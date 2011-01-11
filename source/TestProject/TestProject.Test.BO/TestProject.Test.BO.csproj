@@ -1,0 +1,116 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{2815411B-1A87-436B-B3A7-76CB1C3E380F}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>TestProject.Test.BO</RootNamespace>
+    <AssemblyName>TestProject.Test.BO</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Habanero.Base, Version=2.4.0.0, Culture=neutral, PublicKeyToken=1fb6a9c86f815c07, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\lib\Habanero.Base.dll</HintPath>
+    </Reference>
+    <Reference Include="Habanero.BO, Version=2.4.0.0, Culture=neutral, PublicKeyToken=b7599514c88df7f1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\lib\Habanero.BO.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework, Version=2.5.3.9345, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\lib\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Rhino.Mocks, Version=3.6.0.0, Culture=neutral, PublicKeyToken=0b3305902db7183f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\lib\Rhino.Mocks.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <ProjectReference Include="..\..\AutoMappingHabanero\AutoMappingHabanero.csproj">
+      <Project>{6750B8F7-AA4B-4E74-AF0F-9AF9BE05FEDC}</Project>
+      <Name>AutoMappingHabanero</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TestProject.BO\TestProject.BO.csproj">
+      <Project>{1516550B-C387-4440-938D-F3BE4A563338}</Project>
+      <Name>TestProject.BO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TestProject.Test.Base\TestProject.Test.Base.csproj">
+      <Project>{C56C6D9F-27BA-47C4-BA39-F53A5A9FBF81}</Project>
+      <Name>TestProject.Test.Base</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestBase.cs" />
+    <Compile Include="TestCar.cs" />
+    <Compile Include="TestCar.Def.cs">
+      <DependentUpon>TestCar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TestDriver.cs" />
+    <Compile Include="TestDriver.Def.cs">
+      <DependentUpon>TestDriver.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TestSteeringWheel.cs" />
+    <Compile Include="TestSteeringWheel.Def.cs">
+      <DependentUpon>TestSteeringWheel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TestUtils\TestUtilsCar.cs" />
+    <Compile Include="TestUtils\TestUtilsCar.Def.cs">
+      <DependentUpon>TestUtilsCar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TestUtils\TestUtilsDriver.cs" />
+    <Compile Include="TestUtils\TestUtilsDriver.Def.cs">
+      <DependentUpon>TestUtilsDriver.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TestUtils\TestUtilsSteeringWheel.cs" />
+    <Compile Include="TestUtils\TestUtilsSteeringWheel.Def.cs">
+      <DependentUpon>TestUtilsSteeringWheel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TestUtils\TestUtilsVehicle.cs" />
+    <Compile Include="TestUtils\TestUtilsVehicle.Def.cs">
+      <DependentUpon>TestUtilsVehicle.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TestVehicle.cs" />
+    <Compile Include="TestVehicle.Def.cs">
+      <DependentUpon>TestVehicle.cs</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <!-- NB: These build events MUST be after the above project import  -->
+  <PropertyGroup>
+    <PostBuildEvent />
+    <PreBuildEvent />
+  </PropertyGroup>
+</Project>
