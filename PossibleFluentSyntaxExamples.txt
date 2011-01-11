@@ -1,0 +1,43 @@
+// with single property primary key
+
+new ClassDefBuilder<Car>()
+		.WithPrimaryKey(c=>c.CarID)
+	.Build();
+			
+
+// with composite primary key
+new ClassDefBuilder<Car>()
+	.WithCompositePrimaryKey()
+		.WithPrimaryKeyProperty(c=>c.Make)
+		.WithPrimaryKeyProperty(c=>c.Model)
+		.Return()
+	.Build();
+		
+// with SuperClass
+new ClassDefBuilder()
+		.WithSuperClass()
+	.Build();
+	
+	
+// with single property primarykey and some properties
+new ClassDefBuilder<Car>()
+		.WithPrimaryKey(c => c.VehicleID)
+	.WithProperties
+		.Property(c=>c.Make)
+		.Property(c=>c.Model)
+		.Return()
+	.Build();
+	
+// with single property primarykey, one property and one property rule
+new ClassDefBuilder<Car>()
+		.WithPrimaryKey(c => c.VehicleID)
+	.WithProperties
+		.Property(c=>c.Make)
+			.WithPropertyRules
+				.RequiredFieldRule()
+				.Return()
+			.Return()
+		.Return()
+	.Build();
+
+		
