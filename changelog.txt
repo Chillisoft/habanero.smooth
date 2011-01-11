@@ -1,0 +1,35 @@
+Habanero Smooth Change log
+
+For use of Smooth please see the sample projects included in the source code zip.
+
+v1.4 - 1 December 2010
+Built against Habanero Core 2.5.1
+
+#904 - Automapping of autonumber attribute
+#905 - AutoMapUniqueConstraint should be called AutoMapUniqueConstraintAttribute
+#909 - Map Relationship: When Map OneToOne Association Relationship does not correctly figure out FK Prop - Modified Code for OwningBoHasForeignKey to check the reverse relationship and only set the OwningBoHasForeignKey when the reverse Relationship is defined as Composition or Aggregation.
+
+v1.3 - 17 September 2010
+
+Built against Habanero Core 2.5.0
+#812 - Determine the DeleteParentAction of a RelationshipDef based on its RelationshipType for OneToOne Rels
+- If relationship is Aggregation or Composition then DeleteParentAction should be set to Prevent.
+- If defined as Association or reverse relationship defined as Composition or Aggregation then DeleteParentAction = DoNothing.
+#813 - Determine OwningBOHasForeignKey based on RelationshipType for One To One Relationships
+   If there are no FK props defined on either BusinessObject then the Automapping must determine where the ForeignKeys should be created. 
+   In this case the following guideline is followed:
+   - If Composition or Aggregation then Create FK Props on Related Class.
+   - If Defines as Association then Create FKProps on OwnerClass.
+   - If reverse relationship defined as Composition or Aggregation then create on OwnerClass.
+#850 - AutoMapping of unique constraints. Smooth now maps unique constraints (known as keys in Habanero Core) if you mark properties with the AutoMapUniqueConstraint attribute.
+#851 - IdentiyAutoMapper should be called IdentityAutomapper (spelling)
+
+v1.2 - 9 September 2010
+
+Built against Habanero Core 2.5.0
+#732: Add ability to define RelationshipType for a Relationship - You can define the Relationship Type as part of the AutoMapRelationshipAttribute (i.e. define Composition, Aggregation, Association)
+
+v1.1 - 10 May 2010
+
+First public release
+Built against Habanero Core 2.4.0
