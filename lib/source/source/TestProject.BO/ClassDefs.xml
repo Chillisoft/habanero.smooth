@@ -1,0 +1,48 @@
+﻿<classes>
+  <class name="Car" assembly="TestProject.BO" displayName="Car">
+    <superClass class="Vehicle" assembly="TestProject.BO" orMapping="SingleTableInheritance" discriminator="VehicleType" />
+    <property name="Make" />
+    <property name="Model" />
+    <relationship name="Drivers" type="multiple" relatedClass="Driver" reverseRelationship="Car" relatedAssembly="TestProject.BO">
+      <relatedProperty property="VehicleID" relatedProperty="CarID" />
+    </relationship>
+    <relationship name="SteeringWheel" type="single" relatedClass="SteeringWheel" reverseRelationship="Car" relatedAssembly="TestProject.BO" owningBOHasForeignKey="false">
+      <relatedProperty property="VehicleID" relatedProperty="CarID" />
+    </relationship>
+  </class>
+  <class name="Driver" assembly="TestProject.BO" displayName="Driver">
+    <property name="DriverID" type="Guid" readWriteRule="WriteNew" compulsory="true" />
+    <property name="DriverName" />
+    <property name="Age" type="Int32" />
+    <property name="DOB" type="DateTime" />
+    <property name="LicenseRaing" type="Double" />
+    <property name="CarID" type="Guid" />
+    <primaryKey>
+      <prop name="DriverID" />
+    </primaryKey>
+    <relationship name="Car" type="single" relatedClass="Car" reverseRelationship="Drivers" relatedAssembly="TestProject.BO" deleteAction="DoNothing">
+      <relatedProperty property="CarID" relatedProperty="VehicleID" />
+    </relationship>
+  </class>
+  <class name="SteeringWheel" assembly="TestProject.BO" displayName="Steering Wheel">
+    <property name="SteeringWheelID" type="Guid" readWriteRule="WriteNew" compulsory="true" />
+    <property name="CarID" type="Guid" />
+    <key ignoreIfNull="true">
+      <prop name="CarID" />
+    </key>
+    <primaryKey>
+      <prop name="SteeringWheelID" />
+    </primaryKey>
+    <relationship name="Car" type="single" relatedClass="Car" reverseRelationship="SteeringWheel" relatedAssembly="TestProject.BO" deleteAction="DoNothing">
+      <relatedProperty property="CarID" relatedProperty="VehicleID" />
+    </relationship>
+  </class>
+  <class name="Vehicle" assembly="TestProject.BO" displayName="Vehicle">
+    <property name="VehicleID" type="Guid" readWriteRule="WriteNew" compulsory="true" />
+    <property name="VehicleType" />
+    <property name="MaxSpeed" type="Double" />
+    <primaryKey>
+      <prop name="VehicleID" />
+    </primaryKey>
+  </class>
+</classes>
