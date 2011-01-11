@@ -1,0 +1,530 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!--This file represents the results of running a test suite-->
+<test-results name="bin\Habanero.Smooth.Test.dll" total="424" failures="0" not-run="0" date="2010-09-09" time="16:37:56">
+  <environment nunit-version="2.4.6.0" clr-version="2.0.50727.4927" os-version="Microsoft Windows NT 6.1.7600.0" platform="Win32NT" cwd="E:\Systems\Habanero Community\SmoothHabanero\tags\v1.2" machine-name="HUDSON" user="chilli" user-domain="CHILLI" />
+  <culture-info current-culture="en-ZA" current-uiculture="en-US" />
+  <test-suite name="bin\Habanero.Smooth.Test.dll" success="True" time="2.127" asserts="0">
+    <results>
+      <test-suite name="Habanero" success="True" time="2.125" asserts="0">
+        <results>
+          <test-suite name="Smooth" success="True" time="2.125" asserts="0">
+            <results>
+              <test-suite name="Test" success="True" time="2.121" asserts="0">
+                <results>
+                  <test-suite name="TestAllClassesAutoMapper" success="True" time="0.706" asserts="0">
+                    <results>
+                      <test-case name="Habanero.Smooth.Test.TestAllClassesAutoMapper.Test_Construct_WithNullsource_ShouldRaiseError" executed="True" success="True" time="0.006" asserts="2" />
+                      <test-case name="Habanero.Smooth.Test.TestAllClassesAutoMapper.Test_CreateRevRelationship_WhenIsOneToOne_ShouldCreateSingleRevRel" executed="True" success="True" time="0.140" asserts="7" />
+                      <test-case name="Habanero.Smooth.Test.TestAllClassesAutoMapper.Test_GetClassDefCol_WhenNonSet_ShouldRetEmptyCol" executed="True" success="True" time="0.008" asserts="2" />
+                      <test-case name="Habanero.Smooth.Test.TestAllClassesAutoMapper.Test_GetTypes_WhenExtDll_ShouldReturnObjectThatOnlyImplementsIBo" executed="True" success="True" time="0.013" asserts="1" />
+                      <test-case name="Habanero.Smooth.Test.TestAllClassesAutoMapper.Test_IdentityNameConvention_ShouldBeDefaultIfNotSet" executed="True" success="True" time="0.000" asserts="1" />
+                      <test-case name="Habanero.Smooth.Test.TestAllClassesAutoMapper.Test_Map_When2LayersOfInheritance_AndHasDiscriminatorProp_ShouldNotCreateDiscriminator" executed="True" success="True" time="0.020" asserts="4" />
+                      <test-case name="Habanero.Smooth.Test.TestAllClassesAutoMapper.Test_Map_WhenHaveTwoClassesShouldMapBoth" executed="True" success="True" time="0.001" asserts="5" />
+                      <test-case name="Habanero.Smooth.Test.TestAllClassesAutoMapper.Test_Map_WhenInheritance_ShouldCreateDiscriminatorPropInSuperClass" executed="True" success="True" time="0.002" asserts="4" />
+                      <test-case name="Habanero.Smooth.Test.TestAllClassesAutoMapper.Test_Map_WhenInheritance_ShouldMapInheritenceRelationship" executed="True" success="True" time="0.002" asserts="4" />
+                      <test-case name="Habanero.Smooth.Test.TestAllClassesAutoMapper.Test_Map_WhenInheritance_ShouldNotCreatePKInSubClass" executed="True" success="True" time="0.003" asserts="8" />
+                      <test-case name="Habanero.Smooth.Test.TestAllClassesAutoMapper.Test_Map_WhenInheritanceAndHasRelationship_ShouldCreateCorrectRelPropDefs" executed="True" success="True" time="0.056" asserts="9" />
+                      <test-case name="Habanero.Smooth.Test.TestAllClassesAutoMapper.Test_Map_WhenNotHasFKPropDefined_AndIsOneToMany_ShouldFKProp" executed="True" success="True" time="0.003" asserts="4" />
+                      <test-case name="Habanero.Smooth.Test.TestAllClassesAutoMapper.Test_Map_WhenNotHasReverseRelDefined_ShouldCreateRelProp" executed="True" success="True" time="0.004" asserts="9" />
+                      <test-case name="Habanero.Smooth.Test.TestAllClassesAutoMapper.Test_Map_WhenNotHasReverseRelDefined_ShouldCreateReverseRel" executed="True" success="True" time="0.009" asserts="11" />
+                      <test-case name="Habanero.Smooth.Test.TestAllClassesAutoMapper.Test_Map_WhenNotHasRevRelDefined_AndIsOneToMany_ShouldCreateSingleRevRel" executed="True" success="True" time="0.002" asserts="9" />
+                      <test-case name="Habanero.Smooth.Test.TestAllClassesAutoMapper.Test_Map_WhenNotHasRevRelDefined_AndIsOneToOne_ShouldCreateSingleRevRel" executed="True" success="True" time="0.006" asserts="9" />
+                      <test-case name="Habanero.Smooth.Test.TestAllClassesAutoMapper.Test_Map_WhenRelatedClassNotInClassDefCol_ShouldNotRaiseError" executed="True" success="True" time="0.001" asserts="2" />
+                      <test-case name="Habanero.Smooth.Test.TestAllClassesAutoMapper.Test_Map_WhenTypeInSourceTwice_ShouldAddSingleClassDef" executed="True" success="True" time="0.002" asserts="3" />
+                      <test-case name="Habanero.Smooth.Test.TestAllClassesAutoMapper.Test_MapClassesForAssembly_ShouldAlwaysResetTheClassDefCol_ShouldMapAllClassesIntheAssembly" executed="True" success="True" time="0.004" asserts="2" />
+                      <test-case name="Habanero.Smooth.Test.TestAllClassesAutoMapper.Test_MapClassesForAssembly_ShouldMapAllClassesIntheAssembly" executed="True" success="True" time="0.001" asserts="3" />
+                      <test-case name="Habanero.Smooth.Test.TestAllClassesAutoMapper.Test_MapClassesForType_ShouldMapAllClassesForTheTypesAssembly" executed="True" success="True" time="0.001" asserts="3" />
+                      <test-case name="Habanero.Smooth.Test.TestAllClassesAutoMapper.Test_MapClassesForTypeWithWhereClause_ShouldMapAllClassesForTheTypesAssemblyMatchingClause" executed="True" success="True" time="0.003" asserts="3" />
+                      <test-case name="Habanero.Smooth.Test.TestAllClassesAutoMapper.Test_MapWhenHasAbstract_ShouldNotMap" executed="True" success="True" time="0.000" asserts="2" />
+                      <test-case name="Habanero.Smooth.Test.TestAllClassesAutoMapper.Test_MapWhenHasEnum_ShouldNotMap" executed="True" success="True" time="0.000" asserts="2" />
+                      <test-case name="Habanero.Smooth.Test.TestAllClassesAutoMapper.Test_MapWhenHasInterface_ShouldNotMap" executed="True" success="True" time="0.001" asserts="2" />
+                      <test-case name="Habanero.Smooth.Test.TestAllClassesAutoMapper.Test_SetClassDefCol_ShouldSet" executed="True" success="True" time="0.000" asserts="1" />
+                      <test-case name="Habanero.Smooth.Test.TestAllClassesAutoMapper.Test_SetIdentityNameConvention_ShouldSetCustomConvention" executed="True" success="True" time="0.150" asserts="1" />
+                      <test-case name="Habanero.Smooth.Test.TestAllClassesAutoMapper.TestAccept_Validate_WhenAllClassDefsLoaded_ShouldBeTrue" executed="True" success="True" time="0.259" asserts="2" />
+                    </results>
+                  </test-suite>
+                  <test-suite name="TestAppDomainTypeSource" success="True" time="0.374" asserts="0">
+                    <results>
+                      <test-case name="Habanero.Smooth.Test.TestAppDomainTypeSource.Test_GetTypes_ShouldNotReturnAbstractClasses" executed="True" success="True" time="0.100" asserts="4" />
+                      <test-case name="Habanero.Smooth.Test.TestAppDomainTypeSource.Test_GetTypes_ShouldNotReturnGenericClasses" executed="True" success="True" time="0.016" asserts="4" />
+                      <test-case name="Habanero.Smooth.Test.TestAppDomainTypeSource.Test_GetTypes_ShouldNotReturnInterface" executed="True" success="True" time="0.016" asserts="4" />
+                      <test-case name="Habanero.Smooth.Test.TestAppDomainTypeSource.Test_GetTypes_ShouldReturnAllTypesImplementingIBoInterface" executed="True" success="True" time="0.119" asserts="72" />
+                      <test-case name="Habanero.Smooth.Test.TestAppDomainTypeSource.Test_GetTypes_WhenHasWhereClause_ShouldReturnItemsMatchingWhereClause" executed="True" success="True" time="0.123" asserts="141" />
+                    </results>
+                  </test-suite>
+                  <test-suite name="TestAssemblyTypeSource" success="True" time="0.010" asserts="0">
+                    <results>
+                      <test-case name="Habanero.Smooth.Test.TestAssemblyTypeSource.Test_GetAllTypesImplementingIBo_ShouldNotReturnAbstractClasses" executed="True" success="True" time="0.000" asserts="4" />
+                      <test-case name="Habanero.Smooth.Test.TestAssemblyTypeSource.Test_GetAllTypesImplementingIBo_ShouldNotReturnGenericClasses" executed="True" success="True" time="0.001" asserts="4" />
+                      <test-case name="Habanero.Smooth.Test.TestAssemblyTypeSource.Test_GetTypes_ShouldNotReturnInterface" executed="True" success="True" time="0.000" asserts="2" />
+                      <test-case name="Habanero.Smooth.Test.TestAssemblyTypeSource.Test_GetTypes_ShouldReturnAllTypesImplementingIBoInterface" executed="True" success="True" time="0.002" asserts="68" />
+                      <test-case name="Habanero.Smooth.Test.TestAssemblyTypeSource.Test_GetTypes_ShouldReturnObjectThatOnlyImplementsIBo" executed="True" success="True" time="0.001" asserts="1" />
+                      <test-case name="Habanero.Smooth.Test.TestAssemblyTypeSource.Test_GetTypes_WhenExtDll_ShouldNotReturnAbstractClasses" executed="True" success="True" time="0.000" asserts="3" />
+                      <test-case name="Habanero.Smooth.Test.TestAssemblyTypeSource.Test_GetTypes_WhenExtDll_ShouldNotReturnGenericClasses" executed="True" success="True" time="0.000" asserts="3" />
+                      <test-case name="Habanero.Smooth.Test.TestAssemblyTypeSource.Test_GetTypes_WhenExtDll_ShouldNotReturnInterface" executed="True" success="True" time="0.000" asserts="1" />
+                      <test-case name="Habanero.Smooth.Test.TestAssemblyTypeSource.Test_GetTypes_WhenExtDll_ShouldReturnAllTypesImplementingIBoInterface" executed="True" success="True" time="0.001" asserts="5" />
+                      <test-case name="Habanero.Smooth.Test.TestAssemblyTypeSource.Test_GetTypes_WhenExtDll_ShouldReturnNormalBo" executed="True" success="True" time="0.000" asserts="1" />
+                      <test-case name="Habanero.Smooth.Test.TestAssemblyTypeSource.Test_GetTypes_WhenExtDll_ShouldReturnObjectThatOnlyImplementsIBo" executed="True" success="True" time="0.000" asserts="1" />
+                      <test-case name="Habanero.Smooth.Test.TestAssemblyTypeSource.Test_GetTypes_WhenExtDll_WhenConstructWithType_ShouldReturnNormalBo" executed="True" success="True" time="0.001" asserts="5" />
+                      <test-case name="Habanero.Smooth.Test.TestAssemblyTypeSource.Test_GetTypes_WhenExtDll_WithNullWhereClause_ShouldRetAllClasses" executed="True" success="True" time="0.000" asserts="4" />
+                      <test-case name="Habanero.Smooth.Test.TestAssemblyTypeSource.Test_GetTypes_WhenExtDll_WithWhereClause_ShouldNotReturnExcludedClasses" executed="True" success="True" time="0.001" asserts="4" />
+                    </results>
+                  </test-suite>
+                  <test-suite name="TestAutoMapperExtensions" success="True" time="0.205" asserts="0">
+                    <results>
+                      <test-case name="Habanero.Smooth.Test.TestAutoMapperExtensions.Test_Get1_1RevRels_WhenAutoMapOneToOne_ShouldReturnOneItem" executed="True" success="True" time="0.004" asserts="11" />
+                      <test-case name="Habanero.Smooth.Test.TestAutoMapperExtensions.Test_Get1_1RevRels_WhenHasIgnore_ShouldReturnNoItems" executed="True" success="True" time="0.001" asserts="9" />
+                      <test-case name="Habanero.Smooth.Test.TestAutoMapperExtensions.Test_Get1_1RevRels_WhenHasMultipleReverse_NoAttributes_ShouldReturnBothPotentialReverseRels" executed="True" success="True" time="0.000" asserts="8" />
+                      <test-case name="Habanero.Smooth.Test.TestAutoMapperExtensions.Test_Get1_1RevRels_WhenHasOneSingleRev_ShouldReturnOneItem" executed="True" success="True" time="0.001" asserts="9" />
+                      <test-case name="Habanero.Smooth.Test.TestAutoMapperExtensions.Test_Get1_1RevRels_WhenIsMultiple_ShouldReturnNone" executed="True" success="True" time="0.001" asserts="7" />
+                      <test-case name="Habanero.Smooth.Test.TestAutoMapperExtensions.Test_Get1_1RevRels_WhenNotHas_ShouldNotHaveItems" executed="True" success="True" time="0.000" asserts="2" />
+                      <test-case name="Habanero.Smooth.Test.TestAutoMapperExtensions.Test_Get1_1RevRels_WhenRelHasManyToOneAttribute_ShouldNotHaveItems" executed="True" success="True" time="0.000" asserts="2" />
+                      <test-case name="Habanero.Smooth.Test.TestAutoMapperExtensions.Test_Get1_1RevRels_WhenReverseAutoMapOneToOne_ShouldReturnOneItem" executed="True" success="True" time="0.001" asserts="10" />
+                      <test-case name="Habanero.Smooth.Test.TestAutoMapperExtensions.Test_Get1_1RevRels_WhenReverseHasIgnore_ShouldReturnNoItems" executed="True" success="True" time="0.000" asserts="7" />
+                      <test-case name="Habanero.Smooth.Test.TestAutoMapperExtensions.Test_Get1_1RevRels_WhenReverseRelHasManyToOne_ShouldNotHaveItems" executed="True" success="True" time="0.001" asserts="4" />
+                      <test-case name="Habanero.Smooth.Test.TestAutoMapperExtensions.Test_GetM1RevRels_WhenHasTwo_ShouldReturnBoth" executed="True" success="True" time="0.001" asserts="9" />
+                      <test-case name="Habanero.Smooth.Test.TestAutoMapperExtensions.Test_GetM1RevRels_WhenHasTwo_ThisRelIgnored_ShouldReturnNone" executed="True" success="True" time="0.000" asserts="8" />
+                      <test-case name="Habanero.Smooth.Test.TestAutoMapperExtensions.Test_GetM1RevRels_WhenHasTwoButRelHasOneToManyMapping_ShouldReturnMappedRel" executed="True" success="True" time="0.002" asserts="9" />
+                      <test-case name="Habanero.Smooth.Test.TestAutoMapperExtensions.Test_GetM1RevRels_WhenMappedToNonExistentReverse_ShouldReturnNoItems" executed="True" success="True" time="0.001" asserts="5" />
+                      <test-case name="Habanero.Smooth.Test.TestAutoMapperExtensions.Test_GetM1RevRels_WhenNotHas_ShouldNotHaveItems" executed="True" success="True" time="0.000" asserts="3" />
+                      <test-case name="Habanero.Smooth.Test.TestAutoMapperExtensions.Test_GetM1RevRels_WhenOneRevIgnored_ShouldReturnOne" executed="True" success="True" time="0.001" asserts="9" />
+                      <test-case name="Habanero.Smooth.Test.TestAutoMapperExtensions.Test_GetM1RevRels_WhenRelIsSingle_ShouldReturnNone" executed="True" success="True" time="0.000" asserts="8" />
+                      <test-case name="Habanero.Smooth.Test.TestAutoMapperExtensions.Test_GetMappedReverseRelationshipName_WhenAutoMapPropNoReverseRel_ShouldReturnNull" executed="True" success="True" time="0.173" asserts="5" />
+                      <test-case name="Habanero.Smooth.Test.TestAutoMapperExtensions.Test_GetMappedReverseRelationshipName_WhenAutoMapPropWithReverseRel_ShouldReturnReverseRel" executed="True" success="True" time="0.004" asserts="5" />
+                      <test-case name="Habanero.Smooth.Test.TestAutoMapperExtensions.Test_GetMappedReverseRelationshipName_WhenNoAttribute_ShouldReturnNull" executed="True" success="True" time="0.002" asserts="3" />
+                      <test-case name="Habanero.Smooth.Test.TestAutoMapperExtensions.Test_GetSingleRels_WhenRevRelHasOneToOneAtt_ShouldReturnNoItems" executed="True" success="True" time="0.000" asserts="5" />
+                      <test-case name="Habanero.Smooth.Test.TestAutoMapperExtensions.Test_GetSingleRevRelationshipName_ShouldReturnRelDefWithRevRelNameSet" executed="True" success="True" time="0.001" asserts="4" />
+                      <test-case name="Habanero.Smooth.Test.TestAutoMapperExtensions.Test_GetSingleRevRelationshipName_WhenHasRevRel_ShouldBeFoundRevRelName" executed="True" success="True" time="0.001" asserts="3" />
+                      <test-case name="Habanero.Smooth.Test.TestAutoMapperExtensions.Test_GetSingleRevRelationshipName_WhenNoRevRel_WhenHasAttribute_WhenHasRevRelName__ShouldBeRevRelName" executed="True" success="True" time="0.001" asserts="2" />
+                      <test-case name="Habanero.Smooth.Test.TestAutoMapperExtensions.Test_GetSingleRevRelationshipName_WhenNoRevRel_WhenHasAttribute_WhenNoRevRelName__ShouldBeOwnerClassName" executed="True" success="True" time="0.000" asserts="2" />
+                      <test-case name="Habanero.Smooth.Test.TestAutoMapperExtensions.Test_GetSingleRevRels_WhenRevRelHasAutomapRel_ShouldReturnItemWithMappingRel" executed="True" success="True" time="0.000" asserts="12" />
+                      <test-case name="Habanero.Smooth.Test.TestAutoMapperExtensions.Test_HasSingleReverseRelationship_WhenHasAndOwnerMultiple_ShouldBeTrue" executed="True" success="True" time="0.001" asserts="7" />
+                      <test-case name="Habanero.Smooth.Test.TestAutoMapperExtensions.Test_HasSingleReverseRelationship_WhenHasAndOwnerSingle_ShouldBeTrue" executed="True" success="True" time="0.000" asserts="5" />
+                      <test-case name="Habanero.Smooth.Test.TestAutoMapperExtensions.Test_HasSingleReverseRelationship_WhenNotHas_ShouldBeFalse" executed="True" success="True" time="0.001" asserts="9" />
+                      <test-case name="Habanero.Smooth.Test.TestAutoMapperExtensions.Test_HasSingleReverseRelationship_WhenRevHasM_1Attr_ShouldBeFalse" executed="True" success="True" time="0.000" asserts="2" />
+                    </results>
+                  </test-suite>
+                  <test-suite name="TestAutoMappingAttributes" success="True" time="0.002" asserts="0">
+                    <results>
+                      <test-case name="Habanero.Smooth.Test.TestAutoMappingAttributes.Test_Default_Construct_WithValue_ShouldSetValue" executed="True" success="True" time="0.001" asserts="1" />
+                      <test-case name="Habanero.Smooth.Test.TestAutoMappingAttributes.Test_ReadWriteRule_Construct_WithValue_ShouldSetValue" executed="True" success="True" time="0.001" asserts="1" />
+                    </results>
+                  </test-suite>
+                  <test-suite name="TestAutoMapRelationshipAttribute" success="True" time="0.004" asserts="0">
+                    <results>
+                      <test-case name="Habanero.Smooth.Test.TestAutoMapRelationshipAttribute.Test_ConstructRelationship_WithNoParams_ShouldSetRelationshipTypeAssociation" executed="True" success="True" time="0.001" asserts="1" />
+                      <test-case name="Habanero.Smooth.Test.TestAutoMapRelationshipAttribute.Test_ConstructRelationship_WithRelNameAndRelType_ShouldSetToRSpecified" executed="True" success="True" time="0.000" asserts="1" />
+                      <test-case name="Habanero.Smooth.Test.TestAutoMapRelationshipAttribute.Test_ConstructRelationship_WithRelType_ShouldSetToRSpecified" executed="True" success="True" time="0.000" asserts="1" />
+                      <test-case name="Habanero.Smooth.Test.TestAutoMapRelationshipAttribute.Test_ConstructRelationship_WithRevRelName_ShouldSetRelationshipTypeAssociation" executed="True" success="True" time="0.001" asserts="1" />
+                      <test-case name="Habanero.Smooth.Test.TestAutoMapRelationshipAttribute.Test_SetAttributeWithRelationshipType_ShouldHaveRelType" executed="True" success="True" time="0.002" asserts="4" />
+                    </results>
+                  </test-suite>
+                  <test-suite name="TestClassAutoMapper" success="True" time="0.042" asserts="0">
+                    <results>
+                      <test-case name="Habanero.Smooth.Test.TestClassAutoMapper.Test_IdentityNameConvention_ShouldBeDefaultIfNotSet" executed="True" success="True" time="0.000" asserts="1" />
+                      <test-case name="Habanero.Smooth.Test.TestClassAutoMapper.Test_Map_ShouldMapManyToOneRelationship" executed="True" success="True" time="0.003" asserts="3" />
+                      <test-case name="Habanero.Smooth.Test.TestClassAutoMapper.Test_Map_ShouldMapPrimaryKey" executed="True" success="True" time="0.001" asserts="4" />
+                      <test-case name="Habanero.Smooth.Test.TestClassAutoMapper.Test_Map_WhenClassAlreadyInClassDefCol_ShouldRetExistingClassDef" executed="True" success="True" time="0.001" asserts="3" />
+                      <test-case name="Habanero.Smooth.Test.TestClassAutoMapper.Test_Map_WhenHasFKProp_ShouldNotCreateFKProp" executed="True" success="True" time="0.005" asserts="3" />
+                      <test-case name="Habanero.Smooth.Test.TestClassAutoMapper.Test_Map_WhenHasIgnore_ShouldReturnNull" executed="True" success="True" time="0.000" asserts="1" />
+                      <test-case name="Habanero.Smooth.Test.TestClassAutoMapper.Test_Map_WhenHasNoProps_ShouldMapNoProps" executed="True" success="True" time="0.000" asserts="2" />
+                      <test-case name="Habanero.Smooth.Test.TestClassAutoMapper.Test_Map_WhenInheritance_AndBaseClassAlreadyInClassDefCol_ShouldUseExistingClassDef" executed="True" success="True" time="0.001" asserts="6" />
+                      <test-case name="Habanero.Smooth.Test.TestClassAutoMapper.Test_Map_WhenInheritance_ShouldMapInheritenceRelationship" executed="True" success="True" time="0.001" asserts="6" />
+                      <test-case name="Habanero.Smooth.Test.TestClassAutoMapper.Test_MapAccept_WhenHasRelationship_ShouldMapRelationshipDefToClassDef" executed="True" success="True" time="0.004" asserts="4" />
+                      <test-case name="Habanero.Smooth.Test.TestClassAutoMapper.Test_MapClass_ShouldAssignPropDefToClassDef" executed="True" success="True" time="0.001" asserts="5" />
+                      <test-case name="Habanero.Smooth.Test.TestClassAutoMapper.Test_MapClass_WhenIsAbstract_ReturnNullClassDef" executed="True" success="True" time="0.001" asserts="1" />
+                      <test-case name="Habanero.Smooth.Test.TestClassAutoMapper.Test_MapClass_WhenIsIBo_ShouldMapClassName" executed="True" success="True" time="0.001" asserts="3" />
+                      <test-case name="Habanero.Smooth.Test.TestClassAutoMapper.Test_MapClass_WhenIsInterface_ReturnNullClassDef" executed="True" success="True" time="0.000" asserts="1" />
+                      <test-case name="Habanero.Smooth.Test.TestClassAutoMapper.Test_MapClass_WhenNotIsIBo_ReturnNullClassDef" executed="True" success="True" time="0.001" asserts="1" />
+                      <test-case name="Habanero.Smooth.Test.TestClassAutoMapper.Test_MustBeMapped_WhenHasIgnore_ShouldReturnFalse" executed="True" success="True" time="0.000" asserts="1" />
+                      <test-case name="Habanero.Smooth.Test.TestClassAutoMapper.Test_MustBeMapped_WhenIsAbstract_ReturnFalse" executed="True" success="True" time="0.000" asserts="1" />
+                      <test-case name="Habanero.Smooth.Test.TestClassAutoMapper.Test_MustBeMapped_WhenIsIBo_ShouldRetTrue" executed="True" success="True" time="0.000" asserts="1" />
+                      <test-case name="Habanero.Smooth.Test.TestClassAutoMapper.Test_MustBeMapped_WhenIsInterface_ReturnFalse" executed="True" success="True" time="0.001" asserts="1" />
+                      <test-case name="Habanero.Smooth.Test.TestClassAutoMapper.Test_MustBeMapped_WhenNotIsIBo_ReturnFalse" executed="True" success="True" time="0.000" asserts="1" />
+                      <test-case name="Habanero.Smooth.Test.TestClassAutoMapper.Test_MustBeMapped_WhenNull_ReturnFalse" executed="True" success="True" time="0.000" asserts="1" />
+                      <test-case name="Habanero.Smooth.Test.TestClassAutoMapper.Test_SetIdentityNameConvention_ShouldSetCustomConvention" executed="True" success="True" time="0.001" asserts="1" />
+                      <test-case name="Habanero.Smooth.Test.TestClassAutoMapper.TestAccept_Map_NoFKPropDef_ShouldCreateFKProp" executed="True" success="True" time="0.004" asserts="8" />
+                      <test-case name="Habanero.Smooth.Test.TestClassAutoMapper.TestAccept_Map_UsingType_NoFKPropDef_ShouldCreateFKProp" executed="True" success="True" time="0.010" asserts="8" />
+                    </results>
+                  </test-suite>
+                  <test-suite name="TestClassDefLoader" success="True" time="0.003" asserts="0">
+                    <results>
+                      <test-case name="Habanero.Smooth.Test.TestClassDefLoader.Test_Construct_WhenSourceNull_ShouldRaiseError" executed="True" success="True" time="0.001" asserts="2" />
+                      <test-case name="Habanero.Smooth.Test.TestClassDefLoader.TestAccept_LoadClassDefs_ShouldLoadAllClassDefs" executed="True" success="True" time="0.002" asserts="4" />
+                    </results>
+                  </test-suite>
+                  <test-suite name="TestCustomTypeSource" success="True" time="0.003" asserts="0">
+                    <results>
+                      <test-case name="Habanero.Smooth.Test.TestCustomTypeSource.Test_Add_ShouldReturnAllTypesAdded" executed="True" success="True" time="0.001" asserts="3" />
+                      <test-case name="Habanero.Smooth.Test.TestCustomTypeSource.Test_AddGeneric_ShouldReturnAllTypesAdded" executed="True" success="True" time="0.001" asserts="2" />
+                      <test-case name="Habanero.Smooth.Test.TestCustomTypeSource.Test_AddList_ShouldReturnAllTypesAdded" executed="True" success="True" time="0.000" asserts="3" />
+                      <test-case name="Habanero.Smooth.Test.TestCustomTypeSource.Test_ConstructWithList_ShouldReturnAllTypesAdded" executed="True" success="True" time="0.001" asserts="3" />
+                    </results>
+                  </test-suite>
+                  <test-suite name="TestIdentityPropNameConvetion" success="True" time="0.000" asserts="0">
+                    <results>
+                      <test-case name="Habanero.Smooth.Test.TestIdentityPropNameConvetion.Test_DefaultNamingConvention_GetPropertyName" executed="True" success="True" time="0.000" asserts="1" />
+                      <test-case name="Habanero.Smooth.Test.TestIdentityPropNameConvetion.Test_DefaultNamingConvention_GetPropertyNameGeneric" executed="True" success="True" time="0.000" asserts="1" />
+                    </results>
+                  </test-suite>
+                  <test-suite name="TestIdentiyAutoMapper" success="True" time="0.011" asserts="0">
+                    <results>
+                      <test-case name="Habanero.Smooth.Test.TestIdentiyAutoMapper.Test_Construct_WithNullclassDef_ShouldRaiseError" executed="True" success="True" time="0.001" asserts="2" />
+                      <test-case name="Habanero.Smooth.Test.TestIdentiyAutoMapper.Test_IdentityNameConvention_ShouldBeDefaultIfNotSet" executed="True" success="True" time="0.000" asserts="1" />
+                      <test-case name="Habanero.Smooth.Test.TestIdentiyAutoMapper.Test_Map_WhenHasPKProp_ShouldMapPK" executed="True" success="True" time="0.004" asserts="8" />
+                      <test-case name="Habanero.Smooth.Test.TestIdentiyAutoMapper.Test_Map_WhenHasPropDefined_ShouldHaveSamePropDefAsClassDef" executed="True" success="True" time="0.001" asserts="11" />
+                      <test-case name="Habanero.Smooth.Test.TestIdentiyAutoMapper.Test_Map_WhenNotHasPKProp_ShouldCreatePrimaryKeyProp" executed="True" success="True" time="0.001" asserts="14" />
+                      <test-case name="Habanero.Smooth.Test.TestIdentiyAutoMapper.Test_Map_WhenNullCDef_ShouldReturnNull" executed="True" success="True" time="0.000" asserts="1" />
+                      <test-case name="Habanero.Smooth.Test.TestIdentiyAutoMapper.Test_Map_WhenStdNamePropAndAttributeProp_ShouldUseAttributeDefinedProp" executed="True" success="True" time="0.001" asserts="10" />
+                      <test-case name="Habanero.Smooth.Test.TestIdentiyAutoMapper.Test_Map_WhenStdNamingPropNonExist_WhenUsePrimaryKeyAttribute_ShouldMapAttributeProp" executed="True" success="True" time="0.000" asserts="11" />
+                      <test-case name="Habanero.Smooth.Test.TestIdentiyAutoMapper.Test_Map_WhenTwoPropsWithPrimaryKeyAttribute_ShouldRaiseError" executed="True" success="True" time="0.001" asserts="5" />
+                      <test-case name="Habanero.Smooth.Test.TestIdentiyAutoMapper.Test_SetIdentityNameConvention_ShouldSetCustomConvention" executed="True" success="True" time="0.001" asserts="1" />
+                    </results>
+                  </test-suite>
+                  <test-suite name="TestInheritanceAutoMapper" success="True" time="0.008" asserts="0">
+                    <results>
+                      <test-case name="Habanero.Smooth.Test.TestInheritanceAutoMapper.Test_Map_ShouldSetInheritanceDef_ClassName" executed="True" success="True" time="0.001" asserts="6" />
+                      <test-case name="Habanero.Smooth.Test.TestInheritanceAutoMapper.Test_Map_When2LayersOfInheritance_AndHasDiscriminatorProp_ShouldNotCreateDiscriminator" executed="True" success="True" time="0.002" asserts="6" />
+                      <test-case name="Habanero.Smooth.Test.TestInheritanceAutoMapper.Test_Map_When2LayersOfInheritance_ShouldCreateDiscriminatorOnSuperSuperTypeOnly" executed="True" success="True" time="0.001" asserts="7" />
+                      <test-case name="Habanero.Smooth.Test.TestInheritanceAutoMapper.Test_Map_When2LayersOfInheritance_ShouldMapInheritenceRelationship" executed="True" success="True" time="0.001" asserts="7" />
+                      <test-case name="Habanero.Smooth.Test.TestInheritanceAutoMapper.Test_Map_WhenInheritance_ShouldCreateDiscriminatorPropIfNonExists" executed="True" success="True" time="0.001" asserts="4" />
+                      <test-case name="Habanero.Smooth.Test.TestInheritanceAutoMapper.Test_Map_WhenInheritance_ShouldMapInheritenceRelationship" executed="True" success="True" time="0.000" asserts="6" />
+                      <test-case name="Habanero.Smooth.Test.TestInheritanceAutoMapper.Test_Map_WhenNoInheritance_ShouldRetNull" executed="True" success="True" time="0.001" asserts="1" />
+                      <test-case name="Habanero.Smooth.Test.TestInheritanceAutoMapper.Test_Map_WhenNotBO_ShouldRetNull" executed="True" success="True" time="0.000" asserts="3" />
+                    </results>
+                  </test-suite>
+                  <test-suite name="TestManyToOneAutoMapper" success="True" time="0.099" asserts="0">
+                    <results>
+                      <test-case name="Habanero.Smooth.Test.TestManyToOneAutoMapper.Test_Construct_WhenNullPropWrapper_ShouldRaiseError" executed="True" success="True" time="0.000" asserts="2" />
+                      <test-case name="Habanero.Smooth.Test.TestManyToOneAutoMapper.Test_ConstructShouldRaiseError" executed="True" success="True" time="0.000" asserts="2" />
+                      <test-case name="Habanero.Smooth.Test.TestManyToOneAutoMapper.Test_DefaultNameConventionIfNoneSet" executed="True" success="True" time="0.000" asserts="1" />
+                      <test-case name="Habanero.Smooth.Test.TestManyToOneAutoMapper.Test_GetRelatatedPropName_WhenNoProp_ShouldReturnStdNamingProp" executed="True" success="True" time="0.001" asserts="1" />
+                      <test-case name="Habanero.Smooth.Test.TestManyToOneAutoMapper.Test_GetRelatatedPropName_WhenStdNamingPropAndRelDeclaredProp_ShouldReturnDeclaredPropName" executed="True" success="True" time="0.000" asserts="1" />
+                      <test-case name="Habanero.Smooth.Test.TestManyToOneAutoMapper.Test_GetRelatedPropName_WhenRelatedClassHasAttributeDeclaredIdProp_ShouldUseDeclaredIDPropName" executed="True" success="True" time="0.000" asserts="1" />
+                      <test-case name="Habanero.Smooth.Test.TestManyToOneAutoMapper.Test_HasMultipleReverseRelationship_WhenNotHasShouldReturnFalse" executed="True" success="True" time="0.000" asserts="2" />
+                      <test-case name="Habanero.Smooth.Test.TestManyToOneAutoMapper.Test_HasMultipleReverseRelationshipWhenHasShouldReturnTrue" executed="True" success="True" time="0.001" asserts="2" />
+                      <test-case name="Habanero.Smooth.Test.TestManyToOneAutoMapper.Test_Map_PropWithIgnoreAttribute_ShouldReturnNull" executed="True" success="True" time="0.000" asserts="8" />
+                      <test-case name="Habanero.Smooth.Test.TestManyToOneAutoMapper.Test_Map_ShouldSetDeleteActionDoNothing_OwningBOHasFKTrue" executed="True" success="True" time="0.002" asserts="4" />
+                      <test-case name="Habanero.Smooth.Test.TestManyToOneAutoMapper.Test_Map_When_WhenHasCompulsoryAttribute_ShouldSetIsCompulsoryToTrue" executed="True" success="True" time="0.004" asserts="4" />
+                      <test-case name="Habanero.Smooth.Test.TestManyToOneAutoMapper.Test_Map_When_WhenNotHasCompulsoryAttribute_ShouldSetIsCompulsoryToFalse" executed="True" success="True" time="0.005" asserts="3" />
+                      <test-case name="Habanero.Smooth.Test.TestManyToOneAutoMapper.Test_Map_WhenHasAttributeDeclareRevRelName_ShouldReturnRel_WithDeclaredRevRelName" executed="True" success="True" time="0.001" asserts="6" />
+                      <test-case name="Habanero.Smooth.Test.TestManyToOneAutoMapper.Test_Map_WhenHasMultipleReverseRel_ShouldReturnRel_WithReverseRelNameSet" executed="True" success="True" time="0.001" asserts="8" />
+                      <test-case name="Habanero.Smooth.Test.TestManyToOneAutoMapper.Test_Map_WhenHasOneToOneAttribute_ShouldReturnNull" executed="True" success="True" time="0.000" asserts="3" />
+                      <test-case name="Habanero.Smooth.Test.TestManyToOneAutoMapper.Test_Map_WhenHasSingleReverseRel_ShouldReturnNull" executed="True" success="True" time="0.001" asserts="7" />
+                      <test-case name="Habanero.Smooth.Test.TestManyToOneAutoMapper.Test_Map_WhenInheritedProp_ShouldReturnNull" executed="True" success="True" time="0.000" asserts="5" />
+                      <test-case name="Habanero.Smooth.Test.TestManyToOneAutoMapper.Test_Map_WhenIsSingleRel_ShouldCreateRelProp" executed="True" success="True" time="0.001" asserts="7" />
+                      <test-case name="Habanero.Smooth.Test.TestManyToOneAutoMapper.Test_Map_WhenIsSingleRel_ShouldReturnRelDef" executed="True" success="True" time="0.001" asserts="8" />
+                      <test-case name="Habanero.Smooth.Test.TestManyToOneAutoMapper.Test_Map_WhenIsSingleRel_WithCompulsoryAttribute_ShouldCreateRelProp_WithCompulsoryProp" executed="True" success="True" time="0.003" asserts="7" />
+                      <test-case name="Habanero.Smooth.Test.TestManyToOneAutoMapper.Test_Map_WhenNonDefaultNameConventionSet_ShouldCreateRelProp" executed="True" success="True" time="0.002" asserts="7" />
+                      <test-case name="Habanero.Smooth.Test.TestManyToOneAutoMapper.Test_Map_WhenNoReverseRelationship_NoAttributes_ShouldReturnRel_WithConventionMultipleReverseRel" executed="True" success="True" time="0.001" asserts="7" />
+                      <test-case name="Habanero.Smooth.Test.TestManyToOneAutoMapper.Test_Map_WhenNotRelToIBoCol_ShouldReturnNull" executed="True" success="True" time="0.001" asserts="3" />
+                      <test-case name="Habanero.Smooth.Test.TestManyToOneAutoMapper.Test_Map_WhenNotSingleRel_ShouldReturnNull" executed="True" success="True" time="0.000" asserts="3" />
+                      <test-case name="Habanero.Smooth.Test.TestManyToOneAutoMapper.Test_Map_WhenNullPropInfo_ShouldReturnNull" executed="True" success="True" time="0.000" asserts="1" />
+                      <test-case name="Habanero.Smooth.Test.TestManyToOneAutoMapper.Test_Map_WhenNullPropWrapper_ShouldReturnNull" executed="True" success="True" time="0.000" asserts="1" />
+                      <test-case name="Habanero.Smooth.Test.TestManyToOneAutoMapper.Test_Map_WhenOverridenProp_ShouldReturnNull" executed="True" success="True" time="0.001" asserts="5" />
+                      <test-case name="Habanero.Smooth.Test.TestManyToOneAutoMapper.Test_MustBeMapped_WhenPropIsInherited_ShouldRetFalse" executed="True" success="True" time="0.064" asserts="8" />
+                      <test-case name="Habanero.Smooth.Test.TestManyToOneAutoMapper.Test_SetPropNamingConvention_ShouldSetConvention" executed="True" success="True" time="0.000" asserts="1" />
+                      <test-case name="Habanero.Smooth.Test.TestManyToOneAutoMapper.TestAccept_Map_WhenHasSingleReverseRelAndMultipleReverseRel_HasOneToOneAttribute_ShouldReturnNull" executed="True" success="True" time="0.001" asserts="8" />
+                      <test-case name="Habanero.Smooth.Test.TestManyToOneAutoMapper.TestAccept_Map_WhenHasSingleReverseRelAndMultipleReverseRel_ShouldRaiseError" executed="True" success="True" time="0.001" asserts="7" />
+                      <test-case name="Habanero.Smooth.Test.TestManyToOneAutoMapper.TestAccept_Map_WhenHasSingleReverseRelAndMultipleReverseRel_WhenHasOneToManyAttribute_ShouldReturnRel" executed="True" success="True" time="0.000" asserts="9" />
+                      <test-case name="Habanero.Smooth.Test.TestManyToOneAutoMapper.TestAccept_Map_WhenIsPrivateProperty_ShouldReturnNull" executed="True" success="True" time="0.001" asserts="3" />
+                      <test-case name="Habanero.Smooth.Test.TestManyToOneAutoMapper.TestAccept_Map_WhenIsStaticProperty_ShouldReturnNull" executed="True" success="True" time="0.000" asserts="3" />
+                    </results>
+                  </test-suite>
+                  <test-suite name="TestMutiTypeSource" success="True" time="0.004" asserts="0">
+                    <results>
+                      <test-case name="Habanero.Smooth.Test.TestMutiTypeSource.Test_GetTypes_ShouldReturnAllTypesImplementingIBoInterface" executed="True" success="True" time="0.003" asserts="11" />
+                      <test-case name="Habanero.Smooth.Test.TestMutiTypeSource.Test_GetTypes_WhenAddToTypeSource_ShouldReturnAllTypesImplementingIBoInterface" executed="True" success="True" time="0.001" asserts="8" />
+                    </results>
+                  </test-suite>
+                  <test-suite name="TestOneToManyAutoMapper" success="True" time="0.109" asserts="0">
+                    <results>
+                      <test-case name="Habanero.Smooth.Test.TestOneToManyAutoMapper.Test_Construct_WithNullPropInfo_ShouldRaiseError" executed="True" success="True" time="0.000" asserts="2" />
+                      <test-case name="Habanero.Smooth.Test.TestOneToManyAutoMapper.Test_CreateRelPropDef__WhenNonDefaultNameConventionSet_WhenNoReverseRel_ShouldCreateRelPropWithConventionName" executed="True" success="True" time="0.001" asserts="5" />
+                      <test-case name="Habanero.Smooth.Test.TestOneToManyAutoMapper.Test_CreateRelPropDef_WhenAutoMapPrimaryKey_WhenNoReverse_ShouldCreateRelProp_WithPrimaryKeyName" executed="True" success="True" time="0.001" asserts="5" />
+                      <test-case name="Habanero.Smooth.Test.TestOneToManyAutoMapper.Test_CreateRelPropDef_WhenHasReverse_ShouldCreateRelProp_WithNonStdNaming_WithNonStdReverseRelName" executed="True" success="True" time="0.001" asserts="5" />
+                      <test-case name="Habanero.Smooth.Test.TestOneToManyAutoMapper.Test_CreateRelPropDef_WhenHasReverse_ShouldCreateRelProp_WithReverseRelNameID" executed="True" success="True" time="0.001" asserts="5" />
+                      <test-case name="Habanero.Smooth.Test.TestOneToManyAutoMapper.Test_CreateRelPropDef_WhenNoReverseRel_WithDefaultIDConventionName" executed="True" success="True" time="0.000" asserts="5" />
+                      <test-case name="Habanero.Smooth.Test.TestOneToManyAutoMapper.Test_DefaultNameConventionIfNoneSet" executed="True" success="True" time="0.000" asserts="1" />
+                      <test-case name="Habanero.Smooth.Test.TestOneToManyAutoMapper.Test_GetOwningPropName_ShouldReturnClassTypeID" executed="True" success="True" time="0.000" asserts="1" />
+                      <test-case name="Habanero.Smooth.Test.TestOneToManyAutoMapper.Test_GetOwningPropName_WhenAutoMapPK_ShouldReturnClassTypeID" executed="True" success="True" time="0.000" asserts="1" />
+                      <test-case name="Habanero.Smooth.Test.TestOneToManyAutoMapper.Test_GetRelatatedPropName_WhenNoRevNonDefaultNaming_ShouldReturnNamingProp" executed="True" success="True" time="0.001" asserts="2" />
+                      <test-case name="Habanero.Smooth.Test.TestOneToManyAutoMapper.Test_GetRelatatedPropName_WhenStdNamingPropAndRelDeclaredProp_ShouldReturnDeclaredPropName" executed="True" success="True" time="0.000" asserts="4" />
+                      <test-case name="Habanero.Smooth.Test.TestOneToManyAutoMapper.Test_GetRelatedPropName_WhenRelatedClassHasAttributeDeclaredIdProp_ShouldUseDeclaredIDPropName" executed="True" success="True" time="0.001" asserts="2" />
+                      <test-case name="Habanero.Smooth.Test.TestOneToManyAutoMapper.Test_Map_PropWithIgnoreAttribute_ShouldReturnNull" executed="True" success="True" time="0.001" asserts="3" />
+                      <test-case name="Habanero.Smooth.Test.TestOneToManyAutoMapper.Test_Map_ShouldSetDeleteActionPrevent_OwningBOHasFKFalse" executed="True" success="True" time="0.000" asserts="4" />
+                      <test-case name="Habanero.Smooth.Test.TestOneToManyAutoMapper.Test_Map_WhenHasSingleReverseRel_ShouldReturnRelDefWithRevRelNameSet" executed="True" success="True" time="0.001" asserts="6" />
+                      <test-case name="Habanero.Smooth.Test.TestOneToManyAutoMapper.Test_Map_WhenIs_IBoCol_ShouldReturnRelDefWitConventionForRevName" executed="True" success="True" time="0.013" asserts="9" />
+                      <test-case name="Habanero.Smooth.Test.TestOneToManyAutoMapper.Test_Map_WhenIsMultiple_ShouldCreateRelProp_WhenNoReverseRel_WithDefaultConventionName" executed="True" success="True" time="0.001" asserts="8" />
+                      <test-case name="Habanero.Smooth.Test.TestOneToManyAutoMapper.Test_Map_WhenIsMultipleRel_BoCol_NotReverse_ShouldReturnRelDefWithConventionRevName" executed="True" success="True" time="0.001" asserts="10" />
+                      <test-case name="Habanero.Smooth.Test.TestOneToManyAutoMapper.Test_Map_WhenMappedToRelViaAttributes_WhouldSetReverseRelName" executed="True" success="True" time="0.001" asserts="6" />
+                      <test-case name="Habanero.Smooth.Test.TestOneToManyAutoMapper.Test_Map_WhenMappedViaAttributesWithNoRevRel_WhouldSetReverseRelNameToMappedName" executed="True" success="True" time="0.001" asserts="5" />
+                      <test-case name="Habanero.Smooth.Test.TestOneToManyAutoMapper.Test_Map_WhenNonDefaultNameConventionSet_WhenNoReverseRel_ShouldCreateRelPropWithConventionName" executed="True" success="True" time="0.001" asserts="8" />
+                      <test-case name="Habanero.Smooth.Test.TestOneToManyAutoMapper.Test_Map_WhenNoRelationshipTypeDefined_ShouldSetToAssociation" executed="True" success="True" time="0.001" asserts="4" />
+                      <test-case name="Habanero.Smooth.Test.TestOneToManyAutoMapper.Test_Map_WhenNotRelToIBoCol_ShouldReturnNull" executed="True" success="True" time="0.000" asserts="3" />
+                      <test-case name="Habanero.Smooth.Test.TestOneToManyAutoMapper.Test_Map_WhenNullPropInfo_ShouldReturnNull" executed="True" success="True" time="0.000" asserts="1" />
+                      <test-case name="Habanero.Smooth.Test.TestOneToManyAutoMapper.Test_Map_WhenRelationshipTypeDefined_ShouldSetToComposition" executed="True" success="True" time="0.001" asserts="4" />
+                      <test-case name="Habanero.Smooth.Test.TestOneToManyAutoMapper.Test_MapWithPropWrapper_PropWithIgnoreAttribute_ShouldReturnNull" executed="True" success="True" time="0.000" asserts="3" />
+                      <test-case name="Habanero.Smooth.Test.TestOneToManyAutoMapper.Test_MustBeMapped_WhenPropIsInherited_ShouldRetFalse" executed="True" success="True" time="0.075" asserts="7" />
+                      <test-case name="Habanero.Smooth.Test.TestOneToManyAutoMapper.Test_SetPropNamingConvention_ShouldSetConvention" executed="True" success="True" time="0.000" asserts="1" />
+                      <test-case name="Habanero.Smooth.Test.TestOneToManyAutoMapper.TestAccept_Map_WhenHasTwoSingleReverseRel_WithNoAttributes_ShouldRaiseError" executed="True" success="True" time="0.001" asserts="8" />
+                      <test-case name="Habanero.Smooth.Test.TestOneToManyAutoMapper.TestAccept_Map_WhenIsPrivateProperty_ShouldReturnNull" executed="True" success="True" time="0.000" asserts="3" />
+                      <test-case name="Habanero.Smooth.Test.TestOneToManyAutoMapper.TestAccept_Map_WhenIsStaticProperty_ShouldReturnNull" executed="True" success="True" time="0.000" asserts="3" />
+                    </results>
+                  </test-suite>
+                  <test-suite name="TestOneToOneAutoMapper" success="True" time="0.199" asserts="0">
+                    <results>
+                      <test-case name="Habanero.Smooth.Test.TestOneToOneAutoMapper.Test_CreateRelPropDef_WithDefaultIDConventionName_ShouldCreateWithCorrectOwningAndRelatedPropNames" executed="True" success="True" time="0.053" asserts="7" />
+                      <test-case name="Habanero.Smooth.Test.TestOneToOneAutoMapper.Test_CreateRelPropDef_WithNonDefaultIDConventionName_ShouldCreateWithCorrectOwningAndRelatedPropNames" executed="True" success="True" time="0.006" asserts="7" />
+                      <test-case name="Habanero.Smooth.Test.TestOneToOneAutoMapper.Test_DefaultNameConventionIfNoneSet" executed="True" success="True" time="0.000" asserts="1" />
+                      <test-case name="Habanero.Smooth.Test.TestOneToOneAutoMapper.Test_GetOwningPropName_NeitherHaveProps_ShouldReturnRevRelNameID" executed="True" success="True" time="0.004" asserts="8" />
+                      <test-case name="Habanero.Smooth.Test.TestOneToOneAutoMapper.Test_GetOwningPropName_OwnerHasProp_RelatedHasProp_NonStandardNaming_ShouldReturnFoundRelName" executed="True" success="True" time="0.004" asserts="3" />
+                      <test-case name="Habanero.Smooth.Test.TestOneToOneAutoMapper.Test_GetOwningPropName_OwnerHasProp_RelatedHasProp_ShouldReturnFoundRelName" executed="True" success="True" time="0.004" asserts="3" />
+                      <test-case name="Habanero.Smooth.Test.TestOneToOneAutoMapper.Test_GetOwningPropName_OwnerHasProp_RelatedNotHasProp_ShouldReturnRelatedTypePkName" executed="True" success="True" time="0.003" asserts="5" />
+                      <test-case name="Habanero.Smooth.Test.TestOneToOneAutoMapper.Test_GetOwningPropName_OwnerNotHasProp_RelatedHasProp_NonStandardNaming_ShouldReturnFoundRelName" executed="True" success="True" time="0.004" asserts="3" />
+                      <test-case name="Habanero.Smooth.Test.TestOneToOneAutoMapper.Test_GetOwningPropName_OwnerNotHasProp_RelatedHasProp_ShouldReturnFoundRelName" executed="True" success="True" time="0.004" asserts="3" />
+                      <test-case name="Habanero.Smooth.Test.TestOneToOneAutoMapper.Test_GetOwningPropName_WhenNeitherHaveProps_WhenOwnerGTRelated_ShouldReturnRevRelNameID" executed="True" success="True" time="0.004" asserts="8" />
+                      <test-case name="Habanero.Smooth.Test.TestOneToOneAutoMapper.Test_GetRelatedPropName_NeitherHaveProps_NonDefaultNaming_ShouldReturnRevRelNameID" executed="True" success="True" time="0.003" asserts="8" />
+                      <test-case name="Habanero.Smooth.Test.TestOneToOneAutoMapper.Test_GetRelatedPropName_NeitherHaveProps_ShouldReturnRevRelNameID" executed="True" success="True" time="0.004" asserts="8" />
+                      <test-case name="Habanero.Smooth.Test.TestOneToOneAutoMapper.Test_GetRelatedPropName_OwnerHasProp_RelatedHasProp_FakeNameConvention_ShouldReturnFoundRelName" executed="True" success="True" time="0.004" asserts="3" />
+                      <test-case name="Habanero.Smooth.Test.TestOneToOneAutoMapper.Test_GetRelatedPropName_OwnerHasProp_RelatedHasProp_ShouldReturnFoundRelName" executed="True" success="True" time="0.004" asserts="3" />
+                      <test-case name="Habanero.Smooth.Test.TestOneToOneAutoMapper.Test_GetRelatedPropName_OwnerHasProp_RelatedNotHasProp_ShouldReturnRelatedTypePkName" executed="True" success="True" time="0.004" asserts="5" />
+                      <test-case name="Habanero.Smooth.Test.TestOneToOneAutoMapper.Test_GetRelatedPropName_OwnerNotHasProp_RelatedHasProp_ShouldReturnFoundRelName" executed="True" success="True" time="0.003" asserts="3" />
+                      <test-case name="Habanero.Smooth.Test.TestOneToOneAutoMapper.Test_GetRelatedPropName_WhenNeitherHaveProps_WhenOwnerGTRelated_ShouldReturnRevRelNameID" executed="True" success="True" time="0.004" asserts="8" />
+                      <test-case name="Habanero.Smooth.Test.TestOneToOneAutoMapper.Test_Map_OwningBoHasFK_ShouldReturnRelatedTypePkName" executed="True" success="True" time="0.009" asserts="9" />
+                      <test-case name="Habanero.Smooth.Test.TestOneToOneAutoMapper.Test_Map_PropWithIgnoreAttribute_ShouldReturnNull" executed="True" success="True" time="0.001" asserts="3" />
+                      <test-case name="Habanero.Smooth.Test.TestOneToOneAutoMapper.Test_Map_ShouldCreateRelProp_WithCorrectNames" executed="True" success="True" time="0.008" asserts="6" />
+                      <test-case name="Habanero.Smooth.Test.TestOneToOneAutoMapper.Test_Map_ShouldSetRelationshipAsOneToOne" executed="True" success="True" time="0.006" asserts="3" />
+                      <test-case name="Habanero.Smooth.Test.TestOneToOneAutoMapper.Test_Map_ShouldSetReverseRelationshipName" executed="True" success="True" time="0.007" asserts="5" />
+                      <test-case name="Habanero.Smooth.Test.TestOneToOneAutoMapper.Test_Map_WhenNotSingleRel_ShouldReturnNull" executed="True" success="True" time="0.001" asserts="3" />
+                      <test-case name="Habanero.Smooth.Test.TestOneToOneAutoMapper.Test_Map_WhenNullPropInfo_ShouldReturnNull" executed="True" success="True" time="0.000" asserts="1" />
+                      <test-case name="Habanero.Smooth.Test.TestOneToOneAutoMapper.Test_Map_WhenOwningBoHasFK_ShouldSetOwningBoHasFKTrue" executed="True" success="True" time="0.006" asserts="6" />
+                      <test-case name="Habanero.Smooth.Test.TestOneToOneAutoMapper.Test_MustBeMapped_WhenPropIsInherited_ShouldRetFalse" executed="True" success="True" time="0.009" asserts="10" />
+                      <test-case name="Habanero.Smooth.Test.TestOneToOneAutoMapper.Test_OwningBoHasForeignKey_BothHave_FakeNameConvention_ShouldReturnFalse" executed="True" success="True" time="0.005" asserts="4" />
+                      <test-case name="Habanero.Smooth.Test.TestOneToOneAutoMapper.Test_OwningBoHasForeignKey_BothHaveProp_ShouldReturnFalse" executed="True" success="True" time="0.003" asserts="4" />
+                      <test-case name="Habanero.Smooth.Test.TestOneToOneAutoMapper.Test_OwningBoHasForeignKey_NeitherHaveProps_NonDefaultNaming_ShouldReturnFalse" executed="True" success="True" time="0.007" asserts="4" />
+                      <test-case name="Habanero.Smooth.Test.TestOneToOneAutoMapper.Test_OwningBoHasForeignKey_NeitherHaveProps_OwnerLTRelated_ShouldReturnFalse" executed="True" success="True" time="0.004" asserts="4" />
+                      <test-case name="Habanero.Smooth.Test.TestOneToOneAutoMapper.Test_OwningBoHasForeignKey_OwnerHasProp_RelatedNotHasProp_ShouldReturnTrue" executed="True" success="True" time="0.003" asserts="3" />
+                      <test-case name="Habanero.Smooth.Test.TestOneToOneAutoMapper.Test_OwningBoHasForeignKey_OwnerNotHasProp_RelatedHasProp_ShouldReturnFalse" executed="True" success="True" time="0.004" asserts="3" />
+                      <test-case name="Habanero.Smooth.Test.TestOneToOneAutoMapper.Test_OwningBoHasForeignKey_WhenNeitherHaveProps_WhenOwnerGTRelated_ShouldReturnTrue" executed="True" success="True" time="0.004" asserts="4" />
+                      <test-case name="Habanero.Smooth.Test.TestOneToOneAutoMapper.Test_ReverseRelationshipName_ShouldBeSameAsPropReverseRelName" executed="True" success="True" time="0.001" asserts="2" />
+                      <test-case name="Habanero.Smooth.Test.TestOneToOneAutoMapper.Test_SetPropNamingConvention_ShouldSetConvention" executed="True" success="True" time="0.000" asserts="1" />
+                      <test-case name="Habanero.Smooth.Test.TestOneToOneAutoMapper.TestAccept_Map_WhenHasTwoSingleReverseRel_WithNoAttributes_ShouldRaiseError" executed="True" success="True" time="0.001" asserts="9" />
+                      <test-case name="Habanero.Smooth.Test.TestOneToOneAutoMapper.TestAccept_Map_WhenIsPrivateProperty_ShouldReturnNull" executed="True" success="True" time="0.001" asserts="3" />
+                      <test-case name="Habanero.Smooth.Test.TestOneToOneAutoMapper.TestAccept_Map_WhenIsStaticProperty_ShouldReturnNull" executed="True" success="True" time="0.000" asserts="3" />
+                      <test-case name="Habanero.Smooth.Test.TestOneToOneAutoMapper.TestAccept_Map_WhenMappedViaAttributes_ButTypeIsInterface_ShouldNotMap" executed="True" success="True" time="0.000" asserts="3" />
+                      <test-case name="Habanero.Smooth.Test.TestOneToOneAutoMapper.TestAccept_Map_WhenMappedViaAttributesWithNoRevRel_WhouldSetReverseRelNameToMappedName" executed="True" success="True" time="0.001" asserts="5" />
+                      <test-case name="Habanero.Smooth.Test.TestOneToOneAutoMapper.TestAccept_Map_WhenNoReverseRelNoAttribute_ShouldReturnNull" executed="True" success="True" time="0.001" asserts="3" />
+                      <test-case name="Habanero.Smooth.Test.TestOneToOneAutoMapper.TestAccept_Map_WhenRelationshipTypeDefined_ShouldSetToComposition" executed="True" success="True" time="0.001" asserts="4" />
+                    </results>
+                  </test-suite>
+                  <test-suite name="TestPropertyAutoMapper" success="True" time="0.020" asserts="0">
+                    <results>
+                      <test-case name="Habanero.Smooth.Test.TestPropertyAutoMapper.Test_ConstructWithNullPropInfo_ShouldRaiseError" executed="True" success="True" time="0.000" asserts="2" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyAutoMapper.Test_ConstructWithNullPropWrapper_ShouldRaiseError" executed="True" success="True" time="0.001" asserts="2" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyAutoMapper.Test_Map_WhenCompulsoryAttribute_ShouldReturnMakePropDefCompulsoryTrue" executed="True" success="True" time="0.000" asserts="7" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyAutoMapper.Test_Map_WhenDefaultAttribute_ShouldReturnPropDefWithDefaultSet" executed="True" success="True" time="0.000" asserts="6" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyAutoMapper.Test_Map_WhenHasIgnoreAttribute_ShouldReturnNull" executed="True" success="True" time="0.001" asserts="5" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyAutoMapper.Test_Map_WhenImplementedProp_ShouldReturnPropDef" executed="True" success="True" time="0.001" asserts="7" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyAutoMapper.Test_Map_WhenInheritedProp_ShouldReturnNull" executed="True" success="True" time="0.000" asserts="6" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyAutoMapper.Test_Map_WhenIsStatic_ShouldReturnNull" executed="True" success="True" time="0.000" asserts="4" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyAutoMapper.Test_Map_WhenNoCompulsoryAttribute_ShouldReturnMakePropDefCompulsoryFalse" executed="True" success="True" time="0.000" asserts="6" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyAutoMapper.Test_Map_WhenOverriddenProp_ShouldReturnNull" executed="True" success="True" time="0.000" asserts="6" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyAutoMapper.Test_Map_WhenTypeNotSystem_ShouldReturnNull" executed="True" success="True" time="0.001" asserts="4" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyAutoMapper.Test_MapWithFake_WhenHasDefaultAttribute_ShouldReturnPropDefWithDefault" executed="True" success="True" time="0.006" asserts="3" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyAutoMapper.Test_MapWithFake_WhenHasReadWriteAttribute_ShouldReturnPropDefWithAttribute" executed="True" success="True" time="0.002" asserts="4" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyAutoMapper.Test_MapWithFake_WhenNotHasDefaultAttribute_ShouldReturnPropDefWithDefaultNull" executed="True" success="True" time="0.002" asserts="4" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyAutoMapper.Test_MapWithFake_WhenNotHasReadWriteAttribute_ShouldReturnPropDefWithReadWrite" executed="True" success="True" time="0.001" asserts="3" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyAutoMapper.Test_PrivateProp_ShouldReturnNull" executed="True" success="True" time="0.001" asserts="5" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyAutoMapper.Test_PropWithNonIgnoreAttribute_ShouldReturnPropDef" executed="True" success="True" time="0.000" asserts="6" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyAutoMapper.Test_ReflectionExtensions_GetBaseDefinition_WhenInheritedNotOverriden_ShouldNotReturnSelf" executed="True" success="True" time="0.000" asserts="3" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyAutoMapper.Test_ReflectionExtensions_GetBaseDefinition_WhenNotInherited_ShouldReturnSelf" executed="True" success="True" time="0.000" asserts="2" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyAutoMapper.Test_ReflectionExtensions_GetBaseDefinition_WhenOverriden_ShouldNotReturnSelf" executed="True" success="True" time="0.000" asserts="2" />
+                    </results>
+                  </test-suite>
+                  <test-suite name="TestPropertyMapperExtensions" success="True" time="0.000" asserts="0">
+                    <results>
+                      <test-case name="Habanero.Smooth.Test.TestPropertyMapperExtensions.Test_CanMapToProp_WhenTypeNotSystem_ShouldReturnNull" executed="True" success="True" time="0.000" asserts="4" />
+                    </results>
+                  </test-suite>
+                  <test-suite name="TestPropertyWrapper" success="True" time="0.217" asserts="0">
+                    <results>
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.Test_AssemblyQualifiedName_ShouldReturnUndelyingAssemblyName" executed="True" success="True" time="0.002" asserts="2" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.Test_DeclaringType_ShouldReturnDeclaringTypeWrapped" executed="True" success="True" time="0.001" asserts="2" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.Test_DeclaringTypeName_ShouldReturnUndelyingTypeName" executed="True" success="True" time="0.000" asserts="2" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.Test_EqualEquals_WhenBothNullPropertyWrapper_ShouldRetTrue" executed="True" success="True" time="0.001" asserts="1" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.Test_EqualEquals_WhenNotPropInfo_ShouldRetFalse" executed="True" success="True" time="0.000" asserts="1" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.Test_EqualEquals_WhenNull_ShouldRetFalse" executed="True" success="True" time="0.000" asserts="1" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.Test_EqualEquals_WhenNullPropertyWrapper_ShouldRetFalse" executed="True" success="True" time="0.000" asserts="1" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.Test_EqualEquals_WhenPropertyWrapperNull_ShouldReturnFalse" executed="True" success="True" time="0.000" asserts="2" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.Test_EqualEquals_WhenPropInfo_ShouldRetTrue" executed="True" success="True" time="0.000" asserts="1" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.Test_EqualEquals_WhenSelf_ShouldReturnTrue" executed="True" success="True" time="0.000" asserts="1" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.Test_EqualEquals_WhenWrapDiffProp_ShouldReturnFalse" executed="True" success="True" time="0.001" asserts="2" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.Test_EqualEquals_WhenWrapSameProp_ShouldReturnTrue" executed="True" success="True" time="0.000" asserts="2" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.Test_EqualEqualsOtherProp_WhenNull_ShouldRetFalse" executed="True" success="True" time="0.000" asserts="1" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.Test_Equals__WhenRandomString_ShouldRetFalse" executed="True" success="True" time="0.000" asserts="1" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.Test_Equals_WhenName_ShouldRetTrue" executed="True" success="True" time="0.001" asserts="2" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.Test_Equals_WhenNotPropInfo_ShouldRetFalse" executed="True" success="True" time="0.001" asserts="1" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.Test_Equals_WhenNull_ShouldRetFalse" executed="True" success="True" time="0.000" asserts="1" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.Test_Equals_WhenNullString_ShouldRetFalse" executed="True" success="True" time="0.000" asserts="1" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.Test_Equals_WhenPropertyWrapperNull_ShouldReturnFalse" executed="True" success="True" time="0.000" asserts="2" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.Test_Equals_WhenPropInfo_ShouldRetTrue" executed="True" success="True" time="0.000" asserts="1" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.Test_Equals_WhenSelf_ShouldReturnTrue" executed="True" success="True" time="0.000" asserts="1" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.Test_Equals_WhenWrapDiffType_ShouldReturnFalse" executed="True" success="True" time="0.001" asserts="2" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.Test_Equals_WhenWrapSameType_ShouldReturnTrue" executed="True" success="True" time="0.001" asserts="2" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.Test_Get1_1RevRels_WhenAutoMapOneToOne_ShouldReturnOneItem" executed="True" success="True" time="0.001" asserts="11" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.Test_Get1_1RevRels_WhenHasIgnore_ShouldReturnNoItems" executed="True" success="True" time="0.000" asserts="9" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.Test_Get1_1RevRels_WhenHasMultipleReverse_NoAttributes_ShouldReturnBothPotentialReverseRels" executed="True" success="True" time="0.000" asserts="8" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.Test_Get1_1RevRels_WhenHasOneSingleRev_ShouldReturnOneItem" executed="True" success="True" time="0.001" asserts="9" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.Test_Get1_1RevRels_WhenIsMultiple_ShouldReturnNone" executed="True" success="True" time="0.000" asserts="7" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.Test_Get1_1RevRels_WhenNotHas_ShouldNotHaveItems" executed="True" success="True" time="0.001" asserts="2" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.Test_Get1_1RevRels_WhenRelHasManyToOneAttribute_ShouldNotHaveItems" executed="True" success="True" time="0.000" asserts="2" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.Test_Get1_1RevRels_WhenReverseAutoMapOneToOne_ShouldReturnOneItem" executed="True" success="True" time="0.000" asserts="10" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.Test_Get1_1RevRels_WhenReverseHasIgnore_ShouldReturnNoItems" executed="True" success="True" time="0.001" asserts="7" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.Test_Get1_1RevRels_WhenReverseRelHasManyToOne_ShouldNotHaveItems" executed="True" success="True" time="0.001" asserts="4" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.Test_GetAttribute_WhenHasAttribute_ShouldReturnAttribute" executed="True" success="True" time="0.000" asserts="1" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.Test_GetAttribute_WhenNotHasAttribute_ShouldReturnNull" executed="True" success="True" time="0.000" asserts="1" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.Test_GetAttributes_WhenHas_ShouldReturnOne" executed="True" success="True" time="0.033" asserts="2" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.Test_GetAttributes_WhenNotHas_ShouldReturnNone" executed="True" success="True" time="0.002" asserts="2" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.Test_GetHashCode_ShouldReturnCalculatedCode" executed="True" success="True" time="0.000" asserts="1" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.Test_GetM1RevRels_WhenHasTwo_ShouldReturnBoth" executed="True" success="True" time="0.000" asserts="9" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.Test_GetM1RevRels_WhenHasTwo_ThisRelIgnored_ShouldReturnNone" executed="True" success="True" time="0.001" asserts="8" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.Test_GetM1RevRels_WhenHasTwoButRelHasOneToManyMapping_ShouldReturnMappedRel" executed="True" success="True" time="0.001" asserts="9" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.Test_GetM1RevRels_WhenMappedToNonExistentReverse_ShouldReturnNoItems" executed="True" success="True" time="0.001" asserts="5" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.Test_GetM1RevRels_WhenNotHas_ShouldNotHaveItems" executed="True" success="True" time="0.000" asserts="3" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.Test_GetM1RevRels_WhenOneRevIgnored_ShouldReturnOne" executed="True" success="True" time="0.001" asserts="9" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.Test_GetM1RevRels_WhenRelIsSingle_ShouldReturnNone" executed="True" success="True" time="0.000" asserts="8" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.Test_GetMappedReverseRelationshipName_WhenAutoMapPropNoReverseRel_ShouldReturnNull" executed="True" success="True" time="0.002" asserts="5" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.Test_GetMappedReverseRelationshipName_WhenAutoMapPropWithReverseRel_ShouldReturnReverseRel" executed="True" success="True" time="0.001" asserts="5" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.Test_GetMappedReverseRelationshipName_WhenNoAttribute_ShouldReturnNull" executed="True" success="True" time="0.000" asserts="3" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.Test_GetSingleRels_WhenRevRelHasOneToOneAtt_ShouldReturnNoItems" executed="True" success="True" time="0.000" asserts="5" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.Test_GetSingleRevRelationshipName_ShouldReturnRelDefWithRevRelNameSet" executed="True" success="True" time="0.004" asserts="4" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.Test_GetSingleRevRelationshipName_WhenHasRevRel_ShouldBeFoundRevRelName" executed="True" success="True" time="0.001" asserts="3" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.Test_GetSingleRevRelationshipName_WhenNoRevRel_WhenHasAttribute_WhenHasRevRelName__ShouldBeRevRelName" executed="True" success="True" time="0.000" asserts="2" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.Test_GetSingleRevRelationshipName_WhenNoRevRel_WhenHasAttribute_WhenNoRevRelName__ShouldBeOwnerClassName" executed="True" success="True" time="0.001" asserts="2" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.Test_GetSingleRevRels_WhenRevRelHasAutomapRel_ShouldReturnItemWithMappingRel" executed="True" success="True" time="0.000" asserts="12" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.Test_HasCompulsoryAttribute_WhenHas_ShouldReturnTrue" executed="True" success="True" time="0.033" asserts="2" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.Test_HasCompulsoryAttribute_WhenNotHas_ShouldReturnFalse" executed="True" success="True" time="0.001" asserts="2" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.Test_HasDefaultAttribute_WhenHasOne_ShouldReturnTrue" executed="True" success="True" time="0.000" asserts="1" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.Test_HasDefaultAttribute_WhenNotHasOne_ShouldReturnFalse" executed="True" success="True" time="0.000" asserts="1" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.Test_HasIgnoreAttribute_WhenHas_ShouldReturnTrue" executed="True" success="True" time="0.001" asserts="2" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.Test_HasIgnoreAttribute_WhenNotHas_ShouldReturnFalse" executed="True" success="True" time="0.001" asserts="2" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.Test_HasManyToOneAttribute_WhenHas_ShouldReturnTrue" executed="True" success="True" time="0.034" asserts="2" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.Test_HasManyToOneAttribute_WhenNotHas_ShouldReturnFalse" executed="True" success="True" time="0.001" asserts="2" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.Test_HasMoreThanOneSingleRev__WhenHasOneItem_ShouldReturnFalse" executed="True" success="True" time="0.001" asserts="2" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.Test_HasMoreThanOneSingleRev_WhenHasNone_ShouldReturnFalse" executed="True" success="True" time="0.000" asserts="3" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.Test_HasMoreThanOneSingleReverseRel_WhenHas2_ShouldRetTrue" executed="True" success="True" time="0.001" asserts="2" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.Test_HasOneToOneAttribute_WhenHas_ShouldReturnTrue" executed="True" success="True" time="0.034" asserts="2" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.Test_HasOneToOneAttribute_WhenNotHas_ShouldReturnFalse" executed="True" success="True" time="0.001" asserts="2" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.Test_HasSingleReverseRelationship_WhenGetSingleReverseRelPropInfoIsNull_ShouldBeFalse" executed="True" success="True" time="0.001" asserts="2" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.Test_HasSingleReverseRelationship_WhenHasAndOwnerMultiple_ShouldBeTrue" executed="True" success="True" time="0.001" asserts="7" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.Test_HasSingleReverseRelationship_WhenHasAndOwnerSingle_ShouldBeTrue" executed="True" success="True" time="0.001" asserts="5" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.Test_HasSingleReverseRelationship_WhenNotHas_ShouldBeFalse" executed="True" success="True" time="0.000" asserts="9" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.Test_HasSingleReverseRelationship_WhenRevHasM_1Attr_ShouldBeFalse" executed="True" success="True" time="0.000" asserts="2" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.Test_IsInherited_WhenOverriden_ShouldReturnTrue" executed="True" success="True" time="0.000" asserts="2" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.Test_IsInheritedProp_WhenInheritedProp_ShouldReturnTrue" executed="True" success="True" time="0.000" asserts="2" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.Test_IsInheritedProp_WhenNotInheritedProp_ShouldReturnFalse" executed="True" success="True" time="0.000" asserts="2" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.Test_IsInheritedProp_WhenPropFromInterface_ShouldReturnFalse" executed="True" success="True" time="0.000" asserts="2" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.Test_IsMultipleRel_WhenIsBOShouldReturnFalse" executed="True" success="True" time="0.001" asserts="1" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.Test_IsMultipleRel_WhenIsGenericShouldReturnTrue" executed="True" success="True" time="0.001" asserts="2" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.Test_IsMultipleRel_WhenIsStringShouldReturnFalse" executed="True" success="True" time="0.001" asserts="1" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.Test_IsOverridden_WhenDeclaredOnClass_ShouldReturnFalse" executed="True" success="True" time="0.001" asserts="3" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.Test_IsOverridden_WhenImplementedProp_ShouldReturnFalse" executed="True" success="True" time="0.000" asserts="3" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.Test_IsOverridden_WhenInheritedPropNotOverriden_ShouldReturnFalse" executed="True" success="True" time="0.000" asserts="3" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.Test_IsOverridden_WhenOverriden_ShouldReturnTrue" executed="True" success="True" time="0.000" asserts="2" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.Test_IsPublic_WhenInternalGet_ShouldReturnFalse" executed="True" success="True" time="0.000" asserts="2" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.Test_IsPublic_WhenPrivateGet_ShouldReturnFalse" executed="True" success="True" time="0.000" asserts="2" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.Test_IsPublic_WhenProtectedGet_ShouldReturnFalse" executed="True" success="True" time="0.000" asserts="2" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.Test_IsPublic_WhenPublicGet_ShouldReturnTrue" executed="True" success="True" time="0.001" asserts="3" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.Test_IsRel_WhenIsBOShouldReturnTrue" executed="True" success="True" time="0.000" asserts="1" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.Test_IsRel_WhenIsGenericShouldReturnTrue" executed="True" success="True" time="0.000" asserts="2" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.Test_IsRel_WhenIsStringShouldReturnFalse" executed="True" success="True" time="0.000" asserts="1" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.Test_IsSingleRel_WhenIsBOShouldReturnTrue" executed="True" success="True" time="0.000" asserts="1" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.Test_IsSingleRel_WhenIsGenericShouldReturnFalse" executed="True" success="True" time="0.000" asserts="2" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.Test_IsSingleRel_WhenIsStringShouldReturnFalse" executed="True" success="True" time="0.001" asserts="1" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.Test_IsStatic_WhenIs_ShouldReturnTrue" executed="True" success="True" time="0.000" asserts="2" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.Test_IsStatic_WhenNot_ShouldReturnFalse" executed="True" success="True" time="0.001" asserts="2" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.Test_Name_ShouldReturnInfoName" executed="True" success="True" time="0.000" asserts="2" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.Test_NotEquals_WhenNullPropertyWrapper_ShouldRetFalse" executed="True" success="True" time="0.001" asserts="1" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.Test_NotEquals_WhenWrapDiffProp_ShouldReturnTrue" executed="True" success="True" time="0.000" asserts="2" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.Test_NotEqualsOnOtherProp_WhenWrapDiffProp_ShouldReturnTrue" executed="True" success="True" time="0.001" asserts="2" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.Test_NotEqualsOnProp_WhenWrapDiffProp_ShouldReturnTrue" executed="True" success="True" time="0.000" asserts="2" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.Test_PropertyInfo_ShouldReturnPropInfo" executed="True" success="True" time="0.000" asserts="1" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.Test_PropType_ShouldReturnPropInfoType" executed="True" success="True" time="0.000" asserts="2" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.Test_ReflectedType_ShouldReturnUnderlyingTypesReflectedType" executed="True" success="True" time="0.002" asserts="2" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.Test_RelatedClassName_ShouldReturnUndelyingTypeName" executed="True" success="True" time="0.002" asserts="2" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.Test_RelatedClassType_WhenIsGenericShouldReturnUnderlyingPropType" executed="True" success="True" time="0.000" asserts="2" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.Test_RelatedClassType_WhenNotGenericShouldReturnPropType" executed="True" success="True" time="0.000" asserts="3" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.Test_UnderlyingPropertyType_WhenGuid_ShouldReturnGuid" executed="True" success="True" time="0.001" asserts="2" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.Test_UnderlyingPropertyType_WhenInt_ShouldReturnInt" executed="True" success="True" time="0.001" asserts="2" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.Test_UnderlyingPropertyType_WhenNullableGuid_ShouldReturnGuid" executed="True" success="True" time="0.001" asserts="2" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.TestIntegrate_HasCompulsoryAttribute_WhenHas_ShouldReturnTrue" executed="True" success="True" time="0.001" asserts="2" />
+                      <test-case name="Habanero.Smooth.Test.TestPropertyWrapper.TestIntegrate_HasCompulsoryAttribute_WhenNotHas_ShouldReturnFalse" executed="True" success="True" time="0.000" asserts="2" />
+                    </results>
+                  </test-suite>
+                  <test-suite name="TestReflectionUtils" success="True" time="0.016" asserts="0">
+                    <results>
+                      <test-case name="Habanero.Smooth.Test.TestReflectionUtils.Test_GetProperty_WithExpression_ShouldReturnProperty" executed="True" success="True" time="0.016" asserts="2" />
+                    </results>
+                  </test-suite>
+                  <test-suite name="TestTypeWrapper" success="True" time="0.041" asserts="0">
+                    <results>
+                      <test-case name="Habanero.Smooth.Test.TestTypeWrapper.Test_AssemblyName_ReturnsCorrectName" executed="True" success="True" time="0.000" asserts="1" />
+                      <test-case name="Habanero.Smooth.Test.TestTypeWrapper.Test_AssemblyQualifiedName_ShouldReturnFromType" executed="True" success="True" time="0.001" asserts="2" />
+                      <test-case name="Habanero.Smooth.Test.TestTypeWrapper.Test_BaseType_ShouldReturnFromType" executed="True" success="True" time="0.002" asserts="2" />
+                      <test-case name="Habanero.Smooth.Test.TestTypeWrapper.Test_BaseType_WhenNoBaseType_ShouldReturnFalse" executed="True" success="True" time="0.001" asserts="2" />
+                      <test-case name="Habanero.Smooth.Test.TestTypeWrapper.Test_BaseType_WhenNoBaseType_ShouldReturnNull" executed="True" success="True" time="0.000" asserts="2" />
+                      <test-case name="Habanero.Smooth.Test.TestTypeWrapper.Test_EqualEquals_WhenBothNullTypeWrapper_ShouldRetTrue" executed="True" success="True" time="0.000" asserts="1" />
+                      <test-case name="Habanero.Smooth.Test.TestTypeWrapper.Test_EqualEquals_WhenNullTypeWrapper_ShouldRetFalse" executed="True" success="True" time="0.000" asserts="1" />
+                      <test-case name="Habanero.Smooth.Test.TestTypeWrapper.Test_Equals_WhenSecondRefToSelf_ShouldReturnTrue" executed="True" success="True" time="0.000" asserts="2" />
+                      <test-case name="Habanero.Smooth.Test.TestTypeWrapper.Test_Equals_WhenSelf_ShouldReturnTrue" executed="True" success="True" time="0.000" asserts="1" />
+                      <test-case name="Habanero.Smooth.Test.TestTypeWrapper.Test_Equals_WhenSelfObject_ShouldReturnTrue" executed="True" success="True" time="0.001" asserts="1" />
+                      <test-case name="Habanero.Smooth.Test.TestTypeWrapper.Test_Equals_WhenStringNull_ShouldReturnFalse" executed="True" success="True" time="0.000" asserts="2" />
+                      <test-case name="Habanero.Smooth.Test.TestTypeWrapper.Test_GetGenericArguments_ShouldReturnFromType" executed="True" success="True" time="0.002" asserts="3" />
+                      <test-case name="Habanero.Smooth.Test.TestTypeWrapper.Test_GetHashCode_ShouldReturnCalculatedCode" executed="True" success="True" time="0.000" asserts="1" />
+                      <test-case name="Habanero.Smooth.Test.TestTypeWrapper.Test_GetNullableUndelyingType_WhenIs_ShouldRetGuid" executed="True" success="True" time="0.001" asserts="3" />
+                      <test-case name="Habanero.Smooth.Test.TestTypeWrapper.Test_GetNullableUndelyingType_WhenNot_ShouldRetGuid" executed="True" success="True" time="0.000" asserts="1" />
+                      <test-case name="Habanero.Smooth.Test.TestTypeWrapper.Test_GetPKPropName_WhenInheritance_ShouldBasePropName" executed="True" success="True" time="0.000" asserts="3" />
+                      <test-case name="Habanero.Smooth.Test.TestTypeWrapper.Test_GetPKPropName_WhenNonStdNaming_WhenNoAttribute_ShouldRetNonStdNamePropName" executed="True" success="True" time="0.001" asserts="1" />
+                      <test-case name="Habanero.Smooth.Test.TestTypeWrapper.Test_GetPKPropName_WhenStdNamingPropNonExist_WhenNoAttribute_ShouldRetStdNamePropName" executed="True" success="True" time="0.000" asserts="1" />
+                      <test-case name="Habanero.Smooth.Test.TestTypeWrapper.Test_GetPKPropName_WhenStdNamingPropNonExist_WhenUsePrimaryKeyAttribute_ShouldReturnAttributeProp" executed="True" success="True" time="0.001" asserts="1" />
+                      <test-case name="Habanero.Smooth.Test.TestTypeWrapper.Test_GetProperties_ShouldReturnFromType" executed="True" success="True" time="0.002" asserts="3" />
+                      <test-case name="Habanero.Smooth.Test.TestTypeWrapper.Test_GetProperty_ShouldReturnFromType" executed="True" success="True" time="0.001" asserts="2" />
+                      <test-case name="Habanero.Smooth.Test.TestTypeWrapper.Test_GetUnderlyingSystemType_ShouldReturnType" executed="True" success="True" time="0.001" asserts="1" />
+                      <test-case name="Habanero.Smooth.Test.TestTypeWrapper.Test_HasBaseType_WhemHas_ShouldRetTrue" executed="True" success="True" time="0.001" asserts="2" />
+                      <test-case name="Habanero.Smooth.Test.TestTypeWrapper.Test_HasIgnoreAttribute_WhenHas_ShouldRetTrue" executed="True" success="True" time="0.000" asserts="2" />
+                      <test-case name="Habanero.Smooth.Test.TestTypeWrapper.Test_HasIgnoreAttribute_WhenNotHas_ShouldRetFalse" executed="True" success="True" time="0.000" asserts="2" />
+                      <test-case name="Habanero.Smooth.Test.TestTypeWrapper.Test_HasProperty_WhenHas_ShouldReturnTrue" executed="True" success="True" time="0.001" asserts="3" />
+                      <test-case name="Habanero.Smooth.Test.TestTypeWrapper.Test_HasProperty_WhenNotHas_ShouldReturnFalse" executed="True" success="True" time="0.000" asserts="3" />
+                      <test-case name="Habanero.Smooth.Test.TestTypeWrapper.Test_IdentityNameConvention_ShouldBeDefaultIfNotSet" executed="True" success="True" time="0.000" asserts="1" />
+                      <test-case name="Habanero.Smooth.Test.TestTypeWrapper.Test_IsBaseTypeLayerSuperType_WhenDoesNotInherit_ShouldReturnFalse" executed="True" success="True" time="0.001" asserts="2" />
+                      <test-case name="Habanero.Smooth.Test.TestTypeWrapper.Test_IsBaseTypeLayerSuperType_WhenInheritFromAnotherBO_ShouldReturnFalse" executed="True" success="True" time="0.001" asserts="2" />
+                      <test-case name="Habanero.Smooth.Test.TestTypeWrapper.Test_IsBaseTypeLayerSuperType_WhenInheritsDirectlyFromBO_ShouldReturnTrue" executed="True" success="True" time="0.000" asserts="2" />
+                      <test-case name="Habanero.Smooth.Test.TestTypeWrapper.Test_IsBusinessObject_WhenTypeImplementsIBo_ShouldRetTrue" executed="True" success="True" time="0.001" asserts="2" />
+                      <test-case name="Habanero.Smooth.Test.TestTypeWrapper.Test_IsBusinessObject_WhenTypeNotImplementsIBo_ShouldRetFalse" executed="True" success="True" time="0.000" asserts="2" />
+                      <test-case name="Habanero.Smooth.Test.TestTypeWrapper.Test_IsGenericType_ShouldReturnFromType" executed="True" success="True" time="0.001" asserts="2" />
+                      <test-case name="Habanero.Smooth.Test.TestTypeWrapper.Test_IsNullableType_WhenIs_ShouldRetTrue" executed="True" success="True" time="0.000" asserts="3" />
+                      <test-case name="Habanero.Smooth.Test.TestTypeWrapper.Test_IsNullableType_WhenNot_ShouldRetFalse" executed="True" success="True" time="0.000" asserts="1" />
+                      <test-case name="Habanero.Smooth.Test.TestTypeWrapper.Test_IsOfType_WhenInnerTypeIsOfType_ShouldReturnTrue" executed="True" success="True" time="0.000" asserts="2" />
+                      <test-case name="Habanero.Smooth.Test.TestTypeWrapper.Test_IsOfType_WhenInnerTypeNotIsOfType_ShouldReturnFalse" executed="True" success="True" time="0.000" asserts="2" />
+                      <test-case name="Habanero.Smooth.Test.TestTypeWrapper.Test_IsOfTypeGeneric_WhenInnerTypeIsOfType_ShouldReturnTrue" executed="True" success="True" time="0.000" asserts="2" />
+                      <test-case name="Habanero.Smooth.Test.TestTypeWrapper.Test_IsRealType_WhenAbstract_ShouldReturnFalse" executed="True" success="True" time="0.000" asserts="4" />
+                      <test-case name="Habanero.Smooth.Test.TestTypeWrapper.Test_IsRealType_WhenGeneric_ShouldReturnFalse" executed="True" success="True" time="0.001" asserts="4" />
+                      <test-case name="Habanero.Smooth.Test.TestTypeWrapper.Test_IsRealType_WhenIsInterface_ShouldReturnFalse" executed="True" success="True" time="0.000" asserts="3" />
+                      <test-case name="Habanero.Smooth.Test.TestTypeWrapper.Test_MakeGenericBusinessObjectCollection_ShouldReturnBOColForInnerType" executed="True" success="True" time="0.000" asserts="1" />
+                      <test-case name="Habanero.Smooth.Test.TestTypeWrapper.Test_Name_ShouldReturnTypeName" executed="True" success="True" time="0.001" asserts="2" />
+                      <test-case name="Habanero.Smooth.Test.TestTypeWrapper.Test_NameSpace_ShouldReturnTypeNameSpace" executed="True" success="True" time="0.002" asserts="2" />
+                      <test-case name="Habanero.Smooth.Test.TestTypeWrapper.Test_NotEquals_WhenNullTypeWrapper_ShouldRetFalse" executed="True" success="True" time="0.000" asserts="1" />
+                      <test-case name="Habanero.Smooth.Test.TestTypeWrapper.Test_SetIdentityNameConvention_ShouldSetCustomConvention" executed="True" success="True" time="0.001" asserts="1" />
+                      <test-case name="Habanero.Smooth.Test.TestTypeWrapper.Test_ToStringShouldReturnTypeToString" executed="True" success="True" time="0.001" asserts="2" />
+                    </results>
+                  </test-suite>
+                </results>
+              </test-suite>
+            </results>
+          </test-suite>
+        </results>
+      </test-suite>
+    </results>
+  </test-suite>
+</test-results>
