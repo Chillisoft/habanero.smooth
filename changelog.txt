@@ -1,0 +1,13 @@
+Habanero Smooth Change log
+
+For use of Smooth please see the sample projects included in the source code zip.
+
+v1.2 - 9 September 2010
+
+Built against Habanero Core 2.5.0
+#732: Add ability to define RelationshipType for a Relationship - You can define the Relationship Type as part of the AutoMapRelationshipAttribute (i.e. define Composition, Aggregation, Association)
+
+v1.1 - 10 May 2010
+
+First public release
+Built against Habanero Core 2.4.0
