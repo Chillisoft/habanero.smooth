@@ -1,35 +1,18 @@
 require 'rake'
 require 'albacore'
     
-task :default => [:build_habanero,:build_FakeBOsInSeperateAssembly,:build_smooth,:clean_up]#this is the starting point for the script
+task :default => [:rake_habanero,:build_smooth,:clean_up]
 
-task :build_habanero => [:clean_habanero,:checkout_habanero,:msbuild_habanero] # a list of tasks spawned off the default task
+task :build_FakeBOsInSeperateAssembly => [:clean_FakeBOsInSeperateAssembly,:checkout_FakeBOsInSeperateAssembly,:msbuild_FakeBOsInSeperateAssembly,:copy_dll_to_smooth_lib] 
 
-task :build_FakeBOsInSeperateAssembly => [:clean_FakeBOsInSeperateAssembly,:checkout_FakeBOsInSeperateAssembly,:msbuild_FakeBOsInSeperateAssembly] # a list of tasks spawned off the default task
-
-task :build_smooth => [:clean_smooth,:copy_dlls_to_smooth_lib,:msbuild_smooth,:run_nunit,:commit_lib]
+task :build_smooth => [:clean_smooth,:copy_habanero_dlls_to_smooth_lib,:build_FakeBOsInSeperateAssembly,:msbuild_smooth,:run_nunit,:commit_lib]
 
 $Nunit_path = "C:/Program Files (x86)/NUnit 2.5.6/bin/net-2.0/nunit-console-x86.exe"
 $Nunit_options = '/xml=nunit-result.xml'
 
-#build_habanero tasks
-task :clean_habanero do #deletes bin folder
-	FileUtils.rm_rf 'temp/Habanero/trunk/bin'
+exec :rake_habanero do |cmd|
+   cmd.path_to_command = "rake-habanero.cmd"
 end
-
-exec :checkout_habanero do |cmd| #command to check out habanero source using SVN
-	cmd.path_to_command = "../../../Utilities/BuildServer/Subversion/bin/svn.exe" # for some reason this doesn't pick up environment variables so I can't just use 'svn'
-	cmd.parameters %q(checkout "http://delicious:8080/svn/habanero/Habanero/trunk" temp/Habanero/trunk/ --username chilli --password chilli) 
-end
-
-msbuild :msbuild_habanero do |msb| #builds habanero with msbuild
-  msb.targets :Rebuild
-  msb.properties :configuration => :Debug
-  msb.solution = "temp/Habanero/trunk/source/Habanero.sln"
-  msb.path_to_command = "C:/Windows/Microsoft.NET/Framework/v4.0.30319/MSBuild.exe"
-  msb.verbosity = "quiet"
-  
-  end
 
 #build_FakeBOsInSeperateAssembly tasks
 task :clean_FakeBOsInSeperateAssembly do #deletes bin folder
@@ -49,15 +32,25 @@ msbuild :msbuild_FakeBOsInSeperateAssembly do |msb| #builds FakeBOsInSeperateAss
   msb.verbosity = "quiet"
 end
 
+task :copy_dll_to_smooth_lib do
+	FileUtils.cp Dir.glob('temp/FakeBOsInSeperateAssembly/bin/FakeBosInSeperateAssembly.dll'), 'lib'
+end
+
 #build_smooth tasks
 task :clean_smooth do #deletes bin folder
 	FileUtils.rm_rf 'bin'
 end
 
-task :copy_dlls_to_smooth_lib  do #copies habanero DLLs to smooth lib
-	FileUtils.cp Dir.glob('temp/Habanero/trunk/bin/Habanero*.dll'), 'lib'
-	FileUtils.cp Dir.glob('temp/FakeBOsInSeperateAssembly/bin/FakeBosInSeperateAssembly.dll'), 'lib'
+task :copy_habanero_dlls_to_smooth_lib  do #copies habanero DLLs to smooth lib
+	FileUtils.cp Dir.glob('temp/Habanero/bin/Habanero.Base.dll'), 'lib'
+	FileUtils.cp Dir.glob('temp/Habanero/bin/Habanero.Base.pdb'), 'lib'
+	FileUtils.cp Dir.glob('temp/Habanero/bin/Habanero.Base.xml'), 'lib'
+	FileUtils.cp Dir.glob('temp/Habanero/bin/Habanero.BO.dll'), 'lib'
+	FileUtils.cp Dir.glob('temp/Habanero/bin/Habanero.BO.pdb'), 'lib'
+	FileUtils.cp Dir.glob('temp/Habanero/bin/Habanero.BO.xml'), 'lib'
+	
 end
+
 
 msbuild :msbuild_smooth do |msb| #builds smooth with msbuild
   msb.targets :Rebuild
