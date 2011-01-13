@@ -1,11 +1,11 @@
 require 'rake'
 require 'albacore'
     
-task :default => [:clean_up,:rake_habanero,:build_smooth,:clean_up]
+task :default => [:clean_temp, :rake_habanero, :build, :clean_temp]
 
 task :build_FakeBOsInSeperateAssembly => [:clean_FakeBOsInSeperateAssembly,:checkout_FakeBOsInSeperateAssembly,:msbuild_FakeBOsInSeperateAssembly,:copy_dll_to_smooth_lib] 
 
-task :build_smooth => [:clean_smooth,:copy_habanero_dlls_to_smooth_lib,:build_FakeBOsInSeperateAssembly,:msbuild_smooth,:run_nunit,:commit_lib]
+task :build => [:clean, :updatelib, :build_FakeBOsInSeperateAssembly, :msbuild, :test, :commitlib]
 
 $Nunit_path = "C:/Program Files (x86)/NUnit 2.5.6/bin/net-2.0/nunit-console-x86.exe"
 $Nunit_options = '/xml=nunit-result.xml'
@@ -14,6 +14,11 @@ $MSBuild_path = "C:/Windows/Microsoft.NET/Framework/v4.0.30319/MSBuild.exe"
 
 $habanero_version = "trunk"
 
+#--------------------------------general tasks-------------------------------------------
+
+task :clean_temp do
+	FileUtils.rm_rf 'temp'
+end
 
 #--------------------------------build habanero-------------------------------------------
 
@@ -49,16 +54,16 @@ end
 
 #-------------------------------build smooth itself ----------------------------------
 
-exec :update_lib do |cmd|
+task :clean do 
+	FileUtils.rm_rf 'bin'
+end
+
+exec :update_lib_from_svn do |cmd|
 	cmd.path_to_command = "svn.exe" 
 	cmd.parameters %q(update lib --username chilli --password chilli --quiet --no-auth-cache) 
 end
 
-task :clean_smooth => :update_lib do 
-	FileUtils.rm_rf 'bin'
-end
-
-task :copy_habanero_dlls_to_smooth_lib  do 
+task :updatelib => :update_lib_from_svn do 
 	FileUtils.cp Dir.glob('temp/Habanero/bin/Habanero.Base.dll'), 'lib'
 	FileUtils.cp Dir.glob('temp/Habanero/bin/Habanero.Base.pdb'), 'lib'
 	FileUtils.cp Dir.glob('temp/Habanero/bin/Habanero.Base.xml'), 'lib'
@@ -67,25 +72,22 @@ task :copy_habanero_dlls_to_smooth_lib  do
 	FileUtils.cp Dir.glob('temp/Habanero/bin/Habanero.BO.xml'), 'lib'
 end
 
-msbuild :msbuild_smooth do |msb| 
+msbuild :msbuild do |msb| 
   msb.targets :Rebuild
   msb.properties :configuration => :Release
   msb.solution = "source/SmoothHabanero_2010.sln"
   msb.verbosity = "quiet"
   msb.path_to_command = $MSBuild_path
-  end
+end
 
-nunit :run_nunit do |nunit|
+nunit :test do |nunit|
 	nunit.path_to_command = $Nunit_path
 	nunit.assemblies 'bin\Habanero.Smooth.Test.dll','bin\Habanero.Naked.Tests.dll', 'bin\Habanero.Fluent.Tests.dll' ,'bin\TestProject.Test.BO.dll','bin\TestProjectNoDBSpecificProps.Test.BO.dll' 
 	nunit.options $Nunit_options
 end
 
-task :clean_up do
-FileUtils.rm_rf 'temp'
-end
 
-exec :commit_lib do |cmd|
+exec :commitlib do |cmd|
 	cmd.path_to_command = "svn.exe" 
-	cmd.parameters %q(ci -m autocheckin --username chilli --password chilli --quiet --no-auth-cache) 
+	cmd.parameters %q(ci lib -m autocheckin --username chilli --password chilli --quiet --no-auth-cache) 
 end
