@@ -71,8 +71,9 @@ namespace Habanero.Fluent.Tests
 
             //---------------Execute Test ----------------------
             new NewClassDefBuilder<Car>()
-            .WithPrimaryKey(c => c.VehicleID)
-            .Build();
+                .WithPrimaryKey(c => c.VehicleID)
+                   
+                .Build();
 
             //---------------Test Result -----------------------
             Assert.Fail("Test Not Yet Implemented");

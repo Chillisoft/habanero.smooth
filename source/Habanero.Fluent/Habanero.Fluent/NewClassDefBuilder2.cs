@@ -12,13 +12,13 @@ namespace Habanero.Fluent
     public class NewClassDefBuilder2<T> where T : BusinessObject
     {
         private NewClassDefBuilder<T> _classDefBuilder;
-
+        private NewPropertiesDefBuilder<T> _propertiesDefBuilder;
         public NewClassDefBuilder2(NewClassDefBuilder<T> classDefBuilder)
         {
             _classDefBuilder = classDefBuilder;
-                        PropDefBuilders = new List<NewPropDefBuilder<T>>();
 //             _builders
             _propDefCol = new PropDefCol();
+            _propertiesDefBuilder = new NewPropertiesDefBuilder<T>(this);
             _relationshipDefCol = new RelationshipDefCol();
             _primaryKeyPropNames = new List<string>();
             _primaryKeyDef = new PrimaryKeyDef();
@@ -26,7 +26,7 @@ namespace Habanero.Fluent
 
 
 
-        private PropDefCol _propDefCol;
+        private IPropDefCol _propDefCol;
 
         private IList<ISingleRelDefBuilder> _singleRelationshipDefBuilders = new List<ISingleRelDefBuilder>();
         private IList<IMulipleRelDefBuilder> _multipleRelationshipDefBuilders = new List<IMulipleRelDefBuilder>();
@@ -40,13 +40,12 @@ namespace Habanero.Fluent
         private KeyDefCol _keyDefCol = new KeyDefCol();
         private SuperClassDefBuilder<T> _superClassDefBuilder;
 
-        private IList<NewPropDefBuilder<T>> PropDefBuilders { get; set; }
 
 
         public IClassDef Build()
         {
             Type type = typeof(T);
-            SetupPropDefCol();
+            //SetupPropDefCol();
             SetupRelationshipDefCol();
             SetupPrimaryKey();
             SetupKeysCol();
@@ -85,14 +84,7 @@ namespace Habanero.Fluent
             }
         }
 
-        private void SetupPropDefCol()
-        {
-            foreach(var propDefBuilder in PropDefBuilders)
-            {
-                var propDef = propDefBuilder.Build();
-                _propDefCol.Add(propDef);
-            }
-        }
+
 
         private void SetupRelationshipDefCol()
         {
@@ -108,27 +100,7 @@ namespace Habanero.Fluent
             }
         }
 
-        public NewPropDefBuilder<T> WithProperty(string propertyName)
-        {
-            var propDefBuilder = GetPropDefBuilder(propertyName);
-            PropDefBuilders.Add(propDefBuilder);
-            return propDefBuilder;
-        }
-        public NewPropDefBuilder<T> WithProperty<TReturnType>(string propertyName)
-        {
-            var propDefBuilder = GetPropDefBuilder(propertyName);
-            propDefBuilder.WithType<TReturnType>();
-            PropDefBuilders.Add(propDefBuilder);
-            return propDefBuilder;
-        }
 
-        public NewPropDefBuilder<T> WithProperty<TReturnType>(Expression<Func<T, TReturnType>> propExpression)
-        {
-            var propDefBuilder = new NewPropDefBuilder<T>(this);
-            propDefBuilder.WithProperty(propExpression);
-            PropDefBuilders.Add(propDefBuilder);
-            return propDefBuilder;
-        }
 
         private static string GetPropertyName<TReturn>(Expression<Func<T, TReturn>> propExpression)
         {
@@ -149,11 +121,10 @@ namespace Habanero.Fluent
         {
             return this.GetValidPropValue(this.BusinessObject, propExpression);
         }*/
-        private NewPropDefBuilder<T> GetPropDefBuilder(string propertyName)
+
+        public NewPropertiesDefBuilder<T> WithProperties()
         {
-            var propDefBuilder = new NewPropDefBuilder<T>(this);
-            propDefBuilder.WithPropertyName(propertyName);
-            return propDefBuilder;
+            return _propertiesDefBuilder;
         }
 
         public NewSingleRelationshipDefBuilder<T, TRelatedType> WithSingleRelationship<TRelatedType>(string relationshipName) where TRelatedType : BusinessObject
@@ -209,7 +180,10 @@ namespace Habanero.Fluent
         }
 
 
-
+        public void SetupPropDefCol(IPropDefCol propDefCol)
+        {
+            _propDefCol = propDefCol;
+        }
     }
 }
 

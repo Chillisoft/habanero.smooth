@@ -42,7 +42,7 @@ namespace Habanero.Fluent
             return _classDefBuilder;
         }
 
-        public IKeyDef Build(PropDefCol propDefCol)
+        public IKeyDef Build(IPropDefCol propDefCol)
         {
             var keyDef = new KeyDef(_keyName);
             foreach (var propName in _propNames)

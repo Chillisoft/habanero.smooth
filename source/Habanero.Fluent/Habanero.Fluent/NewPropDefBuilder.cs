@@ -10,7 +10,7 @@ namespace Habanero.Fluent
 {
     public class NewPropDefBuilder<T> where T : BusinessObject
     {
-        private readonly NewClassDefBuilder2<T> _classDefBuilder;
+        private readonly NewPropertiesDefBuilder<T> _propertiesDefBuilder;
         private  bool _isCompulsory;
         private  bool _isAutoIncrementing;
         private string _description;
@@ -29,9 +29,9 @@ namespace Habanero.Fluent
             SetupBuilderDefaults();
         }
 
-        public NewPropDefBuilder(NewClassDefBuilder2<T> classDefBuilder)
+        public NewPropDefBuilder(NewPropertiesDefBuilder<T> propertiesDefBuilder)
         {
-            _classDefBuilder = classDefBuilder;
+            _propertiesDefBuilder = propertiesDefBuilder;
             SetupBuilderDefaults();
         }
 
@@ -42,9 +42,9 @@ namespace Habanero.Fluent
             _isCompulsory = false;
         }
 
-        public NewClassDefBuilder2<T> Return()
+        public NewPropertiesDefBuilder<T> Return()
         {
-            return _classDefBuilder;
+            return _propertiesDefBuilder;
         }
 
         public NewPropDefBuilder<T> WithPropertyName(string propertyName)
@@ -161,6 +161,7 @@ namespace Habanero.Fluent
             return ReflectionUtilities.GetPropertyInfo(expression);
         }
 
+        ////TODO andrew 13 Jan 2011: Need to check if this is needed
         public NewPropDefBuilder<T> WithProperty<TReturnType>(Expression<Func<T, TReturnType>> propExpression)
         {
             PropertyInfo propertyInfo = GetPropertyInfo(propExpression);
@@ -170,5 +171,7 @@ namespace Habanero.Fluent
             WithTypeName(propertyType.Name);
             return this;
         }
+
+
     }
 }
