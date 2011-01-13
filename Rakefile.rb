@@ -1,7 +1,7 @@
 require 'rake'
 require 'albacore'
     
-task :default => [:rake_habanero,:build_smooth,:clean_up]
+task :default => [:clean_up,:rake_habanero,:build_smooth,:clean_up]
 
 task :build_FakeBOsInSeperateAssembly => [:clean_FakeBOsInSeperateAssembly,:checkout_FakeBOsInSeperateAssembly,:msbuild_FakeBOsInSeperateAssembly,:copy_dll_to_smooth_lib] 
 
@@ -31,7 +31,7 @@ end
 
 exec :checkout_FakeBOsInSeperateAssembly do |cmd| 
 	cmd.path_to_command = "svn.exe" 
-	cmd.parameters %q(checkout "http://delicious:8080/svn/habanero/HabaneroCommunity/SmoothHabanero/trunk/source/FakeBosInSeperateAssembly" temp/FakeBOsInSeperateAssembly/ --username chilli --password chilli --quiet ) 
+	cmd.parameters %q(checkout "http://delicious:8080/svn/habanero/HabaneroCommunity/SmoothHabanero/trunk/source/FakeBosInSeperateAssembly" temp/FakeBOsInSeperateAssembly/ --username chilli --password chilli --quiet --no-auth-cache) 
 end
 
 msbuild :msbuild_FakeBOsInSeperateAssembly do |msb| #builds FakeBOsInSeperateAssembly with msbuild
@@ -49,7 +49,12 @@ end
 
 #-------------------------------build smooth itself ----------------------------------
 
-task :clean_smooth do 
+exec :update_lib do |cmd|
+	cmd.path_to_command = "svn.exe" 
+	cmd.parameters %q(update lib --username chilli --password chilli --quiet --no-auth-cache) 
+end
+
+task :clean_smooth => :update_lib do 
 	FileUtils.rm_rf 'bin'
 end
 
@@ -82,5 +87,5 @@ end
 
 exec :commit_lib do |cmd|
 	cmd.path_to_command = "svn.exe" 
-	cmd.parameters %q(ci -m autocheckin --quiet --username chilli --password chilli) 
+	cmd.parameters %q(ci -m autocheckin --username chilli --password chilli --quiet --no-auth-cache) 
 end
