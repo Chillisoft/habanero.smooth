@@ -7,6 +7,7 @@ namespace Habanero.Fluent.Tests
     public class TestNewClassDefBuilder
     {
         [Test]
+        [Ignore("not yet implemented")]
         public void Test_WithPrimaryKey()
         {
             //---------------Set up test pack-------------------
@@ -24,6 +25,7 @@ namespace Habanero.Fluent.Tests
 
 
         [Test]
+        [Ignore("not yet implemented")]
         public void Test_WithCompositePrimaryKey()
         {
             //---------------Set up test pack-------------------
@@ -43,6 +45,7 @@ namespace Habanero.Fluent.Tests
         }
 
         [Test]
+        [Ignore("not yet implemented")]
         public void Test_WithSuperClass()
         {
             //---------------Set up test pack-------------------
@@ -59,6 +62,7 @@ namespace Habanero.Fluent.Tests
         }
 
         [Test]
+        [Ignore("not yet implemented")]
         public void Test_WithX()
         {
             //---------------Set up test pack-------------------
