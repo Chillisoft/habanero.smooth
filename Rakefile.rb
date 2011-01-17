@@ -17,7 +17,10 @@ end
 msbuild_settings = {
   :properties => {:configuration => :release},
   :targets => [:clean, :rebuild],
-  :verbosity => :quiet
+  :verbosity => :quiet,
+  
+  #uncomment to use .net 3.5 - default is 4.0
+  #:use => :net35
 }
 
 Albacore.configure do |config|
@@ -29,6 +32,7 @@ Albacore.configure do |config|
 end
 
 #------------------------dependency settings---------------------
+$: << '/systems/HabaneroCommunity/BuildScripts/'
 require 'rake-habanero.rb'
 $habanero_version = 'trunk'
 
