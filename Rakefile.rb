@@ -4,35 +4,26 @@ require 'albacore'
 #______________________________________________________________________________
 #---------------------------------SETTINGS-------------------------------------
 
+# set up the build script folder so we can pull in shared rake scripts.
+# This should be the same for most projects, but if your project is a level
+# deeper in the repo you will need to add another ..
+bs = File.dirname(__FILE__)
+bs = File.join(bs, "..") if bs.index("branches") != nil
+bs = File.join(bs, "../../../HabaneroCommunity/BuildScripts")
+$:.unshift(File.expand_path(bs)) unless
+    $:.include?(bs) || $:.include?(File.expand_path(bs))
+
 #------------------------build settings--------------------------
-class Svn
-  include Albacore::Task
-  include Albacore::RunCommand
-  def execute
-	@command = "svn.exe"
-    run_command "svn", "--username chilli --password chilli --quiet --no-auth-cache"
-  end
-end
+require 'rake-settings.rb'
 
 msbuild_settings = {
   :properties => {:configuration => :release},
   :targets => [:clean, :rebuild],
   :verbosity => :quiet,
-  
-  #uncomment to use .net 3.5 - default is 4.0
-  #:use => :net35
+  #:use => :net35  ;uncomment to use .net 3.5 - default is 4.0
 }
 
-Albacore.configure do |config|
-  config.log_level = :quiet
-  config.nunit do |nunit|
-    nunit.command = "C:/Program Files (x86)/NUnit 2.5.6/bin/net-2.0/nunit-console-x86.exe"
-    nunit.options = ["/xml=nunit-result.xml"]
-  end
-end
-
 #------------------------dependency settings---------------------
-$: << '/systems/HabaneroCommunity/BuildScripts/'
 require 'rake-habanero.rb'
 $habanero_version = 'trunk'
 
