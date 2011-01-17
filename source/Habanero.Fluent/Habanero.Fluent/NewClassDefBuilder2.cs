@@ -13,12 +13,14 @@ namespace Habanero.Fluent
     {
         private NewClassDefBuilder<T> _classDefBuilder;
         private NewPropertiesDefBuilder<T> _propertiesDefBuilder;
+
         public NewClassDefBuilder2(NewClassDefBuilder<T> classDefBuilder)
         {
             _classDefBuilder = classDefBuilder;
 //             _builders
             _propDefCol = new PropDefCol();
-            _propertiesDefBuilder = new NewPropertiesDefBuilder<T>(this);
+            PropDefBuilders = new List<NewPropDefBuilder<T>>();
+            _propertiesDefBuilder = new NewPropertiesDefBuilder<T>(this, PropDefBuilders);
             _relationshipDefCol = new RelationshipDefCol();
             _primaryKeyPropNames = new List<string>();
             _primaryKeyDef = new PrimaryKeyDef();
@@ -39,13 +41,14 @@ namespace Habanero.Fluent
         private IList<NewKeyDefBuilder<T>> _keyDefBuilders = new List<NewKeyDefBuilder<T>>();
         private KeyDefCol _keyDefCol = new KeyDefCol();
         private SuperClassDefBuilder<T> _superClassDefBuilder;
+        private IList<NewPropDefBuilder<T>> PropDefBuilders { get; set; }
 
 
 
         public IClassDef Build()
         {
             Type type = typeof(T);
-            //SetupPropDefCol();
+            SetupPropDefCol();
             SetupRelationshipDefCol();
             SetupPrimaryKey();
             SetupKeysCol();
@@ -74,6 +77,24 @@ namespace Habanero.Fluent
             }
             foreach (var propName in _primaryKeyPropNames)
             {
+                if (!_propDefCol.Contains(propName))
+                {
+                    //set up this property
+                    var newPropDefBuilder = new NewPropDefBuilder<T>();
+                    var propertyInfo = ReflectionUtilities.GetPropertyInfo(typeof (T), propName);
+                    if (propertyInfo == null)
+                    {
+                        newPropDefBuilder.WithPropertyName(propName);
+                    }
+                    else
+                    {
+                        Type propertyType = ReflectionUtilities.GetUndelyingPropertType(propertyInfo);
+                        newPropDefBuilder.WithPropertyName(propertyInfo.Name);
+                        newPropDefBuilder.WithType(propertyType);
+                    }
+                    var pkPropDef = newPropDefBuilder.Build();
+                    _propDefCol.Add(pkPropDef);
+                }
                 var propDef = _propDefCol[propName];
                 _primaryKeyDef.Add(propDef);
                 if (_primaryKeyPropNames.Count == 1)
@@ -180,10 +201,17 @@ namespace Habanero.Fluent
         }
 
 
-        public void SetupPropDefCol(IPropDefCol propDefCol)
+        private IPropDefCol SetupPropDefCol()
         {
-            _propDefCol = propDefCol;
+            foreach (var propDefBuilder in PropDefBuilders)
+            {
+                var propDef = propDefBuilder.Build();
+                _propDefCol.Add(propDef);
+            }
+            return _propDefCol;
         }
+
+
     }
 }
 

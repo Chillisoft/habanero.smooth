@@ -17,6 +17,7 @@ namespace Habanero.Fluent
 
         public NewClassDefBuilder()
         {
+            _primaryKeyPropNames = new List<string>();
             _newClassDefBuilder2 = new NewClassDefBuilder2<T>(this);
         }
 
@@ -28,7 +29,7 @@ namespace Habanero.Fluent
 
         public NewPrimaryKeyDefBuilder<T> WithCompositePrimaryKey()
         {
-            return new NewPrimaryKeyDefBuilder<T>(new NewClassDefBuilder2<T>(this));
+            return new NewPrimaryKeyDefBuilder<T>(new NewClassDefBuilder2<T>(this), _primaryKeyPropNames);
         }
 
 

@@ -161,16 +161,16 @@ namespace Habanero.Fluent
             return ReflectionUtilities.GetPropertyInfo(expression);
         }
 
-        ////TODO andrew 13 Jan 2011: Need to check if this is needed
-        public NewPropDefBuilder<T> WithProperty<TReturnType>(Expression<Func<T, TReturnType>> propExpression)
-        {
-            PropertyInfo propertyInfo = GetPropertyInfo(propExpression);
-            PropertyName = propertyInfo.Name;
-            Type propertyType = ReflectionUtilities.GetUndelyingPropertType(propertyInfo);
-            WithAssemblyName(propertyType.Namespace);
-            WithTypeName(propertyType.Name);
-            return this;
-        }
+        // Moved to NewPropertiesDefBuilder
+        //public NewPropDefBuilder<T> WithProperty<TReturnType>(Expression<Func<T, TReturnType>> propExpression)
+        //{
+        //    PropertyInfo propertyInfo = GetPropertyInfo(propExpression);
+        //    PropertyName = propertyInfo.Name;
+        //    Type propertyType = ReflectionUtilities.GetUndelyingPropertType(propertyInfo);
+        //    WithAssemblyName(propertyType.Namespace);
+        //    WithTypeName(propertyType.Name);
+        //    return this;
+        //}
 
 
     }

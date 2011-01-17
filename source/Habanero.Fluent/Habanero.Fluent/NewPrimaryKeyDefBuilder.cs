@@ -11,11 +11,13 @@ namespace Habanero.Fluent
     public class NewPrimaryKeyDefBuilder<T> where T : BusinessObject
     {
         private NewClassDefBuilder2<T> _classDefBuilder;
-        private List<string> _primaryKeyPropNames;
+        private IList<string> _primaryKeyPropNames;
 
-        public NewPrimaryKeyDefBuilder(NewClassDefBuilder2<T> classDefBuilder)
+
+        public NewPrimaryKeyDefBuilder(NewClassDefBuilder2<T> classDefBuilder, IList<string> primaryKeyPropNames)
         {
             _classDefBuilder = classDefBuilder;
+            _primaryKeyPropNames = primaryKeyPropNames;
         }
 
         public NewPrimaryKeyDefBuilder<T> WithPrimaryKeyProperty<TReturn>(Expression<Func<T, TReturn>> propExpression)

@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using Habanero.Base;
+using NUnit.Framework;
 using TestProject.BO;
 
 namespace Habanero.Fluent.Tests
@@ -72,12 +73,21 @@ namespace Habanero.Fluent.Tests
             //---------------Execute Test ----------------------
             new NewClassDefBuilder<Car>()
                 .WithPrimaryKey(c => c.VehicleID)
-                   
+                .WithProperties()
+                    .Property(c => c.Make)
+                        .WithDatabaseFieldName("gogo")
+                        .WithDefaultValue("99")
+                        .WithReadWriteRule(PropReadWriteRule.ReadWrite)
+                    .Return()
+                    .Property(c => c.Model).Return()
+                .Return()
+
                 .Build();
 
             //---------------Test Result -----------------------
             Assert.Fail("Test Not Yet Implemented");
         }
+
 
 
     }

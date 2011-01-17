@@ -14,14 +14,12 @@ namespace Habanero.Fluent
     public class NewPropertiesDefBuilder<T> where T : BusinessObject
     {
         private NewClassDefBuilder2<T> _classDefBuilder;
-        private PropDefCol _propDefCol;
         private IList<NewPropDefBuilder<T>> PropDefBuilders { get; set; }
 
-        public NewPropertiesDefBuilder(NewClassDefBuilder2<T> classDefBuilder)
+        public NewPropertiesDefBuilder(NewClassDefBuilder2<T> classDefBuilder, IList<NewPropDefBuilder<T>> propDefBuilders)
         {
             _classDefBuilder = classDefBuilder;
-            PropDefBuilders = new List<NewPropDefBuilder<T>>();
-
+            PropDefBuilders = propDefBuilders;
         }
 
         public NewPropDefBuilder<T> Property(string propertyName)
@@ -41,20 +39,14 @@ namespace Habanero.Fluent
         public NewPropDefBuilder<T> Property<TReturnType>(Expression<Func<T, TReturnType>> propExpression)
         {
             var propDefBuilder = new NewPropDefBuilder<T>(this);
-            propDefBuilder.WithProperty(propExpression);
+            PropertyInfo propertyInfo = GetPropertyInfo(propExpression);
+            propDefBuilder.WithPropertyName(propertyInfo.Name);
+            Type propertyType = ReflectionUtilities.GetUndelyingPropertType(propertyInfo);
+            propDefBuilder.WithAssemblyName(propertyType.Namespace);
+            propDefBuilder.WithTypeName(propertyType.Name);
             PropDefBuilders.Add(propDefBuilder);
             return propDefBuilder;
         }
-
-        //public NewPropDefBuilder<T> WithProperty<TReturnType>(Expression<Func<T, TReturnType>> propExpression)
-        //{
-        //    PropertyInfo propertyInfo = GetPropertyInfo(propExpression);
-        //    PropertyName = propertyInfo.Name;
-        //    Type propertyType = ReflectionUtilities.GetUndelyingPropertType(propertyInfo);
-        //    WithAssemblyName(propertyType.Namespace);
-        //    WithTypeName(propertyType.Name);
-        //    return this;
-        //}
 
         private NewPropDefBuilder<T> GetPropDefBuilder(string propertyName)
         {
@@ -75,18 +67,9 @@ namespace Habanero.Fluent
 
         public NewClassDefBuilder2<T> Return()
         {
-            _classDefBuilder.SetupPropDefCol(SetupPropDefCol());
             return _classDefBuilder;
         }
 
-        private IPropDefCol SetupPropDefCol()
-        {
-            foreach (var propDefBuilder in PropDefBuilders)
-            {
-                var propDef = propDefBuilder.Build();
-                _propDefCol.Add(propDef);
-            }
-            return _propDefCol;
-        }
+
     }
 }
