@@ -13,9 +13,9 @@ end
 
 task :write_script do
 	File.open $rakehabanero, "w" do | f | 
-		f.write "cd temp/habanero \n"
-		f.write "rmdir /s /q .svn \n"
-		f.write "rake --rakefile habanero-library-rakefile.rb \n"
+		f.write "@cd temp/habanero \n"
+		f.write "@rmdir /s /q .svn \n"
+		f.write "@rake --rakefile habanero-library-rakefile.rb \n"
 	end
 end
 	   

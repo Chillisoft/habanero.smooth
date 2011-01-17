@@ -16,12 +16,12 @@ end
 
 msbuild_settings = {
   :properties => {:configuration => :release},
-  :targets => [:clean, :rebuild]
+  :targets => [:clean, :rebuild],
+  :verbosity => :quiet
 }
 
 Albacore.configure do |config|
-  config.log_level = :verbose
-  config.msbuild.verbosity = :quiet
+  config.log_level = :quiet
   config.nunit do |nunit|
     nunit.command = "C:/Program Files (x86)/NUnit 2.5.6/bin/net-2.0/nunit-console-x86.exe"
     nunit.options = ["/xml=nunit-result.xml"]
