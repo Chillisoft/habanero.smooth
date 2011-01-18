@@ -24,8 +24,8 @@ msbuild_settings = {
 }
 
 #------------------------dependency settings---------------------
-require 'rake-habanero.rb'
 $habanero_version = 'branches/v2.5'
+require 'rake-habanero.rb'
 
 #------------------------project settings------------------------
 $basepath = 'http://delicious:8080/svn/habanero/HabaneroCommunity/SmoothHabanero/branches/v1.5'
@@ -88,12 +88,12 @@ end
 
 task :updatelib => :update_lib_from_svn do 
 	puts cyan("Updating lib")
-	FileUtils.cp Dir.glob('temp/Habanero/bin/Habanero.Base.dll'), 'lib'
-	FileUtils.cp Dir.glob('temp/Habanero/bin/Habanero.Base.pdb'), 'lib'
-	FileUtils.cp Dir.glob('temp/Habanero/bin/Habanero.Base.xml'), 'lib'
-	FileUtils.cp Dir.glob('temp/Habanero/bin/Habanero.BO.dll'), 'lib'
-	FileUtils.cp Dir.glob('temp/Habanero/bin/Habanero.BO.pdb'), 'lib'
-	FileUtils.cp Dir.glob('temp/Habanero/bin/Habanero.BO.xml'), 'lib'
+	FileUtils.cp Dir.glob('temp/bin/Habanero.Base.dll'), 'lib'
+	FileUtils.cp Dir.glob('temp/bin/Habanero.Base.pdb'), 'lib'
+	FileUtils.cp Dir.glob('temp/bin/Habanero.Base.xml'), 'lib'
+	FileUtils.cp Dir.glob('temp/bin/Habanero.BO.dll'), 'lib'
+	FileUtils.cp Dir.glob('temp/bin/Habanero.BO.pdb'), 'lib'
+	FileUtils.cp Dir.glob('temp/bin/Habanero.BO.xml'), 'lib'
 end
 
 desc "Builds the solution with msbuild"
