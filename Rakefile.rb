@@ -1,55 +1,99 @@
 require 'rake'
 require 'albacore'
-    
-task :default => [:build_habanero,:build_smooth,:clean_up]#this is the starting point for the script
 
-task :build_habanero => [:clean_habanero,:checkout_habanero,:msbuild_habanero] # a list of tasks spawned off the default task
+#______________________________________________________________________________
+#---------------------------------SETTINGS-------------------------------------
 
-task :build_smooth => [:clean_smooth,:copy_dlls_to_smooth_lib,:msbuild_smooth,:run_nunit]
+# set up the build script folder so we can pull in shared rake scripts.
+# This should be the same for most projects, but if your project is a level
+# deeper in the repo you will need to add another ..
+bs = File.dirname(__FILE__)
+bs = File.join(bs, "..") if bs.index("branches") != nil
+bs = File.join(bs, "../../../HabaneroCommunity/BuildScripts")
+$:.unshift(File.expand_path(bs)) unless
+    $:.include?(bs) || $:.include?(File.expand_path(bs))
 
-$Nunit_path = "C:/Program Files (x86)/NUnit 2.5.6/bin/net-2.0/nunit-console-x86.exe"
-$Nunit_options = '/xml=nunit-result.xml'
+#------------------------build settings--------------------------
+require 'rake-settings.rb'
 
-#build_habanero tasks
-task :clean_habanero do #deletes bin folder
-	FileUtils.rm_rf 'temp/Habanero/branches/v2.6/bin'
+msbuild_settings = {
+  :properties => {:configuration => :release},
+  :targets => [:clean, :rebuild],
+  :verbosity => :quiet,
+  #:use => :net35  ;uncomment to use .net 3.5 - default is 4.0
+}
+
+#------------------------dependency settings---------------------
+require 'rake-habanero.rb'
+$habanero_version = 'branches/v2.5'
+
+#------------------------project settings------------------------
+$basepath = 'http://delicious:8080/svn/habanero/HabaneroCommunity/SmoothHabanero/branches/v1.5'
+$solution = 'source/SmoothHabanero_2010.sln'
+
+#______________________________________________________________________________
+#---------------------------------TASKS----------------------------------------
+
+task :default => [:build_all]
+task :build_all => [:clean_temp, :rake_habanero, :build, :clean_temp]
+task :build => [:clean, :updatelib, :build_FakeBOsInSeperateAssembly, :msbuild, :test, :commitlib]
+task :build_FakeBOsInSeperateAssembly => [:msbuild_FakeBOsInSeperateAssembly,:copy_dll_to_smooth_lib] 
+
+#------------------------general tasks---------------------------
+
+task :clean_temp do
+	FileUtils.rm_rf 'temp'
 end
 
-exec :checkout_habanero do |cmd| #command to check out habanero source using SVN
-	cmd.path_to_command = "../../../../Utilities/BuildServer/Subversion/bin/svn.exe" # for some reason this doesn't pick up environment variables so I can't just use 'svn'
-	cmd.parameters %q(checkout "http://delicious:8080/svn/habanero/Habanero/branches/v2.6" temp/Habanero/branches/v2.6/ --username chilli --password chilli) 
+#------------------------build FakeBOsInSeperateAssembly---------
+
+$fakeBOsFolder = "temp/FakeBOsInSeperateAssembly"
+
+task :clean_FakeBOsInSeperateAssembly do 
+	FileUtils.rm_rf "#{$fakeBOsFolder}/bin"
 end
 
-msbuild :msbuild_habanero do |msb| #builds habanero with msbuild
-  msb.targets :Rebuild
-  msb.properties :configuration => :Debug
-  msb.solution = "temp/Habanero/branches/v2.6/source/Habanero.sln"
-  msb.path_to_command = "C:/Windows/Microsoft.NET/Framework/v4.0.30319/MSBuild.exe"  
-  end
+svn :checkout_FakeBOsInSeperateAssembly => :clean_FakeBOsInSeperateAssembly do |s| 
+	s.parameters "co #{$basepath}/source/FakeBosInSeperateAssembly #{$fakeBOsFolder}"
+end
 
-#build_smooth tasks
-task :clean_smooth do #deletes bin folder
+msbuild :msbuild_FakeBOsInSeperateAssembly => :checkout_FakeBOsInSeperateAssembly do |msb| 
+	msb.update_attributes msbuild_settings
+    msb.solution = "#{$fakeBOsFolder}/FakeBOsInSeperateAssembly.sln"
+end
+
+task :copy_dll_to_smooth_lib do
+	FileUtils.cp Dir.glob("#{$fakeBOsFolder}/bin/FakeBosInSeperateAssembly.dll"), 'lib'
+end
+
+#------------------------build smooth itself --------------------
+
+task :clean do 
 	FileUtils.rm_rf 'bin'
 end
 
-task :copy_dlls_to_smooth_lib  do #copies habanero DLLs to smooth lib
-	FileUtils.cp Dir.glob('temp/Habanero/branches/v2.6/bin/Habanero*.dll'), 'lib'
+svn :update_lib_from_svn do |s|
+	s.parameters "update lib"
 end
 
-msbuild :msbuild_smooth do |msb| #builds smooth with msbuild
-  msb.targets :Rebuild
-  msb.properties :configuration => :Release
-  msb.solution = "source/SmoothHabanero_2010.sln"
-  msb.verbosity = "quiet"
-  msb.path_to_command = "C:/Windows/Microsoft.NET/Framework/v4.0.30319/MSBuild.exe"
-  end
-
-nunit :run_nunit do |nunit|
-	nunit.path_to_command = $Nunit_path
-	nunit.assemblies 'bin\Habanero.Smooth.Test.dll','bin\TestProject.Test.BO.dll','bin\TestProjectNoDBSpecificProps.Test.BO.dll' #this cannot be passed into the task as a global variable, unfortunately as it seems to be an array of sorts
-	nunit.options $Nunit_options
+task :updatelib => :update_lib_from_svn do 
+	FileUtils.cp Dir.glob('temp/Habanero/bin/Habanero.Base.dll'), 'lib'
+	FileUtils.cp Dir.glob('temp/Habanero/bin/Habanero.Base.pdb'), 'lib'
+	FileUtils.cp Dir.glob('temp/Habanero/bin/Habanero.Base.xml'), 'lib'
+	FileUtils.cp Dir.glob('temp/Habanero/bin/Habanero.BO.dll'), 'lib'
+	FileUtils.cp Dir.glob('temp/Habanero/bin/Habanero.BO.pdb'), 'lib'
+	FileUtils.cp Dir.glob('temp/Habanero/bin/Habanero.BO.xml'), 'lib'
 end
 
-task :clean_up do
-FileUtils.rm_rf 'temp'
+msbuild :msbuild do |msb| 
+	msb.update_attributes msbuild_settings
+	msb.solution = $solution
+end
+
+nunit :test do |nunit|
+	nunit.assemblies 'bin\Habanero.Smooth.Test.dll','bin\Habanero.Naked.Tests.dll', 'bin\Habanero.Fluent.Tests.dll' ,'bin\TestProject.Test.BO.dll','bin\TestProjectNoDBSpecificProps.Test.BO.dll' 
+end
+
+svn :commitlib do |s|
+	s.parameters "ci lib -m autocheckin"
 end
