@@ -34,10 +34,17 @@ $solution = 'source/SmoothHabanero_2010.sln'
 #______________________________________________________________________________
 #---------------------------------TASKS----------------------------------------
 
+desc "Runs the build all task"
 task :default => [:build_all]
+
+desc "Rakes habanero, builds Smooth"
 task :build_all => [:clean_temp, :rake_habanero, :build, :clean_temp]
-task :build => [:clean, :updatelib, :build_FakeBOsInSeperateAssembly, :msbuild, :test, :commitlib]
-task :build_FakeBOsInSeperateAssembly => [:msbuild_FakeBOsInSeperateAssembly,:copy_dll_to_smooth_lib] 
+
+desc "Builds Smooth, including tests"
+task :build => [:clean, :updatelib, :build_FakeBOs, :msbuild, :test, :commitlib]
+
+desc "builds the FakeBOs dll and copies to the lib folder"
+task :build_FakeBOs => [:msbuild_FakeBOsInSeperateAssembly,:copy_dll_to_smooth_lib] 
 
 #------------------------general tasks---------------------------
 
@@ -58,6 +65,7 @@ svn :checkout_FakeBOsInSeperateAssembly => :clean_FakeBOsInSeperateAssembly do |
 end
 
 msbuild :msbuild_FakeBOsInSeperateAssembly => :checkout_FakeBOsInSeperateAssembly do |msb| 
+	puts cyan("building FakeBOsInSeperateAssembly in #{$fakeBOsFolder}")
 	msb.update_attributes msbuild_settings
     msb.solution = "#{$fakeBOsFolder}/FakeBOsInSeperateAssembly.sln"
 end
@@ -68,7 +76,9 @@ end
 
 #------------------------build smooth itself --------------------
 
-task :clean do 
+desc "Cleans the bin folder"
+task :clean do
+	puts cyan("Cleaning bin folder")
 	FileUtils.rm_rf 'bin'
 end
 
@@ -77,6 +87,7 @@ svn :update_lib_from_svn do |s|
 end
 
 task :updatelib => :update_lib_from_svn do 
+	puts cyan("Updating lib")
 	FileUtils.cp Dir.glob('temp/Habanero/bin/Habanero.Base.dll'), 'lib'
 	FileUtils.cp Dir.glob('temp/Habanero/bin/Habanero.Base.pdb'), 'lib'
 	FileUtils.cp Dir.glob('temp/Habanero/bin/Habanero.Base.xml'), 'lib'
@@ -85,15 +96,20 @@ task :updatelib => :update_lib_from_svn do
 	FileUtils.cp Dir.glob('temp/Habanero/bin/Habanero.BO.xml'), 'lib'
 end
 
+desc "Builds the solution with msbuild"
 msbuild :msbuild do |msb| 
+	puts cyan("Building #{$solution} with msbuild")
 	msb.update_attributes msbuild_settings
 	msb.solution = $solution
 end
 
+desc "Runs the tests"
 nunit :test do |nunit|
+	puts cyan("Running tests")
 	nunit.assemblies 'bin\Habanero.Smooth.Test.dll','bin\Habanero.Naked.Tests.dll', 'bin\Habanero.Fluent.Tests.dll' ,'bin\TestProject.Test.BO.dll','bin\TestProjectNoDBSpecificProps.Test.BO.dll' 
 end
 
 svn :commitlib do |s|
+	puts cyan("Commiting lib")
 	s.parameters "ci lib -m autocheckin"
 end
