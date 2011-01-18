@@ -24,8 +24,9 @@ msbuild_settings = {
 }
 
 #------------------------dependency settings---------------------
-require 'rake-habanero.rb'
 $habanero_version = 'trunk'
+require 'rake-habanero.rb'
+
 
 #------------------------project settings------------------------
 $basepath = 'http://delicious:8080/svn/habanero/HabaneroCommunity/SmoothHabanero/trunk'
