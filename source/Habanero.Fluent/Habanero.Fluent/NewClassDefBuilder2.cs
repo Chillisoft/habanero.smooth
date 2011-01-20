@@ -14,15 +14,15 @@ namespace Habanero.Fluent
         private NewClassDefBuilder<T> _classDefBuilder;
         private NewPropertiesDefBuilder<T> _propertiesDefBuilder;
 
-        public NewClassDefBuilder2(NewClassDefBuilder<T> classDefBuilder)
+        public NewClassDefBuilder2(NewClassDefBuilder<T> classDefBuilder, IList<string> primaryKeyPropNames)
         {
             _classDefBuilder = classDefBuilder;
+            _primaryKeyPropNames = primaryKeyPropNames;
 //             _builders
             _propDefCol = new PropDefCol();
             PropDefBuilders = new List<NewPropDefBuilder<T>>();
             _propertiesDefBuilder = new NewPropertiesDefBuilder<T>(this, PropDefBuilders);
             _relationshipDefCol = new RelationshipDefCol();
-            _primaryKeyPropNames = new List<string>();
             _primaryKeyDef = new PrimaryKeyDef();
         }
 
@@ -36,7 +36,7 @@ namespace Habanero.Fluent
 
         private RelationshipDefCol _relationshipDefCol;
         //private IList<MultipleRelationshipDefBuilder<T>> _multipleRelationshipDefBuilders = new List<MultipleRelationshipDefBuilder<T>>();
-        private List<string> _primaryKeyPropNames;
+        private IList<string> _primaryKeyPropNames;
         private PrimaryKeyDef _primaryKeyDef;
         private IList<NewKeyDefBuilder<T>> _keyDefBuilders = new List<NewKeyDefBuilder<T>>();
         private KeyDefCol _keyDefCol = new KeyDefCol();
@@ -84,7 +84,7 @@ namespace Habanero.Fluent
                     var propertyInfo = ReflectionUtilities.GetPropertyInfo(typeof (T), propName);
                     if (propertyInfo == null)
                     {
-                        newPropDefBuilder.WithPropertyName(propName);
+                        newPropDefBuilder.WithPropertyName(propName).WithType(typeof(Guid));
                     }
                     else
                     {
@@ -92,6 +92,7 @@ namespace Habanero.Fluent
                         newPropDefBuilder.WithPropertyName(propertyInfo.Name);
                         newPropDefBuilder.WithType(propertyType);
                     }
+                    newPropDefBuilder.WithReadWriteRule(PropReadWriteRule.WriteNew);
                     var pkPropDef = newPropDefBuilder.Build();
                     _propDefCol.Add(pkPropDef);
                 }

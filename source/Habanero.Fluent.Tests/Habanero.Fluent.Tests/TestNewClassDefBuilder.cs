@@ -71,8 +71,8 @@ namespace Habanero.Fluent.Tests
             //---------------Assert Precondition----------------
 
             //---------------Execute Test ----------------------
-            new NewClassDefBuilder<Car>()
-                .WithPrimaryKey(c => c.VehicleID)
+            var classDef = new NewClassDefBuilder<Car>()
+                .WithPrimaryKey("gogoID")
                 .WithProperties()
                     .Property(c => c.Make)
                         .WithDatabaseFieldName("gogo")
@@ -81,7 +81,6 @@ namespace Habanero.Fluent.Tests
                     .Return()
                     .Property(c => c.Model).Return()
                 .Return()
-
                 .Build();
 
             //---------------Test Result -----------------------
