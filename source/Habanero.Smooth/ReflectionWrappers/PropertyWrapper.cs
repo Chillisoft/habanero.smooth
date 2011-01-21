@@ -18,6 +18,7 @@
 // ---------------------------------------------------------------------------------
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using Habanero.Base;
@@ -186,8 +187,10 @@ namespace Habanero.Smooth.ReflectionWrappers
         /// </summary>
         public bool HasDefaultAttribute
         {
-            get { return this.HasAttribute<AutoMapDefaultAttribute>(); }
+            get { return this.HasAttribute<AutoMapDefaultAttribute>() || this.HasAttribute<DefaultValueAttribute>(); }
         }
+
+
         /// <summary>
         /// Returns true if this property has the <see cref="AutoMapCompulsoryAttribute"/>
         /// </summary>
@@ -266,7 +269,7 @@ namespace Habanero.Smooth.ReflectionWrappers
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public virtual bool HasAttribute<T>() where T : class
+        public virtual bool HasAttribute<T>() where T : Attribute
         {
             T attribute = this.GetAttribute<T>();
             return attribute != null;
@@ -276,7 +279,7 @@ namespace Habanero.Smooth.ReflectionWrappers
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public virtual T GetAttribute<T>() where T : class
+        public virtual T GetAttribute<T>() where T : Attribute
         {
             var attributes = this.GetAttributes<T>();
             return attributes == null ? null : attributes.FirstOrDefault();
@@ -286,7 +289,7 @@ namespace Habanero.Smooth.ReflectionWrappers
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public virtual IEnumerable<T> GetAttributes<T>() where T : class
+        public virtual IEnumerable<T> GetAttributes<T>() where T : Attribute
         {
             var attributes = this._propertyInfo.GetCustomAttributes(typeof (T), true);
             return attributes == null ? null : attributes.Select(y => y as T);

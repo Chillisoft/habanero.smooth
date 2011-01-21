@@ -8,6 +8,7 @@ using Habanero.Smooth.ReflectionWrappers;
 using Habanero.Util;
 using NUnit.Framework;
 
+// ReSharper disable InconsistentNaming
 namespace Habanero.Smooth.Test
 {
     [TestFixture]
@@ -143,5 +144,6 @@ namespace Habanero.Smooth.Test
         }
     }
 
-    
+
+    // ReSharper restore InconsistentNaming
 }
