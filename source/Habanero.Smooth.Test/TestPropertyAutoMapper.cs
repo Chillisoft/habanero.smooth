@@ -24,6 +24,7 @@ using Habanero.Smooth.Test.ValidFakeBOs;
 using NUnit.Framework;
 using Rhino.Mocks;
 
+// ReSharper disable InconsistentNaming
 namespace Habanero.Smooth.Test
 {
     [TestFixture]
