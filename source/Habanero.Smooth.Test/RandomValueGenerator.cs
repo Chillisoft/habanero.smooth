@@ -28,6 +28,7 @@ using Rhino.Mocks;
 
 namespace Habanero.Smooth.Test
 {
+// ReSharper disable MemberCanBePrivate.Global
     public static class RandomValueGenerator
     {
         private static Random _randomGenerator;
@@ -307,14 +308,14 @@ namespace Habanero.Smooth.Test
         }
 
 
-        public static void AssertHasAttribute<T>(this PropertyInfo propertyInfo) where T : class
+        public static void AssertHasAttribute<T>(this PropertyInfo propertyInfo) where T : Attribute
         {
             PropertyWrapper propertyWrapper = propertyInfo.ToPropertyWrapper();
             Assert.IsTrue(propertyWrapper.HasAttribute<T>()
                     , propertyWrapper.Name + string.Format(" does not have a '{0}' attribute", typeof(T)));
 
         }
-        public static void AssertHasAttribute<T>(this PropertyWrapper propWrapper) where T : class
+        public static void AssertHasAttribute<T>(this PropertyWrapper propWrapper) where T :  Attribute
         {
             Assert.IsTrue(propWrapper.HasAttribute<T>()
                     , propWrapper.Name + string.Format(" does not have a '{0}' attribute", typeof(T)));
@@ -329,4 +330,5 @@ namespace Habanero.Smooth.Test
             propertyInfo.AssertHasAttribute<AutoMapIgnoreAttribute>();
         }
     }
+    // ReSharper restore MemberCanBePrivate.Global
 }
