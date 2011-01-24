@@ -41,6 +41,7 @@ namespace Habanero.Fluent
         private IList<NewKeyDefBuilder<T>> _keyDefBuilders = new List<NewKeyDefBuilder<T>>();
         private KeyDefCol _keyDefCol = new KeyDefCol();
         private SuperClassDefBuilder<T> _superClassDefBuilder;
+        private NewPropDefBuilder<T> _newPropDefBuilder;
         private IList<NewPropDefBuilder<T>> PropDefBuilders { get; set; }
 
 
@@ -77,25 +78,7 @@ namespace Habanero.Fluent
             }
             foreach (var propName in _primaryKeyPropNames)
             {
-                if (!_propDefCol.Contains(propName))
-                {
-                    //set up this property
-                    var newPropDefBuilder = new NewPropDefBuilder<T>();
-                    var propertyInfo = ReflectionUtilities.GetPropertyInfo(typeof (T), propName);
-                    if (propertyInfo == null)
-                    {
-                        newPropDefBuilder.WithPropertyName(propName).WithType(typeof(Guid));
-                    }
-                    else
-                    {
-                        Type propertyType = ReflectionUtilities.GetUndelyingPropertType(propertyInfo);
-                        newPropDefBuilder.WithPropertyName(propertyInfo.Name);
-                        newPropDefBuilder.WithType(propertyType);
-                    }
-                    newPropDefBuilder.WithReadWriteRule(PropReadWriteRule.WriteNew);
-                    var pkPropDef = newPropDefBuilder.Build();
-                    _propDefCol.Add(pkPropDef);
-                }
+                UpdatePropDefCol(propName, true);
                 var propDef = _propDefCol[propName];
                 _primaryKeyDef.Add(propDef);
                 if (_primaryKeyPropNames.Count == 1)
@@ -106,6 +89,35 @@ namespace Habanero.Fluent
             }
         }
 
+        private void UpdatePropDefCol(string propName, bool isPrimaryKeyProp)
+        {
+            if (!_propDefCol.Contains(propName))
+            {
+                //set up this property
+                var newPropDefBuilder = new NewPropDefBuilder<T>();
+                var propertyInfo = ReflectionUtilities.GetPropertyInfo(typeof (T), propName);
+                if (propertyInfo == null)
+                {
+                    newPropDefBuilder.WithPropertyName(propName);
+                    if (isPrimaryKeyProp)
+                    {
+                        newPropDefBuilder.WithType(typeof(Guid));
+                    }
+                }
+                else
+                {
+                    Type propertyType = ReflectionUtilities.GetUndelyingPropertType(propertyInfo);
+                    newPropDefBuilder.WithPropertyName(propertyInfo.Name);
+                    newPropDefBuilder.WithType(propertyType);
+                }
+                if (isPrimaryKeyProp)
+                {
+                    newPropDefBuilder.WithReadWriteRule(PropReadWriteRule.WriteNew);
+                }
+                var pkPropDef = newPropDefBuilder.Build();
+                _propDefCol.Add(pkPropDef);
+            }
+        }
 
 
         private void SetupRelationshipDefCol()
@@ -113,15 +125,25 @@ namespace Habanero.Fluent
             foreach (var singleRelationshipDefBuilder in _singleRelationshipDefBuilders)
             {
                 var singleRelationshipDef = singleRelationshipDefBuilder.Build();
+                CheckOwnerProps(singleRelationshipDef.RelKeyDef);
                 _relationshipDefCol.Add(singleRelationshipDef);
             }
             foreach (var multipleRelationshipDefBuilder in _multipleRelationshipDefBuilders)
             {
                 var multipleRelationshipDef = multipleRelationshipDefBuilder.Build();
+                CheckOwnerProps(multipleRelationshipDef.RelKeyDef);
                 _relationshipDefCol.Add(multipleRelationshipDef);
             }
         }
 
+        private void CheckOwnerProps(IRelKeyDef relPropDefs)
+        {
+            foreach (var relPropDef in relPropDefs)
+            {
+                UpdatePropDefCol(relPropDef.OwnerPropertyName, false);
+
+            }
+        }
 
 
         private static string GetPropertyName<TReturn>(Expression<Func<T, TReturn>> propExpression)
@@ -149,49 +171,25 @@ namespace Habanero.Fluent
             return _propertiesDefBuilder;
         }
 
-        public NewSingleRelationshipDefBuilder<T, TRelatedType> WithSingleRelationship<TRelatedType>(string relationshipName) where TRelatedType : BusinessObject
-        {
-            var singleRelationshipDefBuilder = new NewSingleRelationshipDefBuilder<T, TRelatedType>(this, relationshipName);
-            _singleRelationshipDefBuilders.Add(singleRelationshipDefBuilder);
-            //return new RelKeyBuilder<T, TRelatedType>(singleRelationshipDefBuilder);
-            return singleRelationshipDefBuilder;
-        }
+        //public NewSingleRelationshipDefBuilder<T, TRelatedType> WithSingleRelationship<TRelatedType>(string relationshipName) where TRelatedType : BusinessObject
+        //{
+        //    var singleRelationshipDefBuilder = new NewSingleRelationshipDefBuilder<T, TRelatedType>(this, relationshipName);
+        //    _singleRelationshipDefBuilders.Add(singleRelationshipDefBuilder);
+        //    //return new RelKeyBuilder<T, TRelatedType>(singleRelationshipDefBuilder);
+        //    return singleRelationshipDefBuilder;
+        //}
 
-        public NewSingleRelationshipDefBuilder<T, TRelatedType> WithSingleRelationship<TRelatedType>(Expression<Func<T, TRelatedType>> relationshipExpression) where TRelatedType : BusinessObject
-        {
-            NewSingleRelationshipDefBuilder<T, TRelatedType> singleRelationshipDefBuilder = new NewSingleRelationshipDefBuilder<T, TRelatedType>(this, relationshipExpression);
-            _singleRelationshipDefBuilders.Add(singleRelationshipDefBuilder);
-            return singleRelationshipDefBuilder;
+        //public NewSingleRelationshipDefBuilder<T, TRelatedType> WithSingleRelationship<TRelatedType>(Expression<Func<T, TRelatedType>> relationshipExpression) where TRelatedType : BusinessObject
+        //{
+        //    NewSingleRelationshipDefBuilder<T, TRelatedType> singleRelationshipDefBuilder = new NewSingleRelationshipDefBuilder<T, TRelatedType>(this, relationshipExpression);
+        //    _singleRelationshipDefBuilders.Add(singleRelationshipDefBuilder);
+        //    return singleRelationshipDefBuilder;
 
-        }
-        public NewRelKeyDefBuilder<T, TRelatedType> WithNewSingleRelationship<TRelatedType>(Expression<Func<T, TRelatedType>> relationshipExpression) where TRelatedType : BusinessObject
-        {
-            NewSingleRelationshipDefBuilder<T, TRelatedType> singleRelationshipDefBuilder = new NewSingleRelationshipDefBuilder<T, TRelatedType>(this, relationshipExpression);
-            _singleRelationshipDefBuilders.Add(singleRelationshipDefBuilder);
-            var relKeyDefBuilder = new NewRelKeyDefBuilder<T, TRelatedType>(singleRelationshipDefBuilder);
-            singleRelationshipDefBuilder.RelKeyDefBuilder = relKeyDefBuilder;
-            return relKeyDefBuilder;
-        }
+        //}
 
-        public NewMultipleRelationshipDefBuilder<T, TRelatedType> WithMultipleRelationship<TRelatedType>(string relationshipName) where TRelatedType : IBusinessObject
+        public NewRelationshipsBuilder<T> WithRelationships()
         {
-            NewMultipleRelationshipDefBuilder<T, TRelatedType> multipleRelationshipDefBuilder = new NewMultipleRelationshipDefBuilder<T, TRelatedType>(this)
-                .WithRelationshipName(relationshipName);
-                //.WithRelatedType<TRelatedType>();
-            _multipleRelationshipDefBuilders.Add(multipleRelationshipDefBuilder);
-            return multipleRelationshipDefBuilder;
-                
-        }
-
-        public NewMultipleRelationshipDefBuilder<T, TBusinessObject> WithMultipleRelationship<TBusinessObject>(Expression<Func<T, BusinessObjectCollection<TBusinessObject>>> relationshipExpression)
-            where TBusinessObject : class, IBusinessObject, new()
-        {
-            string relationshipName = GetPropertyName(relationshipExpression);
-            NewMultipleRelationshipDefBuilder<T, TBusinessObject> multipleRelationshipDefBuilder = new NewMultipleRelationshipDefBuilder<T, TBusinessObject>(this)
-                .WithRelationshipName(relationshipName);
-            _multipleRelationshipDefBuilders.Add(multipleRelationshipDefBuilder);
-            return multipleRelationshipDefBuilder;
-                
+            return new NewRelationshipsBuilder<T>(this, _singleRelationshipDefBuilders, _multipleRelationshipDefBuilders);
         }
 
         public NewKeyDefBuilder<T> WithUniqueConstraint(string keyName = "")

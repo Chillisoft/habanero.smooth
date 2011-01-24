@@ -58,6 +58,7 @@
     <Compile Include="NewMultipleRelationshipDefBuilder.cs" />
     <Compile Include="NewPrimaryKeyDefBuilder.cs" />
     <Compile Include="NewPropDefBuilder.cs" />
+    <Compile Include="NewRelationshipsBuilder.cs" />
     <Compile Include="NewRelKeyBuilder.cs" />
     <Compile Include="NewRelKeyDefBuilder.cs" />
     <Compile Include="NewSingleRelationshipDefBuilder.cs" />

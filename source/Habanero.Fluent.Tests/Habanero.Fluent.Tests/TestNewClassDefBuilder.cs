@@ -1,4 +1,5 @@
 ﻿using Habanero.Base;
+using Habanero.BO.ClassDefinition;
 using NUnit.Framework;
 using TestProject.BO;
 
@@ -74,14 +75,17 @@ namespace Habanero.Fluent.Tests
             var classDef = new NewClassDefBuilder<Car>()
                 .WithPrimaryKey("gogoID")
                 .WithProperties()
-                    .Property(c => c.Make)
+                    .Property("sdf")
                         .WithDatabaseFieldName("gogo")
                         .WithDefaultValue("99")
                         .WithReadWriteRule(PropReadWriteRule.ReadWrite)
                     .Return()
+                    .Property(c => c.Make).Return()
                     .Property(c => c.Model).Return()
                 .Return()
-                .Build();
+                .WithRelationships()
+                    .WithNewSingleRelationship(c => c.SteeringWheel)
+            .Build();
 
             //---------------Test Result -----------------------
             Assert.Fail("Test Not Yet Implemented");

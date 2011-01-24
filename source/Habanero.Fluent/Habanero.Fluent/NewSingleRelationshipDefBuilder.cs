@@ -23,16 +23,16 @@ namespace Habanero.Fluent
         private InsertParentAction InsertAction { get; set; }
         private RelationshipType RelType { get; set; }
 
-        public NewSingleRelationshipDefBuilder(Expression<Func<T, TRelatedType>> relationshipExpression)
-        {
-            SetupDefaultValues(GetPropertyName(relationshipExpression));
-        }
+        //public NewSingleRelationshipDefBuilder(Expression<Func<T, TRelatedType>> relationshipExpression)
+        //{
+        //    SetupDefaultValues(GetPropertyName(relationshipExpression));
+        //}
 
-        public NewSingleRelationshipDefBuilder(string relationshipName)
-        {
-            if (string.IsNullOrEmpty(relationshipName)) throw new ArgumentNullException("relationshipName");
-            SetupDefaultValues(relationshipName);
-        }
+        //public NewSingleRelationshipDefBuilder(string relationshipName)
+        //{
+        //    if (string.IsNullOrEmpty(relationshipName)) throw new ArgumentNullException("relationshipName");
+        //    SetupDefaultValues(relationshipName);
+        //}
 
         public NewSingleRelationshipDefBuilder(NewClassDefBuilder2<T> classDefBuilder, string relationshipName)
         {
