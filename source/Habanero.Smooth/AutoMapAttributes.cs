@@ -34,7 +34,6 @@ namespace Habanero.Smooth
     {
         public AutoMapTableNameAttribute()
         {
-
         }
 
         public AutoMapTableNameAttribute(string tableName)
@@ -213,5 +212,77 @@ namespace Habanero.Smooth
     {
     }
 
-    
+    /// <summary>
+    /// Marks an Integer range property rule.
+    /// </summary>
+    [AttributeUsage(AttributeTargets.Property)]
+    public class AutoMapIntPropRuleAttribute : Attribute
+    {
+        public AutoMapIntPropRuleAttribute()
+            : this(int.MinValue, int.MaxValue)
+        {
+        }
+
+        public AutoMapIntPropRuleAttribute(int min, int max)
+        {
+            Min = min;
+            Max = max;
+        }
+
+        public int Max { get; private set; }
+
+        public int Min { get; private set; }
+    }
+
+    /// <summary>
+    /// Marks a String length property rule
+    /// </summary>
+    [AttributeUsage(AttributeTargets.Property)]
+    public class AutoMapStringLengthPropRuleAttribute : Attribute
+    {
+
+        public int MinLength { get; private set; }
+        public int MaxLength { get; private set; }
+
+        public AutoMapStringLengthPropRuleAttribute()
+            : this(0, 255)
+        {
+        }
+
+        public AutoMapStringLengthPropRuleAttribute(int minLength, int maxLength)
+        {
+            MinLength = minLength;
+            MaxLength = maxLength;
+        }
+
+
+    }
+    /// <summary>
+    /// Marks a String Pattern Match property rule
+    /// </summary>
+    public class AutoMapStringPatternMatchPropRuleAttribute : Attribute
+    {
+        public string Pattern { get; private set; }
+
+        public AutoMapStringPatternMatchPropRuleAttribute(string pattern)
+        {
+            Pattern = pattern;
+        }
+    }
+
+    /// <summary>
+    /// Marks a Date Range property rule
+    /// </summary>
+    public class AutoMapDateTimePropRuleAttribute : Attribute
+    {
+        public DateTime StartDate { get; private set; }
+        public DateTime EndDate { get; private set; }
+
+        public AutoMapDateTimePropRuleAttribute(DateTime startDateValue, DateTime endDateValue)
+        {
+            StartDate = startDateValue;
+            EndDate = endDateValue;
+        }
+    }
+
 }

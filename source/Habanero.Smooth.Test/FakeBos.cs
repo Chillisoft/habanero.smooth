@@ -141,6 +141,7 @@ namespace Habanero.Smooth.Test
         [AutoMapPrimaryKey]
         public Guid PublicGuidProp { get; private set; }
 
+
         public Guid AnotherProp { get; private set; }
     }
 

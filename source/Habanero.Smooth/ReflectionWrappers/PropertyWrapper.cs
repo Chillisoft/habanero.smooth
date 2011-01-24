@@ -18,7 +18,6 @@
 // ---------------------------------------------------------------------------------
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using Habanero.Base;
@@ -185,15 +184,14 @@ namespace Habanero.Smooth.ReflectionWrappers
         /// <summary>
         /// Returns true if the Property has a <see cref="AutoMapDefaultAttribute"/> set on it.
         /// </summary>
-        public virtual bool HasDefaultAttribute
+        public bool HasDefaultAttribute
         {
-            get { return this.HasAttribute<AutoMapDefaultAttribute>() || this.HasAttribute<DefaultValueAttribute>(); }
+            get { return this.HasAttribute<AutoMapDefaultAttribute>(); }
         }
-
         /// <summary>
         /// Returns true if this property has the <see cref="AutoMapCompulsoryAttribute"/>
         /// </summary>
-        public virtual bool HasCompulsoryAttribute
+        public bool HasCompulsoryAttribute
         {
             get { return this.HasAttribute<AutoMapCompulsoryAttribute>(); }
         }
@@ -224,7 +222,14 @@ namespace Habanero.Smooth.ReflectionWrappers
         public virtual bool HasReadWriteRuleAttribute
         {
             get { return this.HasAttribute<AutoMapReadWriteRuleAttribute>(); }
-        }        
+        }
+        /// <summary>
+        /// has a IntPropRule Attribute on the Property.
+        /// </summary>
+        public virtual bool HasIntPropRuleAttribute
+        {
+            get { return this.HasAttribute<AutoMapIntPropRuleAttribute>(); }
+        }   
         /// <summary>
         /// has a UniqueConstraint Attribute on the Property.
         /// </summary>
@@ -268,7 +273,7 @@ namespace Habanero.Smooth.ReflectionWrappers
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public virtual bool HasAttribute<T>() where T : Attribute
+        public virtual bool HasAttribute<T>() where T : class
         {
             T attribute = this.GetAttribute<T>();
             return attribute != null;
@@ -278,7 +283,7 @@ namespace Habanero.Smooth.ReflectionWrappers
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public virtual T GetAttribute<T>() where T : Attribute
+        public virtual T GetAttribute<T>() where T : class
         {
             var attributes = this.GetAttributes<T>();
             return attributes == null ? null : attributes.FirstOrDefault();
@@ -288,7 +293,7 @@ namespace Habanero.Smooth.ReflectionWrappers
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public virtual IEnumerable<T> GetAttributes<T>() where T : Attribute
+        public virtual IEnumerable<T> GetAttributes<T>() where T : class
         {
             var attributes = this._propertyInfo.GetCustomAttributes(typeof (T), true);
             return attributes == null ? null : attributes.Select(y => y as T);
@@ -515,6 +520,28 @@ namespace Habanero.Smooth.ReflectionWrappers
         {
             get { return ReflectionUtilities.GetUndelyingPropertType(this.PropertyInfo); }
         }
+
+        /// <summary>
+        /// has a StringLengthRule Attribute on the Property.
+        /// </summary>
+        public virtual bool HasStringLengthRuleAttribute
+        {
+            get { return this.HasAttribute<AutoMapStringLengthPropRuleAttribute>(); }
+        }
+
+        ///<summary>
+        /// has a StringPatternMatchRule Attribute on the Property.
+        ///</summary>
+        public virtual bool HasStringPatternMatchRuleAttribute
+        {
+            get { return this.HasAttribute<AutoMapStringPatternMatchPropRuleAttribute>(); }
+        }
+
+        public virtual bool HasDateTimeRuleAttribute
+        {
+            get { return this.HasAttribute<AutoMapDateTimePropRuleAttribute>(); }
+        }
+
 
         //TODO brett 10 Jul 2010: This looks wrong to me surely it should use the UnderlyingType as above
         // and not the PropertyType.

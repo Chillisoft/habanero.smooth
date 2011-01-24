@@ -19,12 +19,12 @@
 using System;
 using System.Reflection;
 using Habanero.Base;
+using Habanero.BO;
 using Habanero.Smooth.ReflectionWrappers;
 using Habanero.Smooth.Test.ValidFakeBOs;
 using NUnit.Framework;
 using Rhino.Mocks;
 
-// ReSharper disable InconsistentNaming
 namespace Habanero.Smooth.Test
 {
     [TestFixture]
@@ -484,6 +484,138 @@ namespace Habanero.Smooth.Test
             Assert.AreNotSame(propertyInfo, basePropInfo);
         }
 
+        [Test]
+        public void Test_MapWithFake_WhenIntPropRuleAttribute_ShouldReturnPropDefWithIntMinMaxRuleDefault()
+        {
+            //---------------Set up test pack-------------------
+            PropertyWrapper wrapper = GetMockPropWrapper();
+            var propertyAutoMapper = new PropertyAutoMapper(wrapper);
+            //---------------Assert Precondition----------------
+            Assert.IsNull(wrapper.GetAttribute<AutoMapIntPropRuleAttribute>());
+            //---------------Execute Test ----------------------
+            SetIntPropRuleAttributeWithDefaultConstructor(wrapper);
+            var propDef = propertyAutoMapper.MapProperty();
+            //---------------Test Result -----------------------
+            Assert.IsNotNull(propDef);
+            int defaultMinValue = (int) propDef.PropRules[0].Parameters["min"];
+            int defaultMaxValue = (int) propDef.PropRules[0].Parameters["max"];
+            Assert.AreEqual(int.MinValue,defaultMinValue);
+            Assert.AreEqual(int.MaxValue,defaultMaxValue);
+        }        
+        
+        [Test]
+        public void Test_MapWithFake_WhenIntPropRuleAttribute_ShouldReturnPropDefWithIntMinMaxRuleWithValues()
+        {
+            //---------------Set up test pack-------------------
+            PropertyWrapper wrapper = GetMockPropWrapper();
+            var propertyAutoMapper = new PropertyAutoMapper(wrapper);
+            var minValue = 9;
+            var maxValue = 89;
+            //---------------Assert Precondition----------------
+            Assert.IsNull(wrapper.GetAttribute<AutoMapIntPropRuleAttribute>());
+            //---------------Execute Test ----------------------
+            SetIntPropRuleAttributeWithDefaultConstructor(wrapper,minValue,maxValue);
+            var propDef = propertyAutoMapper.MapProperty();
+            //---------------Test Result -----------------------
+            Assert.IsNotNull(propDef);
+            int propMinValue = (int) propDef.PropRules[0].Parameters["min"];
+            int propMaxValue = (int) propDef.PropRules[0].Parameters["max"];
+            Assert.AreEqual(minValue, propMinValue);
+            Assert.AreEqual(maxValue, propMaxValue);
+        }
+
+        [Test]
+        public void Test_MapWithFake_WhenStringLengthPropRuleAttribute_ShouldReturnPropDefWithStringLengthPropRuleDefault()
+        {
+            //---------------Set up test pack-------------------
+            PropertyWrapper wrapper = GetMockPropWrapper();
+            var propertyAutoMapper = new PropertyAutoMapper(wrapper);
+          
+            //---------------Assert Precondition----------------
+            Assert.IsNull(wrapper.GetAttribute<AutoMapStringLengthPropRuleAttribute>());
+            //---------------Execute Test ----------------------
+            SetStringLengthPropRuleAttributeWithDefaultConstructor(wrapper);
+            var propDef = propertyAutoMapper.MapProperty();
+            //---------------Test Result -----------------------
+            Assert.IsNotNull(propDef);
+            int propMinValue = (int)propDef.PropRules[0].Parameters["minLength"];
+            int propMaxValue = (int)propDef.PropRules[0].Parameters["maxLength"];
+            Assert.AreEqual(0, propMinValue);
+            Assert.AreEqual(255, propMaxValue);
+        }
+
+        [Test]
+        public void Test_MapWithFake_WhenStringLengthPropRuleAttribute_ShouldReturnPropDefWithStringLengthPropRuleWithValues()
+        {
+            //---------------Set up test pack-------------------
+            PropertyWrapper wrapper = GetMockPropWrapper();
+            var propertyAutoMapper = new PropertyAutoMapper(wrapper);
+            var minLength = 10;
+            var maxLength = 100;
+            //---------------Assert Precondition----------------
+            Assert.IsNull(wrapper.GetAttribute<AutoMapStringLengthPropRuleAttribute>());
+            //---------------Execute Test ----------------------
+        
+            SetStringLengthPropRuleAttributeWithDefaultConstructor(wrapper,minLength,maxLength);
+            var propDef = propertyAutoMapper.MapProperty();
+            //---------------Test Result -----------------------
+            Assert.IsNotNull(propDef);
+            int propMinValue = (int)propDef.PropRules[0].Parameters["minLength"];
+            int propMaxValue = (int)propDef.PropRules[0].Parameters["maxLength"];
+            Assert.AreEqual(minLength, propMinValue);
+            Assert.AreEqual(maxLength, propMaxValue);
+        }      
+        
+        [Test]
+        public void Test_MapWithFake_WhenDateTimePropRuleAttribute_ShouldReturnPropDefWithDateTimePropRuleWithValues()
+        {
+            //---------------Set up test pack-------------------
+            PropertyWrapper wrapper = GetMockPropWrapper();
+            var propertyAutoMapper = new PropertyAutoMapper(wrapper);
+            var StartDate = DateTime.Now;
+            var EndDate = StartDate.AddDays(10);
+            //---------------Assert Precondition----------------
+            Assert.IsNull(wrapper.GetAttribute<AutoMapDateTimePropRuleAttribute>());
+            //---------------Execute Test ----------------------
+        
+            SetDateTimePropRuleAttributeWithDefaultConstructor(wrapper,StartDate,EndDate);
+            var propDef = propertyAutoMapper.MapProperty();
+            //---------------Test Result -----------------------
+            Assert.IsNotNull(propDef);
+            Assert.AreEqual(1,propDef.PropRules.Count);
+        }
+
+
+
+        [Test]
+        public void Test_MapWithFake_WhenStringPatternMatchPropRuleAttribute_ShouldReturnPropDefWithStringPatternMatchPropRuleWithValue()
+        {
+            //---------------Set up test pack-------------------
+            PropertyWrapper wrapper = GetMockPropWrapper();
+            var propertyAutoMapper = new PropertyAutoMapper(wrapper);
+            string emailPatternMatch = @"\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b";
+            //---------------Assert Precondition----------------
+            Assert.IsNull(wrapper.GetAttribute<AutoMapStringPatternMatchPropRuleAttribute>());
+            //---------------Execute Test ----------------------
+
+           
+            SetStringPatternMatchPropRuleAttributeWithDefaultConstructor(wrapper, emailPatternMatch);
+            var propDef = propertyAutoMapper.MapProperty();
+            //---------------Test Result -----------------------
+            Assert.IsNotNull(propDef);
+            Assert.AreEqual(1,propDef.PropRules.Count);
+            var actualPattern = (string)propDef.PropRules[0].Parameters["patternMatch"];
+            StringAssert.AreEqualIgnoringCase(emailPatternMatch, actualPattern);
+        }
+
+        private void SetStringPatternMatchPropRuleAttributeWithDefaultConstructor(PropertyWrapper wrapper, string emailPatternMatch)
+        {
+            wrapper.Stub(propertyWrapper => propertyWrapper.GetAttribute<AutoMapStringPatternMatchPropRuleAttribute>()).Return(
+                  new AutoMapStringPatternMatchPropRuleAttribute(emailPatternMatch));
+            wrapper.Stub(propertyWrapper => propertyWrapper.HasStringPatternMatchRuleAttribute).Return(true);
+        }
+
+
         private static string GetRandomString()
         {
             return RandomValueGenerator.GetRandomString();
@@ -497,6 +629,8 @@ namespace Habanero.Smooth.Test
             wrapper.Stub(wrapper1 => wrapper1.Name).Return(GetRandomString());
             return wrapper;
         }
+
+
 
         private static void SetHasDefaultAttribute(PropertyWrapper wrapper, bool hasDefault, string defaultValue)
         {
@@ -512,6 +646,41 @@ namespace Habanero.Smooth.Test
             wrapper.Stub(propertyWrapper => propertyWrapper.GetAttribute<AutoMapReadWriteRuleAttribute>()).Return(
                     new AutoMapReadWriteRuleAttribute(rule));
             wrapper.Stub(propertyWrapper => propertyWrapper.HasReadWriteRuleAttribute).Return(true);
+        }
+
+        private static void SetIntPropRuleAttributeWithDefaultConstructor(PropertyWrapper wrapper)
+        {
+            wrapper.Stub(propertyWrapper => propertyWrapper.GetAttribute<AutoMapIntPropRuleAttribute>()).Return(
+                    new AutoMapIntPropRuleAttribute());
+            wrapper.Stub(propertyWrapper => propertyWrapper.HasIntPropRuleAttribute).Return(true);
+        }
+        
+        private static void SetIntPropRuleAttributeWithDefaultConstructor(PropertyWrapper wrapper,int minValue,int maxValue)
+        {
+            wrapper.Stub(propertyWrapper => propertyWrapper.GetAttribute<AutoMapIntPropRuleAttribute>()).Return(
+                    new AutoMapIntPropRuleAttribute(minValue,maxValue));
+            wrapper.Stub(propertyWrapper => propertyWrapper.HasIntPropRuleAttribute).Return(true);
+        }
+
+        private void SetStringLengthPropRuleAttributeWithDefaultConstructor(PropertyWrapper wrapper)
+        {
+            wrapper.Stub(propertyWrapper => propertyWrapper.GetAttribute<AutoMapStringLengthPropRuleAttribute>()).Return(
+                   new AutoMapStringLengthPropRuleAttribute());
+            wrapper.Stub(propertyWrapper => propertyWrapper.HasStringLengthRuleAttribute).Return(true);
+        }
+
+        private void SetStringLengthPropRuleAttributeWithDefaultConstructor(PropertyWrapper wrapper,int minLength,int maxLength)
+        {
+            wrapper.Stub(propertyWrapper => propertyWrapper.GetAttribute<AutoMapStringLengthPropRuleAttribute>()).Return(
+                   new AutoMapStringLengthPropRuleAttribute(minLength,maxLength));
+            wrapper.Stub(propertyWrapper => propertyWrapper.HasStringLengthRuleAttribute).Return(true);
+        }
+
+        private void SetDateTimePropRuleAttributeWithDefaultConstructor(PropertyWrapper wrapper, DateTime startDate, DateTime endDate)
+        {
+            wrapper.Stub(propertyWrapper => propertyWrapper.GetAttribute<AutoMapDateTimePropRuleAttribute>()).Return(
+                   new AutoMapDateTimePropRuleAttribute(startDate, endDate));
+            wrapper.Stub(propertyWrapper => propertyWrapper.HasDateTimeRuleAttribute).Return(true);
         }
 
         private TypeWrapper GetFakeTypeWrapper()

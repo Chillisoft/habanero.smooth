@@ -81,7 +81,101 @@ namespace Habanero.Smooth.Test
             Assert.AreEqual(tableName, attribute.TableName);
         }
 
+        [Test]
+        public void Test_IntPropRule_ShouldSetDefaultValue()
+        {
+            //---------------Set up test pack-------------------
+            
+            //---------------Assert Precondition----------------
+
+            //---------------Execute Test ----------------------
+            var attribute = new AutoMapIntPropRuleAttribute();
+            //---------------Test Result -----------------------
+            Assert.IsInstanceOf<Attribute>(attribute);
+            Assert.AreEqual(int.MinValue, attribute.Min);
+            Assert.AreEqual(int.MaxValue, attribute.Max);
+        }
+
+        [Test]
+        public void Test_IntPropRule_ShouldSetValue()
+        {
+            //---------------Set up test pack-------------------
+            var min = 1;
+            var max = 10;
+            //---------------Assert Precondition----------------
+
+            //---------------Execute Test ----------------------
+            var attribute = new AutoMapIntPropRuleAttribute(min, max);
+            //---------------Test Result -----------------------
+            Assert.IsInstanceOf<Attribute>(attribute);
+            Assert.AreEqual(min, attribute.Min);
+            Assert.AreEqual(max, attribute.Max);
+        }
+
+        [Test]
+        public void Test_DateTimePropRule_ShouldSetValue()
+        {
+            //---------------Set up test pack-------------------
+            var startDateValue = DateTime.Now;
+            var endDateValue = DateTime.Now.AddDays(10);
+            //---------------Assert Precondition----------------
+
+            //---------------Execute Test ----------------------
+            var attribute = new AutoMapDateTimePropRuleAttribute(startDateValue, endDateValue);
+            //---------------Test Result -----------------------
+            Assert.IsInstanceOf<Attribute>(attribute);
+            Assert.AreEqual(startDateValue, attribute.StartDate);
+            Assert.AreEqual(endDateValue, attribute.EndDate);
+        }
+
+        [Test]
+        public void Test_StringPatternMatchPropRule_ShouldSetValue()
+        {
+            //---------------Set up test pack-------------------
+            var pattern =@"^[-+.\w]{1,64}@[-.\w]{1,64}\.[-.\w]{2,6}$" ;
+            //---------------Assert Precondition----------------
+
+            //---------------Execute Test ----------------------
+            var attribute = new AutoMapStringPatternMatchPropRuleAttribute(pattern);
+            //---------------Test Result -----------------------
+            Assert.IsInstanceOf<Attribute>(attribute);
+            Assert.AreEqual(pattern, attribute.Pattern);
+        }
+
+        [Test]
+        public void Test_StringLengthPropRule_ShouldReturnDefault()
+        {
+            //---------------Set up test pack-------------------
+           
+            //---------------Assert Precondition----------------
+
+            //---------------Execute Test ----------------------
+            var attribute = new AutoMapStringLengthPropRuleAttribute();
+            //---------------Test Result -----------------------
+            Assert.IsInstanceOf<Attribute>(attribute);
+            Assert.AreEqual(0, attribute.MinLength);
+            Assert.AreEqual(255, attribute.MaxLength);
+        }
+
+        [Test]
+        public void Test_StringLengthPropRule_ShouldSetValue()
+        {
+            //---------------Set up test pack-------------------
+            var minLengthValue = 5;
+            var maxLengthValue = 400;
+            //---------------Assert Precondition----------------
+
+            //---------------Execute Test ----------------------
+            var attribute = new AutoMapStringLengthPropRuleAttribute(minLengthValue,maxLengthValue);
+            //---------------Test Result -----------------------
+            Assert.IsInstanceOf<Attribute>(attribute);
+            Assert.AreEqual(minLengthValue, attribute.MinLength);
+            Assert.AreEqual(maxLengthValue, attribute.MaxLength);
+        }
+
+
     }
 
    
+
 }

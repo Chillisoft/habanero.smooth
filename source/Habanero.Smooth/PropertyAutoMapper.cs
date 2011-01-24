@@ -19,6 +19,7 @@
 using System;
 using System.Reflection;
 using Habanero.Base;
+using Habanero.BO;
 using Habanero.BO.ClassDefinition;
 using Habanero.Smooth.ReflectionWrappers;
 using Habanero.Util;
@@ -75,10 +76,62 @@ namespace Habanero.Smooth
                 {
                     propDef.ReadWriteRule = this.PropertyWrapper.GetAttribute<AutoMapReadWriteRuleAttribute>().ReadWriteRule;
                 }
+                if (this.PropertyWrapper.HasIntPropRuleAttribute)
+                {
+                    var intPropRule = CreateIntPropRule();
+                    propDef.AddPropRule(intPropRule);
+                }
+
+                if (this.PropertyWrapper.HasStringLengthRuleAttribute )
+                {
+                    var stringPropRule = CreateStringLengthPropRule();
+                    propDef.AddPropRule(stringPropRule);
+                }
+
+                if (this.PropertyWrapper.HasStringPatternMatchRuleAttribute)
+                {
+                    var stringPropRule = CreatePatternMatchPropRule();
+                    propDef.AddPropRule(stringPropRule);
+                }
+
+                if (this.PropertyWrapper.HasDateTimeRuleAttribute)
+                {
+                    var propRuleDate = CreateDateTimePropRule();
+                    propDef.AddPropRule(propRuleDate);
+                }
+
                 propDef.AutoIncrementing = this.PropertyWrapper.HasAutoIncrementingAttribute;
                 return propDef;
             }
             return null;
+        }
+
+        private PropRuleDate CreateDateTimePropRule()
+        {
+            var startDate = this.PropertyWrapper.GetAttribute<AutoMapDateTimePropRuleAttribute>().StartDate;
+            var dateTime = this.PropertyWrapper.GetAttribute<AutoMapDateTimePropRuleAttribute>().EndDate;
+            return new PropRuleDate("", "",startDate,dateTime);
+        }
+
+        private PropRuleString CreatePatternMatchPropRule()
+        {
+            var patternMatch = this.PropertyWrapper.GetAttribute<AutoMapStringPatternMatchPropRuleAttribute>().Pattern;
+            var patternMatchMessage = string.Format("The value does not conform to the following pattern '{0}'", patternMatch);
+            return new PropRuleString("", "", 0, 255, patternMatch, patternMatchMessage);
+        }
+
+        private PropRuleString CreateStringLengthPropRule()
+        {
+            var minLength = this.PropertyWrapper.GetAttribute<AutoMapStringLengthPropRuleAttribute>().MinLength;
+            var maxLength = this.PropertyWrapper.GetAttribute<AutoMapStringLengthPropRuleAttribute>().MaxLength;
+            return new PropRuleString("", "", minLength,maxLength, "");
+        }
+
+        private IPropRule CreateIntPropRule()
+        {
+            var min = this.PropertyWrapper.GetAttribute<AutoMapIntPropRuleAttribute>().Min;
+            var max = this.PropertyWrapper.GetAttribute<AutoMapIntPropRuleAttribute>().Max;
+            return new PropRuleInteger("", "",min,max);
         }
 
         private bool MustMapProperty
