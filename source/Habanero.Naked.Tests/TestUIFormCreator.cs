@@ -11,6 +11,10 @@ namespace Habanero.Naked.Tests
     [TestFixture]
     public class TestUIFormCreator
     {
+        protected virtual IDefClassFactory GetFactory()
+        {
+            return new DefClassFactory();
+        }
         [Test]
         public void Test_Construct_ShouldConstruct()
         {
@@ -19,7 +23,7 @@ namespace Habanero.Naked.Tests
             //---------------Assert Precondition----------------
 
             //---------------Execute Test ----------------------
-            var formCreator = new UIFormCreator();
+            var formCreator = new UIFormCreator(GetFactory());
             //---------------Test Result -----------------------
             Assert.IsNotNull(formCreator);
         }
@@ -28,7 +32,7 @@ namespace Habanero.Naked.Tests
         public void Test_CreateUIForm_ShouldReturnNewUIDef()
         {
             //---------------Set up test pack-------------------
-            var formCreator = new UIFormCreator();
+            var formCreator = new UIFormCreator(GetFactory());
             IClassDef classDef = typeof(FakeBo).MapClass();
             //---------------Assert Precondition----------------
             //---------------Execute Test ----------------------
@@ -41,7 +45,7 @@ namespace Habanero.Naked.Tests
         public void Test_CreateUIForm_ShouldSetTitle()
         {
             //---------------Set up test pack-------------------
-            var formCreator = new UIFormCreator();
+            var formCreator = new UIFormCreator(GetFactory());
             IClassDef classDef = typeof(FakeBo).MapClass();
             //---------------Assert Precondition----------------
             Assert.AreEqual(0, classDef.UIDefCol.Count);
@@ -56,7 +60,7 @@ namespace Habanero.Naked.Tests
         public void Test_CreateUIForm_WhenNotHasViewAndHasStringProp_ShouldCreateUIField()
         {
             //---------------Set up test pack-------------------
-            var formCreator = new UIFormCreator();
+            var formCreator = new UIFormCreator(GetFactory());
             IClassDef classDef = typeof(FakeBo).MapClass();
             //---------------Assert Precondition----------------
             Assert.AreEqual(0, classDef.UIDefCol.Count);
@@ -89,7 +93,7 @@ namespace Habanero.Naked.Tests
         public void Test_CreateUIForm_With2Props_ShouldCreate2UIFields()
         {
             //---------------Set up test pack-------------------
-            var formCreator = new UIFormCreator();
+            var formCreator = new UIFormCreator(GetFactory());
             IClassDef classDef = typeof(FakeBoW2Props).MapClass();
             //---------------Assert Precondition----------------
             Assert.AreEqual(0, classDef.UIDefCol.Count);
@@ -111,7 +115,7 @@ namespace Habanero.Naked.Tests
         {
             //---------------Set up test pack-------------------
             IPropDef propDef = new PropDefFake(typeof (bool));
-            var formCreator = new UIFormCreatorSpy();
+            var formCreator = new UIFormCreatorSpy(GetFactory());
             //---------------Assert Precondition----------------
             Assert.AreSame(typeof(bool), propDef.PropertyType);
             //---------------Execute Test ----------------------
@@ -126,7 +130,7 @@ namespace Habanero.Naked.Tests
             //---------------Set up test pack-------------------
             var propType = typeof (int);
             IPropDef propDef = new PropDefFake(propType);
-            var formCreator = new UIFormCreatorSpy();
+            var formCreator = new UIFormCreatorSpy(GetFactory());
             //---------------Assert Precondition----------------
             Assert.AreSame(propType, propDef.PropertyType);
             //---------------Execute Test ----------------------
@@ -141,7 +145,7 @@ namespace Habanero.Naked.Tests
             //---------------Set up test pack-------------------
             var propType = typeof (DateTime);
             IPropDef propDef = new PropDefFake(propType);
-            var formCreator = new UIFormCreatorSpy();
+            var formCreator = new UIFormCreatorSpy(GetFactory());
             //---------------Assert Precondition----------------
             Assert.AreSame(propType, propDef.PropertyType);
             //---------------Execute Test ----------------------
@@ -158,7 +162,7 @@ namespace Habanero.Naked.Tests
             {
                 LookupList = new SimpleLookupList(new Dictionary<string, string>())
             };
-            var formCreator = new UIFormCreatorSpy();
+            var formCreator = new UIFormCreatorSpy(GetFactory());
             //---------------Assert Precondition----------------
             Assert.IsTrue(propDef.HasLookupList(), "Prop Def should have lookupList");
             //---------------Execute Test ----------------------
@@ -170,7 +174,11 @@ namespace Habanero.Naked.Tests
     }
     internal class UIFormCreatorSpy : UIFormCreator
     {
-        public UIFormField CallGetUIFormField(IPropDef propDef)
+        public UIFormCreatorSpy(IDefClassFactory factory) : base(factory)
+        {
+        }
+
+        public IUIFormField CallGetUIFormField(IPropDef propDef)
         {
             return this.GetUIFormField(propDef);
         }

@@ -7,9 +7,16 @@ namespace Habanero.Naked
 {
     public class UIGridCreator
     {
+        private readonly IDefClassFactory _factory;
+
+        public UIGridCreator(IDefClassFactory factory)
+        {
+            _factory = factory;
+        }
+
         public IUIGrid CreateUIGrid(IClassDef classDef)
         {
-            var uiGrid = new UIGrid();
+            IUIGrid uiGrid = _factory.CreateUIGridDef();
 
             //The Properties are loaded in the ordinal position order
             // that they occur in the XML ClassDef so this will be the 
@@ -28,7 +35,7 @@ namespace Habanero.Naked
         {
             if (propDef == null) throw new ArgumentNullException("propDef");
             UIControlType controlType = GetControlType(propDef);
-            var gridColumn = new UIGridColumn(propDef.DisplayName, propDef.PropertyName, controlType.TypeName, controlType.AssemblyName,true, 100, PropAlignment.left, new Hashtable());
+            var gridColumn = _factory.CreateUIGridProperty(propDef.DisplayName, propDef.PropertyName, controlType.TypeName, controlType.AssemblyName,true, 100, PropAlignment.left, new Hashtable());
             //SetControlType(propDef, gridColumn);
 
             return gridColumn;

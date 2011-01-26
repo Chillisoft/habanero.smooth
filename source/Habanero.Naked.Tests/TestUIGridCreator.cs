@@ -11,6 +11,10 @@ namespace Habanero.Naked.Tests
     [TestFixture]
     public class TestUIGridCreator
     {
+        protected virtual IDefClassFactory GetFactory()
+        {
+            return new DefClassFactory();
+        }
         [Test]
         public void Test_Construct_ShouldConstruct()
         {
@@ -19,7 +23,7 @@ namespace Habanero.Naked.Tests
             //---------------Assert Precondition----------------
 
             //---------------Execute Test ----------------------
-            var gridCreator = new UIGridCreator();
+            var gridCreator = new UIGridCreator(GetFactory());
             //---------------Test Result -----------------------
             Assert.IsNotNull(gridCreator);
         }
@@ -28,7 +32,7 @@ namespace Habanero.Naked.Tests
         public void Test_CreateUIGrid_ShouldReturnNewUIDef()
         {
             //---------------Set up test pack-------------------
-            var gridCreator = new UIGridCreator();
+            var gridCreator = new UIGridCreator(GetFactory());
             IClassDef classDef = typeof(FakeBo).MapClass();
             //---------------Assert Precondition----------------
             //---------------Execute Test ----------------------
@@ -40,7 +44,7 @@ namespace Habanero.Naked.Tests
         public void Test_CreateUIGrid_WhenNotHasViewAndHasStringProp_ShouldCreateGridColumn()
         {
             //---------------Set up test pack-------------------
-            var gridCreator = new UIGridCreator();
+            var gridCreator = new UIGridCreator(GetFactory());
             IClassDef classDef = typeof(FakeBo).MapClass();
             //---------------Assert Precondition----------------
             Assert.AreEqual(0, classDef.UIDefCol.Count);
@@ -62,7 +66,7 @@ namespace Habanero.Naked.Tests
         public void Test_CreateUIGrid_With2Props_ShouldCreate2GridColumns()
         {
             //---------------Set up test pack-------------------
-            var gridCreator = new UIGridCreator();
+            var gridCreator = new UIGridCreator(GetFactory());
             IClassDef classDef = typeof(FakeBoW2Props).MapClass();
             //---------------Assert Precondition----------------
             Assert.AreEqual(0, classDef.UIDefCol.Count);
@@ -83,7 +87,7 @@ namespace Habanero.Naked.Tests
         {
             //---------------Set up test pack-------------------
             IClassDef classDef = typeof(FakeBoW2Props).MapClass();
-            UIGridCreator gridCreator = new UIGridCreator();
+            UIGridCreator gridCreator = new UIGridCreator(GetFactory());
             //---------------Assert Precondition----------------
             Assert.AreSame(typeof(bool), classDef.PropDefcol["FakeBoName2"].PropertyType);
             //---------------Execute Test ----------------------
@@ -98,7 +102,7 @@ namespace Habanero.Naked.Tests
         public void Test_GetUIFormField_WhenPropNull_ShouldRaiseError()
         {
             //---------------Set up test pack-------------------
-            var gridCreator = new UIGridCreatorSpy();
+            var gridCreator = new UIGridCreatorSpy(GetFactory());
             //---------------Assert Precondition----------------
             //---------------Execute Test ----------------------
             try
@@ -118,7 +122,7 @@ namespace Habanero.Naked.Tests
         {
             //---------------Set up test pack-------------------
             IPropDef propDef = new PropDefFake(typeof(string));
-            var gridCreator = new UIGridCreatorSpy();
+            var gridCreator = new UIGridCreatorSpy(GetFactory());
             //---------------Assert Precondition----------------
             Assert.AreSame(typeof(string), propDef.PropertyType);
             //---------------Execute Test ----------------------
@@ -134,7 +138,7 @@ namespace Habanero.Naked.Tests
         {
             //---------------Set up test pack-------------------
             IPropDef propDef = new PropDefFake(typeof(bool));
-            var gridCreator = new UIGridCreatorSpy();
+            var gridCreator = new UIGridCreatorSpy(GetFactory());
             //---------------Assert Precondition----------------
             Assert.AreSame(typeof(bool), propDef.PropertyType);
             //---------------Execute Test ----------------------
@@ -149,7 +153,7 @@ namespace Habanero.Naked.Tests
             //---------------Set up test pack-------------------
             var propType = typeof(int);
             IPropDef propDef = new PropDefFake(propType);
-            var gridCreator = new UIGridCreatorSpy();
+            var gridCreator = new UIGridCreatorSpy(GetFactory());
             //---------------Assert Precondition----------------
             Assert.AreSame(propType, propDef.PropertyType);
             //---------------Execute Test ----------------------
@@ -164,7 +168,7 @@ namespace Habanero.Naked.Tests
             //---------------Set up test pack-------------------
             var propType = typeof(DateTime);
             IPropDef propDef = new PropDefFake(propType);
-            var gridCreator = new UIGridCreatorSpy();
+            var gridCreator = new UIGridCreatorSpy(GetFactory());
             //---------------Assert Precondition----------------
             Assert.AreSame(propType, propDef.PropertyType);
             //---------------Execute Test ----------------------
@@ -181,7 +185,7 @@ namespace Habanero.Naked.Tests
                        {
                            LookupList = new SimpleLookupList(new Dictionary<string, string>())
                        };
-            var gridCreator = new UIGridCreatorSpy();
+            var gridCreator = new UIGridCreatorSpy(GetFactory());
             //---------------Assert Precondition----------------
             Assert.IsTrue(propDef.HasLookupList(), "Prop Def should have lookupList");
             //---------------Execute Test ----------------------
@@ -223,7 +227,7 @@ namespace Habanero.Naked.Tests
             DMProperty dmProperty1 = dmClass.Properties.CreateBusinessObject();
             TestUtilsDMProperty.SetDMPropStringType(dmProperty1);
             dmClass.CreateObjectIdentity(dmProperty1);
-            UIGridCreator gridCreator = new UIGridCreator();
+            UIGridCreator gridCreator = new UIGridCreator(GetFactory());
             //---------------Assert Precondition----------------
             Assert.IsNotNull(dmClass);
             Assert.AreEqual(3, dmClass.Properties.Count);
@@ -244,7 +248,7 @@ namespace Habanero.Naked.Tests
             DMProperty property = dmClass.Properties.CreateBusinessObject();
             TestUtilsDMProperty.SetDMPropStringType(property);
             property.KeepValuePrivate = true;
-            UIGridCreator gridCreator = new UIGridCreator();
+            UIGridCreator gridCreator = new UIGridCreator(GetFactory());
             //---------------Assert Precondition----------------
             Assert.IsNotNull(dmClass);
             Assert.AreEqual(3, dmClass.Properties.Count);
@@ -265,7 +269,7 @@ namespace Habanero.Naked.Tests
             TestUtilsDMProperty.SetDMPropBooleanType(dmProperty);
             DMProperty property = TestUtilsDMProperty.CreateUnsavedValidDMProperty(dmClass);
             property.KeepValuePrivate = null;
-            UIGridCreator gridCreator = new UIGridCreator();
+            UIGridCreator gridCreator = new UIGridCreator(GetFactory());
             //---------------Assert Precondition----------------
             Assert.IsNotNull(dmClass);
             Assert.AreEqual(3, dmClass.Properties.Count);
@@ -288,7 +292,7 @@ namespace Habanero.Naked.Tests
             DMProperty dmProperty2 = dmClass.Properties.CreateBusinessObject();
             dmProperty2.DisplayName = TestUtilsShared.GetRandomString();
             TestUtilsDMProperty.SetDMPropBooleanType(dmProperty2);
-            UIGridCreator gridCreator = new UIGridCreator();
+            UIGridCreator gridCreator = new UIGridCreator(GetFactory());
             BusinessObjectCollection<DMProperty> selectedProps = new BusinessObjectCollection<DMProperty>();
             selectedProps.Add(dmProperty2);
             selectedProps.Add(dmProperty1);
@@ -325,6 +329,10 @@ namespace Habanero.Naked.Tests
     }
     internal class UIGridCreatorSpy : UIGridCreator
     {
+        public UIGridCreatorSpy(IDefClassFactory factory) : base(factory)
+        {
+        }
+
         public IUIGridColumn CallGetUIGridColumn(IPropDef propDef)
         {
             return this.GetUIGridColumn(propDef);

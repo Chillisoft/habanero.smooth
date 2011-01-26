@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using Habanero.Base;
 using Habanero.BO.ClassDefinition;
 
@@ -6,11 +7,23 @@ namespace Habanero.Naked
 {
     public class UIFormCreator
     {
+                private readonly IDefClassFactory _factory;
+
+                public UIFormCreator(IDefClassFactory factory)
+        {
+            _factory = factory;
+        }
+
+
         public IUIForm CreateUIForm(IClassDef classDef)
         {
-            var uiForm = new UIForm {Title = classDef.DisplayName + " Form"};
-            var uiFormTab = new UIFormTab("default");
-            var uiFormColumn = new UIFormColumn();
+            var uiForm = _factory.CreateUIFormDef();
+            uiForm.Title = classDef.DisplayName + " Form";
+
+            var uiFormTab = _factory.CreateUIFormTab();
+            uiFormTab.Name = "default";
+
+            var uiFormColumn = _factory.CreateUIFormColumn();
             //The Properties are loaded in the ordinal position order
             // that they occur in the XML ClassDef so this will be the 
             // correct order they should be shown in the UI.
@@ -26,20 +39,29 @@ namespace Habanero.Naked
         }
 
 
-        protected UIFormField GetUIFormField(IPropDef propDef)
+        protected IUIFormField GetUIFormField(IPropDef propDef)
         {
             if (propDef == null) throw new ArgumentNullException("propDef");
-            var uiFormField = new UIFormField(propDef.DisplayName, propDef.PropertyName);
-            SetControlType(propDef, uiFormField);
+
+            var uiControlType = GetControlType(propDef);
+
+            var uiFormField = _factory.CreateUIFormProperty(propDef.DisplayName, propDef.PropertyName,
+                                                            uiControlType.TypeName, uiControlType.AssemblyName, "", "",
+                                                            true, false, "", new Hashtable(), LayoutStyle.Label);
+
+
+            //var uiFormField = new UIFormField(propDef.DisplayName, propDef.PropertyName);
+            
+            //SetControlType(propDef, uiFormField);
             return uiFormField;
         }
 
-        private void SetControlType(IPropDef propDef, IUIFormField uiFormField)
-        {
-            var uiControlType = GetControlType(propDef);
-            uiFormField.ControlAssemblyName = uiControlType.AssemblyName;
-            uiFormField.ControlTypeName = uiControlType.TypeName;
-        }
+        //private void SetControlType(IPropDef propDef, IUIFormField uiFormField)
+        //{
+        //    var uiControlType = GetControlType(propDef);
+        //    uiFormField.ControlAssemblyName = uiControlType.AssemblyName;
+        //    uiFormField.ControlTypeName = uiControlType.TypeName;
+        //}
 
         private static UIControlType GetControlType(IPropDef propDef)
         {

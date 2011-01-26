@@ -9,6 +9,13 @@ namespace Habanero.Naked
 {
     public class UIViewCreator
     {
+        private readonly IDefClassFactory _factory;
+
+        public UIViewCreator(IDefClassFactory factory)
+        {
+            _factory = factory;
+        }
+
         public IUIDef GetDefaultUIDef(IClassDef classDef)
         {
             if (classDef == null) throw new ArgumentNullException("classDef");
@@ -17,9 +24,11 @@ namespace Habanero.Naked
             {
                 return classDef.UIDefCol["default"];
             }
-            IUIForm uiForm = classDef.CreateUIForm();
-            var uiGrid = classDef.CreateUIGrid();
-            return new UIDef("default", uiForm, uiGrid) {ClassDef = classDef};
+            IUIForm uiForm = CreateUIForm(classDef);
+            var uiGrid = CreateUIGrid(classDef);
+            var uiDef = _factory.CreateUIDef("default", uiForm, uiGrid);
+            uiDef.ClassDef = classDef;
+            return uiDef;
         }
 /*
         public UIView CreateUIView(DMClass dmClass)
@@ -47,6 +56,18 @@ namespace Habanero.Naked
             gridInfo.UIGridFilter = gridFilterInfo;
             return view;
         }*/
+
+        public IUIGrid CreateUIGrid(IClassDef classDef)
+        {
+            var gridCreator = new UIGridCreator(_factory);
+            return gridCreator.CreateUIGrid(classDef);
+        }
+        public IUIForm CreateUIForm(IClassDef classDef)
+        {
+            var formCreator = new UIFormCreator(_factory);
+            return formCreator.CreateUIForm(classDef);
+        }
+       
     }
 
     internal class UIControlType
@@ -58,17 +79,7 @@ namespace Habanero.Naked
 
     public static class UIFormCreatorExtensions
     {
-        public static IUIForm CreateUIForm(this IClassDef classDef)
-        {
-            var formCreator = new UIFormCreator();
-            return formCreator.CreateUIForm(classDef);
-        }
-        public static IUIGrid CreateUIGrid(this IClassDef classDef)
-        {
-            var gridCreator = new UIGridCreator();
-            return gridCreator.CreateUIGrid(classDef);
-        }
-
+     
         public static bool IsPartOfObjectIdentity(this IPropDef propDef)
         {
             //It is assumed that all Guids are FK Props or PrimaryKey Props and that
