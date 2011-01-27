@@ -24,7 +24,7 @@ namespace Habanero.Fluent
 
         public NewRelKeyDefBuilder<T, TRelatedType> WithNewSingleRelationship<TRelatedType>(string relationshipName) where TRelatedType : BusinessObject
         {
-            NewSingleRelationshipDefBuilder<T, TRelatedType> singleRelationshipDefBuilder = new NewSingleRelationshipDefBuilder<T, TRelatedType>(_classDefBuilder, relationshipName);
+            NewSingleRelationshipDefBuilder<T, TRelatedType> singleRelationshipDefBuilder = new NewSingleRelationshipDefBuilder<T, TRelatedType>(this, relationshipName);
             _singleRelationshipDefBuilders.Add(singleRelationshipDefBuilder);
             var relKeyDefBuilder = new NewRelKeyDefBuilder<T, TRelatedType>(singleRelationshipDefBuilder);
             singleRelationshipDefBuilder.RelKeyDefBuilder = relKeyDefBuilder;
@@ -33,7 +33,7 @@ namespace Habanero.Fluent
 
         public NewRelKeyDefBuilder<T, TRelatedType> WithNewSingleRelationship<TRelatedType>(Expression<Func<T, TRelatedType>> relationshipExpression) where TRelatedType : BusinessObject
         {
-            NewSingleRelationshipDefBuilder<T, TRelatedType> singleRelationshipDefBuilder = new NewSingleRelationshipDefBuilder<T, TRelatedType>(_classDefBuilder, relationshipExpression);
+            NewSingleRelationshipDefBuilder<T, TRelatedType> singleRelationshipDefBuilder = new NewSingleRelationshipDefBuilder<T, TRelatedType>(this, relationshipExpression);
             _singleRelationshipDefBuilders.Add(singleRelationshipDefBuilder);
             var relKeyDefBuilder = new NewRelKeyDefBuilder<T, TRelatedType>(singleRelationshipDefBuilder);
             singleRelationshipDefBuilder.RelKeyDefBuilder = relKeyDefBuilder;

@@ -85,6 +85,9 @@ namespace Habanero.Fluent.Tests
                 .Return()
                 .WithRelationships()
                     .WithNewSingleRelationship(c => c.SteeringWheel)
+                        .WithRelProp("asdsfa","asfsda")
+                        .Return()
+                    .Return()
             .Build();
 
             //---------------Test Result -----------------------

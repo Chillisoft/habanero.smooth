@@ -12,10 +12,10 @@ namespace Habanero.Fluent
                                                                                          where TRelatedType :
                                                                                              BusinessObject
     {
+        private readonly NewRelationshipsBuilder<T> _newRelationshipsBuilder;
         private IRelKeyDef _relKeyDef;
         private string _relatedObjectAssemblyName;
         private string _relatedClassName;
-        private NewClassDefBuilder2<T> _classDefBuilder;
         //private RelKeyBuilder<T, TRelatedType> _relKeyBuilder;
         private string RelationshipName { get; set; }
         private static DeleteParentAction DeleteAction { get; set; }
@@ -34,16 +34,15 @@ namespace Habanero.Fluent
         //    SetupDefaultValues(relationshipName);
         //}
 
-        public NewSingleRelationshipDefBuilder(NewClassDefBuilder2<T> classDefBuilder, string relationshipName)
+        public NewSingleRelationshipDefBuilder(NewRelationshipsBuilder<T> newRelationshipsBuilder, string relationshipName)
         {
-            _classDefBuilder = classDefBuilder;
+            _newRelationshipsBuilder = newRelationshipsBuilder;
             SetupDefaultValues(relationshipName);
         }
 
-        public NewSingleRelationshipDefBuilder(NewClassDefBuilder2<T> classDefBuilder,
-                                               Expression<Func<T, TRelatedType>> relationshipExpression)
+        public NewSingleRelationshipDefBuilder(NewRelationshipsBuilder<T> newRelationshipsBuilder, Expression<Func<T, TRelatedType>> relationshipExpression)
         {
-            _classDefBuilder = classDefBuilder;
+            _newRelationshipsBuilder = newRelationshipsBuilder;
             SetupDefaultValues(GetPropertyName(relationshipExpression));
         }
 
@@ -65,9 +64,9 @@ namespace Habanero.Fluent
         //    return new RelKeyBuilder<T, TRelatedType>(this);
         //}
 
-        public NewClassDefBuilder2<T> Return()
+        public NewRelationshipsBuilder<T> Return()
         {
-            return _classDefBuilder;
+            return _newRelationshipsBuilder;
         }
 
 /*
