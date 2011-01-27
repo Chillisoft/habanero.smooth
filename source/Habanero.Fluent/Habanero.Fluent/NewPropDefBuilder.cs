@@ -42,7 +42,7 @@ namespace Habanero.Fluent
             _isCompulsory = false;
         }
 
-        public NewPropertiesDefBuilder<T> Return()
+        public NewPropertiesDefBuilder<T> EndProperty()
         {
             return _propertiesDefBuilder;
         }

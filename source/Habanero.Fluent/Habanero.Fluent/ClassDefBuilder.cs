@@ -14,7 +14,7 @@ namespace Habanero.Fluent
         private PropDefCol _propDefCol;
 
         private IList<ISingleRelDefBuilder> _singleRelationshipDefBuilders = new List<ISingleRelDefBuilder>();
-        private IList<IMulipleRelDefBuilder> _multipleRelationshipDefBuilders = new List<IMulipleRelDefBuilder>();
+        private IList<IMultipleRelDefBuilder> _multipleRelationshipDefBuilders = new List<IMultipleRelDefBuilder>();
 
 
         private RelationshipDefCol _relationshipDefCol;

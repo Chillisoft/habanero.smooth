@@ -65,7 +65,7 @@ namespace Habanero.Fluent
             return ReflectionUtilities.GetPropertyInfo(expression);
         }
 
-        public NewClassDefBuilder2<T> Return()
+        public NewClassDefBuilder2<T> EndProperties()
         {
             return _classDefBuilder;
         }

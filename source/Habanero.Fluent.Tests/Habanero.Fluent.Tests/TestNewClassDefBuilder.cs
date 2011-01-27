@@ -79,22 +79,25 @@ namespace Habanero.Fluent.Tests
                         .WithDatabaseFieldName("gogo")
                         .WithDefaultValue("99")
                         .WithReadWriteRule(PropReadWriteRule.ReadWrite)
-                    .Return()
-                    .Property(c => c.Make).Return()
-                    .Property(c => c.Model).Return()
-                .Return()
+                    .EndProperty()
+                    .Property(c => c.Make).EndProperty()
+                    .Property(c => c.Model).EndProperty()
+                .EndProperties()
                 .WithRelationships()
                     .WithNewSingleRelationship(c => c.SteeringWheel)
-                        .WithRelProp("asdsfa","asfsda")
-                        .Return()
-                    .Return()
+                            .WithRelProp("asdsfa","asfsda")
+                    .EndSingleRelationship()
+                    .WithNewMultipleRelationship(d => d.Drivers)
+                        .WithCompositeRelationshipKey()
+                                .WithRelProp("x","y")
+                                .WithRelProp("x", "y")
+                            .EndRelProps()
+                        .EndCompositeRelationship()
+                .EndRelationships()
             .Build();
 
             //---------------Test Result -----------------------
             Assert.Fail("Test Not Yet Implemented");
         }
-
-
-
     }
 }

@@ -8,12 +8,12 @@ using Habanero.Util;
 
 namespace Habanero.Fluent
 {
-    public interface IMulipleRelDefBuilder
+    public interface IMultipleRelDefBuilder
     {
         IRelationshipDef Build();
     }
 
-    public class MultipleRelationshipDefBuilder<T, TRelatedType> : IMulipleRelDefBuilder where T : BusinessObject
+    public class MultipleRelationshipDefBuilder<T, TRelatedType> : IMultipleRelDefBuilder where T : BusinessObject
     {
         private RelKeyDef _relKeyDef;
         private int _timeOut;

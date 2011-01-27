@@ -8,24 +8,24 @@ using Habanero.Util;
 
 namespace Habanero.Fluent
 {
-    public class NewRelKeyBuilder<T, TRelatedType> : IRelDefBuilder where T : BusinessObject where TRelatedType : BusinessObject
+    public class NewMultipleRelKeyBuilder<T, TRelatedType> : IRelDefBuilder where T : BusinessObject 
     {
-        private readonly NewSingleRelationshipDefBuilder<T, TRelatedType> _singleRelationshipDefBuilder;
+        private readonly NewMultipleRelationshipDefBuilder<T, TRelatedType> _multipleRelationshipDefBuilder;
         private readonly RelKeyDef _relKeyDef;
-//        private readonly SingleRelationshipDefBuilder<T, TRelatedType> _relBuilder;
+//        private readonly MultipleRelationshipDefBuilder<T, TRelatedType> _relBuilder;
 
-        public NewRelKeyBuilder(NewSingleRelationshipDefBuilder<T, TRelatedType> singleRelationshipDefBuilder)
+        public NewMultipleRelKeyBuilder(NewMultipleRelationshipDefBuilder<T, TRelatedType> multipleRelationshipDefBuilder)
         {
-            _singleRelationshipDefBuilder = singleRelationshipDefBuilder;
+            _multipleRelationshipDefBuilder = multipleRelationshipDefBuilder;
             _relKeyDef = new RelKeyDef();
         }
 
-        public NewRelKeyBuilder<T, TRelatedType> WithRelProp(string ownerClassPropertyName, string relatedPropName) 
+        public NewMultipleRelKeyBuilder<T, TRelatedType> WithRelProp(string ownerClassPropertyName, string relatedPropName) 
         {
             this._relKeyDef.Add(new RelPropDef(ownerClassPropertyName, relatedPropName));
             return this;
         }
-        public NewRelKeyBuilder<T, TRelatedType> WithRelProp<TReturn>(Expression<Func<T, TReturn>> ownerPropExpression, Expression<Func<TRelatedType, TReturn>> relatedPropExpression) 
+        public NewMultipleRelKeyBuilder<T, TRelatedType> WithRelProp<TReturn>(Expression<Func<T, TReturn>> ownerPropExpression, Expression<Func<TRelatedType, TReturn>> relatedPropExpression) 
         {
             string ownerClassPropertyName = GetPropertyName(ownerPropExpression);
             string relatedPropName = GetRelatedPropertyName(relatedPropExpression);
@@ -49,9 +49,9 @@ namespace Habanero.Fluent
         {
             return ReflectionUtilities.GetPropertyInfo(expression);
         }
-        public NewSingleRelationshipDefBuilder<T, TRelatedType> Return()
+        public NewMultipleRelationshipDefBuilder<T, TRelatedType> EndRelProps()
         {
-            return this._singleRelationshipDefBuilder;
+            return this._multipleRelationshipDefBuilder;
         }
     }
 }
