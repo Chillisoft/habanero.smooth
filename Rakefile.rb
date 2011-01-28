@@ -30,7 +30,7 @@ require 'rake-habanero.rb'
 
 #------------------------project settings------------------------
 $basepath = 'http://delicious:8080/svn/habanero/HabaneroCommunity/SmoothHabanero/branches/v1.3'
-$solution = 'source/SmoothHabanero_2010.sln'
+$solution = 'source/SmoothHabanero_2008.sln'
 
 #______________________________________________________________________________
 #---------------------------------TASKS----------------------------------------
