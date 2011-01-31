@@ -37,12 +37,14 @@ namespace Habanero.Fluent
         public NewMultipleRelationshipDefBuilder(NewRelationshipsBuilder<T> newRelationshipsBuilder, string relationshipName)
         {
             _newRelationshipsBuilder = newRelationshipsBuilder;
+            WithRelationshipName(relationshipName); 
             SetupDefaultValues();
         }
 
         public NewMultipleRelationshipDefBuilder(NewRelationshipsBuilder<T> newRelationshipsBuilder, Expression<Func<T, TRelatedType>> relationshipExpression)
         {
             _newRelationshipsBuilder = newRelationshipsBuilder;
+            WithRelationshipName(relationshipExpression); 
             SetupDefaultValues();
         }
 

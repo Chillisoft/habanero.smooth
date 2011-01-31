@@ -49,7 +49,7 @@ namespace Habanero.Fluent
         {
             return ReflectionUtilities.GetPropertyInfo(expression);
         }
-        public NewSingleRelationshipDefBuilder<T, TRelatedType> Return()
+        public NewSingleRelationshipDefBuilder<T, TRelatedType> EndCompositeRelationshipKey()
         {
             return this._singleRelationshipDefBuilder;
         }
