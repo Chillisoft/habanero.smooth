@@ -31,7 +31,7 @@ namespace Habanero.Naked
         }
 
 
-        protected IUIGridColumn GetUIGridColumn(IPropDef propDef)
+        public IUIGridColumn GetUIGridColumn(IPropDef propDef)
         {
             if (propDef == null) throw new ArgumentNullException("propDef");
             UIControlType controlType = GetControlType(propDef);
