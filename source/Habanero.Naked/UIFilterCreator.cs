@@ -19,13 +19,14 @@ namespace Habanero.Naked
         public IFilterDef CreateUIFilter(IClassDef classDef)
         {
             if (classDef==null) throw new ArgumentNullException("classDef");
-            IFilterDef filterDef = _factory.CreateFilterDef(new List<IFilterPropertyDef>());
+            var filterPropertyDefs = new List<IFilterPropertyDef>();
             foreach (var propDef in classDef.PropDefcol)
             {
                 if (propDef.IsPartOfObjectIdentity()) continue;
                 if (propDef.IsPropForeignKey()) continue;
-                filterDef.FilterPropertyDefs.Add(CreateUIFilterProperty(propDef));
+                filterPropertyDefs.Add(CreateUIFilterProperty(propDef));
             }
+            IFilterDef filterDef = _factory.CreateFilterDef(filterPropertyDefs);
             return filterDef;
         }
 
