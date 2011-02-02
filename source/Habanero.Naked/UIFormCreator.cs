@@ -39,7 +39,7 @@ namespace Habanero.Naked
         }
 
 
-        protected IUIFormField GetUIFormField(IPropDef propDef)
+        public IUIFormField GetUIFormField(IPropDef propDef)
         {
             if (propDef == null) throw new ArgumentNullException("propDef");
 

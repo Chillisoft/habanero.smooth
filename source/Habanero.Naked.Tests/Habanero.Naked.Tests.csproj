@@ -75,6 +75,7 @@
     </Compile>
     <Compile Include="FakeBos.cs" />
     <Compile Include="PropDefFake.cs" />
+    <Compile Include="TestUIFilterCreator.cs" />
     <Compile Include="TestUIFormCreator.cs" />
     <Compile Include="TestUIGridCreator.cs" />
     <Compile Include="TestUIViewCreator.cs" />

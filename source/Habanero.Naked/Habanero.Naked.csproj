@@ -61,6 +61,7 @@
     <Compile Include="..\Common\AssemblyInfoShared.cs">
       <Link>Properties\AssemblyInfoShared.cs</Link>
     </Compile>
+    <Compile Include="UIFilterCreator.cs" />
     <Compile Include="UIFormCreator.cs" />
     <Compile Include="UIGridCreator.cs" />
     <Compile Include="UIViewCreator.cs" />
