@@ -26,7 +26,10 @@ namespace Habanero.Naked
                 if (propDef.IsPartOfObjectIdentity()) continue;
                 if (propDef.IsPropForeignKey()) continue;
                 uiGrid.Add(GetUIGridColumn(propDef));
-            }            
+            }
+
+            var uiFilterCreator = new UIFilterCreator(_factory);
+            uiGrid.FilterDef = uiFilterCreator.CreateUIFilter(classDef);
             return uiGrid;
         }
 

@@ -63,6 +63,38 @@ namespace Habanero.Naked.Tests
         }
 
         [Test]
+        public void Test_CreateUIGrid_ShouldCreateFilterDefForGrid()
+        {
+            //---------------Set up test pack-------------------
+            var gridCreator = new UIGridCreator(GetFactory());
+            IClassDef classDef = typeof(FakeBo).MapClass();
+            //---------------Assert Precondition----------------
+            Assert.AreEqual(0, classDef.UIDefCol.Count);
+            //---------------Execute Test ----------------------
+            IUIGrid returnedUIGrid = gridCreator.CreateUIGrid(classDef);
+
+            //---------------Test Result -----------------------
+            Assert.IsNotNull(returnedUIGrid.FilterDef);
+        }
+
+        [Test]
+        public void Test_CreateUIGrid_WhenClassDefHasOnePropAndOnePKProp_ShouldCreateFilterDefWithOneFilterPropertyDef()
+        {
+            //---------------Set up test pack-------------------
+            var gridCreator = new UIGridCreator(GetFactory());
+            IClassDef classDef = typeof(FakeBo).MapClass();
+            //---------------Assert Precondition----------------
+            Assert.AreEqual(0, classDef.UIDefCol.Count);
+            //---------------Execute Test ----------------------
+            IUIGrid returnedUIGrid = gridCreator.CreateUIGrid(classDef);
+
+            //---------------Test Result -----------------------
+            Assert.AreEqual(1, returnedUIGrid.FilterDef.FilterPropertyDefs.Count);
+            Assert.AreEqual("Fake Bo Name", returnedUIGrid.FilterDef.FilterPropertyDefs[0].Label);
+            Assert.AreEqual("FakeBoName", returnedUIGrid.FilterDef.FilterPropertyDefs[0].PropertyName);
+        }
+
+        [Test]
         public void Test_CreateUIGrid_With2Props_ShouldCreate2GridColumns()
         {
             //---------------Set up test pack-------------------
@@ -82,6 +114,7 @@ namespace Habanero.Naked.Tests
             Assert.AreEqual("Fake Bo Name 2", uiFormField2.Heading);
             Assert.AreEqual("FakeBoName2", uiFormField2.PropertyName);
         }
+
         [Test]
         public void Test_CreateGridInfo_TwoProperty_ShouldHaveAppropriateColumnInfo()
         {
@@ -98,6 +131,7 @@ namespace Habanero.Naked.Tests
             AssertGridColumnTypeIsTextBox(returnedUIGrid[0]);
             AssertGridColumnTypeIsCheckBox(returnedUIGrid[1]);
         }
+
         [Test]
         public void Test_GetUIFormField_WhenPropNull_ShouldRaiseError()
         {
@@ -117,6 +151,7 @@ namespace Habanero.Naked.Tests
                 StringAssert.Contains("propDef", ex.ParamName);
             }
         }
+
         [Test]
         public void Test_GetUIFormField_WhenString_ShouldHaveTextBoxPropertyAndColumnType()
         {
