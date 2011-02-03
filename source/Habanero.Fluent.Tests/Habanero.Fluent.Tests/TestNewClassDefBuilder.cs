@@ -169,104 +169,137 @@ namespace Habanero.Fluent.Tests
             Assert.AreSame(typeof(int), propDef.PropertyType);
         }
 
-//TODO andrew 31 Jan 2011: These test need to be changed to use GetClassDefBuilder which returns a NewClassDefBuilder
-//        [Test]
-//        public void Test_CreateClassDef_WithLambda_GuidProp_ShouldCreatePropTypeGuid()
-//        {
-//            //---------------Set up test pack-------------------
-//            //---------------Assert Precondition----------------
+        [Ignore("Need to work out why propertyTypeNameAssembly is being returned as CommonLanguageRuntime")] //TODO Andrew Russell 03 Feb 2011: Ignored Test - Need to work out why propertyTypeNameAssembly is being returned as CommonLanguageRuntime
+        [Test]
+        public void Test_CreateClassDef_WithLambda_GuidProp_ShouldCreatePropTypeGuid()
+        {
+            //---------------Set up test pack-------------------
+            //---------------Assert Precondition----------------
 
-//            //---------------Execute Test ----------------------
-//            var classDefBuilder = GetClassDefBuilder();
-//            var classDef = classDefBuilder
-//                            .WithPrimaryKey(c => c.VehicleID)
-//                            .WithProperties()
-//                                .Property(c => c.VehicleID).EndProperty()
-//                            .EndProperties()
-//                .Build();
+            //---------------Execute Test ----------------------
+            var classDefBuilder = GetClassDefBuilder();
+            var classDef = classDefBuilder
+                            .WithPrimaryKey(c => c.VehicleID)
+                            .WithProperties()
+                                .Property(c => c.VehicleID).EndProperty()
+                            .EndProperties()
+                .Build();
 
-//            //---------------Test Result -----------------------
-//            Assert.AreEqual(1, classDef.PropDefcol.Count);//Should not Be Empty
-//            var propDef = classDef.PropDefcol.FirstOrDefault();
-//            Assert.AreEqual("VehicleID", propDef.PropertyName);
-//            Assert.AreEqual("System", propDef.PropertyTypeAssemblyName);
-//            Assert.AreEqual("Guid", propDef.PropertyTypeName);
-//            Assert.AreSame(typeof(Guid), propDef.PropertyType);
-//        }
+            //---------------Test Result -----------------------
+            Assert.AreEqual(1, classDef.PropDefcol.Count);//Should not Be Empty
+            var propDef = classDef.PropDefcol.FirstOrDefault();
+            Assert.AreEqual("VehicleID", propDef.PropertyName);
+            Assert.AreEqual("System", propDef.PropertyTypeAssemblyName);
+            Assert.AreEqual("Guid", propDef.PropertyTypeName);
+            Assert.AreSame(typeof(Guid), propDef.PropertyType);
+        }
 
-//        [Ignore("This test is no longer valid as you can't define a singlerelationship without relprops")] //TODO Andrew Russell 20 Dec 2010: Ignored Test - This test is no longer valid as you can't define a singlerelationship without relprops
-//        [Test]
-//        public void Test_CreateClassDef_WithRelationshipsLambda_ShouldBuildRelationships()
-//        {
-//            //---------------Set up test pack-------------------
-//            //---------------Assert Precondition----------------
+        [Test]
+        public void Test_CreateClassDef_WithSingleRelationship_Lambda_ShouldBuildRelationships()
+        {
+            //---------------Set up test pack-------------------
+            //---------------Assert Precondition----------------
 
-//            //---------------Execute Test ----------------------
-//            var classDefBuilder = new ClassDefBuilder<Car>();
-//            var classDef = classDefBuilder
-//                    .WithSingleRelationship(c => c.SteeringWheel).Return()
-//                    .WithMultipleRelationship(c => c.Drivers).Return()
-//                    .Build();
-//            //---------------Test Result -----------------------
-//            Assert.AreEqual(2, classDef.RelationshipDefCol.Count);
+            //---------------Execute Test ----------------------
+            var classDefBuilder = GetClassDefBuilder();
+            var classDef = classDefBuilder
+                            .WithPrimaryKey(c => c.VehicleID)
+                            .WithRelationships()
+                                .WithNewSingleRelationship(c => c.SteeringWheel)
+                                    .WithRelProp("VehicleID", "CarID")
+                                .EndSingleRelationship()
+                            .EndRelationships()
+                    .Build();
 
-//            var relationshipDef1 = classDef.RelationshipDefCol["SteeringWheel"];
-//            Assert.IsNotNull(relationshipDef1.RelationshipName);
-//            Assert.AreEqual("SteeringWheel", relationshipDef1.RelatedObjectClassName);
+            //---------------Test Result -----------------------
+            Assert.AreEqual(1, classDef.RelationshipDefCol.Count);
 
-//            var relationshipDef2 = classDef.RelationshipDefCol["Drivers"];
-//            Assert.IsNotNull(relationshipDef2.RelationshipName);
-//            Assert.AreEqual("Driver", relationshipDef2.RelatedObjectClassName);
-//        }
-///*
+            var relationshipDef1 = classDef.RelationshipDefCol["SteeringWheel"];
+            Assert.IsNotNull(relationshipDef1.RelationshipName);
+            Assert.AreEqual("SteeringWheel", relationshipDef1.RelatedObjectClassName);
+            Assert.AreEqual(RelationshipType.Association, relationshipDef1.RelationshipType);
+            //var relationshipDef2 = classDef.RelationshipDefCol["Drivers"];
+            //Assert.IsNotNull(relationshipDef2.RelationshipName);
+            //Assert.AreEqual("Driver", relationshipDef2.RelatedObjectClassName);
+        }
 
-//        [Test]
-//        public void Test_Validate_With_NoRelProps_ShouldBeInvalid()
-//        {
-//            //---------------Set up test pack-------------------
-//            string relationshipName = "R" + GetRandomString();
-//            //---------------Assert Precondition----------------
-//            //---------------Execute Test ----------------------
-//            var classDefBuilder = new ClassDefBuilder<Car>();
-//            var classDef = classDefBuilder
-//                .WithPrimaryKeyProp(car1 => car1.VehicleID)
-//                .WithSingleRelationship<SteeringWheel>(relationshipName).Return()
-//                .WithProperty(car1 => car1.VehicleID).Return()
-//                .Build();
-//            var classDefSteeringWheel = new ClassDefBuilder<SteeringWheel>()
-//                .WithProperty(wheel => wheel.CarID).Return()
-//                .WithProperty(wheel => wheel.SteeringWheelID).Return()
-//                .WithPrimaryKeyProp(wheel => wheel.SteeringWheelID)
-//                .WithSingleRelationship(wheel => wheel.Car)
-//                    .WithRelProp(wheel => wheel.CarID, car => car.VehicleID).Return()
-//                .Build();
-//            var classDefCol = new ClassDefCol { classDef, classDefSteeringWheel };
-//            //---------------Test Result -----------------------
-//            var classDefValidator = new ClassDefValidator(new DefClassFactory());
-//            classDefValidator.ValidateClassDefs(classDefCol);
-//        }
-//        [Test]
-//        public void Test_CreateClassDef_WithRelationships_ShouldBuildRelationships()
-//        {
-//            //---------------Set up test pack-------------------
-//            var relationshipName1 = "C" + GetRandomString();
-//            var relationshipName2 = "F" + GetRandomString();
-//            //---------------Assert Precondition----------------
+        [Test]
+        public void Test_CreateClassDef_WithMultipleRelationship_Lambda_ShouldBuildRelationships()
+        {
+            //---------------Set up test pack-------------------
+            //---------------Assert Precondition----------------
 
-//            //---------------Execute Test ----------------------
-//            var classDefBuilder = new ClassDefBuilder<Car>();
-//            var classDef = classDefBuilder
-//                    .WithSingleRelationship<SteeringWheel>(relationshipName1)
-//                            .WithRelProp(car => car.VehicleID, steeringWheel => steeringWheel.CarID)
-//                            .Return()
-//                    .WithMultipleRelationship<Car>(relationshipName2).Return()
-//                    .Build();
-//            //---------------Test Result -----------------------
-//            Assert.AreEqual(2, classDef.RelationshipDefCol.Count);
-//            classDef.RelationshipDefCol.ShouldContain(def => def.RelationshipName == relationshipName1);
-//            classDef.RelationshipDefCol.ShouldContain(def => def.RelationshipName == relationshipName2);
-//        }
-//*/
+            //---------------Execute Test ----------------------
+            var classDefBuilder = GetClassDefBuilder();
+            var classDef = classDefBuilder
+                            .WithPrimaryKey(c => c.VehicleID)
+                            .WithRelationships()
+                                .WithNewMultipleRelationship(car => car.Drivers)
+                                        .WithRelProp("VehicleID", "CarID")
+                                .EndMultipleRelationship()
+                            .EndRelationships()
+                    .Build();
+
+            //---------------Test Result -----------------------
+            Assert.AreEqual(1, classDef.RelationshipDefCol.Count);
+
+
+            var relationshipDef1 = classDef.RelationshipDefCol["Drivers"];
+            Assert.IsNotNull(relationshipDef1.RelationshipName);
+            Assert.AreEqual("Driver", relationshipDef1.RelatedObjectClassName);
+            Assert.AreEqual(RelationshipType.Association, relationshipDef1.RelationshipType);
+
+        }
+
+
+
+        //        [Test]
+        //        public void Test_Validate_With_NoRelProps_ShouldBeInvalid()
+        //        {
+        //            //---------------Set up test pack-------------------
+        //            string relationshipName = "R" + GetRandomString();
+        //            //---------------Assert Precondition----------------
+        //            //---------------Execute Test ----------------------
+        //            var classDefBuilder = new ClassDefBuilder<Car>();
+        //            var classDef = classDefBuilder
+        //                .WithPrimaryKeyProp(car1 => car1.VehicleID)
+        //                .WithSingleRelationship<SteeringWheel>(relationshipName).Return()
+        //                .WithProperty(car1 => car1.VehicleID).Return()
+        //                .Build();
+        //            var classDefSteeringWheel = new ClassDefBuilder<SteeringWheel>()
+        //                .WithProperty(wheel => wheel.CarID).Return()
+        //                .WithProperty(wheel => wheel.SteeringWheelID).Return()
+        //                .WithPrimaryKeyProp(wheel => wheel.SteeringWheelID)
+        //                .WithSingleRelationship(wheel => wheel.Car)
+        //                    .WithRelProp(wheel => wheel.CarID, car => car.VehicleID).Return()
+        //                .Build();
+        //            var classDefCol = new ClassDefCol { classDef, classDefSteeringWheel };
+        //            //---------------Test Result -----------------------
+        //            var classDefValidator = new ClassDefValidator(new DefClassFactory());
+        //            classDefValidator.ValidateClassDefs(classDefCol);
+        //        }
+        //        [Test]
+        //        public void Test_CreateClassDef_WithRelationships_ShouldBuildRelationships()
+        //        {
+        //            //---------------Set up test pack-------------------
+        //            var relationshipName1 = "C" + GetRandomString();
+        //            var relationshipName2 = "F" + GetRandomString();
+        //            //---------------Assert Precondition----------------
+
+        //            //---------------Execute Test ----------------------
+        //            var classDefBuilder = new ClassDefBuilder<Car>();
+        //            var classDef = classDefBuilder
+        //                    .WithSingleRelationship<SteeringWheel>(relationshipName1)
+        //                            .WithRelProp(car => car.VehicleID, steeringWheel => steeringWheel.CarID)
+        //                            .Return()
+        //                    .WithMultipleRelationship<Car>(relationshipName2).Return()
+        //                    .Build();
+        //            //---------------Test Result -----------------------
+        //            Assert.AreEqual(2, classDef.RelationshipDefCol.Count);
+        //            classDef.RelationshipDefCol.ShouldContain(def => def.RelationshipName == relationshipName1);
+        //            classDef.RelationshipDefCol.ShouldContain(def => def.RelationshipName == relationshipName2);
+        //        }
+        //*/
 //        //TODO andrew 20 Dec 2010: 
 
 //        /*

@@ -48,7 +48,8 @@ namespace Habanero.Fluent
 
         private static string GetPropertyName<TReturn>(Expression<Func<T, TReturn>> propExpression)
         {
-            return GetPropertyInfo(propExpression).Name;
+            var propertyInfo = GetPropertyInfo(propExpression);
+            return propertyInfo.Name;
         }
 
         private static PropertyInfo GetPropertyInfo<TModel, TReturn>(Expression<Func<TModel, TReturn>> expression)

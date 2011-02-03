@@ -62,7 +62,7 @@ namespace Habanero.Fluent
             _timeOut = 0;
         }
 
-        public NewRelationshipsBuilder<T> EndCompositeRelationship()
+        public NewRelationshipsBuilder<T> EndMultipleRelationship()
         {
             return _newRelationshipsBuilder;
         }

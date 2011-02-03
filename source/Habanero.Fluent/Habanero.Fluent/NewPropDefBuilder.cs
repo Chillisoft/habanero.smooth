@@ -61,9 +61,9 @@ namespace Habanero.Fluent
 
         public IPropDef Build()
         {
-
-            return new PropDef(PropertyName, PropertyTypeAssemblyName, PropertyTypeName
-                               , ReadWriteRule, DatabaseFieldName, DefaultValueString, _isCompulsory, _isAutoIncrementing, Int32.MaxValue , _displayName, _description, _keepValuePrivate );
+            var propDef = new PropDef(PropertyName, PropertyTypeAssemblyName, PropertyTypeName
+                                      , ReadWriteRule, DatabaseFieldName, DefaultValueString, _isCompulsory, _isAutoIncrementing, Int32.MaxValue , _displayName, _description, _keepValuePrivate );
+            return propDef;
         }
 
         public NewPropDefBuilder<T> IsCompulsory()
