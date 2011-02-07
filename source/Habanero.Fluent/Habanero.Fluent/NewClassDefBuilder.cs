@@ -42,7 +42,7 @@ namespace Habanero.Fluent
 
         public NewSuperClassDefBuilder<T> WithSuperClass()
         {
-            _superClassDefBuilder = new NewSuperClassDefBuilder<T>(_newClassDefBuilder2);
+            _superClassDefBuilder = new NewSuperClassDefBuilder<T>(this);
             return _superClassDefBuilder;
         }
 

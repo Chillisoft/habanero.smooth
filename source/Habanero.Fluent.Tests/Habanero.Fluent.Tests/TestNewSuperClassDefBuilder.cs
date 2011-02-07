@@ -134,7 +134,7 @@ namespace Habanero.Fluent.Tests
         private NewSuperClassDefBuilder<T> GetSuperClassDefBuilder<T>() where T : BusinessObject
         {
             var primaryKeyPropNames = new List<string> { GetRandomString() };
-            return new NewSuperClassDefBuilder<T>(new NewClassDefBuilder2<T>(new NewClassDefBuilder<T>(), primaryKeyPropNames) );
+            return new NewSuperClassDefBuilder<T>(new NewClassDefBuilder<T>());
         }
     }
 }

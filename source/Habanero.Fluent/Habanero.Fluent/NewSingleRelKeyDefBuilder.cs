@@ -1,6 +1,9 @@
+using System;
+using System.Linq.Expressions;
 using Habanero.Base;
 using Habanero.BO;
 using Habanero.Fluent;
+using Habanero.Util;
 
 public class NewSingleRelKeyDefBuilder<TBo, TRelatedType>
     where TBo : BusinessObject
@@ -19,6 +22,13 @@ public class NewSingleRelKeyDefBuilder<TBo, TRelatedType>
         _singleRelKeyBuilder = new NewSingleRelKeyBuilder<TBo, TRelatedType>(_singleRelationshipDefBuilder);
         _singleRelKeyBuilder.WithRelProp(ownerPropName, relatedPropName);
         return _singleRelationshipDefBuilder;
+    }
+
+    public NewSingleRelationshipDefBuilder<TBo, TRelatedType> WithRelProp<TReturn>(Expression<Func<TBo, TReturn>> ownerPropExpression, Expression<Func<TRelatedType, TReturn>> relatedPropExpression)
+    {
+        string ownerClassPropertyName = ReflectionUtilities.GetPropertyName(ownerPropExpression);
+        string relatedPropName = ReflectionUtilities.GetPropertyName(relatedPropExpression);  // note the differente expressions
+        return this.WithRelProp(ownerClassPropertyName, relatedPropName);
     }
 
     public NewSingleRelKeyBuilder<TBo, TRelatedType> WithCompositeRelationshipKey()

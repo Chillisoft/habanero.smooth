@@ -65,6 +65,7 @@
     <Compile Include="NewSingleRelKeyDefBuilder.cs" />
     <Compile Include="NewSingleRelationshipDefBuilder.cs" />
     <Compile Include="NewSuperClassDefBuilder.cs" />
+    <Compile Include="NewUniqueContraintsBuilder.cs" />
     <Compile Include="PropDefBuilder.cs" />
     <Compile Include="NewPropertiesDefBuilder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

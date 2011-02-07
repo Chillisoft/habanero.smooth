@@ -33,7 +33,7 @@ namespace Habanero.Fluent
             return this;
         }
 
-        public NewClassDefBuilder2<T> Return()
+        public NewClassDefBuilder2<T> EndCompositePrimaryKey()
         {
             return _classDefBuilder;
         }

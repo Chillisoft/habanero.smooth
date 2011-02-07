@@ -1,6 +1,9 @@
+using System;
+using System.Linq.Expressions;
 using Habanero.Base;
 using Habanero.BO;
 using Habanero.Fluent;
+using Habanero.Util;
 
 public class NewMultipleRelKeyDefBuilder<TBo, TRelatedType>
     where TBo : BusinessObject
@@ -18,6 +21,13 @@ public class NewMultipleRelKeyDefBuilder<TBo, TRelatedType>
         _multipleRelKeyBuilder = new NewMultipleRelKeyBuilder<TBo, TRelatedType>(_multipleRelationshipDefBuilder);
         _multipleRelKeyBuilder.WithRelProp(ownerPropName, relatedPropName);
         return _multipleRelationshipDefBuilder;
+    }
+
+    public NewMultipleRelationshipDefBuilder<TBo, TRelatedType> WithRelProp<TReturn>(Expression<Func<TBo, TReturn>> ownerPropExpression, Expression<Func<TRelatedType, TReturn>> relatedPropExpression)
+    {
+        string ownerClassPropertyName = ReflectionUtilities.GetPropertyName(ownerPropExpression);
+        string relatedPropName = ReflectionUtilities.GetPropertyName(relatedPropExpression);  // note the different expression
+        return this.WithRelProp(ownerClassPropertyName, relatedPropName);
     }
 
     public NewMultipleRelKeyBuilder<TBo, TRelatedType> WithCompositeRelationshipKey()

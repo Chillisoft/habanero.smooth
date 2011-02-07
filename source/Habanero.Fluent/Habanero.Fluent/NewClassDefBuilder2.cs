@@ -19,6 +19,19 @@ namespace Habanero.Fluent
             _classDefBuilder = classDefBuilder;
             _primaryKeyPropNames = primaryKeyPropNames;
 //             _builders
+            Initialise();
+        }
+
+
+        public NewClassDefBuilder2(NewClassDefBuilder<T> classDefBuilder, NewSuperClassDefBuilder<T> superClassDefBuilder)
+        {
+            _classDefBuilder = classDefBuilder;
+            _superClassDefBuilder = superClassDefBuilder;
+            Initialise();
+        }
+
+        private void Initialise()
+        {
             _propDefCol = new PropDefCol();
             PropDefBuilders = new List<NewPropDefBuilder<T>>();
             _propertiesDefBuilder = new NewPropertiesDefBuilder<T>(this, PropDefBuilders);
@@ -27,20 +40,18 @@ namespace Habanero.Fluent
         }
 
 
-
         private IPropDefCol _propDefCol;
 
         private IList<ISingleRelDefBuilder> _singleRelationshipDefBuilders = new List<ISingleRelDefBuilder>();
         private IList<IMultipleRelDefBuilder> _multipleRelationshipDefBuilders = new List<IMultipleRelDefBuilder>();
-
-
+        
         private RelationshipDefCol _relationshipDefCol;
         //private IList<MultipleRelationshipDefBuilder<T>> _multipleRelationshipDefBuilders = new List<MultipleRelationshipDefBuilder<T>>();
         private IList<string> _primaryKeyPropNames;
         private PrimaryKeyDef _primaryKeyDef;
         private IList<NewKeyDefBuilder<T>> _keyDefBuilders = new List<NewKeyDefBuilder<T>>();
         private KeyDefCol _keyDefCol = new KeyDefCol();
-        private SuperClassDefBuilder<T> _superClassDefBuilder;
+        private NewSuperClassDefBuilder<T> _superClassDefBuilder;
         private NewPropDefBuilder<T> _newPropDefBuilder;
         private IList<NewPropDefBuilder<T>> PropDefBuilders { get; set; }
 
@@ -72,6 +83,7 @@ namespace Habanero.Fluent
 
         private void SetupPrimaryKey()
         {
+            if (_primaryKeyPropNames == null) return;
             if (_primaryKeyPropNames.Count > 1)
             {
                 _primaryKeyDef.IsGuidObjectID = false;
@@ -191,12 +203,17 @@ namespace Habanero.Fluent
             return new NewRelationshipsBuilder<T>(this, _singleRelationshipDefBuilders, _multipleRelationshipDefBuilders);
         }
 
-        public NewKeyDefBuilder<T> WithUniqueConstraint(string keyName = "")
+        public NewUniqueContraintsBuilder<T> WithUniqueConstraints()
+        {
+            return new NewUniqueContraintsBuilder<T>(this, _keyDefBuilders);
+        }
+
+        /*public NewKeyDefBuilder<T> WithUniqueConstraint(string keyName = "")
         {
             NewKeyDefBuilder<T> keyDefBuilder = new NewKeyDefBuilder<T>(this, keyName);
             _keyDefBuilders.Add(keyDefBuilder);
             return keyDefBuilder;
-        }
+        }*/
 
 
         private IPropDefCol SetupPropDefCol()
@@ -208,8 +225,6 @@ namespace Habanero.Fluent
             }
             return _propDefCol;
         }
-
-
     }
 }
 

@@ -40,33 +40,29 @@ namespace Habanero.Fluent
             return relKeyDefBuilder;
         }
 
-        //public NewMultipleRelationshipDefBuilder<T, TRelatedType> WithMultipleRelationship<TRelatedType>(string relationshipName) where TRelatedType : BusinessObject
-        //{
-        //    NewMultipleRelationshipDefBuilder<T, TRelatedType> multipleRelationshipDefBuilder = new NewMultipleRelationshipDefBuilder<T, TRelatedType>(_classDefBuilder)
-        //        .WithRelationshipName(relationshipName);
-        //    //.WithRelatedType<TRelatedType>();
-        //    _multipleRelationshipDefBuilders.Add(multipleRelationshipDefBuilder);
-        //    return multipleRelationshipDefBuilder;
-
-        //}
-
-        public NewMultipleRelKeyDefBuilder<T, TRelatedType> WithNewMultipleRelationship<TRelatedType>(Expression<Func<T, TRelatedType>> relationshipExpression)
+        public NewMultipleRelKeyDefBuilder<T, TRelatedType> WithNewMultipleRelationship<TRelatedType>(string relationshipName) where TRelatedType : BusinessObject
         {
-            NewMultipleRelationshipDefBuilder<T, TRelatedType> multipleRelationshipDefBuilder = new NewMultipleRelationshipDefBuilder<T, TRelatedType>(this, relationshipExpression);
+            NewMultipleRelationshipDefBuilder<T, TRelatedType> multipleRelationshipDefBuilder = new NewMultipleRelationshipDefBuilder<T, TRelatedType>(this);
+            multipleRelationshipDefBuilder.WithRelationshipName(relationshipName);
             _multipleRelationshipDefBuilders.Add(multipleRelationshipDefBuilder);
             var relKeyDefBuilder = new NewMultipleRelKeyDefBuilder<T, TRelatedType>(multipleRelationshipDefBuilder);
             multipleRelationshipDefBuilder.MultipleRelKeyDefBuilder = relKeyDefBuilder;
             return relKeyDefBuilder;
+
         }
-        //public NewMultipleRelKeyDefBuilder<T, TRlatedType> WithMultipleRelationship<TBusinessObject>(Expression<Func<T, BusinessObjectCollection<TBusinessObject>>> relationshipExpression)
-        //    where TBusinessObject : class, IBusinessObject, new()
-        //{
-        //    string relationshipName = GetPropertyName(relationshipExpression);
-        //    NewMultipleRelationshipDefBuilder<T, TBusinessObject> multipleRelationshipDefBuilder = new NewMultipleRelationshipDefBuilder<T, TBusinessObject>(_classDefBuilder)
-        //        .WithRelationshipName(relationshipName);
-        //    _multipleRelationshipDefBuilders.Add(multipleRelationshipDefBuilder);
-        //    return multipleRelationshipDefBuilder;
-        //}
+
+
+        public NewMultipleRelKeyDefBuilder<T, TBusinessObject> WithNewMultipleRelationship<TBusinessObject>(Expression<Func<T, BusinessObjectCollection<TBusinessObject>>> relationshipExpression)
+            where TBusinessObject : class, IBusinessObject, new()
+        {
+            string relationshipName = GetPropertyName(relationshipExpression);
+            NewMultipleRelationshipDefBuilder<T, TBusinessObject> multipleRelationshipDefBuilder = new NewMultipleRelationshipDefBuilder<T, TBusinessObject>(this);
+            multipleRelationshipDefBuilder.WithRelationshipName(relationshipName);
+            _multipleRelationshipDefBuilders.Add(multipleRelationshipDefBuilder);
+            var relKeyDefBuilder = new NewMultipleRelKeyDefBuilder<T, TBusinessObject>(multipleRelationshipDefBuilder);
+            multipleRelationshipDefBuilder.MultipleRelKeyDefBuilder = relKeyDefBuilder;
+            return relKeyDefBuilder;
+        }
 
 
         public NewClassDefBuilder2<T> EndRelationships()

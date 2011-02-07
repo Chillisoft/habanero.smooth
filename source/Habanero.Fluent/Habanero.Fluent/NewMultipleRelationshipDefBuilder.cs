@@ -41,10 +41,10 @@ namespace Habanero.Fluent
             SetupDefaultValues();
         }
 
-        public NewMultipleRelationshipDefBuilder(NewRelationshipsBuilder<T> newRelationshipsBuilder, Expression<Func<T, TRelatedType>> relationshipExpression)
+        public NewMultipleRelationshipDefBuilder(NewRelationshipsBuilder<T> newRelationshipsBuilder)
         {
             _newRelationshipsBuilder = newRelationshipsBuilder;
-            WithRelationshipName(relationshipExpression); 
+            //WithRelationshipName(relationshipExpression); 
             SetupDefaultValues();
         }
 

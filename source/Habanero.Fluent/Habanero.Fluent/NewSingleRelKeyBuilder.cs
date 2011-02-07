@@ -25,6 +25,7 @@ namespace Habanero.Fluent
             this._relKeyDef.Add(new RelPropDef(ownerClassPropertyName, relatedPropName));
             return this;
         }
+
         public NewSingleRelKeyBuilder<T, TRelatedType> WithRelProp<TReturn>(Expression<Func<T, TReturn>> ownerPropExpression, Expression<Func<TRelatedType, TReturn>> relatedPropExpression) 
         {
             string ownerClassPropertyName = GetPropertyName(ownerPropExpression);
