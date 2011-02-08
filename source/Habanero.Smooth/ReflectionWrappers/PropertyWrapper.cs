@@ -542,6 +542,11 @@ namespace Habanero.Smooth.ReflectionWrappers
             get { return this.HasAttribute<AutoMapDateTimePropRuleAttribute>(); }
         }
 
+        public virtual bool HasDateTimeStringRuleAttribute
+        {
+            get { return this.HasAttribute<AutoMapDateTimePropRuleAttribute>(); }
+        }
+
 
         //TODO brett 10 Jul 2010: This looks wrong to me surely it should use the UnderlyingType as above
         // and not the PropertyType.

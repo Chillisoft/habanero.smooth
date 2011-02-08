@@ -100,6 +100,12 @@ namespace Habanero.Smooth
                     propDef.AddPropRule(propRuleDate);
                 }
 
+                if (this.PropertyWrapper.HasDateTimeStringRuleAttribute)
+                {
+                    var propRuleDate = CreateDateTimeStringPropRule();
+                    propDef.AddPropRule(propRuleDate);
+                }
+
                 propDef.AutoIncrementing = this.PropertyWrapper.HasAutoIncrementingAttribute;
                 return propDef;
             }
@@ -111,6 +117,34 @@ namespace Habanero.Smooth
             var startDate = this.PropertyWrapper.GetAttribute<AutoMapDateTimePropRuleAttribute>().StartDate;
             var dateTime = this.PropertyWrapper.GetAttribute<AutoMapDateTimePropRuleAttribute>().EndDate;
             return new PropRuleDate("", "",startDate,dateTime);
+        }
+
+        private PropRuleDate CreateDateTimeStringPropRule()
+        {
+            var startDateString = this.PropertyWrapper.GetAttribute<AutoMapDateTimePropRuleAttribute>().StartDateString;
+            var endDateTimeString = this.PropertyWrapper.GetAttribute<AutoMapDateTimePropRuleAttribute>().EndDateString;
+            DateTime minDate = GetDate(startDateString, DateTime.MinValue);
+            DateTime maxDate = GetDate(endDateTimeString, DateTime.MaxValue);
+            return new PropRuleDate("", "", minDate, maxDate);
+        }
+
+        private static DateTime GetDate(string dateString, DateTime initialDate)
+        {
+            object value;
+            bool dateValueParsedOk = new BOPropDateTimeDataMapper().TryParsePropValue(dateString, out value);
+            DateTime dateTime = initialDate;
+            if (dateValueParsedOk)
+            {
+                if (value is DateTime)
+                {
+                    return (DateTime)value;
+                }
+                if (value is IResolvableToValue)
+                {
+                    dateTime = (DateTime)((IResolvableToValue)value).ResolveToValue();
+                }
+            }
+            return dateTime;
         }
 
         private PropRuleString CreatePatternMatchPropRule()

@@ -277,11 +277,19 @@ namespace Habanero.Smooth
     {
         public DateTime StartDate { get; private set; }
         public DateTime EndDate { get; private set; }
+        public string StartDateString { get; private set; }
+        public string EndDateString { get; private set; }
 
         public AutoMapDateTimePropRuleAttribute(DateTime startDateValue, DateTime endDateValue)
         {
             StartDate = startDateValue;
             EndDate = endDateValue;
+        }
+
+        public AutoMapDateTimePropRuleAttribute(string startDateValue, string endDateValue)
+        {
+            StartDateString = startDateValue;
+            EndDateString = endDateValue;
         }
     }
 

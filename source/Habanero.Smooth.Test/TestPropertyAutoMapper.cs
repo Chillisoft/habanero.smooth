@@ -583,6 +583,25 @@ namespace Habanero.Smooth.Test
             //---------------Test Result -----------------------
             Assert.IsNotNull(propDef);
             Assert.AreEqual(1,propDef.PropRules.Count);
+        } 
+        
+        [Test]
+        public void Test_MapWithFake_WhenDateTimeStringPropRuleAttribute_ShouldReturnPropDefWithDateTimePropRuleWithValues()
+        {
+            //---------------Set up test pack-------------------
+            PropertyWrapper wrapper = GetMockPropWrapper();
+            var propertyAutoMapper = new PropertyAutoMapper(wrapper);
+            string StartDate = "Today";
+            string EndDate = "Tomorrow";
+            //---------------Assert Precondition----------------
+            Assert.IsNull(wrapper.GetAttribute<AutoMapDateTimePropRuleAttribute>());
+            //---------------Execute Test ----------------------
+
+            SetDateTimeStringPropRuleAttributeWithDefaultConstructor(wrapper, StartDate, EndDate);
+            var propDef = propertyAutoMapper.MapProperty();
+            //---------------Test Result -----------------------
+            Assert.IsNotNull(propDef);
+            Assert.AreEqual(1,propDef.PropRules.Count);
         }
 
 
@@ -681,6 +700,13 @@ namespace Habanero.Smooth.Test
             wrapper.Stub(propertyWrapper => propertyWrapper.GetAttribute<AutoMapDateTimePropRuleAttribute>()).Return(
                    new AutoMapDateTimePropRuleAttribute(startDate, endDate));
             wrapper.Stub(propertyWrapper => propertyWrapper.HasDateTimeRuleAttribute).Return(true);
+        }
+
+        private void SetDateTimeStringPropRuleAttributeWithDefaultConstructor(PropertyWrapper wrapper, string startDate, string endDate)
+        {
+            wrapper.Stub(propertyWrapper => propertyWrapper.GetAttribute<AutoMapDateTimePropRuleAttribute>()).Return(
+                   new AutoMapDateTimePropRuleAttribute(startDate, endDate));
+            wrapper.Stub(propertyWrapper => propertyWrapper.HasDateTimeStringRuleAttribute).Return(true);
         }
 
         private TypeWrapper GetFakeTypeWrapper()

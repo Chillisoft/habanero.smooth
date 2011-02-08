@@ -129,6 +129,22 @@ namespace Habanero.Smooth.Test
         }
 
         [Test]
+        public void Test_DateTimeStringPropRule_ShouldSetValue()
+        {
+            //---------------Set up test pack-------------------
+            var startDateValue = "Today";
+            var endDateValue = "Tomorrow";
+            //---------------Assert Precondition----------------
+
+            //---------------Execute Test ----------------------
+            var attribute = new AutoMapDateTimePropRuleAttribute(startDateValue, endDateValue);
+            //---------------Test Result -----------------------
+            Assert.IsInstanceOf<Attribute>(attribute);
+            Assert.AreEqual(startDateValue, attribute.StartDateString);
+            Assert.AreEqual(endDateValue, attribute.EndDateString);
+        }
+
+        [Test]
         public void Test_StringPatternMatchPropRule_ShouldSetValue()
         {
             //---------------Set up test pack-------------------
