@@ -628,7 +628,6 @@ namespace Habanero.Fluent.Tests
 
 
 
-
 ///*    public class CarBuilder: ClassDefBuilder<Car>
 //    {
 //        public CarBuilder()

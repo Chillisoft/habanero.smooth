@@ -59,12 +59,13 @@
     <Compile Include="TestNewClassDefBuilder.cs" />
     <Compile Include="TestNewPropDefBuilder.cs" />
     <Compile Include="TestNewPropertiesDefBuilder.cs" />
+    <Compile Include="TestNewSingleRelKeyDefBuilder.cs" />
     <Compile Include="TestNewSuperClassDefBuilder.cs" />
-    <Compile Include="TestPropDefBuilder.cs" />
+    <Compile Include="TestOldPropDefBuilder.cs" />
     <Compile Include="TestRelKeyDefBuilder.cs" />
     <Compile Include="TestSingleRelationshipDefBuilder.cs" />
     <Compile Include="TestSingleRelKeyDefBuilder.cs" />
-    <Compile Include="TestSuperClassDefBuilder.cs" />
+    <Compile Include="TestOldSuperClassDefBuilder.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Habanero.Fluent\Habanero.Fluent\Habanero.Fluent.csproj">

@@ -38,9 +38,9 @@ namespace Habanero.Fluent.Tests
             Assert.AreEqual(RelationshipType.Association, singleRelationshipDef.RelationshipType);
         }
 
-        private SingleRelationshipDefBuilder<T, TRelatedType> GetSingleRelationshipDefBuilder<T, TRelatedType>(string relationshipName) where T : BusinessObject where TRelatedType : BusinessObject
+        private OldSingleRelationshipDefBuilder<T, TRelatedType> GetSingleRelationshipDefBuilder<T, TRelatedType>(string relationshipName) where T : BusinessObject where TRelatedType : BusinessObject
         {
-            var singleRelationshipDefBuilder = new SingleRelationshipDefBuilder<T, TRelatedType>(relationshipName);
+            var singleRelationshipDefBuilder = new OldSingleRelationshipDefBuilder<T, TRelatedType>(relationshipName);
             return singleRelationshipDefBuilder;
         }
 
@@ -157,7 +157,7 @@ namespace Habanero.Fluent.Tests
             //---------------Assert Precondition----------------
 
             //---------------Execute Test ----------------------
-            var singleRelationshipDef = new SingleRelationshipDefBuilder<Car, SteeringWheel>(c => c.SteeringWheel)
+            var singleRelationshipDef = new OldSingleRelationshipDefBuilder<Car, SteeringWheel>(c => c.SteeringWheel)
                                                             .Build();
 
             //---------------Test Result -----------------------

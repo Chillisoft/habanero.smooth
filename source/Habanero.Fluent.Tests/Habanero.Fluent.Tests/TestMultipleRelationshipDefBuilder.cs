@@ -41,9 +41,9 @@ namespace Habanero.Fluent.Tests
             Assert.AreEqual(0, multipleRelationshipDef.TimeOut);
         }
 
-        private static MultipleRelationshipDefBuilder<T, TRelatedType> GetMultipleRelationshipDefBuilder<T, TRelatedType>(string relationshipName) where T : BusinessObject
+        private static OldMultipleRelationshipDefBuilder<T, TRelatedType> GetMultipleRelationshipDefBuilder<T, TRelatedType>(string relationshipName) where T : BusinessObject
         {
-            return new MultipleRelationshipDefBuilder<T, TRelatedType>()
+            return new OldMultipleRelationshipDefBuilder<T, TRelatedType>()
                 .WithRelationshipName(relationshipName);
         }
 
@@ -200,7 +200,7 @@ namespace Habanero.Fluent.Tests
             //---------------Assert Precondition----------------
 
             //---------------Execute Test ----------------------
-            var multipleRelationshipDef = new MultipleRelationshipDefBuilder<Car, Driver>()
+            var multipleRelationshipDef = new OldMultipleRelationshipDefBuilder<Car, Driver>()
                                                             .WithRelationshipName(c => c.Drivers)
                                                             .Build();
 
@@ -215,7 +215,7 @@ namespace Habanero.Fluent.Tests
             //---------------Assert Precondition----------------
 
             //---------------Execute Test ----------------------
-            var multipleRelationshipDef = new MultipleRelationshipDefBuilder<Car, Driver>()
+            var multipleRelationshipDef = new OldMultipleRelationshipDefBuilder<Car, Driver>()
                                                             .WithRelationshipName(c => c.Drivers)
                                                             .WithRelProp(car => car.VehicleID, driver => driver.CarID)
                                                             .Build();
@@ -235,7 +235,7 @@ namespace Habanero.Fluent.Tests
             //---------------Assert Precondition----------------
 
             //---------------Execute Test ----------------------
-            var multipleRelationshipDef = new MultipleRelationshipDefBuilder<FakeBOWithMultipleRelationship, FakeBOWithSingleRelationship>()
+            var multipleRelationshipDef = new OldMultipleRelationshipDefBuilder<FakeBOWithMultipleRelationship, FakeBOWithSingleRelationship>()
                                                             .WithRelationshipName(c => c.FakeBOWithSingleRelationships)
                                                             .WithRelProp(car => car.FakeBOWithMultipleRelationshipID, driver => driver.FKID)
                                                             .Build();

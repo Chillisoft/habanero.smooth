@@ -18,8 +18,8 @@ namespace Habanero.Fluent.Tests
             //---------------Assert Precondition----------------
 
             //---------------Execute Test ----------------------
-            var singleRelationshipDefBuilder = new ClassDefBuilder<Car>().WithSingleRelationship(c => c.SteeringWheel);
-            var relKeyDefBuilder = new RelKeyDefBuilder<Car, SteeringWheel>(singleRelationshipDefBuilder);
+            var singleRelationshipDefBuilder = new OldClassDefBuilder<Car>().WithSingleRelationship(c => c.SteeringWheel);
+            var relKeyDefBuilder = new OldRelKeyDefBuilder<Car, SteeringWheel>(singleRelationshipDefBuilder);
 
             //---------------Test Result -----------------------
             Assert.IsNotNull(relKeyDefBuilder);
@@ -29,8 +29,8 @@ namespace Habanero.Fluent.Tests
         public void Test_WithRelProp_WhenCalled_ShouldReturnSingleRelationshipDefBuilder()
         {
             //---------------Set up test pack-------------------
-            var singleRelationshipDefBuilder = new ClassDefBuilder<Car>().WithSingleRelationship(c => c.SteeringWheel);
-            var relKeyDefBuilder = new RelKeyDefBuilder<Car, SteeringWheel>(singleRelationshipDefBuilder);
+            var singleRelationshipDefBuilder = new OldClassDefBuilder<Car>().WithSingleRelationship(c => c.SteeringWheel);
+            var relKeyDefBuilder = new OldRelKeyDefBuilder<Car, SteeringWheel>(singleRelationshipDefBuilder);
             
             //---------------Assert Precondition----------------
 

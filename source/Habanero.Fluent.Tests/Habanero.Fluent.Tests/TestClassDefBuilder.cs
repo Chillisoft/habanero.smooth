@@ -25,7 +25,7 @@ namespace Habanero.Fluent.Tests
         public void Test_WithRelDef_WithSingleRelKey_ShouldHaveOneRelProp()
         {
             //---------------Set up test pack-------------------
-            var classDefBuilder = new ClassDefBuilder<Car>();
+            var classDefBuilder = new OldClassDefBuilder<Car>();
             //---------------Assert Precondition----------------
 
             //---------------Execute Test ----------------------
@@ -46,7 +46,7 @@ namespace Habanero.Fluent.Tests
         public void Test_WithRelDef_WithSingleRelKey_ShouldSetDefaults()
         {
             //---------------Set up test pack-------------------
-            var classDefBuilder = new ClassDefBuilder<Car>();
+            var classDefBuilder = new OldClassDefBuilder<Car>();
             //---------------Assert Precondition----------------
 
             //---------------Execute Test ----------------------
@@ -70,7 +70,7 @@ namespace Habanero.Fluent.Tests
         public void Test_WithRelDef_WithCompositeRelKey_ShouldRequired()
         {
             //---------------Set up test pack-------------------
-            var classDefBuilder = new ClassDefBuilder<Car>();
+            var classDefBuilder = new OldClassDefBuilder<Car>();
             //---------------Assert Precondition----------------
 
             //---------------Execute Test ----------------------
@@ -130,7 +130,7 @@ namespace Habanero.Fluent.Tests
             //---------------Assert Precondition----------------
 
             //---------------Execute Test ----------------------
-            var classDef = new ClassDefBuilder<Car>().Build();
+            var classDef = new OldClassDefBuilder<Car>().Build();
             //---------------Test Result -----------------------
             Assert.AreEqual("TestProject.BO", classDef.AssemblyName);
             Assert.AreEqual("Car", classDef.ClassName);
@@ -148,7 +148,7 @@ namespace Habanero.Fluent.Tests
             //---------------Assert Precondition----------------
 
             //---------------Execute Test ----------------------
-            var classDefBuilder = new ClassDefBuilder<Car>();
+            var classDefBuilder = new OldClassDefBuilder<Car>();
             var classDef = classDefBuilder
                 .WithProperty(c => c.Make).Return()
                 .Build();
@@ -168,7 +168,7 @@ namespace Habanero.Fluent.Tests
             //---------------Assert Precondition----------------
 
             //---------------Execute Test ----------------------
-            var classDefBuilder = new ClassDefBuilder<Car>();
+            var classDefBuilder = new OldClassDefBuilder<Car>();
             var classDef = classDefBuilder
                 .WithProperty<int>(propertyName1)
                     .IsCompulsory().Return()
@@ -188,7 +188,7 @@ namespace Habanero.Fluent.Tests
             //---------------Assert Precondition----------------
 
             //---------------Execute Test ----------------------
-                    var classDefBuilder = new ClassDefBuilder<Car>();
+                    var classDefBuilder = new OldClassDefBuilder<Car>();
             var classDef = classDefBuilder
                 .WithProperty(c => c.VehicleID).Return()
                 .Build();
@@ -210,7 +210,7 @@ namespace Habanero.Fluent.Tests
             //---------------Assert Precondition----------------
 
             //---------------Execute Test ----------------------
-            var classDefBuilder = new ClassDefBuilder<Car>();
+            var classDefBuilder = new OldClassDefBuilder<Car>();
             var classDef = classDefBuilder
                     //.WithSingleRelationship(c => c.SteeringWheel).Return()
                     .WithMultipleRelationship(c => c.Drivers).Return()
@@ -302,7 +302,7 @@ namespace Habanero.Fluent.Tests
                     //---------------Assert Precondition----------------
 
                     //---------------Execute Test ----------------------
-                    var classDefBuilder = new ClassDefBuilder<Car>();
+                    var classDefBuilder = new OldClassDefBuilder<Car>();
                     var classDef = classDefBuilder
                             .WithSingleRelationship<Car>(relationshipName1).Return()
                             .WithMultipleRelationship<Car>(relationshipName2).Return()
@@ -320,7 +320,7 @@ namespace Habanero.Fluent.Tests
             //---------------Assert Precondition----------------
 
             //---------------Execute Test ----------------------
-            var multipleRelationshipDef = new MultipleRelationshipDefBuilder<Car, Driver>()
+            var multipleRelationshipDef = new OldMultipleRelationshipDefBuilder<Car, Driver>()
                                                             .WithRelationshipName(c => c.Drivers)
                                                             .WithRelProp(car => car.VehicleID, driver => driver.CarID)
                                                             .Build();
@@ -342,7 +342,7 @@ namespace Habanero.Fluent.Tests
             //---------------Assert Precondition----------------
 
             //---------------Execute Test ----------------------
-            var classDefBuilder = new ClassDefBuilder<Car>();
+            var classDefBuilder = new OldClassDefBuilder<Car>();
             var classDef = classDefBuilder
                 .WithProperty<int>(propertyName1).Return()
                 .WithProperty(propertyName2).Return()
@@ -364,7 +364,7 @@ namespace Habanero.Fluent.Tests
             //---------------Assert Precondition----------------
 
             //---------------Execute Test ----------------------
-            var classDefBuilder = new ClassDefBuilder<Car>();
+            var classDefBuilder = new OldClassDefBuilder<Car>();
             var classDef = classDefBuilder
                 .WithProperty(n => n.Make).Return()
                 .WithPrimaryKeyProp(n => n.Make)
@@ -383,7 +383,7 @@ namespace Habanero.Fluent.Tests
             //---------------Assert Precondition----------------
 
             //---------------Execute Test ----------------------
-            var classDefBuilder = new ClassDefBuilder<Car>();
+            var classDefBuilder = new OldClassDefBuilder<Car>();
             var classDef = classDefBuilder
                 .WithProperty(n => n.VehicleID).Return()
                 .WithPrimaryKeyProp(n => n.VehicleID)
@@ -405,7 +405,7 @@ namespace Habanero.Fluent.Tests
             //---------------Assert Precondition----------------
 
             //---------------Execute Test ----------------------
-            var classDefBuilder = new ClassDefBuilder<Car>();
+            var classDefBuilder = new OldClassDefBuilder<Car>();
             var classDef = classDefBuilder
                 .WithProperty<Guid>(propertyName1).Return()
                 .WithProperty(propertyName2).Return()
@@ -428,7 +428,7 @@ namespace Habanero.Fluent.Tests
             //---------------Assert Precondition----------------
 
             //---------------Execute Test ----------------------
-            var classDefBuilder = new ClassDefBuilder<Car>();
+            var classDefBuilder = new OldClassDefBuilder<Car>();
             var classDef = classDefBuilder
                 .WithProperty<Guid>(propertyName1).Return()
                 .WithProperty(propertyName2).Return()
@@ -452,7 +452,7 @@ namespace Habanero.Fluent.Tests
             //---------------Assert Precondition----------------
 
             //---------------Execute Test ----------------------
-            var classDefBuilder = new ClassDefBuilder<Car>();
+            var classDefBuilder = new OldClassDefBuilder<Car>();
             var classDef = classDefBuilder
                 .WithProperty<int>(propertyName1).Return()
                 .WithProperty(propertyName2).Return()
@@ -476,7 +476,7 @@ namespace Habanero.Fluent.Tests
             //---------------Assert Precondition----------------
 
             //---------------Execute Test ----------------------
-            var classDefBuilder = new ClassDefBuilder<Car>();
+            var classDefBuilder = new OldClassDefBuilder<Car>();
             var classDef = classDefBuilder
                 .WithProperty<int>(propertyName1).Return()
                 .WithProperty(propertyName2).Return()
@@ -503,7 +503,7 @@ namespace Habanero.Fluent.Tests
             //---------------Assert Precondition----------------
 
             //---------------Execute Test ----------------------
-            var classDefBuilder = new ClassDefBuilder<Car>();
+            var classDefBuilder = new OldClassDefBuilder<Car>();
             var classDef = classDefBuilder
                 .WithProperty<int>(propertyName1).Return()
                 .WithProperty(propertyName2).Return()
@@ -524,7 +524,7 @@ namespace Habanero.Fluent.Tests
             //---------------Assert Precondition----------------
 
             //---------------Execute Test ----------------------
-            var classDefBuilder = new ClassDefBuilder<Car>();
+            var classDefBuilder = new OldClassDefBuilder<Car>();
             var classDef = classDefBuilder
                 .WithProperty(o => o.Make).Return()
                 .WithUniqueConstraint(keyName)
@@ -543,7 +543,7 @@ namespace Habanero.Fluent.Tests
             //---------------Assert Precondition----------------
 
             //---------------Execute Test ----------------------
-            var classDefBuilder = new ClassDefBuilder<Car>();
+            var classDefBuilder = new OldClassDefBuilder<Car>();
             IClassDef classDef = classDefBuilder
                 .WithSuperClass().Return()
                 .Build();
@@ -559,7 +559,7 @@ namespace Habanero.Fluent.Tests
             //---------------Assert Precondition----------------
 
             //---------------Execute Test ----------------------
-            var classDefBuilder = new ClassDefBuilder<Car>();
+            var classDefBuilder = new OldClassDefBuilder<Car>();
             var classDef = classDefBuilder
                 .WithSuperClass()
                     .WithDiscriminator(vehicle => vehicle.StringProp).Return()
@@ -578,7 +578,7 @@ namespace Habanero.Fluent.Tests
             //---------------Assert Precondition----------------
 
             //---------------Execute Test ----------------------
-            var classDefBuilder = new ClassDefBuilder<Car>();
+            var classDefBuilder = new OldClassDefBuilder<Car>();
             var classDef = classDefBuilder
                 .WithSuperClass()
                     .WithDiscriminator("SomeProp").Return()

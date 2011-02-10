@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Habanero.Base;
 using Habanero.Base.Exceptions;
 using Habanero.BO;
@@ -9,7 +9,7 @@ using TestProject.BO;
 namespace Habanero.Fluent.Tests
 {
     [TestFixture]
-    public class TestNewPropDefBuilder
+    public class TestOldPropDefBuilder
     {
         [Test]
         public void Test_Build_WithPropertyName_ShouldUseDefaults()
@@ -36,6 +36,40 @@ namespace Habanero.Fluent.Tests
             Assert.AreEqual(Int32.MaxValue, propDef.Length);
         }
 
+        [Test]
+        public void Test_Build_WithLambdaProp_ShouldSetPropNameAndType()
+        {
+            //---------------Set up test pack-------------------
+            //---------------Assert Precondition----------------
+
+            //---------------Execute Test ----------------------
+            var propDef = GetPropDefBuilder<Car>()
+                .WithProperty(c => c.NoOfDoors)
+                .Build();
+
+            //---------------Test Result -----------------------
+            Assert.AreEqual("NoOfDoors", propDef.PropertyName);
+            Assert.AreEqual("System", propDef.PropertyTypeAssemblyName);
+            Assert.AreEqual("Int32", propDef.PropertyTypeName);
+            Assert.AreSame(typeof(Int32), propDef.PropertyType);
+        }
+        [Test]
+        public void Test_Build_WithLambdaProp_GuidProp_ShouldSetPropTypeGuid()
+        {
+            //---------------Set up test pack-------------------
+            //---------------Assert Precondition----------------
+
+            //---------------Execute Test ----------------------
+            var propDef = GetPropDefBuilder<Car>()
+                .WithProperty(c => c.VehicleID)
+                .Build();
+
+            //---------------Test Result -----------------------
+            Assert.AreEqual("VehicleID", propDef.PropertyName);
+            Assert.AreEqual("System", propDef.PropertyTypeAssemblyName);
+            Assert.AreEqual("Guid", propDef.PropertyTypeName);
+            Assert.AreSame(typeof(Guid), propDef.PropertyType);
+        }
 
         [Test]
         public void Test_BuildPropDef_WithNoPropName_ShouldRaiseError()
@@ -314,10 +348,26 @@ namespace Habanero.Fluent.Tests
             Assert.AreEqual(displayName, propDef.DisplayName);
         }
 
+        //[Test]
+        //public void Test_Build_WithLambdaProp_ShouldSetPropValues()
+        //{
+        //    //---------------Set up test pack-------------------
+        //    //---------------Assert Precondition----------------
 
-        private static NewPropDefBuilder<T> GetPropDefBuilder<T>() where T : BusinessObject
+        //    //---------------Execute Test ----------------------
+        //    PropDef propDef = GetPropDefBuilder<Car>()
+        //        .WithProperty(c => c.NoOfDoors)
+        //        .Build();
+
+        //    //---------------Test Result -----------------------
+        //    Assert.AreEqual("NoOfDoors", propDef.PropertyName);
+        //    Assert.AreEqual("System", propDef.PropertyTypeAssemblyName);
+        //    Assert.AreEqual("Int32", propDef.PropertyTypeName);
+        //}
+
+        private static OldPropDefBuilder<T> GetPropDefBuilder<T>() where T : BusinessObject
         {
-            return new NewPropDefBuilder<T>();
+            return new OldPropDefBuilder<T>();
         }
 
 

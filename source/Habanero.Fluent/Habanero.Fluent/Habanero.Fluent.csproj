@@ -49,9 +49,12 @@
     <Compile Include="..\..\Common\AssemblyInfoShared.cs">
       <Link>Properties\AssemblyInfoShared.cs</Link>
     </Compile>
-    <Compile Include="ClassDefBuilder.cs" />
-    <Compile Include="KeyDefBuilder.cs" />
-    <Compile Include="MultipleRelationshipDefBuilder.cs" />
+    <Compile Include="IMultipleRelDefBuilder.cs" />
+    <Compile Include="IRelDefBuilder.cs" />
+    <Compile Include="ISingleRelDefBuilder.cs" />
+    <Compile Include="OldClassDefBuilder.cs" />
+    <Compile Include="OldKeyDefBuilder.cs" />
+    <Compile Include="OldMultipleRelationshipDefBuilder.cs" />
     <Compile Include="NewClassDefBuilder.cs" />
     <Compile Include="NewClassDefBuilder2.cs" />
     <Compile Include="NewKeyDefBuilder.cs" />
@@ -66,13 +69,13 @@
     <Compile Include="NewSingleRelationshipDefBuilder.cs" />
     <Compile Include="NewSuperClassDefBuilder.cs" />
     <Compile Include="NewUniqueContraintsBuilder.cs" />
-    <Compile Include="PropDefBuilder.cs" />
+    <Compile Include="OldPropDefBuilder.cs" />
     <Compile Include="NewPropertiesDefBuilder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RelKeyBuilder.cs" />
-    <Compile Include="RelKeyDefBuilder.cs" />
-    <Compile Include="SingleRelationshipDefBuilder.cs" />
-    <Compile Include="SuperClassDefBuilder.cs" />
+    <Compile Include="OldRelKeyBuilder.cs" />
+    <Compile Include="OldRelKeyDefBuilder.cs" />
+    <Compile Include="OldSingleRelationshipDefBuilder.cs" />
+    <Compile Include="OldSuperClassDefBuilder.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Habanero.Smooth\Habanero.Smooth.csproj">
