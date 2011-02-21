@@ -13,8 +13,8 @@ namespace TestProject.BO
     
     public partial class Vehicle : BusinessObject
     {
-        
         #region Properties
+
         public virtual Guid? VehicleID
         {
             get

@@ -36,6 +36,7 @@ namespace Habanero.Fluent
 
         public NewSingleRelationshipDefBuilder(NewRelationshipsBuilder<T> newRelationshipsBuilder, string relationshipName)
         {
+            if (string.IsNullOrEmpty(relationshipName)) throw new ArgumentNullException("relationshipName");
             _newRelationshipsBuilder = newRelationshipsBuilder;
             SetupDefaultValues(relationshipName);
         }
@@ -100,6 +101,7 @@ namespace Habanero.Fluent
         public ISingleRelationshipDef Build()
         {
             //_relKeyDef = _relKeyBuilder.Build();
+            if(this.SingleRelKeyDefBuilder == null) this.SingleRelKeyDefBuilder = new NewSingleRelKeyDefBuilder<T, TRelatedType>(this);
             _relKeyDef = this.SingleRelKeyDefBuilder.Build();
             return new SingleRelationshipDef(RelationshipName, _relatedObjectAssemblyName, _relatedClassName, _relKeyDef,
                                              KeepReference, DeleteAction, InsertAction, RelType);
@@ -126,6 +128,7 @@ namespace Habanero.Fluent
             return ReflectionUtilities.GetPropertyInfo(expression);
         }
 
-        internal NewSingleRelKeyDefBuilder<T, TRelatedType> SingleRelKeyDefBuilder { set; get; }
+        internal protected NewSingleRelKeyDefBuilder<T, TRelatedType> SingleRelKeyDefBuilder { set; get; }
     }
+
 }

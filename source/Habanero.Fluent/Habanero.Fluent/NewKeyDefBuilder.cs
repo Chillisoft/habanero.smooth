@@ -29,14 +29,10 @@ namespace Habanero.Fluent
 
         public NewKeyDefBuilder<T> AddProperty<TReturnType>(Expression<Func<T, TReturnType>> propExpression)
         {
-            _propNames.Add(GetPropertyName(propExpression));
+            _propNames.Add(propExpression.GetPropertyName());
             return this;
         }
 
-        private static string GetPropertyName<TModel, TReturn>(Expression<Func<TModel, TReturn>> expression)
-        {
-            return ReflectionUtilities.GetPropertyName(expression);
-        }
         public NewUniqueContraintsBuilder<T> EndUniqueConstraint()
         {
             return _uniqueContraintsBuilder;
@@ -51,6 +47,14 @@ namespace Habanero.Fluent
                 keyDef.Add(propDef);
             }
             return keyDef;
+        }
+    }
+    public static class ExpressionExtensions
+    {
+
+        public static string GetPropertyName<TModel, TReturn>(this Expression<Func<TModel, TReturn>> expression)
+        {
+            return ReflectionUtilities.GetPropertyName(expression);
         }
     }
 }

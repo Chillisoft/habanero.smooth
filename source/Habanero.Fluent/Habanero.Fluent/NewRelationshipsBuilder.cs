@@ -21,7 +21,6 @@ namespace Habanero.Fluent
             _multipleRelationshipDefBuilders = multipleRelationshipDefBuilders;
         }
 
-
         public NewSingleRelKeyDefBuilder<T, TRelatedType> WithNewSingleRelationship<TRelatedType>(string relationshipName) where TRelatedType : BusinessObject
         {
             NewSingleRelationshipDefBuilder<T, TRelatedType> singleRelationshipDefBuilder = new NewSingleRelationshipDefBuilder<T, TRelatedType>(this, relationshipName);
@@ -81,4 +80,5 @@ namespace Habanero.Fluent
         }
 
     }
+
 }

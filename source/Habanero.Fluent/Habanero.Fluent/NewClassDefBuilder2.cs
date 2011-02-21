@@ -226,5 +226,6 @@ namespace Habanero.Fluent
             return _propDefCol;
         }
     }
+
 }
 

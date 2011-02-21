@@ -19,7 +19,7 @@ namespace Habanero.Fluent.Tests
 
         [Test]
 // ReSharper disable InconsistentNaming
-        public void Test_WithRelDef_WithSingleRelKey_ShouldHaveOneRelProp()
+        public void Test_WithRelDef_WithSingleRelKey_ShouldBuildOneRelProp()
         {
             //---------------Set up test pack-------------------
             NewClassDefBuilder<Car> classDefBuilder = GetClassDefBuilderForTypeOf_Car();
@@ -28,10 +28,9 @@ namespace Habanero.Fluent.Tests
             //---------------Execute Test ----------------------
             var classDef = classDefBuilder
                                 .WithPrimaryKey(c => c.VehicleID)
-                                    .WithRelationships()
-                                        .WithNewSingleRelationship(car => car.SteeringWheel)
-                                        .WithRelProp(GetRandomString(), GetRandomString())
-
+                                .WithRelationships()
+                                    .WithNewSingleRelationship(car => car.SteeringWheel)
+                                       .WithRelProp(GetRandomString(), GetRandomString())
                                     .EndSingleRelationship()
                                 .EndRelationships()
                 .Build();
@@ -72,7 +71,6 @@ namespace Habanero.Fluent.Tests
             Assert.AreEqual(InsertParentAction.InsertRelationship, relationshipDef.InsertParentAction);
             Assert.AreEqual(RelationshipType.Association, relationshipDef.RelationshipType);
         }
-
 
         [Test]
         public void Test_WithRelDef_WithCompositeRelKey_ShouldRequired()
@@ -168,6 +166,29 @@ namespace Habanero.Fluent.Tests
             Assert.IsTrue(propDef.Compulsory, "Should be compulsory");
             Assert.AreSame(typeof(int), propDef.PropertyType);
         }
+
+        [Test]
+        public void Test_CreateClassDef_WithProperty_ShouldBeDefaultPropTypeString()
+        {
+            //---------------Set up test pack-------------------
+            string propertyName1 = "A" + GetRandomString();
+            string propertyName2 = "B" + GetRandomString();
+            //---------------Assert Precondition----------------
+
+            //---------------Execute Test ----------------------
+            var classDefBuilder = GetClassDefBuilderForTypeOf_Car();
+            var classDef = classDefBuilder
+                                .WithPrimaryKey(c => c.VehicleID)
+                                .WithProperties()
+                                    .Property(c => c.NoOfDoors).EndProperty()
+                                .EndProperties()
+                .Build();
+            //---------------Test Result -----------------------
+            Assert.AreEqual(2, classDef.PropDefcol.Count, "The primarykey prop will also automatically be built");//Should not Be Empty
+            var propDef = classDef.PropDefcol.FirstOrDefault();
+            Assert.AreSame(typeof(int), propDef.PropertyType);
+        }
+
 
         [Ignore("Need to work out why propertyTypeNameAssembly is being returned as CommonLanguageRuntime")] //TODO Andrew Russell 03 Feb 2011: Ignored Test - Need to work out why propertyTypeNameAssembly is being returned as CommonLanguageRuntime
         [Test]
@@ -513,7 +534,7 @@ namespace Habanero.Fluent.Tests
             Assert.AreEqual(propertyName2, keyDef[1].PropertyName);
         }
 
-
+        //TODO andrew 21 Feb 2011: this should be invalid syntax UC with no props
         [Test]
         public void Test_CreateClassDef_WithUniqueConstraint_WithKeyName_ShouldBuildKeyDefWithKeyName()
         {

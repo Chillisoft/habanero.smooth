@@ -15,11 +15,12 @@ public class NewSingleRelKeyDefBuilder<TBo, TRelatedType>
     public NewSingleRelKeyDefBuilder(NewSingleRelationshipDefBuilder<TBo, TRelatedType> singleRelationshipDefBuilder)
     {
         _singleRelationshipDefBuilder = singleRelationshipDefBuilder;
+        _singleRelKeyBuilder = new NewSingleRelKeyBuilder<TBo, TRelatedType>(_singleRelationshipDefBuilder);
     }
 
     public NewSingleRelationshipDefBuilder<TBo, TRelatedType> WithRelProp(string ownerPropName, string relatedPropName)
     {
-        _singleRelKeyBuilder = new NewSingleRelKeyBuilder<TBo, TRelatedType>(_singleRelationshipDefBuilder);
+        //_singleRelKeyBuilder = new NewSingleRelKeyBuilder<TBo, TRelatedType>(_singleRelationshipDefBuilder);
         _singleRelKeyBuilder.WithRelProp(ownerPropName, relatedPropName);
         return _singleRelationshipDefBuilder;
     }
@@ -33,7 +34,7 @@ public class NewSingleRelKeyDefBuilder<TBo, TRelatedType>
 
     public NewSingleRelKeyBuilder<TBo, TRelatedType> WithCompositeRelationshipKey()
     {
-        _singleRelKeyBuilder = new NewSingleRelKeyBuilder<TBo, TRelatedType>(_singleRelationshipDefBuilder);
+        //_singleRelKeyBuilder = new NewSingleRelKeyBuilder<TBo, TRelatedType>(_singleRelationshipDefBuilder);
         return _singleRelKeyBuilder;
     }
 

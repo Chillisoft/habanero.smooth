@@ -57,4 +57,5 @@ namespace Habanero.Fluent
             return ReflectionUtilities.GetPropertyInfo(expression);
         }
     }
+
 }

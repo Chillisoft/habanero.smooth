@@ -1,10 +1,13 @@
 using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
 using Habanero.Base;
 using Habanero.Base.Exceptions;
 using Habanero.BO;
 using Habanero.BO.ClassDefinition;
 using Habanero.Smooth.Test;
 using NUnit.Framework;
+using Rhino.Mocks;
 using TestProject.BO;
 
 namespace Habanero.Fluent.Tests
