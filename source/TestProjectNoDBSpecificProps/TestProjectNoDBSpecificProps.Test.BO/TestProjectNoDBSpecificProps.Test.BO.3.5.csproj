@@ -1,0 +1,149 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{57ADDD4F-7012-4172-BF6F-2E2575C15A68}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>TestProjectNoDBSpecificProps.Test.BO</RootNamespace>
+    <AssemblyName>TestProjectNoDBSpecificProps.Test.BO</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation />
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Habanero.Base">
+      <HintPath>..\..\..\lib\DotNet35\Habanero.Base.dll</HintPath>
+    </Reference>
+    <Reference Include="Habanero.BO">
+      <HintPath>..\..\..\lib\DotNet35\Habanero.BO.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\lib\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework">
+      <HintPath>..\..\..\lib\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <ProjectReference Include="..\..\Habanero.Smooth\Habanero.Smooth.3.5.csproj">
+      <Project>{6750B8F7-AA4B-4E74-AF0F-9AF9BE05FEDC}</Project>
+      <Name>AutoMappingHabanero</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TestProjectNoDBSpecificProps.BO\TestProjectNoDBSpecificProps.BO.3.5.csproj">
+      <Project>{5C59BC0A-98C4-4F48-8D27-B16B5B1ECE74}</Project>
+      <Name>TestProjectNoDBSpecificProps.BO.2008</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestBase.cs" />
+    <Compile Include="TestCar.cs" />
+    <Compile Include="TestCar.Def.cs">
+      <DependentUpon>TestCar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TestDriver.cs" />
+    <Compile Include="TestDriver.Def.cs">
+      <DependentUpon>TestDriver.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TestSteeringWheel.cs" />
+    <Compile Include="TestSteeringWheel.Def.cs">
+      <DependentUpon>TestSteeringWheel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TestUtils\TestUtilsCar.cs" />
+    <Compile Include="TestUtils\TestUtilsCar.Def.cs">
+      <DependentUpon>TestUtilsCar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TestUtils\TestUtilsDriver.cs" />
+    <Compile Include="TestUtils\TestUtilsDriver.Def.cs">
+      <DependentUpon>TestUtilsDriver.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TestUtils\TestUtilsShared.cs" />
+    <Compile Include="TestUtils\TestUtilsSteeringWheel.cs" />
+    <Compile Include="TestUtils\TestUtilsSteeringWheel.Def.cs">
+      <DependentUpon>TestUtilsSteeringWheel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TestUtils\TestUtilsVehicle.cs" />
+    <Compile Include="TestUtils\TestUtilsVehicle.Def.cs">
+      <DependentUpon>TestUtilsVehicle.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TestVehicle.cs" />
+    <Compile Include="TestVehicle.Def.cs">
+      <DependentUpon>TestVehicle.cs</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <!-- NB: These build events MUST be after the above project import  -->
+  <PropertyGroup>
+    <PostBuildEvent />
+    <PreBuildEvent />
+  </PropertyGroup>
+</Project>

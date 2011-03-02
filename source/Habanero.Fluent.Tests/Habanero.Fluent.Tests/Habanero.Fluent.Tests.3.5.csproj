@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{0F8E4A65-6BEC-42B3-B4BC-A56C5C7AAB46}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Habanero.Fluent.Tests</RootNamespace>
+    <AssemblyName>Habanero.Fluent.Tests</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Habanero.Base">
+      <HintPath>..\..\..\lib\DotNet35\Habanero.Base.dll</HintPath>
+    </Reference>
+    <Reference Include="Habanero.BO">
+      <HintPath>..\..\..\lib\DotNet35\Habanero.BO.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework, Version=2.5.3.9345, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <HintPath>..\..\..\lib\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Rhino.Mocks, Version=3.6.0.0, Culture=neutral, PublicKeyToken=0b3305902db7183f, processorArchitecture=MSIL" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\Common\AssemblyInfoShared.cs">
+      <Link>Properties\AssemblyInfoShared.cs</Link>
+    </Compile>
+    <Compile Include="FakeBOs.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestClassDefBuilder.cs" />
+    <Compile Include="TestMultipleRelationshipDefBuilder.cs" />
+    <Compile Include="TestNewClassDefBuilder.cs" />
+    <Compile Include="TestNewPropDefBuilder.cs" />
+    <Compile Include="TestNewPropertiesDefBuilder.cs" />
+    <Compile Include="TestNewSingleRelKeyDefBuilder.cs" />
+    <Compile Include="TestNewSuperClassDefBuilder.cs" />
+    <Compile Include="TestOldPropDefBuilder.cs" />
+    <Compile Include="TestRelKeyDefBuilder.cs" />
+    <Compile Include="TestSingleRelationshipDefBuilder.cs" />
+    <Compile Include="TestSingleRelKeyDefBuilder.cs" />
+    <Compile Include="TestOldSuperClassDefBuilder.cs" />
+    <Compile Include="TestStubs\NewClassDefBuilder2Stub.cs" />
+    <Compile Include="TestStubs\NewClassDefBuilderStub.cs" />
+    <Compile Include="TestStubs\NewRelationshipsBuilderStub.cs" />
+    <Compile Include="TestStubs\NewSingleRelationshipDefBuilderSpy.cs" />
+    <Compile Include="TestNewSingleRelationshipDefBuilder.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Habanero.Fluent\Habanero.Fluent\Habanero.Fluent.3.5.csproj">
+      <Project>{860C1119-BE2A-4842-B08C-F3E5AF476414}</Project>
+      <Name>Habanero.Fluent</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Habanero.Smooth.Test\Habanero.Smooth.Test.3.5.csproj">
+      <Project>{A544173E-B815-46A8-8B54-7DA5D41B7001}</Project>
+      <Name>Habanero.Smooth.Test</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Habanero.Smooth\Habanero.Smooth.3.5.csproj">
+      <Project>{6750B8F7-AA4B-4E74-AF0F-9AF9BE05FEDC}</Project>
+      <Name>Habanero.Smooth</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\TestProjectAllProperties\TestProject.BO\TestProject.BO.3.5.csproj">
+      <Project>{1516550B-C387-4440-938D-F3BE4A563338}</Project>
+      <Name>TestProject.BO</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>"$(SolutionDir)PostBuild-2010_3.5.cmd" "$(SolutionDir)"  "$(TargetDir)"</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

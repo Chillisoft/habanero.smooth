@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<ArrayOfMyBO xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <MyBO MyBoID="33214ae4-1428-4ff6-a0cf-9a6e3541d6a7" TestProp="default prop" TestProp2="" />
+  <MyBO MyBoID="7fd66b40-ae55-4068-9537-7dd05ebfc54d" TestProp="default prop" TestProp2="" />
+</ArrayOfMyBO>
