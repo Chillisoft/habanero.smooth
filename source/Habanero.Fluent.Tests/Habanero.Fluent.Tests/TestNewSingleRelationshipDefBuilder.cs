@@ -126,7 +126,7 @@ namespace Habanero.Fluent.Tests
         //    //---------------Assert Precondition----------------
         //    //---------------Execute Test ----------------------
         //    var singleRelationshipDef = GetNewSingleRelationshipDefBuilder(relationshipName)
-                
+
         //    .WithRelProp(propertyName, relatedPropName)
         //    .Build();
         //    //---------------Test Result -----------------------

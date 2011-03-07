@@ -782,5 +782,8 @@ namespace Habanero.Fluent.Tests
         {
             return new NewClassDefBuilder<Car>();
         }
+        
     }
+
+
 }
