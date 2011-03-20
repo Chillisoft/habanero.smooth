@@ -31,6 +31,7 @@ using Rhino.Mocks;
 
 namespace Habanero.Smooth.Test
 {
+    // ReSharper disable InconsistentNaming
     [TestFixture]
     public class TestManyToOneAutoMapper
     {
@@ -205,6 +206,7 @@ namespace Habanero.Smooth.Test
             Assert.IsInstanceOf(typeof(SingleRelationshipDef), relationshipDef);
             Assert.AreEqual(expectedPropName, relationshipDef.RelationshipName);
             Assert.AreEqual(propertyInfo.PropertyType.FullName, relationshipDef.RelatedObjectClassName);
+            Assert.IsNotNull(propertyInfo.PropertyType.AssemblyQualifiedName);
             propertyInfo.PropertyType.AssemblyQualifiedName.StartsWith(relationshipDef.RelatedObjectAssemblyName);
             Assert.AreEqual(DeleteParentAction.DoNothing, relationshipDef.DeleteParentAction);
             Assert.IsNotNull(relationshipDef.RelKeyDef);
@@ -250,6 +252,43 @@ namespace Habanero.Smooth.Test
             string expectedRelatedClassName = propertyInfo.PropertyType.Name + "ID";
             Assert.AreEqual(expectedRelatedClassName, relPropDef.RelatedClassPropName);
         }
+
+        [Test]
+        public void Test_Map_WhenIsSingleRel_WhenRelatedClassInheritsFromGenericBO_ShouldCreateRelProp()
+        {
+            //---------------Set up test pack-------------------
+            var classType = typeof(FakeBOWithSingleRelToGenericBO);
+            const string expectedPropName = "MySingleRelationship";
+            var propertyInfo = classType.GetProperty(expectedPropName);
+            //---------------Assert Precondition----------------
+            classType.AssertPropertyExists(expectedPropName);
+            propertyInfo.AssertIsOfType<IBusinessObject>();
+            //---------------Execute Test ----------------------
+            var relationshipDef = propertyInfo.MapManyToOne();
+            //---------------Test Result -----------------------
+            var relKeyDef = relationshipDef.RelKeyDef;
+            Assert.IsNotNull(relKeyDef);
+            Assert.AreEqual(1, relKeyDef.Count);
+            const string expectedOwnerPropName = expectedPropName + "ID";
+            Assert.IsTrue(relKeyDef.Contains(expectedOwnerPropName),
+                "By Convention the RelationshipPropName on the single side of the M-1 Relationship Should be RelationshipName & ID");
+            var relPropDef = relKeyDef[expectedOwnerPropName];
+            Assert.AreEqual(expectedOwnerPropName, relPropDef.OwnerPropertyName);
+            string expectedRelatedClassName = "FakeBOGenericID";
+            Assert.AreEqual(expectedRelatedClassName, relPropDef.RelatedClassPropName);
+        }
+
+        /*                    //---------------Set up test pack-------------------
+            var type = typeof(FakeBOGeneric);
+            //---------------Assert Precondition----------------
+            //---------------Execute Test ----------------------
+            var classDef = type.MapClass();
+            //---------------Test Result -----------------------
+            Assert.IsNotNull(classDef.PrimaryKeyDef);
+            Assert.AreEqual(1, classDef.PrimaryKeyDef.Count);
+            var pkProp = classDef.PrimaryKeyDef[0];
+            Assert.AreEqual("FakeBOGeneric" + "ID", pkProp.PropertyName);*/
+
 
         [Test]
         public void Test_Map_When_WhenHasCompulsoryAttribute_ShouldSetIsCompulsoryToTrue()
@@ -694,6 +733,18 @@ namespace Habanero.Smooth.Test
             Assert.AreEqual("FakeBONoPKID", relatedPropName);
         }
 
+        [Test]
+        public void Test_GetRelatedPropName_WhenRelatedClassInheritsFromGenericBO_ShouldUseGenericTypeToDetermineName()
+        {
+            //---------------Set up test pack-------------------
+            var type = typeof(FakeBOGeneric);
+            //---------------Assert Precondition----------------
+
+            //---------------Execute Test ----------------------
+            var relatedPropName = ManyToOneAutoMapper.GetRelatedPropName(type.ToTypeWrapper());
+            //---------------Test Result -----------------------
+            Assert.AreEqual("FakeBOGenericID", relatedPropName);
+        }
         [Test]
         public void TestAccept_Map_WhenIsPrivateProperty_ShouldReturnNull()
         {

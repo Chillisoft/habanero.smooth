@@ -28,6 +28,7 @@ using Rhino.Mocks;
 
 namespace Habanero.Smooth.Test
 {
+    // ReSharper disable InconsistentNaming
     [TestFixture]
     public class TestTypeWrapper
     {
@@ -232,6 +233,21 @@ namespace Habanero.Smooth.Test
             var isBaseTypeLayerSuperType = wrapper.IsBaseTypeBusinessObject;
             //---------------Test Result -----------------------
             Assert.IsFalse(isBaseTypeLayerSuperType);
+        }
+        [Test]
+        public void Test_IsBaseTypeLayerSuperType_WhenInheritFromGenericBO_ShouldReturnTrue()
+        {
+            //If the Type direclty inherits from BusinessObject
+            // Then it inherits from a layer super type.
+            //---------------Set up test pack-------------------
+            var type = typeof(FakeBOGeneric);
+            TypeWrapper wrapper = new TypeWrapper(type);
+            //---------------Assert Precondition----------------
+            type.BaseType.AssertIsOfType<IBusinessObject>();
+            //---------------Execute Test ----------------------
+            var isBaseTypeLayerSuperType = wrapper.IsBaseTypeBusinessObject;
+            //---------------Test Result -----------------------
+            Assert.IsTrue(isBaseTypeLayerSuperType);
         }
 
         [Test]
@@ -499,6 +515,21 @@ namespace Habanero.Smooth.Test
             //---------------Test Result -----------------------
             Assert.AreEqual("FakeBOSuperClassID", pkPropName);
         }
+
+        [Test]
+        public void Test_GetPKPropName_WhenInheritsFromGenericBO_ShouldUseGenericTypeToDetermineName()
+        {
+            //---------------Set up test pack-------------------
+            var classType = typeof(FakeBOGeneric);
+            var typeWrapper = classType.ToTypeWrapper();
+            //---------------Assert Precondition----------------
+            Assert.IsTrue(typeWrapper.BaseType.IsGenericType);
+            //---------------Execute Test ----------------------
+            var pkPropName = typeWrapper.GetPKPropName();
+            //---------------Test Result -----------------------
+            Assert.AreEqual("FakeBOGenericID", pkPropName);
+        }
+
         [Test]
         public void Test_GetPKPropName_WhenSubClass_WhenIDPropDeclaredInClassDefXml_ShouldReturnDefinedClassDef_FixBug1355()
         {
@@ -543,7 +574,60 @@ namespace Habanero.Smooth.Test
             //---------------Test Result -----------------------
             Assert.IsFalse(isBusinessObject);
         }
+        [Test]
+        public void Test_IsGenericBusinessObject_WhenTypeNotImplementsIBo_ShouldRetFalse()
+        {
+            //---------------Set up test pack-------------------
+            Type classType = typeof(SomeNonBoClass);
+            var typeWrapper = classType.ToTypeWrapper();
+            //---------------Assert Precondition----------------
+            Assert.IsFalse(typeof(IBusinessObject).IsAssignableFrom(classType));
+            //---------------Execute Test ----------------------
+            var isGenericBusinessObject = typeWrapper.IsGenericBusinessObject;
+            //---------------Test Result -----------------------
+            Assert.IsFalse(isGenericBusinessObject);
+        }
+        [Test]
+        public void Test_IsGenericBusinessObject_WhenTypeImplementsIBo_ShouldRetFalse()
+        {
+            //---------------Set up test pack-------------------
+            Type classType = typeof(FakeBoNoProps);
+            var typeWrapper = classType.ToTypeWrapper();
+            //---------------Assert Precondition----------------
+            Assert.IsTrue(typeof(IBusinessObject).IsAssignableFrom(classType));
+            //---------------Execute Test ----------------------
+            var isGenericBusinessObject = typeWrapper.IsGenericBusinessObject;
+            //---------------Test Result -----------------------
+            Assert.IsFalse(isGenericBusinessObject);
+        }
+        [Test]
+        public void Test_IsGenericBusinessObject_WhenTypeImplementsGenericBO_ShouldRetTrue()
+        {
+            //---------------Set up test pack-------------------
+            Type classType = typeof(FakeBOGeneric);
+            var typeWrapper = classType.ToTypeWrapper();
+            //---------------Assert Precondition----------------
+            Assert.IsTrue(typeof(IBusinessObject).IsAssignableFrom(classType));
+            //---------------Execute Test ----------------------
+            var isGenericBusinessObject = typeWrapper.IsGenericBusinessObject;
+            //---------------Test Result -----------------------
+            Assert.IsTrue(isGenericBusinessObject);
+        }
+        [Test]
+        public void Test_IsGenericBusinessObject_WhenTypeInheritsFromTypeThatImplementsGenericBO_ShouldRetTrue()
+        {
+            //---------------Set up test pack-------------------
+            Type classType = typeof(FakeBOGenericSubType);
+            var typeWrapper = classType.ToTypeWrapper();
+            //---------------Assert Precondition----------------
+            Assert.IsTrue(typeof(IBusinessObject).IsAssignableFrom(classType));
+            //---------------Execute Test ----------------------
+            var isGenericBusinessObject = typeWrapper.IsGenericBusinessObject;
+            //---------------Test Result -----------------------
+            Assert.IsTrue(isGenericBusinessObject);
+        }
 
+//        FakeBOGeneric
         [Test]
         public void Test_HasIgnoreAttribute_WhenHas_ShouldRetTrue()
         {

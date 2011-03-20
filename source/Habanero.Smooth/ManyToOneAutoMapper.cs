@@ -29,15 +29,27 @@ using Habanero.Util;
 // ReSharper disable ClassWithVirtualMembersNeverInherited.Global
 namespace Habanero.Smooth
 {
+    ///<summary>
+    /// Extension methods that adds some syntactic sugar for testing the ManyToOneAutoMapper.
+    ///</summary>
     public static class ManyToOneAutoMapperExtensions
     {
+        /// <summary>
+        /// Automatically map the RelDef for this propertyInfo
+        /// </summary>
+        /// <param name="propInfo"></param>
+        /// <returns></returns>
         public static IRelationshipDef MapManyToOne(this PropertyInfo propInfo)
         {
             if (propInfo == null) return null;
 
             ManyToOneAutoMapper autoMapper = new ManyToOneAutoMapper(propInfo);
             return autoMapper.MapManyToOne();
-        }
+        }        /// <summary>
+        /// Automatically map the RelDef for this propWrapper
+        /// </summary>
+        /// <param name="propWrapper"></param>
+        /// <returns></returns>
         public static IRelationshipDef MapManyToOne(this PropertyWrapper propWrapper)
         {
             if (propWrapper == null) return null;
@@ -80,9 +92,10 @@ namespace Habanero.Smooth
             if (!MustBeMapped()) return null;
 
             var propertyType = this.PropertyWrapper.PropertyType;
-            SingleRelationshipDef relDef
+            var relDef
                         = new SingleRelationshipDef(this.PropertyWrapper.Name, propertyType.UnderlyingType
                         , new RelKeyDef(), true, DeleteParentAction.DoNothing);
+
             if(this.PropertyWrapper.HasCompulsoryAttribute) relDef.SetAsCompulsory();
             relDef.OwningBOHasForeignKey = true;
             SetReverseRelationshipName(relDef);

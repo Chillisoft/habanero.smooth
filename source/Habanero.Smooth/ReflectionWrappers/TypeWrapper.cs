@@ -78,7 +78,7 @@ namespace Habanero.Smooth.ReflectionWrappers
             _underlyingType = type;
         }
         /// <summary>
-        /// Returns tru if the <see cref="UnderlyingType"/> is a real class 
+        /// Returns true if the <see cref="UnderlyingType"/> is a real class 
         /// i.e. it is not an abstract type, an interface or a generic type.
         /// </summary>
         public bool IsRealClass
@@ -134,9 +134,15 @@ namespace Habanero.Smooth.ReflectionWrappers
         /// </summary>
         public virtual bool IsBaseTypeBusinessObject
         {
-            get {  return _underlyingType == null ? false : _underlyingType.BaseType == typeof(BusinessObject); }
+            get { return _underlyingType == null ? false : (_underlyingType.BaseType == typeof(BusinessObject) || IsBaseTypeGenericBusinessObject()); }
         }
-
+        /// <summary>
+        /// Returns the true if this type inherits from BusinessObject{T} (i.e. Generic BusinessObject is the layer super type).
+        /// </summary>
+        private bool IsBaseTypeGenericBusinessObject()
+        {
+            return !this.BaseType.IsNull() && this.BaseType.IsGenericType && this.BaseType.UnderlyingType.GetGenericTypeDefinition().Equals(typeof(BusinessObject<>));
+        }
         ///<summary>
         /// Returns the Assembly Name for the Underlying Type.
         ///</summary>
@@ -339,7 +345,7 @@ namespace Habanero.Smooth.ReflectionWrappers
 
         ///<summary>
         /// Returns true if the <see cref="Type"/> being wrapped by this TypeWrapper is 
-        /// a business object.
+        /// a business object regardless of where in the inheritance Heirachy the Base Type is.
         ///</summary>
         public bool IsBusinessObject { get { return this.IsOfType<IBusinessObject>(); } }
 
@@ -380,8 +386,18 @@ namespace Habanero.Smooth.ReflectionWrappers
         {
             get { return this.IsGenericType && _underlyingType.GetGenericTypeDefinition().Equals(typeof (Nullable<>)); }
         }
+        /// <summary>
+        /// Does this type inherit from a Generic BO e.g. Person : BusinessObject{Person}
+        /// </summary>
+        public bool IsGenericBusinessObject
+        {
+            get
+            {
+                if (IsBaseTypeGenericBusinessObject()) return true;
+                return !this.BaseType.IsNull() &&  this.BaseType.IsGenericBusinessObject;
+            }
+        }
 
-      
 
         #region Equality
 
@@ -549,6 +565,7 @@ namespace Habanero.Smooth.ReflectionWrappers
             var attributes = this.GetAttributes<T>();
             return attributes == null ? null : attributes.FirstOrDefault();
         }
+        // ReSharper disable ConditionIsAlwaysTrueOrFalse
         /// <summary>
         /// Returns all Attributes of type <typeparamref name="T"/> on the wrapped <see cref="PropertyInfo"/>
         /// </summary>
@@ -557,8 +574,11 @@ namespace Habanero.Smooth.ReflectionWrappers
         public virtual IEnumerable<T> GetAttributes<T>() where T : class
         {
             var attributes = this._underlyingType.GetCustomAttributes(typeof(T), true);
+
             return attributes == null ? null : attributes.Select(y => y as T);
         }
+        // ReSharper restore ConditionIsAlwaysTrueOrFalse
+
 
         ///<summary>
         /// Returns the mapped TableName for the underlying type

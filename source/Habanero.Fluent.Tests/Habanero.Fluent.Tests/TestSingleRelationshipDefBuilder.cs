@@ -7,11 +7,11 @@ using Habanero.BO;
 using Habanero.BO.ClassDefinition;
 using Habanero.Smooth.Test;
 using NUnit.Framework;
-using Rhino.Mocks;
 using TestProject.BO;
 
 namespace Habanero.Fluent.Tests
 {
+    // ReSharper disable InconsistentNaming
     [TestFixture, Ignore("No longer valid as you cannot build a SingleRelationshipDef without relprops")]
     public class TestSingleRelationshipDefBuilder
     {

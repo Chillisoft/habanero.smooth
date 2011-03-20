@@ -21,14 +21,36 @@ using Habanero.Smooth.ReflectionWrappers;
 
 namespace Habanero.Smooth
 {
-
+    /// <summary>
+    /// This is an interface that for stubbing out standard naming conventions
+    /// This can be used later to allow the user of this library to
+    /// implement their own naming conventions.
+    /// </summary>
     public interface INamingConventions
     {
+        /// <summary>
+        /// Based on the Type T return an IDPropName based on convention.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
         string GetIDPropertyName<T>();
+        /// <summary>
+        /// Based on the Type wrapped by t return an IDPropName based on convention.
+        /// </summary>
+        /// <param name="t"></param>
+        /// <returns></returns>
         string GetIDPropertyName(TypeWrapper t);
+        /// <summary>
+        /// Based on the relationshipName create a FKPropName i.e. the FKProp on the single side of the relationship.
+        /// </summary>
+        /// <param name="relationshipName"></param>
+        /// <returns></returns>
         string GetSingleRelOwningPropName(string relationshipName);
     }
 
+    ///<summary>
+    /// The default naming conventions used by Chillisoft.
+    ///</summary>
     public class DefaultPropNamingConventions : INamingConventions
     {
         public string GetIDPropertyName<T>()
@@ -39,8 +61,10 @@ namespace Habanero.Smooth
 
         public string GetIDPropertyName(TypeWrapper t)
         {
+
             return t.Name + "ID";
         }
+
         public string GetSingleRelOwningPropName(string relationshipName)
         {
             return relationshipName + "ID";

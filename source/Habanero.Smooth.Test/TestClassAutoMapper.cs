@@ -28,6 +28,7 @@ using Rhino.Mocks;
 
 namespace Habanero.Smooth.Test
 {
+    // ReSharper disable InconsistentNaming
     [TestFixture]
     public class TestClassAutoMapper
     {
@@ -206,6 +207,32 @@ namespace Habanero.Smooth.Test
             var classDef = type.MapClass();
             //---------------Test Result -----------------------
             Assert.AreEqual(expectedTableName, classDef.TableName);
+        }
+
+        [Test]
+        public void Test_MapClass_WhenInheritsFromGenericBO_ReturnMapClass()
+        {
+            //---------------Set up test pack-------------------
+            var type = typeof(FakeBOGeneric);
+            //---------------Assert Precondition----------------
+            //---------------Execute Test ----------------------
+            var classDef = type.MapClass();
+            //---------------Test Result -----------------------
+            Assert.IsNotNull(classDef);
+        }
+        [Test]
+        public void Test_MapClass_WhenInheritsFromGenericBO_ReturnMapDefaultPrimaryKeyCorrectly()
+        {
+            //---------------Set up test pack-------------------
+            var type = typeof(FakeBOGeneric);
+            //---------------Assert Precondition----------------
+            //---------------Execute Test ----------------------
+            var classDef = type.MapClass();
+            //---------------Test Result -----------------------
+            Assert.IsNotNull(classDef.PrimaryKeyDef);
+            Assert.AreEqual(1, classDef.PrimaryKeyDef.Count);
+            var pkProp = classDef.PrimaryKeyDef[0];
+            Assert.AreEqual("FakeBOGeneric" + "ID", pkProp.PropertyName);
         }
 
         [TestCase("PublicStringProp")]
