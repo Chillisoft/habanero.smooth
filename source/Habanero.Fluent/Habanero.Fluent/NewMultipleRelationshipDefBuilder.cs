@@ -89,6 +89,7 @@ namespace Habanero.Fluent
 
         public IRelationshipDef Build()
         {
+            if (this.MultipleRelKeyDefBuilder == null) this.MultipleRelKeyDefBuilder = new NewMultipleRelKeyDefBuilder<T, TRelatedType>(this);
             _relKeyDef = this.MultipleRelKeyDefBuilder.Build();
             return new MultipleRelationshipDef(_relationshipName, _relatedObjectAssemblyName, _relatedClassName,
                                                _relKeyDef, _keepReference, _orderBy, _deleteAction, _insertAction,

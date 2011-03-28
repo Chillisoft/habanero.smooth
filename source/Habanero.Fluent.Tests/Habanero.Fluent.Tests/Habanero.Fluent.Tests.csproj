@@ -55,18 +55,17 @@
     </Compile>
     <Compile Include="FakeBOs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TestClassDefBuilder.cs" />
-    <Compile Include="TestMultipleRelationshipDefBuilder.cs" />
     <Compile Include="TestNewClassDefBuilder.cs" />
+    <Compile Include="TestNewMultipleRelationshipDefBuilder.cs" />
     <Compile Include="TestNewPropDefBuilder.cs" />
     <Compile Include="TestNewPropertiesDefBuilder.cs" />
     <Compile Include="TestNewSingleRelKeyDefBuilder.cs" />
     <Compile Include="TestNewSuperClassDefBuilder.cs" />
     <Compile Include="TestRelKeyDefBuilder.cs" />
-    <Compile Include="TestSingleRelationshipDefBuilder.cs" />
     <Compile Include="TestSingleRelKeyDefBuilder.cs" />
     <Compile Include="TestStubs\NewClassDefBuilder2Stub.cs" />
     <Compile Include="TestStubs\NewClassDefBuilderStub.cs" />
+    <Compile Include="TestStubs\NewMultipleRelationshipDefBuilderSpy.cs" />
     <Compile Include="TestStubs\NewRelationshipsBuilderStub.cs" />
     <Compile Include="TestStubs\NewSingleRelationshipDefBuilderSpy.cs" />
     <Compile Include="TestNewSingleRelationshipDefBuilder.cs" />

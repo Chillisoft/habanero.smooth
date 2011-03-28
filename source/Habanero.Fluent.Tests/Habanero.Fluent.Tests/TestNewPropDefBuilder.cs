@@ -249,7 +249,7 @@ namespace Habanero.Fluent.Tests
             //---------------Assert Precondition----------------
 
             //---------------Execute Test ----------------------
-            var propDef = new OldPropDefBuilder<Car>()
+            var propDef = GetPropDefBuilder<Car>()
                 .WithPropertyName(propertyName)
                 .IsAutoIncrementing()
                 .Build();
@@ -267,7 +267,7 @@ namespace Habanero.Fluent.Tests
             //---------------Assert Precondition----------------
 
             //---------------Execute Test ----------------------
-            var propDef = new OldPropDefBuilder<Car>()
+            var propDef = GetPropDefBuilder<Car>()
                 .WithPropertyName(propertyName)
                 .WithDescription(description)
                 .Build();
@@ -285,7 +285,7 @@ namespace Habanero.Fluent.Tests
             //---------------Assert Precondition----------------
 
             //---------------Execute Test ----------------------
-            var propDef = new OldPropDefBuilder<Car>()
+            var propDef = GetPropDefBuilder<Car>()
                 .WithPropertyName(propertyName)
                 .KeepValuePrivate()
                 .Build();
@@ -304,7 +304,7 @@ namespace Habanero.Fluent.Tests
             //---------------Assert Precondition----------------
 
             //---------------Execute Test ----------------------
-            var propDef = new OldPropDefBuilder<Car>()
+            var propDef = GetPropDefBuilder<Car>()
                 .WithPropertyName(propertyName)
                 .WithDisplayName(displayName)
                 .Build();
