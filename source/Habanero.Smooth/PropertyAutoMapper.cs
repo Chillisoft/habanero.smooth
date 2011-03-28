@@ -41,6 +41,7 @@ namespace Habanero.Smooth
             if (propInfo == null) throw new ArgumentNullException("propInfo");
             this.PropertyWrapper = propInfo.ToPropertyWrapper();
         }
+
         /// <summary>
         /// Constructs the Property Automapper for a particular <see cref="ReflectionWrappers.PropertyWrapper"/>
         /// where a PropertyWrapper typically wraps a <see cref="PropertyInfo"/> and provides additional methods.
@@ -65,16 +66,18 @@ namespace Habanero.Smooth
             {
                 var propertyType = this.PropertyWrapper.UndelyingPropertyType;
                 var propDef = new PropDef(this.PropertyWrapper.Name, propertyType, PropReadWriteRule.ReadWrite, null)
-                          {
-                              Compulsory = this.PropertyWrapper.HasCompulsoryAttribute
-                          };
-                if(this.PropertyWrapper.HasDefaultAttribute)
+                                  {
+                                      Compulsory = this.PropertyWrapper.HasCompulsoryAttribute
+                                  };
+                if (this.PropertyWrapper.HasDefaultAttribute)
                 {
-                    propDef.DefaultValueString = this.PropertyWrapper.GetAttribute<AutoMapDefaultAttribute>().DefaultValue;
+                    propDef.DefaultValueString =
+                        this.PropertyWrapper.GetAttribute<AutoMapDefaultAttribute>().DefaultValue;
                 }
                 if (this.PropertyWrapper.HasReadWriteRuleAttribute)
                 {
-                    propDef.ReadWriteRule = this.PropertyWrapper.GetAttribute<AutoMapReadWriteRuleAttribute>().ReadWriteRule;
+                    propDef.ReadWriteRule =
+                        this.PropertyWrapper.GetAttribute<AutoMapReadWriteRuleAttribute>().ReadWriteRule;
                 }
                 if (this.PropertyWrapper.HasIntPropRuleAttribute)
                 {
@@ -82,7 +85,7 @@ namespace Habanero.Smooth
                     propDef.AddPropRule(intPropRule);
                 }
 
-                if (this.PropertyWrapper.HasStringLengthRuleAttribute )
+                if (this.PropertyWrapper.HasStringLengthRuleAttribute)
                 {
                     var stringPropRule = CreateStringLengthPropRule();
                     propDef.AddPropRule(stringPropRule);
@@ -116,7 +119,7 @@ namespace Habanero.Smooth
         {
             var startDate = this.PropertyWrapper.GetAttribute<AutoMapDateTimePropRuleAttribute>().StartDate;
             var dateTime = this.PropertyWrapper.GetAttribute<AutoMapDateTimePropRuleAttribute>().EndDate;
-            return new PropRuleDate("", "",startDate,dateTime);
+            return new PropRuleDate("", "", startDate, dateTime);
         }
 
         private PropRuleDate CreateDateTimeStringPropRule()
@@ -137,11 +140,11 @@ namespace Habanero.Smooth
             {
                 if (value is DateTime)
                 {
-                    return (DateTime)value;
+                    return (DateTime) value;
                 }
                 if (value is IResolvableToValue)
                 {
-                    dateTime = (DateTime)((IResolvableToValue)value).ResolveToValue();
+                    dateTime = (DateTime) ((IResolvableToValue) value).ResolveToValue();
                 }
             }
             return dateTime;
@@ -149,8 +152,18 @@ namespace Habanero.Smooth
 
         private PropRuleString CreatePatternMatchPropRule()
         {
-            var patternMatch = this.PropertyWrapper.GetAttribute<AutoMapStringPatternMatchPropRuleAttribute>().Pattern;
-            var patternMatchMessage = string.Format("The value does not conform to the following pattern '{0}'", patternMatch);
+            var attribute = this.PropertyWrapper.GetAttribute<AutoMapStringPatternMatchPropRuleAttribute>();
+            var patternMatch = attribute.Pattern;
+            string patternMatchMessage;
+            if (string.IsNullOrEmpty(attribute.Message))
+            {
+                patternMatchMessage = string.Format("The value does not conform to the following pattern '{0}'",
+                                                    patternMatch);
+            }
+            else
+            {
+                patternMatchMessage = attribute.Message;
+            }
             return new PropRuleString("", "", 0, 255, patternMatch, patternMatchMessage);
         }
 
@@ -158,22 +171,22 @@ namespace Habanero.Smooth
         {
             var minLength = this.PropertyWrapper.GetAttribute<AutoMapStringLengthPropRuleAttribute>().MinLength;
             var maxLength = this.PropertyWrapper.GetAttribute<AutoMapStringLengthPropRuleAttribute>().MaxLength;
-            return new PropRuleString("", "", minLength,maxLength, "");
+            return new PropRuleString("", "", minLength, maxLength, "");
         }
 
         private IPropRule CreateIntPropRule()
         {
             var min = this.PropertyWrapper.GetAttribute<AutoMapIntPropRuleAttribute>().Min;
             var max = this.PropertyWrapper.GetAttribute<AutoMapIntPropRuleAttribute>().Max;
-            return new PropRuleInteger("", "",min,max);
+            return new PropRuleInteger("", "", min, max);
         }
 
         private bool MustMapProperty
         {
             get
             {
-                if(this.PropertyWrapper.IsStatic) return false;
-                if(!this.PropertyWrapper.IsPublic) return false;
+                if (this.PropertyWrapper.IsStatic) return false;
+                if (!this.PropertyWrapper.IsPublic) return false;
                 if (this.PropertyWrapper.IsInherited) return false;
                 var propertyType = this.PropertyWrapper.UndelyingPropertyType;
                 if (IsInheritedFromBO) return false;
@@ -220,26 +233,26 @@ namespace Habanero.Smooth
         /// <returns></returns>
         public static bool CanMapToProp(this Type type)
         {
-            if(type == null) return false;
-            return type == typeof(string) ||
-                   type == typeof(Guid) ||
-                   type == typeof(Guid?) ||
-                   type == typeof(decimal) ||
-                   type == typeof(decimal?) ||
-                   type == typeof(double) ||
-                   type == typeof(double?) ||
-                   type == typeof(DateTime) ||
-                   type == typeof(DateTime?) ||
-                   type == typeof(bool) ||
-                   type == typeof(bool?) ||
-                   type == typeof(Int16) ||
-                   type == typeof(Int16?) ||
-                   type == typeof(Int32) ||
-                   type == typeof(Int32?) ||
-                   type == typeof(Int64) ||
-                   type == typeof(Int64?) ||
-                   type == typeof(float?) ||
-                   type == typeof(float) ||
+            if (type == null) return false;
+            return type == typeof (string) ||
+                   type == typeof (Guid) ||
+                   type == typeof (Guid?) ||
+                   type == typeof (decimal) ||
+                   type == typeof (decimal?) ||
+                   type == typeof (double) ||
+                   type == typeof (double?) ||
+                   type == typeof (DateTime) ||
+                   type == typeof (DateTime?) ||
+                   type == typeof (bool) ||
+                   type == typeof (bool?) ||
+                   type == typeof (Int16) ||
+                   type == typeof (Int16?) ||
+                   type == typeof (Int32) ||
+                   type == typeof (Int32?) ||
+                   type == typeof (Int64) ||
+                   type == typeof (Int64?) ||
+                   type == typeof (float?) ||
+                   type == typeof (float) ||
                    type.IsEnumType();
         }
 
@@ -247,6 +260,7 @@ namespace Habanero.Smooth
         {
             return type.ToTypeWrapper().IsEnumType();
         }
+
 /*        //This method is copied unchanged from SubSonic.
         //Thanks from the Habanero team 2 the Subsonic team for this.
         private static bool IsNullableEnum(this Type type)

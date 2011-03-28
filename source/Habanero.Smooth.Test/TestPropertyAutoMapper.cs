@@ -30,7 +30,7 @@ namespace Habanero.Smooth.Test
     [TestFixture]
     public class TestPropertyAutoMapper
     {
-
+        // ReSharper disable InconsistentNaming
         [Test]
         public void Test_ConstructWithNullPropInfo_ShouldRaiseError()
         {
@@ -612,7 +612,7 @@ namespace Habanero.Smooth.Test
             //---------------Set up test pack-------------------
             PropertyWrapper wrapper = GetMockPropWrapper();
             var propertyAutoMapper = new PropertyAutoMapper(wrapper);
-            string emailPatternMatch = @"\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b";
+            const string emailPatternMatch = @"\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b";
             //---------------Assert Precondition----------------
             Assert.IsNull(wrapper.GetAttribute<AutoMapStringPatternMatchPropRuleAttribute>());
             //---------------Execute Test ----------------------
@@ -627,11 +627,36 @@ namespace Habanero.Smooth.Test
             StringAssert.AreEqualIgnoringCase(emailPatternMatch, actualPattern);
         }
 
-        private void SetStringPatternMatchPropRuleAttributeWithDefaultConstructor(PropertyWrapper wrapper, string emailPatternMatch)
+        [Test]
+        public void Test_MapWithFake_WhenStringPatternMatchPropRuleAttribute_WhenMessageSet_ShouldReturnPropDefWithStringPatternMatchPropRuleWithMessage()
+        {
+            //---------------Set up test pack-------------------
+            PropertyWrapper wrapper = GetMockPropWrapper();
+            var propertyAutoMapper = new PropertyAutoMapper(wrapper);
+            const string fourDigitStringRegex = @"^\d{4}$";
+            string expectedMessage = GetRandomString();
+            //---------------Assert Precondition----------------
+            Assert.IsNull(wrapper.GetAttribute<AutoMapStringPatternMatchPropRuleAttribute>());
+            //---------------Execute Test ----------------------
+            SetStringPatternMatchPropRuleAttributeWithDefaultConstructor(wrapper, fourDigitStringRegex, expectedMessage);
+            var propDef = propertyAutoMapper.MapProperty();
+            //---------------Test Result -----------------------
+            Assert.IsNotNull(propDef);
+            Assert.AreEqual(1,propDef.PropRules.Count);
+            var actualMessage = (string)propDef.PropRules[0].Parameters["patternMatchMessage"];
+            StringAssert.AreEqualIgnoringCase(expectedMessage, actualMessage);
+        }
+
+        private static void SetStringPatternMatchPropRuleAttributeWithDefaultConstructor(PropertyWrapper wrapper, string regexPattern, string message)
         {
             wrapper.Stub(propertyWrapper => propertyWrapper.GetAttribute<AutoMapStringPatternMatchPropRuleAttribute>()).Return(
-                  new AutoMapStringPatternMatchPropRuleAttribute(emailPatternMatch));
+                  new AutoMapStringPatternMatchPropRuleAttribute(regexPattern, message));
             wrapper.Stub(propertyWrapper => propertyWrapper.HasStringPatternMatchRuleAttribute).Return(true);
+        }
+
+        private static void SetStringPatternMatchPropRuleAttributeWithDefaultConstructor(PropertyWrapper wrapper, string emailPatternMatch)
+        {
+            SetStringPatternMatchPropRuleAttributeWithDefaultConstructor(wrapper, emailPatternMatch, "");
         }
 
 

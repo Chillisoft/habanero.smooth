@@ -29,6 +29,7 @@ namespace Habanero.Smooth.Test
     [TestFixture]
     public class TestAutoMappingAttributes
     {
+        // ReSharper disable InconsistentNaming
         [Test]
         public void Test_Default_Construct_WithValue_ShouldSetValue()
         {
@@ -58,7 +59,7 @@ namespace Habanero.Smooth.Test
         public void Test_UniqueConstraint_ConstructWithValue_ShouldSetValue()
         {
             //---------------Set up test pack-------------------
-            string uniqueConstraintName = "myuniqueconstraint";
+            const string uniqueConstraintName = "myuniqueconstraint";
             //---------------Assert Precondition----------------
 
             //---------------Execute Test ----------------------
@@ -100,8 +101,8 @@ namespace Habanero.Smooth.Test
         public void Test_IntPropRule_ShouldSetValue()
         {
             //---------------Set up test pack-------------------
-            var min = 1;
-            var max = 10;
+            const int min = 1;
+            const int max = 10;
             //---------------Assert Precondition----------------
 
             //---------------Execute Test ----------------------
@@ -132,8 +133,8 @@ namespace Habanero.Smooth.Test
         public void Test_DateTimeStringPropRule_ShouldSetValue()
         {
             //---------------Set up test pack-------------------
-            var startDateValue = "Today";
-            var endDateValue = "Tomorrow";
+            const string startDateValue = "Today";
+            const string endDateValue = "Tomorrow";
             //---------------Assert Precondition----------------
 
             //---------------Execute Test ----------------------
@@ -148,13 +149,28 @@ namespace Habanero.Smooth.Test
         public void Test_StringPatternMatchPropRule_ShouldSetValue()
         {
             //---------------Set up test pack-------------------
-            var pattern =@"^[-+.\w]{1,64}@[-.\w]{1,64}\.[-.\w]{2,6}$" ;
+            const string pattern = @"^[-+.\w]{1,64}@[-.\w]{1,64}\.[-.\w]{2,6}$";
             //---------------Assert Precondition----------------
 
             //---------------Execute Test ----------------------
             var attribute = new AutoMapStringPatternMatchPropRuleAttribute(pattern);
             //---------------Test Result -----------------------
             Assert.IsInstanceOf<Attribute>(attribute);
+            Assert.AreEqual(pattern, attribute.Pattern);
+        }
+        [Test]
+        public void Test_StringPatternMatchPropRule_WithErrorMessage_ShouldSetMessage()
+        {
+            //---------------Set up test pack-------------------
+            const string pattern = @"^[-+.\w]{1,64}@[-.\w]{1,64}\.[-.\w]{2,6}$";
+            string message = GetRandomMessage();
+            //---------------Assert Precondition----------------
+
+            //---------------Execute Test ----------------------
+            var attribute = new AutoMapStringPatternMatchPropRuleAttribute(pattern, message);
+            //---------------Test Result -----------------------
+            Assert.IsInstanceOf<Attribute>(attribute);
+            Assert.AreEqual(message, attribute.Message);
             Assert.AreEqual(pattern, attribute.Pattern);
         }
 
@@ -177,8 +193,8 @@ namespace Habanero.Smooth.Test
         public void Test_StringLengthPropRule_ShouldSetValue()
         {
             //---------------Set up test pack-------------------
-            var minLengthValue = 5;
-            var maxLengthValue = 400;
+            const int minLengthValue = 5;
+            const int maxLengthValue = 400;
             //---------------Assert Precondition----------------
 
             //---------------Execute Test ----------------------
@@ -189,7 +205,10 @@ namespace Habanero.Smooth.Test
             Assert.AreEqual(maxLengthValue, attribute.MaxLength);
         }
 
-
+        private string GetRandomMessage()
+        {
+            return RandomValueGenerator.GetRandomString();
+        }
     }
 
    

@@ -18,6 +18,7 @@
 // ---------------------------------------------------------------------------------
 using System;
 using Habanero.Base;
+using Habanero.BO;
 
 namespace Habanero.Smooth
 {
@@ -258,15 +259,37 @@ namespace Habanero.Smooth
 
     }
     /// <summary>
-    /// Marks a String Pattern Match property rule
+    /// Marks a String Pattern Match property rule. <see cref="PropRuleString"/>
     /// </summary>
     public class AutoMapStringPatternMatchPropRuleAttribute : Attribute
     {
+        ///<summary>
+        /// The Regex pattern that will be used for validating the Property
+        ///</summary>
         public string Pattern { get; private set; }
+        /// <summary>
+        /// The Error message that will be returned by the BO in the case where
+        /// the Pattern Match does not work.
+        /// </summary>
+        public string Message { get; private set; }
 
+        ///<summary>
+        /// Construct the Attribute with a specific RegEx pattern
+        ///</summary>
+        ///<param name="pattern"></param>
         public AutoMapStringPatternMatchPropRuleAttribute(string pattern)
         {
             Pattern = pattern;
+        }
+        //patternMatchMessage
+        ///<summary>
+        /// Construct the Attribute with a specific RegEx pattern and a <see cref="Message"/> 
+        ///</summary>
+        ///<param name="pattern"><see cref="Pattern"/></param>
+        ///<param name="message"><see cref="Message"/></param>
+        public AutoMapStringPatternMatchPropRuleAttribute(string pattern, string message):this(pattern)
+        {
+            this.Message = message;
         }
     }
 
