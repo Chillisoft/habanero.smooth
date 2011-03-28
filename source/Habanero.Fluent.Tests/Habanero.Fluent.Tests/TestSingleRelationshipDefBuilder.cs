@@ -100,8 +100,8 @@ namespace Habanero.Fluent.Tests
             Assert.AreEqual(relationshipName, singleRelationshipDef.RelationshipName);
             Assert.AreEqual(RelationshipType.Aggregation, singleRelationshipDef.RelationshipType);
         }
-/*
 
+/*
         [Test]
         public void Test_Build_WithRelProp__ShouldCreateSingleRelDefWithOneProp()
         {

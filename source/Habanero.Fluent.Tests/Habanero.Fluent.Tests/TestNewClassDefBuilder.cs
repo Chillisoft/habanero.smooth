@@ -272,6 +272,35 @@ namespace Habanero.Fluent.Tests
 
         }
 
+        [Test]
+        public void Test_Build_WhenCreatingSingleRelationship_ShouldSetRelationshipDefProps()
+        {
+            //---------------Set up test pack-------------------
+            var classDef = new NewClassDefBuilder<Car>()
+                .WithPrimaryKey(c => c.VehicleID)
+                .WithRelationships()
+                    .WithNewSingleRelationship(c => c.SteeringWheel)
+                        .WithRelProp("VehicleID", "CarID")
+                    .EndSingleRelationship()
+                .EndRelationships();
+
+            //---------------Assert Precondition----------------
+            //---------------Test Result -----------------------
+            IClassDef builtClassDef = classDef.Build();
+
+            var singleRelationshipDef = builtClassDef.GetRelationship("SteeringWheel");
+            Assert.AreEqual("SteeringWheel", singleRelationshipDef.RelationshipName);
+            Assert.IsTrue(singleRelationshipDef.KeepReferenceToRelatedObject);
+            Assert.AreEqual(DeleteParentAction.DoNothing, singleRelationshipDef.DeleteParentAction);
+            Assert.AreEqual("Car", singleRelationshipDef.OwningClassName);
+            Assert.AreEqual("TestProject.BO", singleRelationshipDef.RelatedObjectAssemblyName);
+            Assert.AreEqual("SteeringWheel", singleRelationshipDef.RelatedObjectClassName);
+            Assert.AreEqual(1, singleRelationshipDef.RelKeyDef.Count);
+            Assert.AreEqual(InsertParentAction.InsertRelationship, singleRelationshipDef.InsertParentAction);
+            Assert.AreEqual(RelationshipType.Association, singleRelationshipDef.RelationshipType);
+        }
+
+
         [Ignore("Currently this test is not testing anything as you can no longer create a relationship without a relprop")] //TODO Andrew Russell 07 Feb 2011: Ignored Test - Currently this test is not testing anything as you can no longer create a relationship without a relprop
         [Test]
         public void Test_Validate_With_NoRelProps_ShouldBeInvalid()
