@@ -62,11 +62,9 @@
     <Compile Include="TestNewPropertiesDefBuilder.cs" />
     <Compile Include="TestNewSingleRelKeyDefBuilder.cs" />
     <Compile Include="TestNewSuperClassDefBuilder.cs" />
-    <Compile Include="TestOldPropDefBuilder.cs" />
     <Compile Include="TestRelKeyDefBuilder.cs" />
     <Compile Include="TestSingleRelationshipDefBuilder.cs" />
     <Compile Include="TestSingleRelKeyDefBuilder.cs" />
-    <Compile Include="TestOldSuperClassDefBuilder.cs" />
     <Compile Include="TestStubs\NewClassDefBuilder2Stub.cs" />
     <Compile Include="TestStubs\NewClassDefBuilderStub.cs" />
     <Compile Include="TestStubs\NewRelationshipsBuilderStub.cs" />
