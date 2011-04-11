@@ -42,6 +42,25 @@ namespace Habanero.Fluent.Tests
             Assert.IsInstanceOf<NewSingleRelationshipDefBuilder<Car, SteeringWheel>>(singleRelationshipDefBuilder);
         }
 
+        [Test]
+        public void Test_CompositeRel_WithRelProp_WhenCalled_ShouldReturnSingleRelationshipDefBuilder()
+        {
+            var newSingleRelKeyBuilder = new NewClassDefBuilder<Car>()
+                .WithPrimaryKey(car => car.VehicleID)
+                .WithRelationships()
+                .WithNewSingleRelationship(c => c.SteeringWheel)
+                .WithCompositeRelationshipKey();
+
+            //---------------Assert Precondition----------------
+
+            //---------------Execute Test ----------------------
+            var singleRelationshipDefBuilder = newSingleRelKeyBuilder.WithRelProp("VehicleID", "CarID")
+                                                                     .WithRelProp("xxxx","yyyy").EndCompositeRelationshipKey();
+
+            //---------------Test Result -----------------------
+            Assert.IsInstanceOf<NewSingleRelationshipDefBuilder<Car, SteeringWheel>>(singleRelationshipDefBuilder);
+        }
+
 
 
     }

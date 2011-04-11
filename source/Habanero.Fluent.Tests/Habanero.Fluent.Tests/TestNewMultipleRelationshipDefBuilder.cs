@@ -162,90 +162,96 @@ namespace Habanero.Fluent.Tests
             Assert.AreEqual(relatedPropName, relPropDef.RelatedClassPropName);
         }
 
-        //[Test]
-        //public void Test_Build_With_2RelProps_ShouldCreateRelDefWithTwoProps()
-        //{
-        //    //---------------Set up test pack-------------------
-        //    string relationshipName = "R" + GetRandomString();
-        //    string propertyName = "P" + GetRandomString();
-        //    string relatedPropName = "P" + GetRandomString();
-        //    string propertyName2 = "P" + GetRandomString();
-        //    string relatedPropName2 = "P" + GetRandomString();
-        //    //---------------Assert Precondition----------------
+        [Test]
+        public void Test_Build_With_2RelProps_ShouldCreateRelDefWithTwoProps()
+        {
+            //---------------Set up test pack-------------------
+            string relationshipName = "R" + GetRandomString();
+            string propertyName = "P" + GetRandomString();
+            string relatedPropName = "P" + GetRandomString();
+            string propertyName2 = "P" + GetRandomString();
+            string relatedPropName2 = "P" + GetRandomString();
+            //---------------Assert Precondition----------------
 
-        //    //---------------Execute Test ----------------------
+            //---------------Execute Test ----------------------
 
-        //    var multipleRelationshipDef = GetMultipleRelationshipDefBuilder<Car, Driver>(relationshipName)
-        //        .WithRelProp(propertyName, relatedPropName)
-        //        .WithRelProp(propertyName2, relatedPropName2)
-        //        .Build();
+            var multipleRelationshipDef = new NewRelationshipsBuilderStub<Car>().WithNewMultipleRelationship<Car>(relationshipName)
+                .WithCompositeRelationshipKey()
+                    .WithRelProp(propertyName, relatedPropName)
+                    .WithRelProp(propertyName2, relatedPropName2)
+                .EndCompositeRelationshipKey()
+                .Build();
 
-        //    //---------------Test Result -----------------------
-        //    Assert.AreEqual(relationshipName, multipleRelationshipDef.RelationshipName);
-        //    Assert.AreEqual(2, multipleRelationshipDef.RelKeyDef.Count);
-        //    IRelPropDef relPropDef = multipleRelationshipDef.RelKeyDef[propertyName];
-        //    Assert.IsNotNull(relPropDef);
-        //    Assert.AreEqual(propertyName, relPropDef.OwnerPropertyName);
-        //    Assert.AreEqual(relatedPropName, relPropDef.RelatedClassPropName);
-        //    relPropDef = multipleRelationshipDef.RelKeyDef[propertyName2];
-        //    Assert.IsNotNull(relPropDef);
-        //    Assert.AreEqual(propertyName2, relPropDef.OwnerPropertyName);
-        //    Assert.AreEqual(relatedPropName2, relPropDef.RelatedClassPropName);
-        //}
+            //---------------Test Result -----------------------
+            Assert.AreEqual(relationshipName, multipleRelationshipDef.RelationshipName);
+            Assert.AreEqual(2, multipleRelationshipDef.RelKeyDef.Count);
+            IRelPropDef relPropDef = multipleRelationshipDef.RelKeyDef[propertyName];
+            Assert.IsNotNull(relPropDef);
+            Assert.AreEqual(propertyName, relPropDef.OwnerPropertyName);
+            Assert.AreEqual(relatedPropName, relPropDef.RelatedClassPropName);
+            relPropDef = multipleRelationshipDef.RelKeyDef[propertyName2];
+            Assert.IsNotNull(relPropDef);
+            Assert.AreEqual(propertyName2, relPropDef.OwnerPropertyName);
+            Assert.AreEqual(relatedPropName2, relPropDef.RelatedClassPropName);
+        }
 
-        //[Test]
-        //public void Test_Build_WithLambdaProp_ShouldSetRelationshipName()
-        //{
-        //    //---------------Set up test pack-------------------
-        //    //---------------Assert Precondition----------------
+        [Test]
+        public void Test_Build_WithLambdaProp_ShouldSetRelationshipName()
+        {
+            //---------------Set up test pack-------------------
+            //---------------Assert Precondition----------------
 
-        //    //---------------Execute Test ----------------------
-        //    var multipleRelationshipDef = new OldMultipleRelationshipDefBuilder<Car, Driver>()
-        //        .WithRelationshipName(c => c.Drivers)
-        //        .Build();
+            //---------------Execute Test ----------------------
+            var relationshipDef = new NewRelationshipsBuilderStub<Car>().WithNewMultipleRelationship(c => c.Drivers)
+                .WithRelProp(c=>c.VehicleID,d=>d.CarID)
+                .Build();
 
-        //    //---------------Test Result -----------------------
-        //    Assert.AreEqual("Drivers", multipleRelationshipDef.RelationshipName);
-        //}
+            //---------------Test Result -----------------------
+            Assert.AreEqual("Drivers", relationshipDef.RelationshipName);
+        }
 
-        //[Test]
-        //public void Test_Build_WithLambdaProp_ShouldSetRelationshipProperties()
-        //{
-        //    //---------------Set up test pack-------------------
-        //    //---------------Assert Precondition----------------
+        [Test]
+        public void Test_Build_WithLambdaProp_ShouldSetRelationshipProperties()
+        {
+            //---------------Set up test pack-------------------
+            //---------------Assert Precondition----------------
 
-        //    //---------------Execute Test ----------------------
-        //    var multipleRelationshipDef = new OldMultipleRelationshipDefBuilder<Car, Driver>()
-        //        .WithRelationshipName(c => c.Drivers)
-        //        .WithRelProp(car => car.VehicleID, driver => driver.CarID)
-        //        .Build();
+            //---------------Execute Test ----------------------
+            var relationshipDef = new NewRelationshipsBuilderStub<Car>().WithNewMultipleRelationship(c => c.Drivers)
+                .WithRelProp(c => c.VehicleID, d => d.CarID)
+                .Build();
 
-        //    //---------------Test Result -----------------------
-        //    Assert.AreEqual("Drivers", multipleRelationshipDef.RelationshipName);
-        //    var relPropDef = multipleRelationshipDef.RelKeyDef["VehicleID"];
-        //    Assert.IsNotNull(relPropDef);
-        //    Assert.AreEqual("VehicleID", relPropDef.OwnerPropertyName);
-        //    Assert.AreEqual("CarID", relPropDef.RelatedClassPropName);
-        //}
+            //---------------Test Result -----------------------
+            Assert.AreEqual("Drivers", relationshipDef.RelationshipName);
+            var relPropDef = relationshipDef.RelKeyDef["VehicleID"];
+            Assert.IsNotNull(relPropDef);
+            Assert.AreEqual("VehicleID", relPropDef.OwnerPropertyName);
+            Assert.AreEqual("CarID", relPropDef.RelatedClassPropName);
+        }
 
-        //[Test]
-        //public void Test_Build_WithLambdaProp_WithfakeBOs_ShouldSetRelationshipProperties()
-        //{
-        //    //---------------Set up test pack-------------------
-        //    //---------------Assert Precondition----------------
+        [Test]
+        public void Test_Build_WithLambdaProp_WithfakeBOs_ShouldSetRelationshipProperties()
+        {
+            //---------------Set up test pack-------------------
+            //---------------Assert Precondition----------------
 
-        //    //---------------Execute Test ----------------------
-        //    var multipleRelationshipDef = new OldMultipleRelationshipDefBuilder<FakeBOWithMultipleRelationship, FakeBOWithSingleRelationship>()
-        //        .WithRelationshipName(c => c.FakeBOWithSingleRelationships)
-        //        .WithRelProp(car => car.FakeBOWithMultipleRelationshipID, driver => driver.FKID)
-        //        .Build();
+            //---------------Execute Test ----------------------
+           /* var multipleRelationshipDef = new NewMultipleRelationshipDefBuilder<FakeBOWithMultipleRel, FakeBOWithSingleRel>()
+                .WithRelationshipName(rel => rel.MyMultipleRel)
+                .WithRelProp(car => car.FakeBOWithMultipleRelationshipID, driver => driver.FKID)
+                .Build();*/
 
-        //    //---------------Test Result -----------------------
-        //    var relPropDef = multipleRelationshipDef.RelKeyDef["FakeBOWithMultipleRelationshipID"];
-        //    Assert.IsNotNull(relPropDef);
-        //    Assert.AreEqual("FakeBOWithMultipleRelationshipID", relPropDef.OwnerPropertyName);
-        //    Assert.AreEqual("FKID", relPropDef.RelatedClassPropName);
-        //}
+            IRelationshipDef relationshipDef = new NewRelationshipsBuilderStub<FakeBOWithMultipleRelWithProp>()
+                .WithNewMultipleRelationship(c => c.MyMultipleRel)
+                //.WithRelProp("FakeBOWithMultipleRelationshipID", "MySingleRelationshipID")
+                .WithRelProp(x=> x.FakeBOWithMultipleRelationshipID, n=> n.MySingleRelationshipID)
+                .Build();
+            //---------------Test Result -----------------------
+            var relPropDef = relationshipDef.RelKeyDef["FakeBOWithMultipleRelationshipID"];
+            Assert.IsNotNull(relPropDef);
+            Assert.AreEqual("FakeBOWithMultipleRelationshipID", relPropDef.OwnerPropertyName);
+            Assert.AreEqual("MySingleRelationshipID", relPropDef.RelatedClassPropName);
+        }
 
     }
 }

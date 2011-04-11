@@ -500,6 +500,12 @@ namespace Habanero.Smooth.Test
 		public BusinessObjectCollection<FakeBOWithNoRelationship> MyMultipleRel { get; set; }
 	}
 
+	public class FakeBOWithMultipleRelWithProp : BusinessObject
+	{
+        public Guid? FakeBOWithMultipleRelationshipID { get; set; }
+        public BusinessObjectCollection<FakeBOWithSingleRelAndFKProp> MyMultipleRel { get; set; }
+	}
+
 	public class FakeBOWithOneToOneRel : BusinessObject
 	{
 		[AutoMapOneToOne]
