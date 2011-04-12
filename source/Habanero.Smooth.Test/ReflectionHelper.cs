@@ -17,7 +17,6 @@
 //      along with the Habanero framework.  If not, see <http://www.gnu.org/licenses/>.
 // ---------------------------------------------------------------------------------
 using System;
-using System.Linq.Expressions;
 using System.Reflection;
 using NUnit.Framework;
 
@@ -31,7 +30,7 @@ namespace Habanero.Smooth.Test
     /// </summary>
     public static class ReflectionUtils
     {
-        public static bool IsMethodExpression<TModel>(Expression<Func<TModel, object>> expression)
+     /*   public static bool IsMethodExpression<TModel>(Expression<Func<TModel, object>> expression)
         {
             return IsMethodExpression<TModel, object>(expression);
         }
@@ -122,7 +121,7 @@ namespace Habanero.Smooth.Test
             }
 
             return memberExpression;
-        }
+        }*/
 //
 //        public static Accessor GetAccessor<MODEL>(Expression<Func<MODEL, object>> expression)
 //        {
@@ -157,7 +156,7 @@ namespace Habanero.Smooth.Test
 //            return getAccessor(memberExpression);
 //        }
 
-
+/*
         public static MethodInfo GetMethod<T>(Expression<Func<T, object>> expression)
         {
             MethodCallExpression methodCall = (MethodCallExpression)expression.Body;
@@ -180,6 +179,6 @@ namespace Habanero.Smooth.Test
         {
             MethodCallExpression methodCall = (MethodCallExpression)expression.Body;
             return methodCall.Method;
-        }
+        }*/
     }
 }

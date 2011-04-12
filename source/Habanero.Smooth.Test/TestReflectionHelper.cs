@@ -27,7 +27,7 @@ namespace Habanero.Smooth.Test
     public class TestReflectionUtils
     {
         //TODO brett 30 Jan 2010: Must not Props that have private Get's
-        [Test]
+/*        [Test]
         public void Test_GetProperty_WithExpression_ShouldReturnProperty()
         {
             //---------------Set up test pack-------------------
@@ -40,6 +40,6 @@ namespace Habanero.Smooth.Test
             var propertyInfo = typeof(FakeBOWProps).GetProperty("PublicGetGuidProp");
             property.ShouldEqual(propertyInfo);
             property.PropertyType.ShouldEqual(propertyInfo.PropertyType);
-        }
+        }*/
     }
 }

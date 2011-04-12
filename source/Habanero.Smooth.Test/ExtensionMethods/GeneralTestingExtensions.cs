@@ -20,7 +20,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using NUnit.Framework;
 using Rhino.Mocks;
 
@@ -42,7 +41,7 @@ namespace Habanero.Smooth.Test
     }
     public static class LamdaExpressionViews
     {
-        public static string GetCodeString(this Expression expression)
+/*        public static string GetCodeString(this Expression expression)
         {
             if (expression is LambdaExpression)
             {
@@ -145,7 +144,7 @@ namespace Habanero.Smooth.Test
                 default:
                     return binaryExpression.ToString();
             }
-        }
+        }*/
     }
     public delegate void MethodThatThrows();
     public static class GeneralTestingExtensions
@@ -273,11 +272,11 @@ namespace Habanero.Smooth.Test
         {
             actual.FirstOrDefault(expected).ShouldNotEqual(default(T), "Should contain item");
         }*/
-        public static void ShouldContain<T>(this IEnumerable<T> actual, Expression<Func<T, bool>> expected)
+/*        public static void ShouldContain<T>(this IEnumerable<T> actual, Expression<Func<T, bool>> expected)
         {
             var codeString = expected.GetCodeString();
             actual.FirstOrDefault(expected.Compile()).ShouldNotEqual(default(T), "Should contain item " + codeString);
-        }
+        }*/
 
         public static void ShouldContain(this IDictionary actual, string key, string value)
         {

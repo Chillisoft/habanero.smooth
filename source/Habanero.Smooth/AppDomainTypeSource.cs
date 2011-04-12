@@ -24,7 +24,7 @@ using Habanero.Smooth.ReflectionWrappers;
 
 namespace Habanero.Smooth
 {
-    public class AppDomainTypeSource : ITypeSource
+/*    public class AppDomainTypeSource : ITypeSource
     {
         private Func<TypeWrapper, bool> Where { get; set; }
 
@@ -53,5 +53,5 @@ namespace Habanero.Smooth
                 .Select(type1 => type1.ToTypeWrapper())
                 .Where(type => type.IsBusinessObject && type.IsRealClass);
         }
-    }
+    }*/
 }

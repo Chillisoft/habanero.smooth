@@ -41,7 +41,7 @@ namespace Habanero.Smooth.Test
             //---------------Test Result -----------------------
             Assert.AreSame(defaultValue, attribute.DefaultValue);
         }
-
+/*
         [Test]
         public void Test_ReadWriteRule_Construct_WithValue_ShouldSetValue()
         {
@@ -53,7 +53,7 @@ namespace Habanero.Smooth.Test
             AutoMapReadWriteRuleAttribute attribute = new AutoMapReadWriteRuleAttribute(expecteRwRule);
             //---------------Test Result -----------------------
             Assert.AreEqual(expecteRwRule, attribute.ReadWriteRule);
-        }
+        }*/
 
         [Test]
         public void Test_UniqueConstraint_ConstructWithValue_ShouldSetValue()

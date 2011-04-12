@@ -18,7 +18,6 @@
 // ---------------------------------------------------------------------------------
 using System;
 using System.Globalization;
-using System.Linq.Expressions;
 using System.Reflection;
 
 namespace Habanero.Smooth.Test

@@ -19,7 +19,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Reflection;
 using Habanero.Base;
 using Habanero.Smooth.ReflectionWrappers;
@@ -122,14 +121,14 @@ namespace Habanero.Smooth.Test
             GC.Collect();
             GC.WaitForPendingFinalizers();
         }
-
+/*
         public static TEnum GetRandomEnum<TEnum>()
            where TEnum : struct
         {
             return GetRandomEnum<TEnum>(null);
-        }
+        }*/
 
-        public static TEnum GetRandomEnum<TEnum>(TEnum? excluded)
+/*        public static TEnum GetRandomEnum<TEnum>(TEnum? excluded)
             where TEnum : struct
         {
             Array values = Enum.GetValues(typeof(TEnum));
@@ -140,7 +139,7 @@ namespace Habanero.Smooth.Test
                 return GetRandomEnum(excluded);
             }
             return value;
-        }
+        }*/
 
         public static T AssertIsInstanceOf<T>(object obj)
         {

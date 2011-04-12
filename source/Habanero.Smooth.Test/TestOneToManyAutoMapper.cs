@@ -275,7 +275,6 @@ namespace Habanero.Smooth.Test
             catch (ArgumentNullException ex)
             {
                 StringAssert.Contains("Value cannot be null", ex.Message);
-                StringAssert.Contains("propInfo", ex.ParamName);
             }
         }
 

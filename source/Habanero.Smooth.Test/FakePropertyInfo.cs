@@ -44,7 +44,7 @@ namespace Habanero.Smooth.Test
             throw new NotImplementedException();
         }
 
-        public override Type GetInterface(string name, bool ignoreCase)
+        public  Type GetInterface(string name, bool ignoreCase)
         {
             throw new NotImplementedException();
         }
@@ -70,6 +70,11 @@ namespace Habanero.Smooth.Test
         }
 
         public override Type GetNestedType(string name, BindingFlags bindingAttr)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override MemberInfo[] GetMember(string name, BindingFlags bindingAttr)
         {
             throw new NotImplementedException();
         }
@@ -154,10 +159,11 @@ namespace Habanero.Smooth.Test
             throw new NotImplementedException();
         }
 
-        public override Type UnderlyingSystemType
+        public override RuntimeTypeHandle TypeHandle
         {
             get { throw new NotImplementedException(); }
         }
+
 
         protected override ConstructorInfo GetConstructorImpl(BindingFlags bindingAttr, Binder binder, CallingConventions callConvention, Type[] types, ParameterModifier[] modifiers)
         {
@@ -165,11 +171,6 @@ namespace Habanero.Smooth.Test
         }
 
         public override string Name
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        public override Guid GUID
         {
             get { throw new NotImplementedException(); }
         }
@@ -359,10 +360,6 @@ namespace Habanero.Smooth.Test
             throw new NotImplementedException();
         }
 
-        public override MethodImplAttributes GetMethodImplementationFlags()
-        {
-            throw new NotImplementedException();
-        }
 
         public override object Invoke(object obj, BindingFlags invokeAttr, Binder binder, object[] parameters, CultureInfo culture)
         {
@@ -372,6 +369,11 @@ namespace Habanero.Smooth.Test
         public override MethodInfo GetBaseDefinition()
         {
             throw new NotImplementedException();
+        }
+
+        public override Type ReturnType
+        {
+            get { throw new NotImplementedException(); }
         }
 
         public override ICustomAttributeProvider ReturnTypeCustomAttributes
