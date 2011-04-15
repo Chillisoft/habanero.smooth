@@ -79,6 +79,7 @@ namespace Habanero.Smooth.Test
         [TestCase("PublicEnumProp", typeof(FakeEnum), "Habanero.Smooth.Test.FakeEnum")]
         [TestCase("PublicNullableEnumProp", typeof(FakeEnum?), "Habanero.Smooth.Test.FakeEnum")]
         [TestCase("PublicPropWithAtt", typeof(float?), "System.Single")]
+        [TestCase("PublicImageProp", typeof(System.Drawing.Image), "System.Drawing.Image")]
         public void Test_MapProperty_WhenPublicProp_ShouldSetPropNameAndType(string propName, Type propType, string typeName)
         {
             //---------------Set up test pack-------------------
@@ -98,6 +99,8 @@ namespace Habanero.Smooth.Test
             Assert.AreEqual(typeName, propDef.PropertyTypeName);
             Assert.AreEqual(PropReadWriteRule.ReadWrite, propDef.ReadWriteRule);
         }
+
+        
 
         [Test]
         public void Test_Map_WhenTypeNotSystem_ShouldReturnNull()

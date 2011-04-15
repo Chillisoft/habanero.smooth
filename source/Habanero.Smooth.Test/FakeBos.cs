@@ -122,6 +122,7 @@ namespace Habanero.Smooth.Test
 		public int PublicIntProp { get; private set; }
 		public FakeEnum PublicEnumProp { get; set; }
 		public FakeEnum? PublicNullableEnumProp { get; set; }
+        public System.Drawing.Image PublicImageProp { get; set; }
 
 		[FakeAttribute]
 		public float? PublicPropWithAtt { get; set; }
@@ -516,6 +517,14 @@ namespace Habanero.Smooth.Test
 	{
 	}
 
+    public class FakeBoNoPropsOfT : BusinessObject<FakeBoNoPropsOfT>
+    {
+    }
+
+    public interface IFakeBO : IBusinessObject
+    {
+        string FakeBOSuperClassWithDescType { get; set; }
+    }
 	public class FakeBOSubClass : FakeBOSuperClass
 	{
 	}

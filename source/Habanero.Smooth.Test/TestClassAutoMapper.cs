@@ -182,6 +182,19 @@ namespace Habanero.Smooth.Test
         }
 
         [Test]
+        public void Test_Map_WhenIsSubtypeOfBusinessObjectOfT_ShouldNotCreateExtraPrimaryKeyProp()
+        {
+            //---------------Set up test pack-------------------
+            var type = typeof (FakeBoNoPropsOfT);
+            //---------------Assert Precondition----------------
+            type.GetProperties().Length.ShouldEqual(7);
+            //---------------Execute Test ----------------------
+            var classDef = type.MapClass();
+            //---------------Test Result -----------------------
+            Assert.AreEqual(1, classDef.PropDefcol.Count, "Creates A Primary Key Prop");
+        }
+
+        [Test]
         public void Test_Map_WhenHasNoMappedTableName_ShouldSetClassName()
         {
             //---------------Set up test pack-------------------
@@ -241,6 +254,7 @@ namespace Habanero.Smooth.Test
         [TestCase("PublicEnumProp")]
         [TestCase("PublicNullableEnumProp")]
         [TestCase("PublicPropWithAtt")]
+        [TestCase("PublicImageProp")]
         public void Test_Map_WhenHasProps_ShouldMapProps(string propName)
         {
             //---------------Set up test pack-------------------
@@ -254,6 +268,7 @@ namespace Habanero.Smooth.Test
             Assert.GreaterOrEqual(classDef.PropDefcol.Count, 5);
             classDef.PropDefcol.ShouldContain(propDef => propDef.PropertyName == propName);
         }
+
         [Test]
         public void Test_MapClass_ShouldAssignPropDefToClassDef()
         {
@@ -289,7 +304,7 @@ namespace Habanero.Smooth.Test
             var propDef = classDef.PrimaryKeyDef[0];
             Assert.AreEqual(primaryKeyPropName, propDef.PropertyName);
         }  
-      
+   
         [Test]
         public void Test_Map_ShouldMapManyToOneRelationship()
         {
@@ -306,6 +321,7 @@ namespace Habanero.Smooth.Test
             var relationshipDef = classDef.RelationshipDefCol[expectedPropName];
             Assert.AreEqual(expectedPropName, relationshipDef.RelationshipName);
         }
+
         [Test]
         public void Test_Map_WhenHasFKProp_ShouldNotCreateFKProp()
         {
