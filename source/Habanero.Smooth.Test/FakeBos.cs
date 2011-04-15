@@ -537,10 +537,7 @@ namespace Habanero.Smooth.Test
 	{
 	}
 
-	public interface IFakeBO : IBusinessObject
-	{
-		string FakeBOSuperClassWithDescType { get; set; }
-	}
+
 
 	public class FakeBOSuperClassWithDesc : BusinessObject, IFakeBO
 	{
