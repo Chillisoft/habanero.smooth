@@ -8,11 +8,11 @@ using Habanero.Util;
 
 namespace Habanero.Fluent
 {
-    public class NewSingleRelationshipDefBuilder<T, TRelatedType> : ISingleRelDefBuilder where T : BusinessObject
+    public class SingleRelationshipDefBuilder<T, TRelatedType> : ISingleRelDefBuilder where T : BusinessObject
                                                                                          where TRelatedType :
                                                                                              BusinessObject
     {
-        private readonly NewRelationshipsBuilder<T> _newRelationshipsBuilder;
+        private readonly RelationshipsBuilder<T> _relationshipsBuilder;
         private IRelKeyDef _relKeyDef;
         private string _relatedObjectAssemblyName;
         private string _relatedClassName;
@@ -23,27 +23,27 @@ namespace Habanero.Fluent
         private InsertParentAction InsertAction { get; set; }
         private RelationshipType RelType { get; set; }
 
-        //public NewSingleRelationshipDefBuilder(Expression<Func<T, TRelatedType>> relationshipExpression)
+        //public SingleRelationshipDefBuilder(Expression<Func<T, TRelatedType>> relationshipExpression)
         //{
         //    SetupDefaultValues(GetPropertyName(relationshipExpression));
         //}
 
-        //public NewSingleRelationshipDefBuilder(string relationshipName)
+        //public SingleRelationshipDefBuilder(string relationshipName)
         //{
         //    if (string.IsNullOrEmpty(relationshipName)) throw new ArgumentNullException("relationshipName");
         //    SetupDefaultValues(relationshipName);
         //}
 
-        public NewSingleRelationshipDefBuilder(NewRelationshipsBuilder<T> newRelationshipsBuilder, string relationshipName)
+        public SingleRelationshipDefBuilder(RelationshipsBuilder<T> relationshipsBuilder, string relationshipName)
         {
             if (string.IsNullOrEmpty(relationshipName)) throw new ArgumentNullException("relationshipName");
-            _newRelationshipsBuilder = newRelationshipsBuilder;
+            _relationshipsBuilder = relationshipsBuilder;
             SetupDefaultValues(relationshipName);
         }
 
-        public NewSingleRelationshipDefBuilder(NewRelationshipsBuilder<T> newRelationshipsBuilder, Expression<Func<T, TRelatedType>> relationshipExpression)
+        public SingleRelationshipDefBuilder(RelationshipsBuilder<T> relationshipsBuilder, Expression<Func<T, TRelatedType>> relationshipExpression)
         {
-            _newRelationshipsBuilder = newRelationshipsBuilder;
+            _relationshipsBuilder = relationshipsBuilder;
             SetupDefaultValues(GetPropertyName(relationshipExpression));
         }
 
@@ -65,9 +65,9 @@ namespace Habanero.Fluent
         //    return new RelKeyBuilder<T, TRelatedType>(this);
         //}
 
-        public NewRelationshipsBuilder<T> EndSingleRelationship()
+        public RelationshipsBuilder<T> EndSingleRelationship()
         {
-            return _newRelationshipsBuilder;
+            return _relationshipsBuilder;
         }
 
 /*
@@ -84,14 +84,14 @@ namespace Habanero.Fluent
             return this;
         }*/
 
-        public NewSingleRelationshipDefBuilder<T, TRelatedType> WithInsertParentAction(
+        public SingleRelationshipDefBuilder<T, TRelatedType> WithInsertParentAction(
             InsertParentAction insertParentAction)
         {
             InsertAction = insertParentAction;
             return this;
         }
 
-        public NewSingleRelationshipDefBuilder<T, TRelatedType> WithRelationshipType(RelationshipType relationshipType)
+        public SingleRelationshipDefBuilder<T, TRelatedType> WithRelationshipType(RelationshipType relationshipType)
         {
             RelType = relationshipType;
             return this;
@@ -101,7 +101,7 @@ namespace Habanero.Fluent
         public ISingleRelationshipDef Build()
         {
             //_relKeyDef = _relKeyBuilder.Build();
-            if(this.SingleRelKeyDefBuilder == null) this.SingleRelKeyDefBuilder = new NewSingleRelKeyDefBuilder<T, TRelatedType>(this);
+            if(this.SingleRelKeyDefBuilder == null) this.SingleRelKeyDefBuilder = new SingleRelKeyDefBuilder<T, TRelatedType>(this);
             _relKeyDef = this.SingleRelKeyDefBuilder.Build();
             return new SingleRelationshipDef(RelationshipName, _relatedObjectAssemblyName, _relatedClassName, _relKeyDef,
                                              KeepReference, DeleteAction, InsertAction, RelType);
@@ -128,7 +128,7 @@ namespace Habanero.Fluent
             return ReflectionUtilities.GetPropertyInfo(expression);
         }
 
-        internal protected NewSingleRelKeyDefBuilder<T, TRelatedType> SingleRelKeyDefBuilder { set; get; }
+        internal protected SingleRelKeyDefBuilder<T, TRelatedType> SingleRelKeyDefBuilder { set; get; }
     }
 
 }

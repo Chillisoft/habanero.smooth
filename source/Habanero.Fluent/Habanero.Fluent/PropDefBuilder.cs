@@ -8,9 +8,9 @@ using Habanero.Util;
 
 namespace Habanero.Fluent
 {
-    public class NewPropDefBuilder<T> where T : BusinessObject
+    public class PropDefBuilder<T> where T : BusinessObject
     {
-        private readonly NewPropertiesDefBuilder<T> _propertiesDefBuilder;
+        private readonly PropertiesDefBuilder<T> _propertiesDefBuilder;
         private  bool _isCompulsory;
         private  bool _isAutoIncrementing;
         private string _description;
@@ -24,12 +24,12 @@ namespace Habanero.Fluent
         private  string DatabaseFieldName { get; set; }
         private  string DefaultValueString { get; set; }
 
-        public NewPropDefBuilder()
+        public PropDefBuilder()
         {
             SetupBuilderDefaults();
         }
 
-        public NewPropDefBuilder(NewPropertiesDefBuilder<T> propertiesDefBuilder)
+        public PropDefBuilder(PropertiesDefBuilder<T> propertiesDefBuilder)
         {
             _propertiesDefBuilder = propertiesDefBuilder;
             SetupBuilderDefaults();
@@ -42,12 +42,12 @@ namespace Habanero.Fluent
             _isCompulsory = false;
         }
 
-        public NewPropertiesDefBuilder<T> EndProperty()
+        public PropertiesDefBuilder<T> EndProperty()
         {
             return _propertiesDefBuilder;
         }
 
-        public NewPropDefBuilder<T> WithPropertyName(string propertyName)
+        public PropDefBuilder<T> WithPropertyName(string propertyName)
         {
             PropertyName = propertyName;
             return this;
@@ -66,31 +66,31 @@ namespace Habanero.Fluent
             return propDef;
         }
 
-        public NewPropDefBuilder<T> IsCompulsory()
+        public PropDefBuilder<T> IsCompulsory()
         {
             _isCompulsory = true;
             return this;
         }
 
-        public NewPropDefBuilder<T> WithAssemblyName(string assemblyName)
+        public PropDefBuilder<T> WithAssemblyName(string assemblyName)
         {
             PropertyTypeAssemblyName = assemblyName;
             return this;
         }
 
-        public NewPropDefBuilder<T> WithTypeName(string typeName)
+        public PropDefBuilder<T> WithTypeName(string typeName)
         {
             PropertyTypeName = typeName;
             return this;
         }
 
-        public NewPropDefBuilder<T> WithType<TReturnType>()
+        public PropDefBuilder<T> WithType<TReturnType>()
         {
             var type = typeof (TReturnType);
             return WithType(type);
         }
 
-        public NewPropDefBuilder<T> WithType(Type type)
+        public PropDefBuilder<T> WithType(Type type)
         {
             string propTypeAssemblyName;
             string propTypeName;
@@ -102,44 +102,44 @@ namespace Habanero.Fluent
             return this;
         }
 
-        public NewPropDefBuilder<T> WithReadWriteRule(PropReadWriteRule propReadWriteRule)
+        public PropDefBuilder<T> WithReadWriteRule(PropReadWriteRule propReadWriteRule)
         {
             ReadWriteRule = propReadWriteRule;
             return this;
         }
 
-        public NewPropDefBuilder<T> WithDatabaseFieldName(string fieldName)
+        public PropDefBuilder<T> WithDatabaseFieldName(string fieldName)
         {
             DatabaseFieldName = fieldName;
             return this;
         }
 
-        public NewPropDefBuilder<T> WithDefaultValue(string defaultValue)
+        public PropDefBuilder<T> WithDefaultValue(string defaultValue)
         {
             DefaultValueString = defaultValue;
             return this;
         }
 
-        public NewPropDefBuilder<T> IsAutoIncrementing()
+        public PropDefBuilder<T> IsAutoIncrementing()
         {
             _isAutoIncrementing = true;
             return this;
 
         }
 
-        public NewPropDefBuilder<T> WithDescription(string description)
+        public PropDefBuilder<T> WithDescription(string description)
         {
             _description = description;
             return this;
         }
 
-        public NewPropDefBuilder<T>  KeepValuePrivate()
+        public PropDefBuilder<T>  KeepValuePrivate()
         {
             _keepValuePrivate = true;
             return this;
         }
 
-        public NewPropDefBuilder<T> WithDisplayName(string displayName)
+        public PropDefBuilder<T> WithDisplayName(string displayName)
         {
             _displayName = displayName;
             return this;
@@ -161,8 +161,8 @@ namespace Habanero.Fluent
             return ReflectionUtilities.GetPropertyInfo(expression);
         }
 
-        // Moved to NewPropertiesDefBuilder
-        //public NewPropDefBuilder<T> WithProperty<TReturnType>(Expression<Func<T, TReturnType>> propExpression)
+        // Moved to PropertiesDefBuilder
+        //public PropDefBuilder<T> WithProperty<TReturnType>(Expression<Func<T, TReturnType>> propExpression)
         //{
         //    PropertyInfo propertyInfo = GetPropertyInfo(propExpression);
         //    PropertyName = propertyInfo.Name;

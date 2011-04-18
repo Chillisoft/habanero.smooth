@@ -12,18 +12,28 @@ namespace Habanero.Fluent
     public class ClassDefBuilder2<T> where T : BusinessObject
     {
         private ClassDefBuilder<T> _classDefBuilder;
-        private NewPropertiesDefBuilder<T> _propertiesDefBuilder;
+        private PropertiesDefBuilder<T> _propertiesDefBuilder;
+        private IPropDefCol _propDefCol;
+        private IList<ISingleRelDefBuilder> _singleRelationshipDefBuilders = new List<ISingleRelDefBuilder>();
+        private IList<IMultipleRelDefBuilder> _multipleRelationshipDefBuilders = new List<IMultipleRelDefBuilder>();
+        private RelationshipDefCol _relationshipDefCol;
+        private IList<string> _primaryKeyPropNames;
+        private PrimaryKeyDef _primaryKeyDef;
+        private IList<KeyDefBuilder<T>> _keyDefBuilders = new List<KeyDefBuilder<T>>();
+        private KeyDefCol _keyDefCol = new KeyDefCol();
+        private SuperClassDefBuilder<T> _superClassDefBuilder;
+        private PropDefBuilder<T> _propDefBuilder;
+        private IList<PropDefBuilder<T>> PropDefBuilders { get; set; }
 
         public ClassDefBuilder2(ClassDefBuilder<T> classDefBuilder, IList<string> primaryKeyPropNames)
         {
             _classDefBuilder = classDefBuilder;
             _primaryKeyPropNames = primaryKeyPropNames;
-//             _builders
             Initialise();
         }
 
 
-        public ClassDefBuilder2(ClassDefBuilder<T> classDefBuilder, NewSuperClassDefBuilder<T> superClassDefBuilder)
+        public ClassDefBuilder2(ClassDefBuilder<T> classDefBuilder, SuperClassDefBuilder<T> superClassDefBuilder)
         {
             _classDefBuilder = classDefBuilder;
             _superClassDefBuilder = superClassDefBuilder;
@@ -33,29 +43,11 @@ namespace Habanero.Fluent
         private void Initialise()
         {
             _propDefCol = new PropDefCol();
-            PropDefBuilders = new List<NewPropDefBuilder<T>>();
-            _propertiesDefBuilder = new NewPropertiesDefBuilder<T>(this, PropDefBuilders);
+            PropDefBuilders = new List<PropDefBuilder<T>>();
+            _propertiesDefBuilder = new PropertiesDefBuilder<T>(this, PropDefBuilders);
             _relationshipDefCol = new RelationshipDefCol();
             _primaryKeyDef = new PrimaryKeyDef();
         }
-
-
-        private IPropDefCol _propDefCol;
-
-        private IList<ISingleRelDefBuilder> _singleRelationshipDefBuilders = new List<ISingleRelDefBuilder>();
-        private IList<IMultipleRelDefBuilder> _multipleRelationshipDefBuilders = new List<IMultipleRelDefBuilder>();
-        
-        private RelationshipDefCol _relationshipDefCol;
-        //private IList<MultipleRelationshipDefBuilder<T>> _multipleRelationshipDefBuilders = new List<MultipleRelationshipDefBuilder<T>>();
-        private IList<string> _primaryKeyPropNames;
-        private PrimaryKeyDef _primaryKeyDef;
-        private IList<KeyDefBuilder<T>> _keyDefBuilders = new List<KeyDefBuilder<T>>();
-        private KeyDefCol _keyDefCol = new KeyDefCol();
-        private NewSuperClassDefBuilder<T> _superClassDefBuilder;
-        private NewPropDefBuilder<T> _newPropDefBuilder;
-        private IList<NewPropDefBuilder<T>> PropDefBuilders { get; set; }
-
-
 
         public IClassDef Build()
         {
@@ -105,7 +97,7 @@ namespace Habanero.Fluent
             if (!_propDefCol.Contains(propName))
             {
                 //set up this property
-                var newPropDefBuilder = new NewPropDefBuilder<T>();
+                var newPropDefBuilder = new PropDefBuilder<T>();
                 var propertyInfo = ReflectionUtilities.GetPropertyInfo(typeof (T), propName);
                 if (propertyInfo == null)
                 {
@@ -167,54 +159,20 @@ namespace Habanero.Fluent
             return ReflectionUtilities.GetPropertyInfo(expression);
         }
 
-/*        /// <summary>
-        /// Creates a valid value for the property identified by the lambda expression <paramref name="propExpression"/>.
-        /// </summary>
-        /// <param name="propExpression"></param>
-        /// <returns></returns>
-        public TReturn GetValidPropValue<TReturn>(Expression<Func<T, TReturn>> propExpression)
-        {
-            return this.GetValidPropValue(this.BusinessObject, propExpression);
-        }*/
-
-        public NewPropertiesDefBuilder<T> WithProperties()
+        public PropertiesDefBuilder<T> WithProperties()
         {
             return _propertiesDefBuilder;
         }
 
-        //public NewSingleRelationshipDefBuilder<T, TRelatedType> WithSingleRelationship<TRelatedType>(string relationshipName) where TRelatedType : BusinessObject
-        //{
-        //    var singleRelationshipDefBuilder = new NewSingleRelationshipDefBuilder<T, TRelatedType>(this, relationshipName);
-        //    _singleRelationshipDefBuilders.Add(singleRelationshipDefBuilder);
-        //    //return new RelKeyBuilder<T, TRelatedType>(singleRelationshipDefBuilder);
-        //    return singleRelationshipDefBuilder;
-        //}
-
-        //public NewSingleRelationshipDefBuilder<T, TRelatedType> WithSingleRelationship<TRelatedType>(Expression<Func<T, TRelatedType>> relationshipExpression) where TRelatedType : BusinessObject
-        //{
-        //    NewSingleRelationshipDefBuilder<T, TRelatedType> singleRelationshipDefBuilder = new NewSingleRelationshipDefBuilder<T, TRelatedType>(this, relationshipExpression);
-        //    _singleRelationshipDefBuilders.Add(singleRelationshipDefBuilder);
-        //    return singleRelationshipDefBuilder;
-
-        //}
-
-        public NewRelationshipsBuilder<T> WithRelationships()
+        public RelationshipsBuilder<T> WithRelationships()
         {
-            return new NewRelationshipsBuilder<T>(this, _singleRelationshipDefBuilders, _multipleRelationshipDefBuilders);
+            return new RelationshipsBuilder<T>(this, _singleRelationshipDefBuilders, _multipleRelationshipDefBuilders);
         }
 
-        public NewUniqueContraintsBuilder<T> WithUniqueConstraints()
+        public UniqueContraintsBuilder<T> WithUniqueConstraints()
         {
-            return new NewUniqueContraintsBuilder<T>(this, _keyDefBuilders);
+            return new UniqueContraintsBuilder<T>(this, _keyDefBuilders);
         }
-
-        /*public KeyDefBuilder<T> WithUniqueConstraint(string keyName = "")
-        {
-            KeyDefBuilder<T> keyDefBuilder = new KeyDefBuilder<T>(this, keyName);
-            _keyDefBuilders.Add(keyDefBuilder);
-            return keyDefBuilder;
-        }*/
-
 
         private IPropDefCol SetupPropDefCol()
         {

@@ -9,11 +9,11 @@ using Habanero.Util;
 
 namespace Habanero.Fluent
 {
-    public class NewSuperClassDefBuilder<T> where T : BusinessObject
+    public class SuperClassDefBuilder<T> where T : BusinessObject
     {
         private readonly ClassDefBuilder<T> _classDefBuilder;
 
-        public NewSuperClassDefBuilder(ClassDefBuilder<T> classDefBuilder)
+        public SuperClassDefBuilder(ClassDefBuilder<T> classDefBuilder)
         {
             _classDefBuilder = classDefBuilder;
         }
@@ -28,13 +28,13 @@ namespace Habanero.Fluent
             return superClassDef;
         }
 
-        public NewSuperClassDefBuilder<T> WithDiscriminator(string discriminator)
+        public SuperClassDefBuilder<T> WithDiscriminator(string discriminator)
         {
             this.Discriminator = discriminator;
             return this;
         }
 
-        public NewSuperClassDefBuilder<T> WithDiscriminator<TReturnType>(Expression<Func<T, TReturnType>> propExpression)
+        public SuperClassDefBuilder<T> WithDiscriminator<TReturnType>(Expression<Func<T, TReturnType>> propExpression)
         {
             PropertyInfo propertyInfo = GetPropertyInfo(propExpression);
             this.Discriminator = propertyInfo.Name;

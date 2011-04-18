@@ -52,21 +52,22 @@
     <Compile Include="IMultipleRelDefBuilder.cs" />
     <Compile Include="IRelDefBuilder.cs" />
     <Compile Include="ISingleRelDefBuilder.cs" />
-    <Compile Include="NewClassDefBuilder.cs" />
+    <Compile Include="ClassDefBuilder.cs" />
     <Compile Include="ClassDefBuilder2.cs" />
-    <Compile Include="NewKeyDefBuilder.cs" />
-    <Compile Include="NewMultipleRelationshipDefBuilder.cs" />
-    <Compile Include="NewMultipleRelKeyBuilder.cs" />
-    <Compile Include="NewMultipleRelKeyDefBuilder.cs" />
-    <Compile Include="NewPrimaryKeyDefBuilder.cs" />
-    <Compile Include="NewPropDefBuilder.cs" />
-    <Compile Include="NewRelationshipsBuilder.cs" />
-    <Compile Include="NewSingleRelKeyBuilder.cs" />
-    <Compile Include="NewSingleRelKeyDefBuilder.cs" />
-    <Compile Include="NewSingleRelationshipDefBuilder.cs" />
-    <Compile Include="NewSuperClassDefBuilder.cs" />
-    <Compile Include="NewUniqueContraintsBuilder.cs" />
-    <Compile Include="NewPropertiesDefBuilder.cs" />
+    <Compile Include="KeyDefBuilder.cs" />
+    <Compile Include="MultipleRelationshipDefBuilder.cs" />
+    <Compile Include="MultipleRelKeyBuilder.cs" />
+    <Compile Include="MultipleRelKeyDefBuilder.cs" />
+    <Compile Include="PrimaryKeyDefBuilder.cs" />
+    <Compile Include="PropDefBuilder.cs" />
+    <Compile Include="PropertiesDefSelector.cs" />
+    <Compile Include="RelationshipsBuilder.cs" />
+    <Compile Include="SingleRelKeyBuilder.cs" />
+    <Compile Include="SingleRelKeyDefBuilder.cs" />
+    <Compile Include="SingleRelationshipDefBuilder.cs" />
+    <Compile Include="SuperClassDefBuilder.cs" />
+    <Compile Include="UniqueContraintsBuilder.cs" />
+    <Compile Include="PropertiesDefBuilder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

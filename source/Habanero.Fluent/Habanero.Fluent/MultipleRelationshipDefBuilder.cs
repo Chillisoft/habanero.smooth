@@ -8,7 +8,7 @@ using Habanero.Util;
 
 namespace Habanero.Fluent
 {
-    public class NewMultipleRelationshipDefBuilder<T, TRelatedType> : IMultipleRelDefBuilder where T : BusinessObject
+    public class MultipleRelationshipDefBuilder<T, TRelatedType> : IMultipleRelDefBuilder where T : BusinessObject
     {
         private IRelKeyDef _relKeyDef;
         private int _timeOut;
@@ -21,29 +21,29 @@ namespace Habanero.Fluent
         private ClassDefBuilder2<T> _classDefBuilder;
         private string _relatedObjectAssemblyName;
         private string _relatedClassName;
-        private NewRelationshipsBuilder<T> _newRelationshipsBuilder;
+        private RelationshipsBuilder<T> _relationshipsBuilder;
 
-        //public NewMultipleRelationshipDefBuilder()
+        //public MultipleRelationshipDefBuilder()
         //{
         //    SetupDefaultValues();
         //}
 
-        //public NewMultipleRelationshipDefBuilder(ClassDefBuilder2<T> classDefBuilder)
+        //public MultipleRelationshipDefBuilder(ClassDefBuilder2<T> classDefBuilder)
         //{
         //    _classDefBuilder = classDefBuilder;
         //    SetupDefaultValues();
         //}
 
-        public NewMultipleRelationshipDefBuilder(NewRelationshipsBuilder<T> newRelationshipsBuilder, string relationshipName)
+        public MultipleRelationshipDefBuilder(RelationshipsBuilder<T> relationshipsBuilder, string relationshipName)
         {
-            _newRelationshipsBuilder = newRelationshipsBuilder;
+            _relationshipsBuilder = relationshipsBuilder;
             WithRelationshipName(relationshipName); 
             SetupDefaultValues();
         }
 
-        public NewMultipleRelationshipDefBuilder(NewRelationshipsBuilder<T> newRelationshipsBuilder)
+        public MultipleRelationshipDefBuilder(RelationshipsBuilder<T> relationshipsBuilder)
         {
-            _newRelationshipsBuilder = newRelationshipsBuilder;
+            _relationshipsBuilder = relationshipsBuilder;
             //WithRelationshipName(relationshipExpression); 
             SetupDefaultValues();
         }
@@ -62,26 +62,26 @@ namespace Habanero.Fluent
             _timeOut = 0;
         }
 
-        public NewRelationshipsBuilder<T> EndMultipleRelationship()
+        public RelationshipsBuilder<T> EndMultipleRelationship()
         {
-            return _newRelationshipsBuilder;
+            return _relationshipsBuilder;
         }
 
-        public NewMultipleRelationshipDefBuilder<T, TRelatedType> WithRelationshipName(string relationshipName)
+        public MultipleRelationshipDefBuilder<T, TRelatedType> WithRelationshipName(string relationshipName)
         {
             _relationshipName = relationshipName;
             return this;
         }
 
 
-        public NewMultipleRelationshipDefBuilder<T, TRelatedType> WithInsertParentAction(
+        public MultipleRelationshipDefBuilder<T, TRelatedType> WithInsertParentAction(
             InsertParentAction insertParentAction)
         {
             _insertAction = insertParentAction;
             return this;
         }
 
-        public NewMultipleRelationshipDefBuilder<T, TRelatedType> WithRelationshipType(RelationshipType relationshipType)
+        public MultipleRelationshipDefBuilder<T, TRelatedType> WithRelationshipType(RelationshipType relationshipType)
         {
             _relationshipType = relationshipType;
             return this;
@@ -89,7 +89,7 @@ namespace Habanero.Fluent
 
         public IRelationshipDef Build()
         {
-            if (this.MultipleRelKeyDefBuilder == null) this.MultipleRelKeyDefBuilder = new NewMultipleRelKeyDefBuilder<T, TRelatedType>(this);
+            if (this.MultipleRelKeyDefBuilder == null) this.MultipleRelKeyDefBuilder = new MultipleRelKeyDefBuilder<T, TRelatedType>(this);
             _relKeyDef = this.MultipleRelKeyDefBuilder.Build();
             return new MultipleRelationshipDef(_relationshipName, _relatedObjectAssemblyName, _relatedClassName,
                                                _relKeyDef, _keepReference, _orderBy, _deleteAction, _insertAction,
@@ -97,20 +97,20 @@ namespace Habanero.Fluent
         }
 
 
-        public NewMultipleRelationshipDefBuilder<T, TRelatedType> WithOrderBy(string orderBy)
+        public MultipleRelationshipDefBuilder<T, TRelatedType> WithOrderBy(string orderBy)
         {
             _orderBy = orderBy;
             return this;
         }
 
-        public NewMultipleRelationshipDefBuilder<T, TRelatedType> WithTimeout(int timeout)
+        public MultipleRelationshipDefBuilder<T, TRelatedType> WithTimeout(int timeout)
         {
             _timeOut = timeout;
             return this;
         }
 
 
-        public NewMultipleRelationshipDefBuilder<T, TRelatedType> WithRelationshipName<TReturnType>(
+        public MultipleRelationshipDefBuilder<T, TRelatedType> WithRelationshipName<TReturnType>(
             Expression<Func<T, TReturnType>> propExpression)
         {
             _relationshipName = GetPropertyName(propExpression);
@@ -132,6 +132,6 @@ namespace Habanero.Fluent
             return GetPropertyInfo(propExpression).Name;
         }
 
-        internal NewMultipleRelKeyDefBuilder<T, TRelatedType> MultipleRelKeyDefBuilder { set; get; }
+        internal MultipleRelKeyDefBuilder<T, TRelatedType> MultipleRelKeyDefBuilder { set; get; }
     }
 }

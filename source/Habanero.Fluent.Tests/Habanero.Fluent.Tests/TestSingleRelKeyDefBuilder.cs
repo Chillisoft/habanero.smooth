@@ -5,7 +5,7 @@ using TestProject.BO;
 namespace Habanero.Fluent.Tests
 {
     [TestFixture]
-    public class TestNewSingleRelKeyDefBuilder
+    public class TestSingleRelKeyDefBuilder
     {
         [Test]
         public void Test_Construct()
@@ -35,7 +35,7 @@ namespace Habanero.Fluent.Tests
             //---------------Execute Test ----------------------
             var singleRelationshipDefBuilder = singleRelKeyDefBuilder.WithRelProp("VehicleID", "CarID");
             //---------------Test Result -----------------------
-            Assert.IsInstanceOf<NewSingleRelationshipDefBuilder<Car, SteeringWheel>>(singleRelationshipDefBuilder);
+            Assert.IsInstanceOf<SingleRelationshipDefBuilder<Car, SteeringWheel>>(singleRelationshipDefBuilder);
         }
 
         [Test]
@@ -54,7 +54,7 @@ namespace Habanero.Fluent.Tests
                                                                      .WithRelProp("xxxx","yyyy").EndCompositeRelationshipKey();
 
             //---------------Test Result -----------------------
-            Assert.IsInstanceOf<NewSingleRelationshipDefBuilder<Car, SteeringWheel>>(singleRelationshipDefBuilder);
+            Assert.IsInstanceOf<SingleRelationshipDefBuilder<Car, SteeringWheel>>(singleRelationshipDefBuilder);
         }
 
     }

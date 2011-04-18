@@ -6,19 +6,15 @@ using Habanero.Smooth.Test;
 using NUnit.Framework;
 using TestProject.BO;
 
+// ReSharper disable InconsistentNaming
 namespace Habanero.Fluent.Tests
 {
     [TestFixture]
-    public class TestNewClassDefBuilder
+    public class TestClassDefBuilder
     {
 
-               private string GetRandomString()
-        {
-            return RandomValueGenerator.GetRandomString();
-        }
 
         [Test]
-// ReSharper disable InconsistentNaming
         public void Test_WithRelDef_WithSingleRelKey_ShouldBuildOneRelProp()
         {
             //---------------Set up test pack-------------------
@@ -676,7 +672,11 @@ namespace Habanero.Fluent.Tests
         {
             return new ClassDefBuilder<Car>();
         }
-        
+
+        private static string GetRandomString()
+        {
+            return RandomValueGenerator.GetRandomString();
+        }
     }
 
 

@@ -12,7 +12,7 @@ namespace Habanero.Fluent
     public class ClassDefBuilder<T> where T : BusinessObject
     {
         private IList<string> _primaryKeyPropNames;
-        private NewSuperClassDefBuilder<T> _superClassDefBuilder;
+        private SuperClassDefBuilder<T> _superClassDefBuilder;
         private ClassDefBuilder2<T> _classDefBuilder2;
 
         public ClassDefBuilder()
@@ -27,12 +27,6 @@ namespace Habanero.Fluent
             return new ClassDefBuilder2<T>(this, _primaryKeyPropNames);
         }
 
-        public NewPrimaryKeyDefBuilder<T> WithCompositePrimaryKey()
-        {
-            return new NewPrimaryKeyDefBuilder<T>(new ClassDefBuilder2<T>(this, _primaryKeyPropNames), _primaryKeyPropNames);
-        }
-
-
         public ClassDefBuilder2<T> WithPrimaryKey<TReturn>(Expression<Func<T, TReturn>> propExpression)
         {
             string propertyName = GetPropertyName(propExpression);
@@ -40,9 +34,14 @@ namespace Habanero.Fluent
             return new ClassDefBuilder2<T>(this, _primaryKeyPropNames);
         }
 
-        public NewSuperClassDefBuilder<T> WithSuperClass()
+        public PrimaryKeyDefBuilder<T> WithCompositePrimaryKey()
         {
-            _superClassDefBuilder = new NewSuperClassDefBuilder<T>(this);
+            return new PrimaryKeyDefBuilder<T>(new ClassDefBuilder2<T>(this, _primaryKeyPropNames), _primaryKeyPropNames);
+        }
+
+        public SuperClassDefBuilder<T> WithSuperClass()
+        {
+            _superClassDefBuilder = new SuperClassDefBuilder<T>(this);
             return _superClassDefBuilder;
         }
 

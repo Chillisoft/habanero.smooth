@@ -10,7 +10,7 @@ using TestProject.BO;
 namespace Habanero.Fluent.Tests
 {
     [TestFixture]
-    public class TestNewPropDefBuilder
+    public class TestPropDefBuilder
     {
         [Test]
         public void Test_Build_WithPropertyName_ShouldUseDefaults()
@@ -316,9 +316,9 @@ namespace Habanero.Fluent.Tests
         }
 
 
-        private static NewPropDefBuilder<T> GetPropDefBuilder<T>() where T : BusinessObject
+        private static PropDefBuilder<T> GetPropDefBuilder<T>() where T : BusinessObject
         {
-            return new NewPropDefBuilder<T>();
+            return new PropDefBuilder<T>();
         }
 
 

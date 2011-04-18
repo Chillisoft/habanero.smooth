@@ -5,12 +5,12 @@ using Habanero.Smooth.Test;
 
 namespace Habanero.Fluent.Tests.TestStubs
 {
-    public class NewMultipleRelationshipDefBuilderSpy<T, TRelatedType> : NewMultipleRelationshipDefBuilder<T, TRelatedType>
+    public class MultipleRelationshipDefBuilderSpy<T, TRelatedType> : MultipleRelationshipDefBuilder<T, TRelatedType>
         where T : BusinessObject
         where TRelatedType : BusinessObject
     {
-        public NewMultipleRelationshipDefBuilderSpy(string relationshipName)
-            : base(new NewRelationshipsBuilderStub<T>(), relationshipName)
+        public MultipleRelationshipDefBuilderSpy(string relationshipName)
+            : base(new RelationshipsBuilderStub<T>(), relationshipName)
         {
         }
 

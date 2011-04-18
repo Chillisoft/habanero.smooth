@@ -9,21 +9,20 @@ using TestProject.BO;
 // ReSharper disable InconsistentNaming
 namespace Habanero.Fluent.Tests
 {
-    public class TestNewSingleRelationshipDefBuilder
+    public class TestSingleRelationshipDefBuilder
     {
-
 
         [Test]
         public void Test_Build_ShouldConstructCorrectly()
         {
             //---------------Set up test pack-------------------
             const string relationshipName = "SteeringWheel"; 
-            NewSingleRelationshipDefBuilder<Car, SteeringWheel> newSingleRelationshipDefBuilder = GetNewSingleRelationshipDefBuilder(car => car.SteeringWheel);
+            SingleRelationshipDefBuilder<Car, SteeringWheel> singleRelationshipDefBuilder = GetNewSingleRelationshipDefBuilder(car => car.SteeringWheel);
 
             //---------------Assert Precondition----------------
 
             //---------------Execute Test ----------------------
-            var singleRelationshipDef = newSingleRelationshipDefBuilder.Build();
+            var singleRelationshipDef = singleRelationshipDefBuilder.Build();
             //---------------Test Result -----------------------
             Assert.AreEqual(relationshipName, singleRelationshipDef.RelationshipName);
             Assert.IsTrue(singleRelationshipDef.KeepReferenceToRelatedObject);
@@ -115,12 +114,12 @@ namespace Habanero.Fluent.Tests
         public void Test_Build_WithLambdaProp_ShouldSetRelationshipName()
         {
             //---------------Set up test pack-------------------
-            var newRelationshipsBuilder = new NewRelationshipsBuilderStub<Car>();
+            var newRelationshipsBuilder = new RelationshipsBuilderStub<Car>();
 
             //---------------Assert Precondition----------------
 
             //---------------Execute Test ----------------------
-            var newSingleRelationshipDefBuilder = new NewSingleRelationshipDefBuilder<Car, SteeringWheel>(newRelationshipsBuilder,c=> c.SteeringWheel);
+            var newSingleRelationshipDefBuilder = new SingleRelationshipDefBuilder<Car, SteeringWheel>(newRelationshipsBuilder,c=> c.SteeringWheel);
             var singleRelationshipDef = newSingleRelationshipDefBuilder.Build();
 
             //---------------Test Result -----------------------
@@ -132,7 +131,7 @@ namespace Habanero.Fluent.Tests
         public void Test_Build_WithLambdaProp_ShouldSetRelationshipProperties()
         {
             //---------------Set up test pack-------------------
-            var newSingleRelationshipDefBuilder = new NewRelationshipsBuilderStub<Car>().WithNewSingleRelationship(c => c.SteeringWheel).WithRelProp("VehicleID", "CarID");
+            var newSingleRelationshipDefBuilder = new RelationshipsBuilderStub<Car>().WithNewSingleRelationship(c => c.SteeringWheel).WithRelProp("VehicleID", "CarID");
             //---------------Assert Precondition----------------
 
             //---------------Execute Test ----------------------
@@ -147,16 +146,16 @@ namespace Habanero.Fluent.Tests
             Assert.AreEqual("CarID", relPropDef.RelatedClassPropName);
         }
 
-        private static NewSingleRelationshipDefBuilder<Car, SteeringWheel> GetNewSingleRelationshipDefBuilder(string relationshipName)
+        private static SingleRelationshipDefBuilder<Car, SteeringWheel> GetNewSingleRelationshipDefBuilder(string relationshipName)
         {
-            var newRelationshipsBuilder = new NewRelationshipsBuilderStub<Car>();
-            return new NewSingleRelationshipDefBuilder<Car, SteeringWheel>(newRelationshipsBuilder, relationshipName);
+            var newRelationshipsBuilder = new RelationshipsBuilderStub<Car>();
+            return new SingleRelationshipDefBuilder<Car, SteeringWheel>(newRelationshipsBuilder, relationshipName);
         }
 
-        private static NewSingleRelationshipDefBuilder<Car, SteeringWheel> GetNewSingleRelationshipDefBuilder(Expression<Func<Car, SteeringWheel>> relationshipExpression)
+        private static SingleRelationshipDefBuilder<Car, SteeringWheel> GetNewSingleRelationshipDefBuilder(Expression<Func<Car, SteeringWheel>> relationshipExpression)
         {
-            var newRelationshipsBuilder = new NewRelationshipsBuilderStub<Car>();
-            return new NewSingleRelationshipDefBuilder<Car, SteeringWheel>(newRelationshipsBuilder, relationshipExpression);
+            var newRelationshipsBuilder = new RelationshipsBuilderStub<Car>();
+            return new SingleRelationshipDefBuilder<Car, SteeringWheel>(newRelationshipsBuilder, relationshipExpression);
         }
 
         private static string GetRandomString()

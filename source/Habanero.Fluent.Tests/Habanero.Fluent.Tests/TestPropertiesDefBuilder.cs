@@ -9,10 +9,8 @@ using TestProject.BO;
 namespace Habanero.Fluent.Tests
 {
     [TestFixture]
-    public class TestNewPropertiesDefBuilder
+    public class TestPropertiesDefBuilder
     {
-
-
         [Test]
         public void Test_Build_WithLambdaProp_ShouldSetPropNameAndType()
         {
@@ -59,9 +57,9 @@ namespace Habanero.Fluent.Tests
             Assert.AreEqual("Int32", propDef.PropertyTypeName);
         }
 
-        private static NewPropertiesDefBuilder<T> GetPropertiesDefBuilder<T>() where T : BusinessObject
+        private static PropertiesDefBuilder<T> GetPropertiesDefBuilder<T>() where T : BusinessObject
         {
-            return new NewPropertiesDefBuilder<T>(new ClassDefBuilder2<T>(new ClassDefBuilder<T>(), new List<string> { RandomValueGenerator.GetRandomString() }), new List<NewPropDefBuilder<T>>());
+            return new PropertiesDefBuilder<T>(new ClassDefBuilder2<T>(new ClassDefBuilder<T>(), new List<string> { RandomValueGenerator.GetRandomString() }), new List<PropDefBuilder<T>>());
         }
 
 

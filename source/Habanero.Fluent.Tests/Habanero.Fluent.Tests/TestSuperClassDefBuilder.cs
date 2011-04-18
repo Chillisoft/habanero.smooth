@@ -7,7 +7,7 @@ using TestProject.BO;
 namespace Habanero.Fluent.Tests
 {
     [TestFixture]
-    public class TestNewSuperClassDefBuilder
+    public class TestSuperClassDefBuilder
     {
         [Test]
         public void Test_Construct_ShouldCreate()
@@ -102,9 +102,9 @@ namespace Habanero.Fluent.Tests
         }
 
 
-        private static NewSuperClassDefBuilder<T> GetSuperClassDefBuilder<T>() where T : BusinessObject
+        private static SuperClassDefBuilder<T> GetSuperClassDefBuilder<T>() where T : BusinessObject
         {
-            return new NewSuperClassDefBuilder<T>(new ClassDefBuilder<T>());
+            return new SuperClassDefBuilder<T>(new ClassDefBuilder<T>());
         }
 
     }

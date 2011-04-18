@@ -55,18 +55,18 @@
     </Compile>
     <Compile Include="FakeBOs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TestNewClassDefBuilder.cs" />
-    <Compile Include="TestNewMultipleRelationshipDefBuilder.cs" />
-    <Compile Include="TestNewPropDefBuilder.cs" />
-    <Compile Include="TestNewPropertiesDefBuilder.cs" />
-    <Compile Include="TestNewSingleRelKeyDefBuilder.cs" />
-    <Compile Include="TestNewSuperClassDefBuilder.cs" />
+    <Compile Include="TestClassDefBuilder.cs" />
+    <Compile Include="TestMultipleRelationshipDefBuilder.cs" />
+    <Compile Include="TestPropDefBuilder.cs" />
+    <Compile Include="TestPropertiesDefBuilder.cs" />
+    <Compile Include="TestSingleRelKeyDefBuilder.cs" />
+    <Compile Include="TestSuperClassDefBuilder.cs" />
     <Compile Include="TestStubs\ClassDefBuilder2Stub.cs" />
     <Compile Include="TestStubs\ClassDefBuilderStub.cs" />
-    <Compile Include="TestStubs\NewMultipleRelationshipDefBuilderSpy.cs" />
-    <Compile Include="TestStubs\NewRelationshipsBuilderStub.cs" />
-    <Compile Include="TestStubs\NewSingleRelationshipDefBuilderSpy.cs" />
-    <Compile Include="TestNewSingleRelationshipDefBuilder.cs" />
+    <Compile Include="TestStubs\MultipleRelationshipDefBuilderSpy.cs" />
+    <Compile Include="TestStubs\RelationshipsBuilderStub.cs" />
+    <Compile Include="TestStubs\SingleRelationshipDefBuilderSpy.cs" />
+    <Compile Include="TestSingleRelationshipDefBuilder.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Habanero.Fluent\Habanero.Fluent\Habanero.Fluent.csproj">

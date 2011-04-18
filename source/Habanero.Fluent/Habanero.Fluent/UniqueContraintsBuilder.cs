@@ -3,12 +3,12 @@ using Habanero.BO;
 
 namespace Habanero.Fluent
 {
-    public class NewUniqueContraintsBuilder<T> where T : BusinessObject
+    public class UniqueContraintsBuilder<T> where T : BusinessObject
     {
         private IList<KeyDefBuilder<T>> _newKeyDefBuilders;
         private ClassDefBuilder2<T> _classDefBuilder2;
 
-        public NewUniqueContraintsBuilder(ClassDefBuilder2<T> classDefBuilder2, IList<KeyDefBuilder<T>> keyDefBuilders)
+        public UniqueContraintsBuilder(ClassDefBuilder2<T> classDefBuilder2, IList<KeyDefBuilder<T>> keyDefBuilders)
         {
             _classDefBuilder2 = classDefBuilder2;
             _newKeyDefBuilders = keyDefBuilders;

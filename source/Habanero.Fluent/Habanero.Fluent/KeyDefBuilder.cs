@@ -11,10 +11,10 @@ namespace Habanero.Fluent
     public class KeyDefBuilder<T> where T : BusinessObject
     {
         private List<string> _propNames;
-        private NewUniqueContraintsBuilder<T> _uniqueContraintsBuilder;
+        private UniqueContraintsBuilder<T> _uniqueContraintsBuilder;
         private readonly string _keyName;
 
-        public KeyDefBuilder(NewUniqueContraintsBuilder<T> uniqueContraintsBuilder, string keyName)
+        public KeyDefBuilder(UniqueContraintsBuilder<T> uniqueContraintsBuilder, string keyName)
         {
             _propNames = new List<string>();
             _uniqueContraintsBuilder = uniqueContraintsBuilder;
@@ -33,7 +33,7 @@ namespace Habanero.Fluent
             return this;
         }
 
-        public NewUniqueContraintsBuilder<T> EndUniqueConstraint()
+        public UniqueContraintsBuilder<T> EndUniqueConstraint()
         {
             return _uniqueContraintsBuilder;
         }

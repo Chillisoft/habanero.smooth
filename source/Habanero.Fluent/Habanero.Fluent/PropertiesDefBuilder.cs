@@ -1,34 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using System.Text;
-using Habanero.Base;
 using Habanero.BO;
-using Habanero.BO.ClassDefinition;
 using Habanero.Util;
 
 namespace Habanero.Fluent
 {
-    public class NewPropertiesDefBuilder<T> where T : BusinessObject
+    public class PropertiesDefBuilder<T> where T : BusinessObject
     {
         private ClassDefBuilder2<T> _classDefBuilder;
-        private IList<NewPropDefBuilder<T>> PropDefBuilders { get; set; }
+        private IList<PropDefBuilder<T>> PropDefBuilders { get; set; }
 
-        public NewPropertiesDefBuilder(ClassDefBuilder2<T> classDefBuilder, IList<NewPropDefBuilder<T>> propDefBuilders)
+        public PropertiesDefBuilder(ClassDefBuilder2<T> classDefBuilder, IList<PropDefBuilder<T>> propDefBuilders)
         {
             _classDefBuilder = classDefBuilder;
             PropDefBuilders = propDefBuilders;
         }
 
-        public NewPropDefBuilder<T> Property(string propertyName)
+        public PropDefBuilder<T> Property(string propertyName)
         {
             var propDefBuilder = GetPropDefBuilder(propertyName);
             PropDefBuilders.Add(propDefBuilder);
             return propDefBuilder;
         }
-        public NewPropDefBuilder<T> Property<TReturnType>(string propertyName)
+        public PropDefBuilder<T> Property<TReturnType>(string propertyName)
         {
             var propDefBuilder = GetPropDefBuilder(propertyName);
             propDefBuilder.WithType<TReturnType>();
@@ -36,9 +32,9 @@ namespace Habanero.Fluent
             return propDefBuilder;
         }
 
-        public NewPropDefBuilder<T> Property<TReturnType>(Expression<Func<T, TReturnType>> propExpression)
+        public PropDefBuilder<T> Property<TReturnType>(Expression<Func<T, TReturnType>> propExpression)
         {
-            var propDefBuilder = new NewPropDefBuilder<T>(this);
+            var propDefBuilder = new PropDefBuilder<T>(this);
             PropertyInfo propertyInfo = GetPropertyInfo(propExpression);
             propDefBuilder.WithPropertyName(propertyInfo.Name);
             Type propertyType = ReflectionUtilities.GetUndelyingPropertType(propertyInfo);
@@ -48,9 +44,9 @@ namespace Habanero.Fluent
             return propDefBuilder;
         }
 
-        private NewPropDefBuilder<T> GetPropDefBuilder(string propertyName)
+        private PropDefBuilder<T> GetPropDefBuilder(string propertyName)
         {
-            var propDefBuilder = new NewPropDefBuilder<T>(this);
+            var propDefBuilder = new PropDefBuilder<T>(this);
             propDefBuilder.WithPropertyName(propertyName);
             return propDefBuilder;
         }
