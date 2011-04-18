@@ -6,20 +6,18 @@ using Habanero.Smooth.Test;
 using NUnit.Framework;
 using TestProject.BO;
 
+// ReSharper disable InconsistentNaming
 namespace Habanero.Fluent.Tests
 {
     public class TestNewSingleRelationshipDefBuilder
     {
-        private string GetRandomString()
-        {
-            return RandomValueGenerator.GetRandomString();
-        }
+
 
         [Test]
         public void Test_Build_ShouldConstructCorrectly()
         {
             //---------------Set up test pack-------------------
-            string relationshipName = "SteeringWheel"; 
+            const string relationshipName = "SteeringWheel"; 
             NewSingleRelationshipDefBuilder<Car, SteeringWheel> newSingleRelationshipDefBuilder = GetNewSingleRelationshipDefBuilder(car => car.SteeringWheel);
 
             //---------------Assert Precondition----------------
@@ -64,8 +62,6 @@ namespace Habanero.Fluent.Tests
         [Test]
         public void Test_NoRelationshipName_ShouldRaiseError()
         {
-            //---------------Set up test pack-------------------
-            //---------------Assert Precondition----------------
             //---------------Execute Test ----------------------
             try
             {
@@ -132,25 +128,24 @@ namespace Habanero.Fluent.Tests
         }
 
 
-          [Test]
-            public void Test_Build_WithLambdaProp_ShouldSetRelationshipProperties()
-            {
-              //---------------Set up test pack-------------------
-              var newSingleRelationshipDefBuilder = new NewRelationshipsBuilderStub<Car>().WithNewSingleRelationship(c => c.SteeringWheel).WithRelProp("VehicleID", "CarID");
-              //---------------Assert Precondition----------------
+        [Test]
+        public void Test_Build_WithLambdaProp_ShouldSetRelationshipProperties()
+        {
+            //---------------Set up test pack-------------------
+            var newSingleRelationshipDefBuilder = new NewRelationshipsBuilderStub<Car>().WithNewSingleRelationship(c => c.SteeringWheel).WithRelProp("VehicleID", "CarID");
+            //---------------Assert Precondition----------------
 
-                //---------------Execute Test ----------------------
-               var singleRelationshipDef = newSingleRelationshipDefBuilder.Build();
+            //---------------Execute Test ----------------------
+            var singleRelationshipDef = newSingleRelationshipDefBuilder.Build();
 
 
-              //---------------Test Result -----------------------
-                Assert.AreEqual("SteeringWheel", singleRelationshipDef.RelationshipName);
-                var relPropDef = singleRelationshipDef.RelKeyDef["VehicleID"];
-                Assert.IsNotNull(relPropDef);
-                Assert.AreEqual("VehicleID", relPropDef.OwnerPropertyName);
-                Assert.AreEqual("CarID", relPropDef.RelatedClassPropName);
-            }
-
+            //---------------Test Result -----------------------
+            Assert.AreEqual("SteeringWheel", singleRelationshipDef.RelationshipName);
+            var relPropDef = singleRelationshipDef.RelKeyDef["VehicleID"];
+            Assert.IsNotNull(relPropDef);
+            Assert.AreEqual("VehicleID", relPropDef.OwnerPropertyName);
+            Assert.AreEqual("CarID", relPropDef.RelatedClassPropName);
+        }
 
         private static NewSingleRelationshipDefBuilder<Car, SteeringWheel> GetNewSingleRelationshipDefBuilder(string relationshipName)
         {
@@ -164,6 +159,9 @@ namespace Habanero.Fluent.Tests
             return new NewSingleRelationshipDefBuilder<Car, SteeringWheel>(newRelationshipsBuilder, relationshipExpression);
         }
 
-
+        private static string GetRandomString()
+        {
+            return RandomValueGenerator.GetRandomString();
+        }
     }
 }

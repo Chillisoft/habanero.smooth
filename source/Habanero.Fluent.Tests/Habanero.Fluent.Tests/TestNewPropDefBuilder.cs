@@ -6,6 +6,7 @@ using Habanero.Smooth.Test;
 using NUnit.Framework;
 using TestProject.BO;
 
+// ReSharper disable InconsistentNaming
 namespace Habanero.Fluent.Tests
 {
     [TestFixture]

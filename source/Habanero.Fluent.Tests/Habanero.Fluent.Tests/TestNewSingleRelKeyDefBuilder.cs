@@ -1,6 +1,7 @@
 using NUnit.Framework;
 using TestProject.BO;
 
+// ReSharper disable InconsistentNaming
 namespace Habanero.Fluent.Tests
 {
     [TestFixture]
@@ -9,16 +10,12 @@ namespace Habanero.Fluent.Tests
         [Test]
         public void Test_Construct()
         {
-            //---------------Set up test pack-------------------
-            //---------------Assert Precondition----------------
-
             //---------------Execute Test ----------------------
-            NewSingleRelKeyDefBuilder<Car, SteeringWheel> singleRelKeyDefBuilder = new NewClassDefBuilder<Car>()
+            var singleRelKeyDefBuilder = new NewClassDefBuilder<Car>()
                 .WithPrimaryKey(car => car.VehicleID)
                 .WithRelationships()
                 .WithNewSingleRelationship(c => c.SteeringWheel);
                 
-            //var relKeyDefBuilder = new NewSingleRelKeyDefBuilder<Car, SteeringWheel>(singleRelationshipDefBuilder);
 
             //---------------Test Result -----------------------
             Assert.IsNotNull(singleRelKeyDefBuilder);
@@ -28,7 +25,7 @@ namespace Habanero.Fluent.Tests
         public void Test_WithRelProp_WhenCalled_ShouldReturnSingleRelationshipDefBuilder()
         {
             //---------------Set up test pack-------------------
-            NewSingleRelKeyDefBuilder<Car, SteeringWheel> singleRelKeyDefBuilder = new NewClassDefBuilder<Car>()
+            var singleRelKeyDefBuilder = new NewClassDefBuilder<Car>()
                              .WithPrimaryKey(car => car.VehicleID)
                              .WithRelationships()
                              .WithNewSingleRelationship(c => c.SteeringWheel);
@@ -37,7 +34,6 @@ namespace Habanero.Fluent.Tests
 
             //---------------Execute Test ----------------------
             var singleRelationshipDefBuilder = singleRelKeyDefBuilder.WithRelProp("VehicleID", "CarID");
-            //var relationshipDefBuilder = relKeyDefBuilder.WithRelProp("VehicleID", "CarID");
             //---------------Test Result -----------------------
             Assert.IsInstanceOf<NewSingleRelationshipDefBuilder<Car, SteeringWheel>>(singleRelationshipDefBuilder);
         }
@@ -60,8 +56,6 @@ namespace Habanero.Fluent.Tests
             //---------------Test Result -----------------------
             Assert.IsInstanceOf<NewSingleRelationshipDefBuilder<Car, SteeringWheel>>(singleRelationshipDefBuilder);
         }
-
-
 
     }
 }

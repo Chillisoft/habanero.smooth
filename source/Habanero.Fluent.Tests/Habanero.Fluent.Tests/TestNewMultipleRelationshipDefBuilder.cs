@@ -6,15 +6,13 @@ using Habanero.Smooth.Test;
 using NUnit.Framework;
 using TestProject.BO;
 
+// ReSharper disable InconsistentNaming
 namespace Habanero.Fluent.Tests
 {
     [TestFixture]
     public class TestNewMultipleRelationshipDefBuilder
     {
-        private string GetRandomString()
-        {
-            return RandomValueGenerator.GetRandomString();
-        }
+
 
         [Test]
         public void Test_Build_ShouldUseDefaults()
@@ -253,5 +251,10 @@ namespace Habanero.Fluent.Tests
             Assert.AreEqual("MySingleRelationshipID", relPropDef.RelatedClassPropName);
         }
 
+
+        private static string GetRandomString()
+        {
+            return RandomValueGenerator.GetRandomString();
+        }
     }
 }

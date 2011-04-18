@@ -1,12 +1,11 @@
 using System;
 using System.Collections.Generic;
-using Habanero.Base;
-using Habanero.Base.Exceptions;
 using Habanero.BO;
 using Habanero.Smooth.Test;
 using NUnit.Framework;
 using TestProject.BO;
 
+// ReSharper disable InconsistentNaming
 namespace Habanero.Fluent.Tests
 {
     [TestFixture]
@@ -17,8 +16,6 @@ namespace Habanero.Fluent.Tests
         [Test]
         public void Test_Build_WithLambdaProp_ShouldSetPropNameAndType()
         {
-            //---------------Set up test pack-------------------
-            //---------------Assert Precondition----------------
 
             //---------------Execute Test ----------------------
             var propDef = GetPropertiesDefBuilder<Car>()
@@ -35,8 +32,6 @@ namespace Habanero.Fluent.Tests
         [Test]
         public void Test_Build_WithLambdaProp_GuidProp_ShouldSetPropTypeGuid()
         {
-            //---------------Set up test pack-------------------
-            //---------------Assert Precondition----------------
 
             //---------------Execute Test ----------------------
             var propDef = GetPropertiesDefBuilder<Car>()
@@ -53,9 +48,6 @@ namespace Habanero.Fluent.Tests
         [Test]
         public void Test_Build_WithLambdaProp_ShouldSetPropValues()
         {
-            //---------------Set up test pack-------------------
-            //---------------Assert Precondition----------------
-
             //---------------Execute Test ----------------------
             var propDef = GetPropertiesDefBuilder<Car>()
                 .Property(c => c.NoOfDoors)
