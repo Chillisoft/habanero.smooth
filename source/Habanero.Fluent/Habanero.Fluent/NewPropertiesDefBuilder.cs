@@ -13,10 +13,10 @@ namespace Habanero.Fluent
 {
     public class NewPropertiesDefBuilder<T> where T : BusinessObject
     {
-        private NewClassDefBuilder2<T> _classDefBuilder;
+        private ClassDefBuilder2<T> _classDefBuilder;
         private IList<NewPropDefBuilder<T>> PropDefBuilders { get; set; }
 
-        public NewPropertiesDefBuilder(NewClassDefBuilder2<T> classDefBuilder, IList<NewPropDefBuilder<T>> propDefBuilders)
+        public NewPropertiesDefBuilder(ClassDefBuilder2<T> classDefBuilder, IList<NewPropDefBuilder<T>> propDefBuilders)
         {
             _classDefBuilder = classDefBuilder;
             PropDefBuilders = propDefBuilders;
@@ -65,7 +65,7 @@ namespace Habanero.Fluent
             return ReflectionUtilities.GetPropertyInfo(expression);
         }
 
-        public NewClassDefBuilder2<T> EndProperties()
+        public ClassDefBuilder2<T> EndProperties()
         {
             return _classDefBuilder;
         }

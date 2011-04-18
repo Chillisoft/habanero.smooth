@@ -10,11 +10,11 @@ namespace Habanero.Fluent
 {
     public class NewRelationshipsBuilder<T>  where T : BusinessObject
     {
-        private readonly NewClassDefBuilder2<T> _classDefBuilder;
+        private readonly ClassDefBuilder2<T> _classDefBuilder;
         private readonly IList<ISingleRelDefBuilder> _singleRelationshipDefBuilders;
         private readonly IList<IMultipleRelDefBuilder> _multipleRelationshipDefBuilders;
 
-        public NewRelationshipsBuilder(NewClassDefBuilder2<T> classDefBuilder, IList<ISingleRelDefBuilder> singleRelationshipDefBuilders, IList<IMultipleRelDefBuilder> multipleRelationshipDefBuilders)
+        public NewRelationshipsBuilder(ClassDefBuilder2<T> classDefBuilder, IList<ISingleRelDefBuilder> singleRelationshipDefBuilders, IList<IMultipleRelDefBuilder> multipleRelationshipDefBuilders)
         {
             _classDefBuilder = classDefBuilder;
             _singleRelationshipDefBuilders = singleRelationshipDefBuilders;
@@ -64,7 +64,7 @@ namespace Habanero.Fluent
         }
 
 
-        public NewClassDefBuilder2<T> EndRelationships()
+        public ClassDefBuilder2<T> EndRelationships()
         {
             return _classDefBuilder;
         }

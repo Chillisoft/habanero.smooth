@@ -11,9 +11,9 @@ namespace Habanero.Fluent
 {
     public class NewSuperClassDefBuilder<T> where T : BusinessObject
     {
-        private readonly NewClassDefBuilder<T> _classDefBuilder;
+        private readonly ClassDefBuilder<T> _classDefBuilder;
 
-        public NewSuperClassDefBuilder(NewClassDefBuilder<T> classDefBuilder)
+        public NewSuperClassDefBuilder(ClassDefBuilder<T> classDefBuilder)
         {
             _classDefBuilder = classDefBuilder;
         }
@@ -47,9 +47,9 @@ namespace Habanero.Fluent
         }
 
 
-        public NewClassDefBuilder2<T> EndSuperClass()
+        public ClassDefBuilder2<T> EndSuperClass()
         {
-            return new NewClassDefBuilder2<T>(_classDefBuilder, this);
+            return new ClassDefBuilder2<T>(_classDefBuilder, this);
         }
     }
 }

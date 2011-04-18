@@ -18,7 +18,7 @@ namespace Habanero.Fluent
         private bool _keepReference;
         private InsertParentAction _insertAction;
         private RelationshipType _relationshipType;
-        private NewClassDefBuilder2<T> _classDefBuilder;
+        private ClassDefBuilder2<T> _classDefBuilder;
         private string _relatedObjectAssemblyName;
         private string _relatedClassName;
         private NewRelationshipsBuilder<T> _newRelationshipsBuilder;
@@ -28,7 +28,7 @@ namespace Habanero.Fluent
         //    SetupDefaultValues();
         //}
 
-        //public NewMultipleRelationshipDefBuilder(NewClassDefBuilder2<T> classDefBuilder)
+        //public NewMultipleRelationshipDefBuilder(ClassDefBuilder2<T> classDefBuilder)
         //{
         //    _classDefBuilder = classDefBuilder;
         //    SetupDefaultValues();

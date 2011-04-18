@@ -53,7 +53,7 @@
     <Compile Include="IRelDefBuilder.cs" />
     <Compile Include="ISingleRelDefBuilder.cs" />
     <Compile Include="NewClassDefBuilder.cs" />
-    <Compile Include="NewClassDefBuilder2.cs" />
+    <Compile Include="ClassDefBuilder2.cs" />
     <Compile Include="NewKeyDefBuilder.cs" />
     <Compile Include="NewMultipleRelationshipDefBuilder.cs" />
     <Compile Include="NewMultipleRelKeyBuilder.cs" />

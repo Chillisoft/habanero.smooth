@@ -2,7 +2,7 @@
 
 namespace Habanero.Fluent.Tests.TestStubs
 {
-    class NewClassDefBuilderStub<T> : NewClassDefBuilder<T> where T : BusinessObject
+    class ClassDefBuilderStub<T> : ClassDefBuilder<T> where T : BusinessObject
     {
     }
 }

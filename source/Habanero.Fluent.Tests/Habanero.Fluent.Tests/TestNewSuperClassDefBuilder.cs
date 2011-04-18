@@ -104,7 +104,7 @@ namespace Habanero.Fluent.Tests
 
         private static NewSuperClassDefBuilder<T> GetSuperClassDefBuilder<T>() where T : BusinessObject
         {
-            return new NewSuperClassDefBuilder<T>(new NewClassDefBuilder<T>());
+            return new NewSuperClassDefBuilder<T>(new ClassDefBuilder<T>());
         }
 
     }

@@ -9,12 +9,12 @@ using Habanero.Util;
 
 namespace Habanero.Fluent
 {
-    public class NewClassDefBuilder2<T> where T : BusinessObject
+    public class ClassDefBuilder2<T> where T : BusinessObject
     {
-        private NewClassDefBuilder<T> _classDefBuilder;
+        private ClassDefBuilder<T> _classDefBuilder;
         private NewPropertiesDefBuilder<T> _propertiesDefBuilder;
 
-        public NewClassDefBuilder2(NewClassDefBuilder<T> classDefBuilder, IList<string> primaryKeyPropNames)
+        public ClassDefBuilder2(ClassDefBuilder<T> classDefBuilder, IList<string> primaryKeyPropNames)
         {
             _classDefBuilder = classDefBuilder;
             _primaryKeyPropNames = primaryKeyPropNames;
@@ -23,7 +23,7 @@ namespace Habanero.Fluent
         }
 
 
-        public NewClassDefBuilder2(NewClassDefBuilder<T> classDefBuilder, NewSuperClassDefBuilder<T> superClassDefBuilder)
+        public ClassDefBuilder2(ClassDefBuilder<T> classDefBuilder, NewSuperClassDefBuilder<T> superClassDefBuilder)
         {
             _classDefBuilder = classDefBuilder;
             _superClassDefBuilder = superClassDefBuilder;
@@ -49,7 +49,7 @@ namespace Habanero.Fluent
         //private IList<MultipleRelationshipDefBuilder<T>> _multipleRelationshipDefBuilders = new List<MultipleRelationshipDefBuilder<T>>();
         private IList<string> _primaryKeyPropNames;
         private PrimaryKeyDef _primaryKeyDef;
-        private IList<NewKeyDefBuilder<T>> _keyDefBuilders = new List<NewKeyDefBuilder<T>>();
+        private IList<KeyDefBuilder<T>> _keyDefBuilders = new List<KeyDefBuilder<T>>();
         private KeyDefCol _keyDefCol = new KeyDefCol();
         private NewSuperClassDefBuilder<T> _superClassDefBuilder;
         private NewPropDefBuilder<T> _newPropDefBuilder;
@@ -208,9 +208,9 @@ namespace Habanero.Fluent
             return new NewUniqueContraintsBuilder<T>(this, _keyDefBuilders);
         }
 
-        /*public NewKeyDefBuilder<T> WithUniqueConstraint(string keyName = "")
+        /*public KeyDefBuilder<T> WithUniqueConstraint(string keyName = "")
         {
-            NewKeyDefBuilder<T> keyDefBuilder = new NewKeyDefBuilder<T>(this, keyName);
+            KeyDefBuilder<T> keyDefBuilder = new KeyDefBuilder<T>(this, keyName);
             _keyDefBuilders.Add(keyDefBuilder);
             return keyDefBuilder;
         }*/

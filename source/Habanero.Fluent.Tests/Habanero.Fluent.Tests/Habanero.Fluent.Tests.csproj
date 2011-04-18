@@ -61,10 +61,8 @@
     <Compile Include="TestNewPropertiesDefBuilder.cs" />
     <Compile Include="TestNewSingleRelKeyDefBuilder.cs" />
     <Compile Include="TestNewSuperClassDefBuilder.cs" />
-    <Compile Include="TestRelKeyDefBuilder.cs" />
-    <Compile Include="TestSingleRelKeyDefBuilder.cs" />
-    <Compile Include="TestStubs\NewClassDefBuilder2Stub.cs" />
-    <Compile Include="TestStubs\NewClassDefBuilderStub.cs" />
+    <Compile Include="TestStubs\ClassDefBuilder2Stub.cs" />
+    <Compile Include="TestStubs\ClassDefBuilderStub.cs" />
     <Compile Include="TestStubs\NewMultipleRelationshipDefBuilderSpy.cs" />
     <Compile Include="TestStubs\NewRelationshipsBuilderStub.cs" />
     <Compile Include="TestStubs\NewSingleRelationshipDefBuilderSpy.cs" />

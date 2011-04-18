@@ -11,7 +11,7 @@ namespace Habanero.Fluent.Tests
         public void Test_Construct()
         {
             //---------------Execute Test ----------------------
-            var singleRelKeyDefBuilder = new NewClassDefBuilder<Car>()
+            var singleRelKeyDefBuilder = new ClassDefBuilder<Car>()
                 .WithPrimaryKey(car => car.VehicleID)
                 .WithRelationships()
                 .WithNewSingleRelationship(c => c.SteeringWheel);
@@ -25,7 +25,7 @@ namespace Habanero.Fluent.Tests
         public void Test_WithRelProp_WhenCalled_ShouldReturnSingleRelationshipDefBuilder()
         {
             //---------------Set up test pack-------------------
-            var singleRelKeyDefBuilder = new NewClassDefBuilder<Car>()
+            var singleRelKeyDefBuilder = new ClassDefBuilder<Car>()
                              .WithPrimaryKey(car => car.VehicleID)
                              .WithRelationships()
                              .WithNewSingleRelationship(c => c.SteeringWheel);
@@ -41,7 +41,7 @@ namespace Habanero.Fluent.Tests
         [Test]
         public void Test_CompositeRel_WithRelProp_WhenCalled_ShouldReturnSingleRelationshipDefBuilder()
         {
-            var newSingleRelKeyBuilder = new NewClassDefBuilder<Car>()
+            var newSingleRelKeyBuilder = new ClassDefBuilder<Car>()
                 .WithPrimaryKey(car => car.VehicleID)
                 .WithRelationships()
                 .WithNewSingleRelationship(c => c.SteeringWheel)

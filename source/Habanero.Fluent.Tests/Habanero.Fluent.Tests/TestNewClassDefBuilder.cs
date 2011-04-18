@@ -22,7 +22,7 @@ namespace Habanero.Fluent.Tests
         public void Test_WithRelDef_WithSingleRelKey_ShouldBuildOneRelProp()
         {
             //---------------Set up test pack-------------------
-            NewClassDefBuilder<Car> classDefBuilder = GetClassDefBuilderForTypeOf_Car();
+            ClassDefBuilder<Car> classDefBuilder = GetClassDefBuilderForTypeOf_Car();
             //---------------Assert Precondition----------------
 
             //---------------Execute Test ----------------------
@@ -272,7 +272,7 @@ namespace Habanero.Fluent.Tests
         public void Test_Build_WhenCreatingSingleRelationship_ShouldSetRelationshipDefProps()
         {
             //---------------Set up test pack-------------------
-            var classDef = new NewClassDefBuilder<Car>()
+            var classDef = new ClassDefBuilder<Car>()
                 .WithPrimaryKey(c => c.VehicleID)
                 .WithRelationships()
                     .WithNewSingleRelationship(c => c.SteeringWheel)
@@ -305,7 +305,7 @@ namespace Habanero.Fluent.Tests
             string relationshipName = "R" + GetRandomString();
             //---------------Assert Precondition----------------
             //---------------Execute Test ----------------------
-            var classDefBuilder = new NewClassDefBuilder<Car>();
+            var classDefBuilder = new ClassDefBuilder<Car>();
             var classDef = classDefBuilder
                     .WithPrimaryKey(car1 => car1.VehicleID)
                     .WithRelationships()
@@ -317,7 +317,7 @@ namespace Habanero.Fluent.Tests
                         .Property(car1 => car1.VehicleID).EndProperty()
                     .EndProperties()
                 .Build();
-            var classDefSteeringWheel = new NewClassDefBuilder<SteeringWheel>()
+            var classDefSteeringWheel = new ClassDefBuilder<SteeringWheel>()
                     .WithPrimaryKey(w => w.SteeringWheelID)
                     .WithProperties()
                         .Property(wheel => wheel.CarID).EndProperty()
@@ -672,9 +672,9 @@ namespace Habanero.Fluent.Tests
         }
 
 
-        private static NewClassDefBuilder<Car> GetClassDefBuilderForTypeOf_Car()
+        private static ClassDefBuilder<Car> GetClassDefBuilderForTypeOf_Car()
         {
-            return new NewClassDefBuilder<Car>();
+            return new ClassDefBuilder<Car>();
         }
         
     }

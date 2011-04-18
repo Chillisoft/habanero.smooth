@@ -5,23 +5,23 @@ namespace Habanero.Fluent
 {
     public class NewUniqueContraintsBuilder<T> where T : BusinessObject
     {
-        private IList<NewKeyDefBuilder<T>> _newKeyDefBuilders;
-        private NewClassDefBuilder2<T> _classDefBuilder2;
+        private IList<KeyDefBuilder<T>> _newKeyDefBuilders;
+        private ClassDefBuilder2<T> _classDefBuilder2;
 
-        public NewUniqueContraintsBuilder(NewClassDefBuilder2<T> classDefBuilder2, IList<NewKeyDefBuilder<T>> keyDefBuilders)
+        public NewUniqueContraintsBuilder(ClassDefBuilder2<T> classDefBuilder2, IList<KeyDefBuilder<T>> keyDefBuilders)
         {
             _classDefBuilder2 = classDefBuilder2;
             _newKeyDefBuilders = keyDefBuilders;
         }
 
-        public NewKeyDefBuilder<T> UniqueConstraint(string keyName = "")
+        public KeyDefBuilder<T> UniqueConstraint(string keyName = "")
         {
-            NewKeyDefBuilder<T> keyDefBuilder = new NewKeyDefBuilder<T>(this, keyName);
+            KeyDefBuilder<T> keyDefBuilder = new KeyDefBuilder<T>(this, keyName);
             _newKeyDefBuilders.Add(keyDefBuilder);
             return keyDefBuilder;
         }
 
-        public NewClassDefBuilder2<T> EndUniqueConstraints()
+        public ClassDefBuilder2<T> EndUniqueConstraints()
         {
             return _classDefBuilder2;
         }

@@ -8,26 +8,26 @@ using Habanero.Util;
 
 namespace Habanero.Fluent
 {
-    public class NewKeyDefBuilder<T> where T : BusinessObject
+    public class KeyDefBuilder<T> where T : BusinessObject
     {
         private List<string> _propNames;
         private NewUniqueContraintsBuilder<T> _uniqueContraintsBuilder;
         private readonly string _keyName;
 
-        public NewKeyDefBuilder(NewUniqueContraintsBuilder<T> uniqueContraintsBuilder, string keyName)
+        public KeyDefBuilder(NewUniqueContraintsBuilder<T> uniqueContraintsBuilder, string keyName)
         {
             _propNames = new List<string>();
             _uniqueContraintsBuilder = uniqueContraintsBuilder;
             _keyName = keyName;
         }
 
-        public NewKeyDefBuilder<T> AddProperty(string propertyName)
+        public KeyDefBuilder<T> AddProperty(string propertyName)
         {
             _propNames.Add(propertyName);
             return this;
         }
 
-        public NewKeyDefBuilder<T> AddProperty<TReturnType>(Expression<Func<T, TReturnType>> propExpression)
+        public KeyDefBuilder<T> AddProperty<TReturnType>(Expression<Func<T, TReturnType>> propExpression)
         {
             _propNames.Add(propExpression.GetPropertyName());
             return this;
