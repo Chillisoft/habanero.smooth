@@ -96,6 +96,7 @@ namespace Habanero.Smooth
                         = new SingleRelationshipDef(this.PropertyWrapper.Name, propertyType.UnderlyingType
                         , new RelKeyDef(), true, DeleteParentAction.DoNothing);
 
+            SetRelationshipType(relDef);
             if(this.PropertyWrapper.HasCompulsoryAttribute) relDef.SetAsCompulsory();
             relDef.OwningBOHasForeignKey = true;
             SetReverseRelationshipName(relDef);
@@ -123,6 +124,13 @@ namespace Habanero.Smooth
             }
             relDef.ReverseRelationshipName = StringUtilities.Pluralize(this.PropertyWrapper.DeclaringClassName);
         }
+
+        private void SetRelationshipType(IRelationshipDef relDef)
+        {
+            var att = this.PropertyWrapper.GetAttribute<AutoMapManyToOneAttribute>();
+            if (att != null) relDef.RelationshipType = att.RelationshipType;
+        }
+
         /// <summary>
         /// Returns the Related Property Name based on a Heuristic dependent upon the 
         /// Related ClassType i.e. the <paramref name="propertyType"/>.

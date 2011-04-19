@@ -803,6 +803,27 @@ namespace Habanero.Smooth.Test
             Assert.IsFalse(mustBeMapped);
         }
 
+        [Test]
+        public void TestAccept_Map_WhenRelationshipTypeDefinedAsAggregation_ShouldSetToAggregation()
+        {
+            //---------------Set up test pack-------------------
+            var classType = typeof(FakeBOWithCompositionManyToOneRel);
+            const string expectedPropName = "MySingleRelationship";
+            PropertyInfo propertyInfo = classType.GetProperty(expectedPropName);
+            var propertyWrapper = propertyInfo.ToPropertyWrapper();
+            //---------------Assert Precondition----------------
+            classType.AssertPropertyExists(expectedPropName);
+            propertyInfo.AssertIsSingleRelationship();
+            var oneToOneAtt = propertyWrapper.GetAttribute<AutoMapManyToOneAttribute>();
+            Assert.AreEqual(RelationshipType.Aggregation, oneToOneAtt.RelationshipType);
+            //---------------Execute Test ----------------------
+            var relationshipDef = propertyWrapper.MapManyToOne();
+            //---------------Test Result -----------------------
+            Assert.AreEqual(RelationshipType.Aggregation, relationshipDef.RelationshipType);
+        }
+
+       
+
         private static void AssertRelationshipIsForOwnerClass(Type ownerClassType, Type reverseClassType, string reveresRelationshipName)
         {
             var reversePropInfo = reverseClassType.GetPropertyWrapper(reveresRelationshipName);

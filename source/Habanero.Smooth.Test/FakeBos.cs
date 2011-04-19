@@ -183,6 +183,12 @@ namespace Habanero.Smooth.Test
 		public FakeBONoPK MySingleRelationship { get; set; }
 	}
 
+	public class FakeBOWithCompositionManyToOneRel : BusinessObject
+	{
+		[AutoMapManyToOne(RelationshipType.Aggregation)]
+		public FakeBONoPK MySingleRelationship { get; set; }
+	}
+
 	public class FakeBOWithSingleRel : BusinessObject
 	{
 		public FakeBONoPK MySingleRelationship { get; set; }
@@ -190,6 +196,7 @@ namespace Habanero.Smooth.Test
 		[AutoMapIgnore]
 		public FakeBONoPK MySingleRElationshipWithIgnore { get; set; }
 	}
+
 	public class FakeBOWithSingleRelToGenericBO : BusinessObject
 	{
 		public FakeBOGeneric MySingleRelationship { get; set; }
