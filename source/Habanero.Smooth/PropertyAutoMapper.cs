@@ -19,6 +19,7 @@
 using System;
 using System.Reflection;
 using Habanero.Base;
+using Habanero.Base.DataMappers;
 using Habanero.BO;
 using Habanero.BO.ClassDefinition;
 using Habanero.Smooth.ReflectionWrappers;
@@ -134,7 +135,7 @@ namespace Habanero.Smooth
         private static DateTime GetDate(string dateString, DateTime initialDate)
         {
             object value;
-            bool dateValueParsedOk = new BOPropDateTimeDataMapper().TryParsePropValue(dateString, out value);
+            bool dateValueParsedOk = new DateTimeDataMapper().TryParsePropValue(dateString, out value);
             DateTime dateTime = initialDate;
             if (dateValueParsedOk)
             {
