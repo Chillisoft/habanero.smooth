@@ -10,7 +10,7 @@ namespace Habanero.Fluent
 {
     public class PropDefBuilder<T> where T : BusinessObject
     {
-        private readonly PropertiesDefBuilder<T> _propertiesDefBuilder;
+        private readonly PropertiesDefBuilder2<T> _propertiesDefBuilder;
         private  bool _isCompulsory;
         private  bool _isAutoIncrementing;
         private string _description;
@@ -29,7 +29,7 @@ namespace Habanero.Fluent
             SetupBuilderDefaults();
         }
 
-        public PropDefBuilder(PropertiesDefBuilder<T> propertiesDefBuilder)
+        public PropDefBuilder(PropertiesDefBuilder2<T> propertiesDefBuilder)
         {
             _propertiesDefBuilder = propertiesDefBuilder;
             SetupBuilderDefaults();
@@ -42,7 +42,7 @@ namespace Habanero.Fluent
             _isCompulsory = false;
         }
 
-        public PropertiesDefBuilder<T> EndProperty()
+        public PropertiesDefBuilder2<T> EndProperty()
         {
             return _propertiesDefBuilder;
         }

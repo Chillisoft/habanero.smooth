@@ -5,20 +5,42 @@ namespace Habanero.Fluent
 {
     public class PropertiesDefSelector<T> where T : BusinessObject
     {
-        private readonly ClassDefBuilder2<T> _classDefBuilder2;
+        private readonly ClassDefBuilder<T> _classDefBuilder;
+        private readonly SuperClassDefBuilder<T> _superClassDefBuilder;
+        private readonly IList<string> _primaryKeyPropNames;
         private PropertiesDefBuilder<T> _propertiesDefBuilder;
-        private IList<PropDefBuilder<T>> PropDefBuilders { get; set; }
+        private List<PropDefBuilder<T>> _propDefBuilders;
+        private ClassDefBuilder2<T> _classDefBuilder2;
 
 
-        public PropertiesDefSelector(ClassDefBuilder2<T> classDefBuilder2)
+        public PropertiesDefSelector(ClassDefBuilder<T> classDefBuilder, IList<string> primaryKeyPropNames)
         {
-            _classDefBuilder2 = classDefBuilder2;
+            _classDefBuilder = classDefBuilder;
+            _primaryKeyPropNames = primaryKeyPropNames;
+            Initialise();
+        }
+
+        public PropertiesDefSelector(ClassDefBuilder<T> classDefBuilder, SuperClassDefBuilder<T> superClassDefBuilder)
+        {
+            _classDefBuilder = classDefBuilder;
+            _superClassDefBuilder = superClassDefBuilder;
+            _primaryKeyPropNames = new List<string>();
             Initialise();
         }
 
         private void Initialise()
         {
-            _propertiesDefBuilder = new PropertiesDefBuilder<T>(_classDefBuilder2, PropDefBuilders);
+            _propDefBuilders = new List<PropDefBuilder<T>>();
+            if (_superClassDefBuilder==null)
+            {
+                _classDefBuilder2 = new ClassDefBuilder2<T>(_classDefBuilder, _propDefBuilders, _primaryKeyPropNames);
+            }
+            else
+            {
+                _classDefBuilder2 = new ClassDefBuilder2<T>(_classDefBuilder, _propDefBuilders, _primaryKeyPropNames, _superClassDefBuilder);
+            }
+
+            _propertiesDefBuilder = new PropertiesDefBuilder<T>(_classDefBuilder2, _propDefBuilders);
         }
 
 
@@ -27,9 +49,5 @@ namespace Habanero.Fluent
             return _propertiesDefBuilder;
         }
 
-        public ClassDefBuilder2<T> EndProperties()
-        {
-            return _classDefBuilder2;
-        }
     }
 }

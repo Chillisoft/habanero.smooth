@@ -59,7 +59,7 @@ namespace Habanero.Fluent.Tests
 
         private static PropertiesDefBuilder<T> GetPropertiesDefBuilder<T>() where T : BusinessObject
         {
-            return new PropertiesDefBuilder<T>(new ClassDefBuilder2<T>(new ClassDefBuilder<T>(), new List<string> { RandomValueGenerator.GetRandomString() }), new List<PropDefBuilder<T>>());
+            return new PropertiesDefBuilder<T>(new ClassDefBuilder2<T>(new ClassDefBuilder<T>(), new List<PropDefBuilder<T>>(), new List<string> { RandomValueGenerator.GetRandomString() }), new List<PropDefBuilder<T>>());
         }
 
 

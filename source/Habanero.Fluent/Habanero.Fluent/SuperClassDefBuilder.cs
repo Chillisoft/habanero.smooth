@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Reflection;
 using Habanero.Base;
@@ -23,6 +24,7 @@ namespace Habanero.Fluent
         public ISuperClassDef Build()
         {
             var typeWrapper = new TypeWrapper(typeof (T));
+            // single table inheritance
             var superClassDef = typeWrapper.MapInheritance();
             if (Discriminator != null) superClassDef.Discriminator = Discriminator;
             return superClassDef;
@@ -47,9 +49,9 @@ namespace Habanero.Fluent
         }
 
 
-        public ClassDefBuilder2<T> EndSuperClass()
+        public PropertiesDefSelector<T> EndSuperClass()
         {
-            return new ClassDefBuilder2<T>(_classDefBuilder, this);
+            return new PropertiesDefSelector<T>(_classDefBuilder, this );
         }
     }
 }

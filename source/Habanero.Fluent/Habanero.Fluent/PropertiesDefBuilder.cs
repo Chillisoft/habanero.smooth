@@ -9,8 +9,10 @@ namespace Habanero.Fluent
 {
     public class PropertiesDefBuilder<T> where T : BusinessObject
     {
-        private ClassDefBuilder2<T> _classDefBuilder;
-        private IList<PropDefBuilder<T>> PropDefBuilders { get; set; }
+        protected ClassDefBuilder2<T> _classDefBuilder;
+        protected IList<PropDefBuilder<T>> PropDefBuilders { get; set; }
+
+        private PropertiesDefBuilder2<T> _propertiesDefBuilder2;
 
         public PropertiesDefBuilder(ClassDefBuilder2<T> classDefBuilder, IList<PropDefBuilder<T>> propDefBuilders)
         {
@@ -34,7 +36,7 @@ namespace Habanero.Fluent
 
         public PropDefBuilder<T> Property<TReturnType>(Expression<Func<T, TReturnType>> propExpression)
         {
-            var propDefBuilder = new PropDefBuilder<T>(this);
+            var propDefBuilder = new PropDefBuilder<T>(CreatePropertiesDefBuilder2());
             PropertyInfo propertyInfo = GetPropertyInfo(propExpression);
             propDefBuilder.WithPropertyName(propertyInfo.Name);
             Type propertyType = ReflectionUtilities.GetUndelyingPropertType(propertyInfo);
@@ -46,7 +48,7 @@ namespace Habanero.Fluent
 
         private PropDefBuilder<T> GetPropDefBuilder(string propertyName)
         {
-            var propDefBuilder = new PropDefBuilder<T>(this);
+            var propDefBuilder = new PropDefBuilder<T>(CreatePropertiesDefBuilder2());
             propDefBuilder.WithPropertyName(propertyName);
             return propDefBuilder;
         }
@@ -61,11 +63,25 @@ namespace Habanero.Fluent
             return ReflectionUtilities.GetPropertyInfo(expression);
         }
 
+        private PropertiesDefBuilder2<T> CreatePropertiesDefBuilder2()
+        {
+            return new PropertiesDefBuilder2<T>(_classDefBuilder, PropDefBuilders);
+        }
+
+    }
+
+    public class PropertiesDefBuilder2<T> : PropertiesDefBuilder<T> where T : BusinessObject
+    {
+        public PropertiesDefBuilder2(ClassDefBuilder2<T> propertiesDefBuilder, IList<PropDefBuilder<T>> propDefBuilders)
+            : base(propertiesDefBuilder, propDefBuilders)
+        {
+
+        }
+
         public ClassDefBuilder2<T> EndProperties()
         {
             return _classDefBuilder;
         }
-
 
     }
 }

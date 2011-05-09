@@ -25,25 +25,25 @@ namespace Habanero.Fluent
         private PropDefBuilder<T> _propDefBuilder;
         private IList<PropDefBuilder<T>> PropDefBuilders { get; set; }
 
-        public ClassDefBuilder2(ClassDefBuilder<T> classDefBuilder, IList<string> primaryKeyPropNames)
+        public ClassDefBuilder2(ClassDefBuilder<T> classDefBuilder, List<PropDefBuilder<T>> propDefBuilders, IList<string> primaryKeyPropNames)
         {
             _classDefBuilder = classDefBuilder;
             _primaryKeyPropNames = primaryKeyPropNames;
+            PropDefBuilders = propDefBuilders;
             Initialise();
         }
 
 
-        public ClassDefBuilder2(ClassDefBuilder<T> classDefBuilder, SuperClassDefBuilder<T> superClassDefBuilder)
-        {
-            _classDefBuilder = classDefBuilder;
+        public ClassDefBuilder2(ClassDefBuilder<T> classDefBuilder, List<PropDefBuilder<T>> propDefBuilders, IList<string> primaryKeyPropNames, SuperClassDefBuilder<T> superClassDefBuilder)
+            :this(classDefBuilder,propDefBuilders,primaryKeyPropNames )
+        {   
             _superClassDefBuilder = superClassDefBuilder;
-            Initialise();
         }
 
         private void Initialise()
         {
             _propDefCol = new PropDefCol();
-            PropDefBuilders = new List<PropDefBuilder<T>>();
+            //PropDefBuilders = new List<PropDefBuilder<T>>();
             _propertiesDefBuilder = new PropertiesDefBuilder<T>(this, PropDefBuilders);
             _relationshipDefCol = new RelationshipDefCol();
             _primaryKeyDef = new PrimaryKeyDef();
@@ -157,11 +157,6 @@ namespace Habanero.Fluent
         private static PropertyInfo GetPropertyInfo<TModel, TReturn>(Expression<Func<TModel, TReturn>> expression)
         {
             return ReflectionUtilities.GetPropertyInfo(expression);
-        }
-
-        public PropertiesDefBuilder<T> WithProperties()
-        {
-            return _propertiesDefBuilder;
         }
 
         public RelationshipsBuilder<T> WithRelationships()

@@ -6,7 +6,7 @@ namespace Habanero.Fluent.Tests.TestStubs
     class ClassDefBuilder2Stub<T> : ClassDefBuilder2<T> where T : BusinessObject
     {
         public ClassDefBuilder2Stub()
-            : base(new ClassDefBuilderStub<T>(), new List<string>())
+            : base(new ClassDefBuilderStub<T>(), new List<PropDefBuilder<T>>(), new List<string>())
         {
         }
 

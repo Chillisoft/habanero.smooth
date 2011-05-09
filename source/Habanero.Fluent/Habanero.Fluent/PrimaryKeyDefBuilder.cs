@@ -10,13 +10,13 @@ namespace Habanero.Fluent
 {
     public class PrimaryKeyDefBuilder<T> where T : BusinessObject
     {
-        private ClassDefBuilder2<T> _classDefBuilder;
+        private PropertiesDefSelector<T> _propertiesDefSelector;
         private IList<string> _primaryKeyPropNames;
 
 
-        public PrimaryKeyDefBuilder(ClassDefBuilder2<T> classDefBuilder, IList<string> primaryKeyPropNames)
+        public PrimaryKeyDefBuilder(PropertiesDefSelector<T> propertiesDefSelector, IList<string> primaryKeyPropNames)
         {
-            _classDefBuilder = classDefBuilder;
+            _propertiesDefSelector = propertiesDefSelector;
             _primaryKeyPropNames = primaryKeyPropNames;
         }
 
@@ -33,9 +33,9 @@ namespace Habanero.Fluent
             return this;
         }
 
-        public ClassDefBuilder2<T> EndCompositePrimaryKey()
+        public PropertiesDefSelector<T> EndCompositePrimaryKey()
         {
-            return _classDefBuilder;
+            return _propertiesDefSelector;
         }
 
         private static string GetPropertyName<TReturn>(Expression<Func<T, TReturn>> propExpression)
