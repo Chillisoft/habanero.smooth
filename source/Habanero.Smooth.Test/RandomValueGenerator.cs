@@ -21,6 +21,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Habanero.Base;
+using Habanero.Base.Util;
 using Habanero.Smooth.ReflectionWrappers;
 using NUnit.Framework;
 using Rhino.Mocks;
@@ -243,7 +244,8 @@ namespace Habanero.Smooth.Test
             PropertyInfo propertyInfo = MockRepository.GenerateMock<PropertyInfo>();
             propertyInfo.Stub(propInfo => propInfo.GetCustomAttributes(true)).Return(new[]
                                      {
-                                         Activator.CreateInstance(typeof(TAutoMapAttribute), reverseRelName)
+                                            ReflectionUtilitiesCF.GetInstanceWithConstructorParameters(typeof (TAutoMapAttribute), new object[] {reverseRelName})
+                                         //Activator.CreateInstance(typeof(TAutoMapAttribute), reverseRelName)
                                      });
             propertyInfo.Stub(propInfo => propInfo.GetCustomAttributes(typeof(TAutoMapAttribute), true)).Return(propertyInfo.GetCustomAttributes(true));
 

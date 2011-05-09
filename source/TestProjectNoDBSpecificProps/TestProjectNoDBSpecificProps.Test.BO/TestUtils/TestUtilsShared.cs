@@ -98,24 +98,6 @@ namespace TestProjectNoDBSpecificProps.Test.BO
             return values[TestUtilsShared.GetRandomInt(0, values.Length - 1)];
         }
 
-        public static TEnum GetRandomEnum<TEnum>()
-            where TEnum : struct
-        {
-            return GetRandomEnum<TEnum>(null);
-        }
-
-        public static TEnum GetRandomEnum<TEnum>(TEnum? excluded)
-            where TEnum : struct
-        {
-            Array values = Enum.GetValues(typeof(TEnum));
-            int randomIndex = GetRandomInt(0, values.Length);
-            TEnum value = (TEnum)values.GetValue(randomIndex);
-            if (excluded.HasValue && excluded.Value.Equals(value))
-            {
-                return GetRandomEnum(excluded);
-            }
-            return value;
-        }
         
         /// <summary>
         /// Waits for the garbage collector to clear dereferenced objects in order

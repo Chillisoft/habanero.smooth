@@ -29,6 +29,7 @@ using Rhino.Mocks;
 
 namespace Habanero.Smooth.Test
 {
+    
     [TestFixture]
     public class TestOneToOneAutoMapper
     {
@@ -160,7 +161,8 @@ namespace Habanero.Smooth.Test
             //---------------Test Result -----------------------
             Assert.IsTrue(owningBoHasForeignKey);
         }
-        /// <summary>
+ 
+   /// <summary>
         ///if ownerClassName LT relatedClassName
         ///     owningBOHasForeignKey = false;;
         /// </summary>
@@ -209,7 +211,7 @@ namespace Habanero.Smooth.Test
             TypeWrapper ownerType; TypeWrapper relatedType;
             string relatedFKPropName; string owningFKPropName;
             var propertyWrapper
-                    = GetPropertyWrapper(out ownerType, out relatedType, out relatedFKPropName, out owningFKPropName);
+                = GetPropertyWrapper(out ownerType, out relatedType, out relatedFKPropName, out owningFKPropName);
             ownerType.ClearReturnValue();
             ownerType.SetName("zzzzz");
             relatedType.SetName("aaaa");
@@ -239,7 +241,7 @@ namespace Habanero.Smooth.Test
             TypeWrapper ownerType; TypeWrapper relatedType;
             string relatedFKPropName; string owningFKPropName;
             var propertyWrapper
-                    = GetPropertyWrapper(out ownerType, out relatedType, out relatedFKPropName, out owningFKPropName);
+                = GetPropertyWrapper(out ownerType, out relatedType, out relatedFKPropName, out owningFKPropName);
             ownerType.ClearReturnValue();
 
             ownerType.SetName("1111");
@@ -268,7 +270,7 @@ namespace Habanero.Smooth.Test
             TypeWrapper ownerType; TypeWrapper relatedType;
             string relatedFKPropName; string owningFKPropName;
             var propertyWrapper
-                    = GetPropertyWrapper(out ownerType, out relatedType, out relatedFKPropName, out owningFKPropName);
+                = GetPropertyWrapper(out ownerType, out relatedType, out relatedFKPropName, out owningFKPropName);
 
             ownerType.SetHasProperty(owningFKPropName, true);
             relatedType.SetHasProperty(relatedFKPropName, true);
@@ -296,12 +298,10 @@ namespace Habanero.Smooth.Test
             TypeWrapper ownerType; TypeWrapper relatedType;
             string relatedFKPropName; string owningFKPropName;
             var propertyWrapper
-                    = GetPropertyWrapper(out ownerType, out relatedType, out relatedFKPropName, out owningFKPropName);
+                = GetPropertyWrapper(out ownerType, out relatedType, out relatedFKPropName, out owningFKPropName);
             ownerType.ClearReturnValue();
             ownerType.SetName("ZZZZZ" + relatedType.Name);
             propertyWrapper.SetOneToOneAttributeOnStub(RelationshipType.Aggregation);
-/*            propertyWrapper.Stub(pw => pw.GetAttribute<AutoMapOneToOneAttribute>()).Return(
-                new AutoMapOneToOneAttribute(RelationshipType.Aggregation));*/
 
             OneToOneAutoMapper autoMapper = new OneToOneAutoMapper(propertyWrapper);
             //---------------Assert Precondition----------------
@@ -326,13 +326,12 @@ namespace Habanero.Smooth.Test
             TypeWrapper ownerType; TypeWrapper relatedType;
             string relatedFKPropName; string owningFKPropName;
             var propertyWrapper
-                    = GetPropertyWrapper(out ownerType, out relatedType, out relatedFKPropName, out owningFKPropName);
+                = GetPropertyWrapper(out ownerType, out relatedType, out relatedFKPropName, out owningFKPropName);
             ownerType.ClearReturnValue();
             ownerType.SetName("ZZZZZ" + relatedType.Name);
 
             propertyWrapper.SetOneToOneAttributeOnStub(RelationshipType.Composition);
-    /*        propertyWrapper.Stub(pw => pw.GetAttribute<AutoMapOneToOneAttribute>()).Return(
-                    new AutoMapOneToOneAttribute(RelationshipType.Composition));*/
+
             OneToOneAutoMapper autoMapper = new OneToOneAutoMapper(propertyWrapper);
             //---------------Assert Precondition----------------
             Assert.IsFalse(ownerType.HasProperty(owningFKPropName));
@@ -357,7 +356,7 @@ namespace Habanero.Smooth.Test
             TypeWrapper ownerType; TypeWrapper relatedType;
             string relatedFKPropName; string owningFKPropName;
             var propertyWrapper
-                    = GetPropertyWrapper(out ownerType, out relatedType, out relatedFKPropName, out owningFKPropName);
+                = GetPropertyWrapper(out ownerType, out relatedType, out relatedFKPropName, out owningFKPropName);
             ownerType.ClearReturnValue();
             ownerType.SetName("ZZZZZZ" + relatedType.Name);
             propertyWrapper.SetOneToOneAttributeOnStub(RelationshipType.Association);
@@ -385,7 +384,7 @@ namespace Habanero.Smooth.Test
             TypeWrapper ownerType; TypeWrapper relatedType;
             var ownerTypeName = "A" + GetRandomString();
             var propertyWrapper
-                    = GetPropertyWrapper(out ownerType, out relatedType, ownerTypeName, "ZZZZZZ" + ownerTypeName);
+                = GetPropertyWrapper(out ownerType, out relatedType, ownerTypeName, "ZZZZZZ" + ownerTypeName);
             propertyWrapper.SetOneToOneAttributeOnStub(RelationshipType.Association);
 
             string owningFKPropName = GetFKPropName(propertyWrapper.Name);
@@ -440,7 +439,7 @@ namespace Habanero.Smooth.Test
             TypeWrapper ownerType; TypeWrapper relatedType;
             string relatedFKPropName; string owningFKPropName;
             var propertyWrapper
-                    = GetPropertyWrapper(out ownerType, out relatedType, out relatedFKPropName, out owningFKPropName);
+                = GetPropertyWrapper(out ownerType, out relatedType, out relatedFKPropName, out owningFKPropName);
             ownerType.SetHasProperty(owningFKPropName, true);
             OneToOneAutoMapper autoMapper = new OneToOneAutoMapper(propertyWrapper);
             //---------------Assert Precondition----------------
@@ -465,7 +464,7 @@ namespace Habanero.Smooth.Test
             TypeWrapper ownerType; TypeWrapper relatedType;
             string relatedFKPropName; string owningFKPropName;
             var propertyWrapper
-                    = GetPropertyWrapper(out ownerType, out relatedType, out relatedFKPropName, out owningFKPropName);
+                = GetPropertyWrapper(out ownerType, out relatedType, out relatedFKPropName, out owningFKPropName);
 
             relatedType.SetHasProperty(relatedFKPropName, true);
             OneToOneAutoMapper autoMapper = new OneToOneAutoMapper(propertyWrapper);
@@ -489,7 +488,7 @@ namespace Habanero.Smooth.Test
             TypeWrapper ownerType; TypeWrapper relatedType;
             string relatedFKPropName; string owningFKPropName;
             var propertyWrapper
-                    = GetPropertyWrapper(out ownerType, out relatedType, out relatedFKPropName, out owningFKPropName);
+                = GetPropertyWrapper(out ownerType, out relatedType, out relatedFKPropName, out owningFKPropName);
             
             ownerType.SetHasProperty(owningFKPropName, true);
             relatedType.SetHasProperty(relatedFKPropName, true);
@@ -504,97 +503,97 @@ namespace Habanero.Smooth.Test
             //---------------Test Result -----------------------
             Assert.AreEqual(relatedFKPropName, relatedPropName);
         }
-
-        ///if ownerClassName LT relatedClassName
-        ///     ownerProp = OwnerClassId
-        ///     relatedProp = reverseRelationshipName+ID        
-        [Test]
-        public void Test_GetRelatedPropName_NeitherHaveProps_ShouldReturnRevRelNameID()
-        {
-            //---------------Set up test pack-------------------
-            var ownerType = MockRepository.GenerateMock<FakeTypeWrapper>();
-            var relatedType = MockRepository.GenerateMock<FakeTypeWrapper>();
-            var reverseRelName = GetRandomString();
-            var relationshipName = GetRandomString();
-            string owningFKPropName = relationshipName + "ID";
-            string relatedFKPropName = reverseRelName + "ID";
-            PropertyWrapper propertyWrapper = MockRepository.GenerateStub<FakePropertyWrapper>();
-            SetupMockPropWrapper(propertyWrapper, ownerType, relatedType, relationshipName, reverseRelName);
-            ownerType.SetName("1111");
-            relatedType.SetName("2222");
-            OneToOneAutoMapper autoMapper = new OneToOneAutoMapper(propertyWrapper);
-            //---------------Assert Precondition----------------
-            Assert.IsFalse(ownerType.HasProperty(owningFKPropName));
-            Assert.IsFalse(relatedType.HasProperty(relatedFKPropName));
-            Assert.AreEqual(-1, ownerType.Name.CompareTo(relatedType.Name));
-            AssertMockPropSetupCorrectly(propertyWrapper, ownerType, relatedType, relationshipName, reverseRelName);
+        
+                ///if ownerClassName LT relatedClassName
+                ///     ownerProp = OwnerClassId
+                ///     relatedProp = reverseRelationshipName+ID        
+                [Test]
+                public void Test_GetRelatedPropName_NeitherHaveProps_ShouldReturnRevRelNameID()
+                {
+                    //---------------Set up test pack-------------------
+                    var ownerType = MockRepository.GenerateMock<FakeTypeWrapper>();
+                    var relatedType = MockRepository.GenerateMock<FakeTypeWrapper>();
+                    var reverseRelName = GetRandomString();
+                    var relationshipName = GetRandomString();
+                    string owningFKPropName = relationshipName + "ID";
+                    string relatedFKPropName = reverseRelName + "ID";
+                    PropertyWrapper propertyWrapper = MockRepository.GenerateStub<FakePropertyWrapper>();
+                    SetupMockPropWrapper(propertyWrapper, ownerType, relatedType, relationshipName, reverseRelName);
+                    ownerType.SetName("1111");
+                    relatedType.SetName("2222");
+                    OneToOneAutoMapper autoMapper = new OneToOneAutoMapper(propertyWrapper);
+                    //---------------Assert Precondition----------------
+                    Assert.IsFalse(ownerType.HasProperty(owningFKPropName));
+                    Assert.IsFalse(relatedType.HasProperty(relatedFKPropName));
+                    Assert.AreEqual(-1, ownerType.Name.CompareTo(relatedType.Name));
+                    AssertMockPropSetupCorrectly(propertyWrapper, ownerType, relatedType, relationshipName, reverseRelName);
             
-            //---------------Execute Test ----------------------
-            var relatedPropName = autoMapper.GetRelatedPropName();
-            //---------------Test Result -----------------------
-            Assert.AreEqual(relatedFKPropName, relatedPropName);
-        }
+                    //---------------Execute Test ----------------------
+                    var relatedPropName = autoMapper.GetRelatedPropName();
+                    //---------------Test Result -----------------------
+                    Assert.AreEqual(relatedFKPropName, relatedPropName);
+                }
 
-        ///if ownerClassName GT relatedClassName
-        ///    ownerProp = RelationshipName+ID
-        ///    relatedProp = RelatedClass.ID    
-        [Test]
-        public void Test_GetRelatedPropName_WhenNeitherHaveProps_WhenOwnerGTRelated_ShouldReturnRevRelNameID()
-        {
-            //---------------Set up test pack-------------------
-            var ownerType = MockRepository.GenerateMock<FakeTypeWrapper>();
-            var relatedType = MockRepository.GenerateMock<FakeTypeWrapper>();
-            relatedType.SetPKPropName(GetRandomString());
-            var reverseRelName = GetRandomString();
-            var relationshipName = GetRandomString();
-            string owningFKPropName = relationshipName + "ID";
-            string relatedFKPropName = reverseRelName + "ID";
-            PropertyWrapper propertyWrapper = MockRepository.GenerateStub<FakePropertyWrapper>();
-            SetupMockPropWrapper(propertyWrapper, ownerType, relatedType, relationshipName, reverseRelName);
-            ownerType.SetName("zzzzz");
-            relatedType.SetName("aaaa");
-            OneToOneAutoMapper autoMapper = new OneToOneAutoMapper(propertyWrapper);
-            //---------------Assert Precondition----------------
-            Assert.IsFalse(ownerType.HasProperty(owningFKPropName));
-            Assert.IsFalse(relatedType.HasProperty(relatedFKPropName));
-            Assert.AreEqual(1, ownerType.Name.CompareTo(relatedType.Name));
-            AssertMockPropSetupCorrectly(propertyWrapper, ownerType, relatedType, relationshipName, reverseRelName);
+                ///if ownerClassName GT relatedClassName
+                ///    ownerProp = RelationshipName+ID
+                ///    relatedProp = RelatedClass.ID    
+                [Test]
+                public void Test_GetRelatedPropName_WhenNeitherHaveProps_WhenOwnerGTRelated_ShouldReturnRevRelNameID()
+                {
+                    //---------------Set up test pack-------------------
+                    var ownerType = MockRepository.GenerateMock<FakeTypeWrapper>();
+                    var relatedType = MockRepository.GenerateMock<FakeTypeWrapper>();
+                    relatedType.SetPKPropName(GetRandomString());
+                    var reverseRelName = GetRandomString();
+                    var relationshipName = GetRandomString();
+                    string owningFKPropName = relationshipName + "ID";
+                    string relatedFKPropName = reverseRelName + "ID";
+                    PropertyWrapper propertyWrapper = MockRepository.GenerateStub<FakePropertyWrapper>();
+                    SetupMockPropWrapper(propertyWrapper, ownerType, relatedType, relationshipName, reverseRelName);
+                    ownerType.SetName("zzzzz");
+                    relatedType.SetName("aaaa");
+                    OneToOneAutoMapper autoMapper = new OneToOneAutoMapper(propertyWrapper);
+                    //---------------Assert Precondition----------------
+                    Assert.IsFalse(ownerType.HasProperty(owningFKPropName));
+                    Assert.IsFalse(relatedType.HasProperty(relatedFKPropName));
+                    Assert.AreEqual(1, ownerType.Name.CompareTo(relatedType.Name));
+                    AssertMockPropSetupCorrectly(propertyWrapper, ownerType, relatedType, relationshipName, reverseRelName);
             
-            //---------------Execute Test ----------------------
-            var relatedPropName = autoMapper.GetRelatedPropName();
-            //---------------Test Result -----------------------
-            Assert.AreEqual(relatedType.GetPKPropName(), relatedPropName);
-        }
+                    //---------------Execute Test ----------------------
+                    var relatedPropName = autoMapper.GetRelatedPropName();
+                    //---------------Test Result -----------------------
+                    Assert.AreEqual(relatedType.GetPKPropName(), relatedPropName);
+                }
 
-        ///if ownerClassName LT relatedClassName
-        ///     ownerProp = OwnerClassId
-        ///     relatedProp = reverseRelationshipName+ID        
-        [Test]
-        public void Test_GetRelatedPropName_NeitherHaveProps_NonDefaultNaming_ShouldReturnRevRelNameID()
-        {
-            //---------------Set up test pack-------------------
-            SetNonDefaultNamingConvention();
-            var ownerType = MockRepository.GenerateMock<FakeTypeWrapper>();
-            var relatedType = MockRepository.GenerateMock<FakeTypeWrapper>();
-            var reverseRelName = GetRandomString();
-            var relationshipName = GetRandomString();
-            var owningFKPropName = GetFKPropName(relationshipName);
-            var relatedFKPropName = GetFKPropName(reverseRelName);
-            PropertyWrapper propertyWrapper = MockRepository.GenerateStub<FakePropertyWrapper>();
-            SetupMockPropWrapper(propertyWrapper, ownerType, relatedType, relationshipName, reverseRelName);
-            ownerType.SetName("1111");
-            relatedType.SetName("2222");
-            OneToOneAutoMapper autoMapper = new OneToOneAutoMapper(propertyWrapper);
-            //---------------Assert Precondition----------------
-            Assert.IsFalse(ownerType.HasProperty(owningFKPropName));
-            Assert.IsFalse(relatedType.HasProperty(relatedFKPropName));
-            Assert.AreEqual(-1, ownerType.Name.CompareTo(relatedType.Name));
-            AssertMockPropSetupCorrectly(propertyWrapper, ownerType, relatedType, relationshipName, reverseRelName);
-            //---------------Execute Test ----------------------
-            var relatedPropName = autoMapper.GetRelatedPropName();
-            //---------------Test Result -----------------------
-            Assert.AreEqual(relatedFKPropName, relatedPropName);
-        }
+                ///if ownerClassName LT relatedClassName
+                ///     ownerProp = OwnerClassId
+                ///     relatedProp = reverseRelationshipName+ID        
+                [Test]
+                public void Test_GetRelatedPropName_NeitherHaveProps_NonDefaultNaming_ShouldReturnRevRelNameID()
+                {
+                    //---------------Set up test pack-------------------
+                    SetNonDefaultNamingConvention();
+                    var ownerType = MockRepository.GenerateMock<FakeTypeWrapper>();
+                    var relatedType = MockRepository.GenerateMock<FakeTypeWrapper>();
+                    var reverseRelName = GetRandomString();
+                    var relationshipName = GetRandomString();
+                    var owningFKPropName = GetFKPropName(relationshipName);
+                    var relatedFKPropName = GetFKPropName(reverseRelName);
+                    PropertyWrapper propertyWrapper = MockRepository.GenerateStub<FakePropertyWrapper>();
+                    SetupMockPropWrapper(propertyWrapper, ownerType, relatedType, relationshipName, reverseRelName);
+                    ownerType.SetName("1111");
+                    relatedType.SetName("2222");
+                    OneToOneAutoMapper autoMapper = new OneToOneAutoMapper(propertyWrapper);
+                    //---------------Assert Precondition----------------
+                    Assert.IsFalse(ownerType.HasProperty(owningFKPropName));
+                    Assert.IsFalse(relatedType.HasProperty(relatedFKPropName));
+                    Assert.AreEqual(-1, ownerType.Name.CompareTo(relatedType.Name));
+                    AssertMockPropSetupCorrectly(propertyWrapper, ownerType, relatedType, relationshipName, reverseRelName);
+                    //---------------Execute Test ----------------------
+                    var relatedPropName = autoMapper.GetRelatedPropName();
+                    //---------------Test Result -----------------------
+                    Assert.AreEqual(relatedFKPropName, relatedPropName);
+                }
 
         /// if ownerClass.HasProp(RelName+ID) and relatedClass.HasProp(RevRelName+ID)
         ///      ownerProp = foundOwnerClassId
@@ -607,7 +606,7 @@ namespace Habanero.Smooth.Test
             TypeWrapper ownerType; TypeWrapper relatedType;
             string relatedFKPropName; string owningFKPropName;
             var propertyWrapper
-                    = GetPropertyWrapper(out ownerType, out relatedType, out relatedFKPropName, out owningFKPropName);
+                = GetPropertyWrapper(out ownerType, out relatedType, out relatedFKPropName, out owningFKPropName);
             ownerType.SetHasProperty(owningFKPropName, true);
             relatedType.SetHasProperty(relatedFKPropName, true);
 
@@ -634,7 +633,7 @@ namespace Habanero.Smooth.Test
             TypeWrapper ownerType; TypeWrapper relatedType;
             string relatedFKPropName; string owningFKPropName;
             var propertyWrapper
-                    = GetPropertyWrapper(out ownerType, out relatedType, out relatedFKPropName, out owningFKPropName);
+                = GetPropertyWrapper(out ownerType, out relatedType, out relatedFKPropName, out owningFKPropName);
             //SetupMockPropWrapper(propertyWrapper, ownerType, relatedType, relationshipName, reverseRelName);
             ownerType.SetHasProperty(owningFKPropName, true);
             OneToOneAutoMapper autoMapper = new OneToOneAutoMapper(propertyWrapper);
@@ -661,7 +660,7 @@ namespace Habanero.Smooth.Test
             TypeWrapper ownerType; TypeWrapper relatedType;
             string relatedFKPropName; string owningFKPropName;
             var propertyWrapper
-                    = GetPropertyWrapper(out ownerType, out relatedType, out relatedFKPropName, out owningFKPropName);
+                = GetPropertyWrapper(out ownerType, out relatedType, out relatedFKPropName, out owningFKPropName);
             relatedType.SetHasProperty(relatedFKPropName, true);
             OneToOneAutoMapper autoMapper = new OneToOneAutoMapper(propertyWrapper);
             //---------------Assert Precondition----------------
@@ -685,7 +684,7 @@ namespace Habanero.Smooth.Test
             TypeWrapper ownerType; TypeWrapper relatedType;
             string relatedFKPropName; string owningFKPropName;
             var propertyWrapper
-                    = GetPropertyWrapper(out ownerType, out relatedType, out relatedFKPropName, out owningFKPropName);
+                = GetPropertyWrapper(out ownerType, out relatedType, out relatedFKPropName, out owningFKPropName);
             relatedType.SetHasProperty(relatedFKPropName, true);
             OneToOneAutoMapper autoMapper = new OneToOneAutoMapper(propertyWrapper);
             //---------------Assert Precondition----------------
@@ -708,7 +707,7 @@ namespace Habanero.Smooth.Test
             TypeWrapper ownerType; TypeWrapper relatedType;
             string relatedFKPropName; string owningFKPropName;
             var propertyWrapper
-                    = GetPropertyWrapper(out ownerType, out relatedType, out relatedFKPropName, out owningFKPropName);
+                = GetPropertyWrapper(out ownerType, out relatedType, out relatedFKPropName, out owningFKPropName);
 //            SetupMockPropWrapper(propertyWrapper, ownerType, relatedType, relationshipName, reverseRelName);
             ownerType.SetHasProperty(owningFKPropName, true);
             relatedType.SetHasProperty(relatedFKPropName, true);
@@ -734,7 +733,7 @@ namespace Habanero.Smooth.Test
             TypeWrapper ownerType; TypeWrapper relatedType;
             string relatedFKPropName; string owningFKPropName;
             var propertyWrapper
-                    = GetPropertyWrapper(out ownerType, out relatedType, out relatedFKPropName, out owningFKPropName);
+                = GetPropertyWrapper(out ownerType, out relatedType, out relatedFKPropName, out owningFKPropName);
 
             ownerType.SetHasProperty(owningFKPropName, true);
             relatedType.SetHasProperty(relatedFKPropName, true);
@@ -814,6 +813,7 @@ namespace Habanero.Smooth.Test
             Assert.AreEqual(owningFKPropName, relatedPropName);
         }
 
+
         [Test]
         public void Test_CreateRelPropDef_WithNonDefaultIDConventionName_ShouldCreateWithCorrectOwningAndRelatedPropNames()
         {
@@ -822,7 +822,7 @@ namespace Habanero.Smooth.Test
             TypeWrapper ownerType; TypeWrapper relatedType;
             string relatedFKPropName; string owningFKPropName;
             var propertyWrapper 
-                    = GetPropertyWrapper(out ownerType, out relatedType, out relatedFKPropName, out owningFKPropName);
+                = GetPropertyWrapper(out ownerType, out relatedType, out relatedFKPropName, out owningFKPropName);
             relatedType.SetHasProperty(relatedFKPropName, true);
             var autoMapper = new OneToOneAutoMapper(propertyWrapper);
             //---------------Assert Precondition----------------
@@ -845,7 +845,7 @@ namespace Habanero.Smooth.Test
             TypeWrapper ownerType; TypeWrapper relatedType;
             string relatedFKPropName; string owningFKPropName;
             var propertyWrapper 
-                    = GetPropertyWrapper(out ownerType, out relatedType, out relatedFKPropName, out owningFKPropName);
+                = GetPropertyWrapper(out ownerType, out relatedType, out relatedFKPropName, out owningFKPropName);
             ownerType.SetHasProperty(owningFKPropName, true);
             relatedType.SetHasProperty(relatedFKPropName, true);
             var autoMapper = new OneToOneAutoMapper(propertyWrapper);
@@ -927,7 +927,7 @@ namespace Habanero.Smooth.Test
             propertyWrapper.Stub(wrapper => wrapper.HasSingleReverseRelationship).Return(true);
             propertyWrapper.Stub(wrapper1 => wrapper1.IsPublic).Return(true);
 
-            propertyWrapper.Stub(wrapper => wrapper.PropertyInfo).Return(MockRepository.GenerateMock<FakePropertyInfo>());
+            propertyWrapper.Stub(wrapper => wrapper.PropertyInfo).Return(MockRepository.GenerateMock<PropertyInfo>());
         }
 
 
@@ -954,6 +954,7 @@ namespace Habanero.Smooth.Test
             Assert.AreEqual(expectedRevRelName, revRelName);
         }
 
+       
         [Test]
         public void Test_MustBeMapped_WhenPropIsInherited_ShouldRetFalse()
         {
@@ -1066,7 +1067,7 @@ namespace Habanero.Smooth.Test
             TypeWrapper ownerType; TypeWrapper relatedType;
             string relatedFKPropName; string owningFKPropName;
             var propertyWrapper
-                    = GetPropertyWrapper(out ownerType, out relatedType, out relatedFKPropName, out owningFKPropName);
+                = GetPropertyWrapper(out ownerType, out relatedType, out relatedFKPropName, out owningFKPropName);
             relatedType.SetHasProperty(relatedFKPropName, true);
             propertyWrapper.SetIsSingleRelationship(true);
             OneToOneAutoMapper autoMapper = new OneToOneAutoMapper(propertyWrapper);
@@ -1135,7 +1136,7 @@ namespace Habanero.Smooth.Test
             TypeWrapper ownerType; TypeWrapper relatedType;
             string relatedFKPropName; string owningFKPropName;
             var propertyWrapper
-                    = GetPropertyWrapper(out ownerType, out relatedType, out relatedFKPropName, out owningFKPropName);
+                = GetPropertyWrapper(out ownerType, out relatedType, out relatedFKPropName, out owningFKPropName);
             propertyWrapper.SetIsSingleRelationship(true);
             OneToOneAutoMapper autoMapper = new OneToOneAutoMapper(propertyWrapper);
             var expectedReverseRelName = propertyWrapper.GetSingleReverseRelationshipName<AutoMapOneToOneAttribute>();
@@ -1366,7 +1367,7 @@ namespace Habanero.Smooth.Test
                 propertyInfo.ToPropertyWrapper().MapOneToOne();
                 Assert.Fail("Expected to throw an InvalidDefinitionException");
             }
-            //---------------Test Result -----------------------
+                //---------------Test Result -----------------------
             catch (InvalidDefinitionException ex)
             {
                 StringAssert.Contains("The Relationship '" + expectedPropName
@@ -1442,9 +1443,10 @@ namespace Habanero.Smooth.Test
             string relatedFKPropName;
             return GetPropertyWrapper(out ownerType, out relatedType, out relatedFKPropName, out owningFKPropName);
         }
-        private FakePropertyInfo GetFakePropertyInfo()
+ 
+  private PropertyInfo GetFakePropertyInfo()
         {
-            return MockRepository.GenerateMock<FakePropertyInfo>();
+            return MockRepository.GenerateMock<PropertyInfo>();
         }
     }
 }

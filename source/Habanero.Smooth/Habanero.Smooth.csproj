@@ -29,7 +29,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>bin\Debug\Habanero.Smooth.XML</DocumentationFile>
-	<NoStdLib>true</NoStdLib>
+    <NoStdLib>true</NoStdLib>
     <NoConfig>true</NoConfig>
     <GenerateSerializationAssemblies>off</GenerateSerializationAssemblies>
   </PropertyGroup>
@@ -40,7 +40,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-	<NoStdLib>true</NoStdLib>
+    <NoStdLib>true</NoStdLib>
     <NoConfig>true</NoConfig>
     <GenerateSerializationAssemblies>off</GenerateSerializationAssemblies>
   </PropertyGroup>
@@ -51,7 +51,7 @@
     <Reference Include="Habanero.BO">
       <HintPath>..\..\lib\Habanero.BO.dll</HintPath>
     </Reference>
-<Reference Include="mscorlib, Version=3.5.0.0, Culture=neutral, PublicKeyToken=969db8053d3322ac, processorArchitecture=MSIL">
+    <Reference Include="mscorlib, Version=3.5.0.0, Culture=neutral, PublicKeyToken=969db8053d3322ac, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Program Files (x86)\Microsoft.NET\SDK\CompactFramework\v3.5\WindowsCE\mscorlib.dll</HintPath>
     </Reference>
@@ -92,7 +92,6 @@
     <Compile Include="..\Common\AssemblyInfoShared.cs">
       <Link>Properties\AssemblyInfoShared.cs</Link>
     </Compile>
-    <Compile Include="AppDomainTypeSource.cs" />
     <Compile Include="AllClassesAutoMapper.cs" />
     <Compile Include="AssemblyTypeSource.cs" />
     <Compile Include="AutoMapAttributes.cs" />

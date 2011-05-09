@@ -23,7 +23,8 @@ using Rhino.Mocks;
 
 namespace Habanero.Smooth.Test
 {
-    public class FakeType : Type
+/*
+  public class FakeType : Type
     {
         public FakeType()
         {
@@ -209,8 +210,8 @@ namespace Habanero.Smooth.Test
         {
             throw new NotImplementedException();
         }
-    }
-    public class FakePropertyInfo : PropertyInfo
+    }*/
+/*    public class FakePropertyInfo : PropertyInfo
     {
         private readonly Type _declaringType;
         private readonly string _propName;
@@ -322,8 +323,8 @@ namespace Habanero.Smooth.Test
         {
             throw new NotImplementedException();
         }
-    }
-
+    }*/
+/*
     public class FakeMethodInfo : MethodInfo
     {
         private readonly Type _declaringType;
@@ -410,5 +411,5 @@ namespace Habanero.Smooth.Test
         {
             throw new NotImplementedException();
         }
-    }
+    }*/
 }

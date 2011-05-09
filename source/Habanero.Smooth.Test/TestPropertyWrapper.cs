@@ -29,9 +29,11 @@ using Rhino.Mocks;
 
 namespace Habanero.Smooth.Test
 {
-    [TestFixture]
+
+  [TestFixture]
     public class TestPropertyWrapper
     {
+// ReSharper disable InconsistentNaming
         [SetUp]
         public void Setup()
         {
@@ -39,64 +41,6 @@ namespace Habanero.Smooth.Test
         }
 
         #region WrapperProps
-
-        [Test]
-        public void Test_Name_ShouldReturnInfoName()
-        {
-            //---------------Set up test pack-------------------
-            const string expectedPropName = "ExpectedName";
-            FakePropertyInfo propertyInfo = new FakePropertyInfo(expectedPropName, typeof (FakeEnum));
-            PropertyWrapper propertyWrapper = propertyInfo.ToPropertyWrapper();
-            //---------------Assert Precondition----------------
-            Assert.AreEqual(expectedPropName, propertyInfo.Name);
-            //---------------Execute Test ----------------------
-            string actualName = propertyWrapper.Name;
-            //---------------Test Result -----------------------
-            Assert.AreEqual(expectedPropName, actualName);
-        }
-
-        [Test]
-        public void Test_PropType_ShouldReturnPropInfoType()
-        {
-            //---------------Set up test pack-------------------
-            TypeWrapper expectedType = typeof (FakeEnum).ToTypeWrapper();
-            FakePropertyInfo propertyInfo = new FakePropertyInfo("fdafads", expectedType.UnderlyingType);
-            PropertyWrapper propertyWrapper = propertyInfo.ToPropertyWrapper();
-            //---------------Assert Precondition----------------
-            Assert.AreSame(expectedType.UnderlyingType, propertyInfo.PropertyType);
-            //---------------Execute Test ----------------------
-            var actualType = propertyWrapper.PropertyType;
-            //---------------Test Result -----------------------
-            Assert.AreEqual(expectedType, actualType);
-        }
-
-        [Test]
-        public void Test_PropertyInfo_ShouldReturnPropInfo()
-        {
-            //---------------Set up test pack-------------------
-            FakePropertyInfo propertyInfo = new FakePropertyInfo(typeof (FakeEnum));
-            PropertyWrapper propertyWrapper = propertyInfo.ToPropertyWrapper();
-            //---------------Assert Precondition----------------
-            //---------------Execute Test ----------------------
-            var propInfo = propertyWrapper.PropertyInfo;
-            //---------------Test Result -----------------------
-            Assert.AreEqual(propertyInfo, propInfo);
-        }
-
-        [Test]
-        public void Test_DeclaringType_ShouldReturnDeclaringTypeWrapped()
-        {
-            //---------------Set up test pack-------------------
-            Type expectedDeclaringType = typeof (FakeBoNoProps);
-            FakePropertyInfo propertyInfo = new FakePropertyInfo(expectedDeclaringType);
-            PropertyWrapper propertyWrapper = propertyInfo.ToPropertyWrapper();
-            //---------------Assert Precondition----------------
-            Assert.AreSame(expectedDeclaringType, propertyInfo.DeclaringType);
-            //---------------Execute Test ----------------------
-            var declaringType = propertyWrapper.DeclaringType;
-            //---------------Test Result -----------------------
-            Assert.AreEqual(expectedDeclaringType, declaringType.UnderlyingType);
-        }
 
         [Test]
         public void Test_DeclaringTypeName_ShouldReturnUndelyingTypeName()
@@ -145,168 +89,6 @@ namespace Habanero.Smooth.Test
             Assert.AreEqual(expectedReturnTypeName, relatedClassName);
         }
 
-        [Test]
-        public void Test_RelatedClassType_WhenNotGenericShouldReturnPropType()
-        {
-            //---------------Set up test pack-------------------
-            Type returnType = MockRepository.GenerateMock<Type>();
-            FakePropertyInfo info = new FakePropertyInfo("fdafasd", returnType);
-            PropertyWrapper propertyWrapper = new PropertyWrapper(info);
-            //---------------Assert Precondition----------------
-            Assert.IsNotNull(propertyWrapper.RelatedClassType);
-            Assert.IsFalse(returnType.IsGenericType);
-            //---------------Execute Test ----------------------
-            var relatedClassType = propertyWrapper.RelatedClassType;
-            //---------------Test Result -----------------------
-            Assert.AreSame(returnType, relatedClassType.UnderlyingType);
-        }
-        [Test]
-        public void Test_RelatedClassType_WhenIsGenericShouldReturnUnderlyingPropType()
-        {
-            //---------------Set up test pack-------------------
-            TypeWrapper underlying = new TypeWrapper(typeof(FakeBOWProps));
-            var genericReturnType = underlying.MakeGenericBusinessObjectCollection();
-            FakePropertyInfo info = new FakePropertyInfo("fdafasd", genericReturnType.UnderlyingType);
-            PropertyWrapper propertyWrapper = new PropertyWrapper(info);
-            
-            //---------------Assert Precondition----------------
-            Assert.IsTrue(genericReturnType.IsGenericType);
-            //---------------Execute Test ----------------------
-            var relatedClassType = propertyWrapper.RelatedClassType;
-            //---------------Test Result -----------------------
-            Assert.AreSame(underlying.UnderlyingType, relatedClassType.UnderlyingType);
-        }
-        [Test]
-        public void Test_IsSingleRel_WhenIsGenericShouldReturnFalse()
-        {
-            //---------------Set up test pack-------------------
-            TypeWrapper underlying = new TypeWrapper(typeof(FakeBOWProps));
-            var genericReturnType = underlying.MakeGenericBusinessObjectCollection();
-            FakePropertyInfo info = new FakePropertyInfo("fdafasd", genericReturnType.UnderlyingType);
-            PropertyWrapper propertyWrapper = new PropertyWrapper(info);
-            
-            //---------------Assert Precondition----------------
-            Assert.IsTrue(genericReturnType.IsGenericType);
-            //---------------Execute Test ----------------------
-            var isSingleRelationhip = propertyWrapper.IsSingleRelationhip;
-            //---------------Test Result -----------------------
-            Assert.IsFalse(isSingleRelationhip);
-        }
-
-        [Test]
-        public void Test_IsSingleRel_WhenIsStringShouldReturnFalse()
-        {
-            //---------------Set up test pack-------------------
-            FakePropertyInfo info = new FakePropertyInfo("fdafasd", typeof(string));
-            PropertyWrapper propertyWrapper = new PropertyWrapper(info);
-            
-            //---------------Assert Precondition----------------
-            //---------------Execute Test ----------------------
-            var isSingleRelationhip = propertyWrapper.IsSingleRelationhip;
-            //---------------Test Result -----------------------
-            Assert.IsFalse(isSingleRelationhip);
-        }
-        [Test]
-        public void Test_IsSingleRel_WhenIsBOShouldReturnTrue()
-        {
-            //---------------Set up test pack-------------------
-            FakePropertyInfo info = new FakePropertyInfo("fdafasd", typeof(FakeBOWProps));
-            PropertyWrapper propertyWrapper = new PropertyWrapper(info);
-            
-            //---------------Assert Precondition----------------
-            //---------------Execute Test ----------------------
-            var isSingleRelationhip = propertyWrapper.IsSingleRelationhip;
-            //---------------Test Result -----------------------
-            Assert.IsTrue(isSingleRelationhip);
-        }
-
-        [Test]
-        public void Test_IsMultipleRel_WhenIsGenericShouldReturnTrue()
-        {
-            //---------------Set up test pack-------------------
-            TypeWrapper underlying = new TypeWrapper(typeof(FakeBOWProps));
-            var genericReturnType = underlying.MakeGenericBusinessObjectCollection();
-            FakePropertyInfo info = new FakePropertyInfo("fdafasd", genericReturnType.UnderlyingType);
-            PropertyWrapper propertyWrapper = new PropertyWrapper(info);
-
-            //---------------Assert Precondition----------------
-            Assert.IsTrue(genericReturnType.IsGenericType);
-            //---------------Execute Test ----------------------
-            var isMultipleRel = propertyWrapper.IsMultipleRelationship;
-            //---------------Test Result -----------------------
-            Assert.IsTrue(isMultipleRel);
-        }
-
-        [Test]
-        public void Test_IsMultipleRel_WhenIsStringShouldReturnFalse()
-        {
-            //---------------Set up test pack-------------------
-            FakePropertyInfo info = new FakePropertyInfo("fdafasd", typeof(string));
-            PropertyWrapper propertyWrapper = new PropertyWrapper(info);
-
-            //---------------Assert Precondition----------------
-            //---------------Execute Test ----------------------
-            var isMultipleRel = propertyWrapper.IsMultipleRelationship;
-            //---------------Test Result -----------------------
-            Assert.IsFalse(isMultipleRel);
-        }
-        [Test]
-        public void Test_IsMultipleRel_WhenIsBOShouldReturnFalse()
-        {
-            //---------------Set up test pack-------------------
-            FakePropertyInfo info = new FakePropertyInfo("fdafasd", typeof(FakeBOWProps));
-            PropertyWrapper propertyWrapper = new PropertyWrapper(info);
-
-            //---------------Assert Precondition----------------
-            //---------------Execute Test ----------------------
-            var isMultipleRel = propertyWrapper.IsMultipleRelationship;
-            //---------------Test Result -----------------------
-            Assert.IsFalse(isMultipleRel);
-        }
-
-        [Test]
-        public void Test_IsRel_WhenIsGenericShouldReturnTrue()
-        {
-            //---------------Set up test pack-------------------
-            TypeWrapper underlying = new TypeWrapper(typeof(FakeBOWProps));
-            var genericReturnType = underlying.MakeGenericBusinessObjectCollection();
-            FakePropertyInfo info = new FakePropertyInfo("fdafasd", genericReturnType.UnderlyingType);
-            PropertyWrapper propertyWrapper = new PropertyWrapper(info);
-
-            //---------------Assert Precondition----------------
-            Assert.IsTrue(genericReturnType.IsGenericType);
-            //---------------Execute Test ----------------------
-            var isMultipleRel = propertyWrapper.IsRelationship;
-            //---------------Test Result -----------------------
-            Assert.IsTrue(isMultipleRel);
-        }
-
-        [Test]
-        public void Test_IsRel_WhenIsStringShouldReturnFalse()
-        {
-            //---------------Set up test pack-------------------
-            FakePropertyInfo info = new FakePropertyInfo("fdafasd", typeof(string));
-            PropertyWrapper propertyWrapper = new PropertyWrapper(info);
-
-            //---------------Assert Precondition----------------
-            //---------------Execute Test ----------------------
-            var isMultipleRel = propertyWrapper.IsRelationship;
-            //---------------Test Result -----------------------
-            Assert.IsFalse(isMultipleRel);
-        }
-        [Test]
-        public void Test_IsRel_WhenIsBOShouldReturnTrue()
-        {
-            //---------------Set up test pack-------------------
-            FakePropertyInfo info = new FakePropertyInfo("fdafasd", typeof(FakeBOWProps));
-            PropertyWrapper propertyWrapper = new PropertyWrapper(info);
-
-            //---------------Assert Precondition----------------
-            //---------------Execute Test ----------------------
-            var isMultipleRel = propertyWrapper.IsRelationship;
-            //---------------Test Result -----------------------
-            Assert.IsTrue(isMultipleRel);
-        }
 
         [Test]
         public void Test_HasIgnoreAttribute_WhenHas_ShouldReturnTrue()
@@ -702,25 +484,7 @@ namespace Habanero.Smooth.Test
             //---------------Test Result -----------------------
             Assert.IsFalse(hasSingleReverseRelationship);
         }
-        [Test]
-        public void Test_HasSingleReverseRelationship_WhenGetSingleReverseRelPropInfoIsNull_ShouldBeFalse()
-        {
-            //FakeBOWithSingleAttributeDeclaredRevRel has a relationship 'MySingleRelationship'
-            // that is mapped via an AutoMapOneToMany Attribute to 'FakeBOWithUndefinableSingleRel'
-            // AttributeRevRelName relationship. Because it is a single Relationship
-            // and is mapped via AutoMap Attribute as a ManyToOne this will always return
-            // that there are no single reverse relationships event though 'SingleRel' would 
-            // be found if it were not for the autoMapping Prop.
-            //---------------Set up test pack-------------------
-            PropertyInfo propInfo = new FakePropertyInfo();
-            //---------------Assert Precondition----------------
-            PropertyWrapper property = propInfo.ToPropertyWrapper();
-            Assert.IsNull(property.GetSingleReverseRelPropInfos());
-            //---------------Execute Test ----------------------
-            var hasSingleReverseRelationship = property.HasSingleReverseRelationship;
-            //---------------Test Result -----------------------
-            Assert.IsFalse(hasSingleReverseRelationship);
-        }
+ 
 
         [Test]
         public void Test_HasSingleReverseRelationship_WhenHasAndOwnerSingle_ShouldBeTrue()
@@ -1404,68 +1168,6 @@ namespace Habanero.Smooth.Test
 
 #region EqualityTests
 
-        [TestCase(1, false)]
-        [TestCase("fdafdfasdfa", false)]
-        [TestCase(typeof(string), false)]
-        [TestCase(null, false)]
-        [TestCase((Type)null, false)]
-        [TestCase((string)null, false)]
-        public void Test_Equals(object other, bool expectedResult)
-        {
-            //---------------Set up test pack-------------------
-            var propInfo = new FakePropertyInfo(typeof(FakeBOWProps));
-            PropertyWrapper propertyWrapper = new PropertyWrapper(propInfo);
-            //---------------Assert Precondition----------------
-
-            //---------------Execute Test ----------------------
-            var isEqual = propertyWrapper.Equals(other);
-            //---------------Test Result -----------------------
-            Assert.AreEqual(expectedResult, isEqual
-                    , string.Format("'{0}' Equals '{1}' should be '{2}'"
-                    , other, propertyWrapper, expectedResult));
-        }
-
-        [Test]
-        public void Test_Equals_WhenPropInfo_ShouldRetTrue()
-        {
-            //---------------Set up test pack-------------------
-            var propInfo = new FakePropertyInfo(typeof(FakeBOWProps));
-            PropertyWrapper propertyWrapper = new PropertyWrapper(propInfo);
-            //---------------Assert Precondition----------------
-
-            //---------------Execute Test ----------------------
-            var isEqual = propertyWrapper.Equals(propInfo);
-            //---------------Test Result -----------------------
-            Assert.IsTrue(isEqual);
-        }
-        [Test]
-        public void Test_Equals_WhenNotPropInfo_ShouldRetFalse()
-        {
-            //---------------Set up test pack-------------------
-            var propInfo = new FakePropertyInfo(typeof(FakeBOWProps));
-            var otherPropInfo = new FakePropertyInfo(typeof(FakeBOWProps));
-            PropertyWrapper propertyWrapper = new PropertyWrapper(propInfo);
-            //---------------Assert Precondition----------------
-
-            //---------------Execute Test ----------------------
-            var isEqual = propertyWrapper.Equals(otherPropInfo);
-            //---------------Test Result -----------------------
-            Assert.IsFalse(isEqual);
-        }
-        [Test]
-        public void Test_Equals_WhenNull_ShouldRetFalse()
-        {
-            //---------------Set up test pack-------------------
-            var propInfo = new FakePropertyInfo(typeof(FakeBOWProps));
-            PropertyInfo otherPropInfo = null;
-            PropertyWrapper propertyWrapper = new PropertyWrapper(propInfo);
-            //---------------Assert Precondition----------------
-
-            //---------------Execute Test ----------------------
-            var isEqual = propertyWrapper.Equals(otherPropInfo);
-            //---------------Test Result -----------------------
-            Assert.IsFalse(isEqual);
-        }
         [Test]
         public void Test_Equals_WhenName_ShouldRetTrue()
         {
@@ -1480,34 +1182,7 @@ namespace Habanero.Smooth.Test
             //---------------Test Result -----------------------
             Assert.IsTrue(isEqual);
         }
-        [Test]
-        public void Test_Equals__WhenRandomString_ShouldRetFalse()
-        {
-            //---------------Set up test pack-------------------
-            var propInfo = new FakePropertyInfo(typeof(FakeBOWProps));
-            PropertyWrapper propertyWrapper = new PropertyWrapper(propInfo);
-            //---------------Assert Precondition----------------
-
-            //---------------Execute Test ----------------------
-            var isEqual = propertyWrapper.Equals(GetRandomString());
-            //---------------Test Result -----------------------
-            Assert.IsFalse(isEqual);
-        }
-
-        [Test]
-        public void Test_Equals_WhenNullString_ShouldRetFalse()
-        {
-            //---------------Set up test pack-------------------
-            var propInfo = new FakePropertyInfo(typeof(FakeBOWProps));
-            string otherPropInfo = null;
-            PropertyWrapper propertyWrapper = new PropertyWrapper(propInfo);
-            //---------------Assert Precondition----------------
-
-            //---------------Execute Test ----------------------
-            var isEqual = propertyWrapper.Equals(otherPropInfo);
-            //---------------Test Result -----------------------
-            Assert.IsFalse(isEqual);
-        }
+       
         [Test]
         public void Test_Equals_WhenSelf_ShouldReturnTrue()
         {
@@ -1564,66 +1239,6 @@ namespace Habanero.Smooth.Test
             Assert.AreNotSame(propertyWrapper.PropertyInfo, otherPropertyWrapper.PropertyInfo);
             //---------------Execute Test ----------------------
             var isEqual = propertyWrapper.Equals(otherPropertyWrapper);
-            //---------------Test Result -----------------------
-            Assert.IsFalse(isEqual);
-        }
-
-
-
-        [Test]
-        public void Test_EqualEquals_WhenPropInfo_ShouldRetTrue()
-        {
-            //---------------Set up test pack-------------------
-            var propInfo = new FakePropertyInfo(typeof(FakeBOWProps));
-            PropertyWrapper propertyWrapper = new PropertyWrapper(propInfo);
-            //---------------Assert Precondition----------------
-
-            //---------------Execute Test ----------------------
-            var isEqual = propertyWrapper == propInfo;
-            //---------------Test Result -----------------------
-            Assert.IsTrue(isEqual);
-        }
-        [Test]
-        public void Test_EqualEquals_WhenNotPropInfo_ShouldRetFalse()
-        {
-            //---------------Set up test pack-------------------
-            var propInfo = new FakePropertyInfo(typeof(FakeBOWProps));
-            var otherPropInfo = new FakePropertyInfo(typeof(FakeBOWProps));
-            PropertyWrapper propertyWrapper = new PropertyWrapper(propInfo);
-            //---------------Assert Precondition----------------
-
-            //---------------Execute Test ----------------------
-            var isEqual = propertyWrapper == otherPropInfo;
-            //---------------Test Result -----------------------
-            Assert.IsFalse(isEqual);
-        }
-       
-        [Test]
-        public void Test_EqualEquals_WhenNull_ShouldRetFalse()
-        {
-            //---------------Set up test pack-------------------
-            var propInfo = new FakePropertyInfo(typeof(FakeBOWProps));
-            PropertyInfo otherPropInfo = null;
-            PropertyWrapper propertyWrapper = new PropertyWrapper(propInfo);
-            //---------------Assert Precondition----------------
-
-            //---------------Execute Test ----------------------
-            var isEqual = propertyWrapper == otherPropInfo;
-            //---------------Test Result -----------------------
-            Assert.IsFalse(isEqual);
-        }
-      
-        [Test]
-        public void Test_EqualEqualsOtherProp_WhenNull_ShouldRetFalse()
-        {
-            //---------------Set up test pack-------------------
-            var propInfo = new FakePropertyInfo(typeof(FakeBOWProps));
-            PropertyInfo otherPropInfo = null;
-            PropertyWrapper propertyWrapper = new PropertyWrapper(propInfo);
-            //---------------Assert Precondition----------------
-
-            //---------------Execute Test ----------------------
-            var isEqual = otherPropInfo == propertyWrapper;
             //---------------Test Result -----------------------
             Assert.IsFalse(isEqual);
         }
@@ -1776,21 +1391,6 @@ namespace Habanero.Smooth.Test
         }
 
         [Test]
-        public void Test_GetHashCode_ShouldReturnCalculatedCode()
-        {
-            //---------------Set up test pack-------------------
-            var propInfo = new FakePropertyInfo(GetRandomString(), typeof(FakeBOWProps));
-            var expectedHashCode = propInfo.GetHashCode() * 397 ^ propInfo.Name.GetHashCode();
-            PropertyWrapper propertyWrapper = new PropertyWrapper(propInfo);
-            //---------------Assert Precondition----------------
-
-            //---------------Execute Test ----------------------
-            var hashCode = propertyWrapper.GetHashCode();
-            //---------------Test Result -----------------------
-            Assert.AreEqual(expectedHashCode, hashCode);
-        }
-
-        [Test]
         public void Test_IsInheritedProp_WhenInheritedProp_ShouldReturnTrue()
         {
             //---------------Set up test pack-------------------
@@ -1832,23 +1432,6 @@ namespace Habanero.Smooth.Test
             var isInherited = propertyWrapper.IsInherited;
             //---------------Test Result -----------------------
             Assert.IsFalse(isInherited);
-        }
-
-        [Test]
-        public void Test_ReflectedType_ShouldReturnUnderlyingTypesReflectedType()
-        {
-            //---------------Set up test pack-------------------
-            PropertyInfo propertyInfo = MockRepository.GenerateMock<FakePropertyInfo>();
-            var expectedReflectedType = MockRepository.GenerateMock<Type>();
-            propertyInfo.Stub(info => info.ReflectedType).Return(expectedReflectedType);
-
-            var propertyWrapper = propertyInfo.ToPropertyWrapper();
-            //---------------Assert Precondition----------------
-            Assert.IsNotNull(propertyInfo.ReflectedType);
-            //---------------Execute Test ----------------------
-            var reflectedType = propertyWrapper.ReflectedType;
-            //---------------Test Result -----------------------
-            Assert.AreSame(expectedReflectedType, reflectedType.UnderlyingType);
         }
 
         private static string GetRandomString()

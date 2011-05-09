@@ -24,6 +24,7 @@ namespace TestProject.Test.BO
     [TestFixture]
     public partial class TestVehicle
     {
+// ReSharper disable InconsistentNaming
         private readonly Dictionary<string, string> _ignoreList = new Dictionary<string, string>();
 
         /// <summary>
@@ -37,12 +38,6 @@ namespace TestProject.Test.BO
         /// </summary>
         private void CheckIfTestShouldBeIgnored()
         {
-            string methodName = new StackTrace().GetFrame(1).GetMethod().Name;
-            if (_ignoreList.ContainsKey(methodName))
-            {
-                Assert.Ignore("The developer has chosen to ignore this test: " + methodName +
-                    ", Reason: " + _ignoreList[methodName]);
-            }
         }
         
         [Test]  // Ensures that the defaults have not been tampered

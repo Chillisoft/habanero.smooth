@@ -7,10 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Habanero.Smooth.Test", "Hab
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FakeBosInSeperateAssembly", "FakeBosInSeperateAssembly\FakeBosInSeperateAssembly.csproj", "{6F817092-27AD-45F0-973B-51200707FC71}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Habanero.Naked", "Habanero.Naked\Habanero.Naked.csproj", "{FBEFA412-483F-4E80-8352-47D20D800623}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Habanero.Naked.Tests", "Habanero.Naked.Tests\Habanero.Naked.Tests.csproj", "{D01E0B1F-DBEB-4271-A464-D64A5D5C497F}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProject.Test.BO", "TestProjectAllProperties\TestProject.Test.BO\TestProject.Test.BO.csproj", "{2815411B-1A87-436B-B3A7-76CB1C3E380F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProject.BO", "TestProjectAllProperties\TestProject.BO\TestProject.BO.csproj", "{1516550B-C387-4440-938D-F3BE4A563338}"
@@ -37,14 +33,6 @@ Global
 		{6F817092-27AD-45F0-973B-51200707FC71}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6F817092-27AD-45F0-973B-51200707FC71}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6F817092-27AD-45F0-973B-51200707FC71}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FBEFA412-483F-4E80-8352-47D20D800623}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FBEFA412-483F-4E80-8352-47D20D800623}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FBEFA412-483F-4E80-8352-47D20D800623}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FBEFA412-483F-4E80-8352-47D20D800623}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D01E0B1F-DBEB-4271-A464-D64A5D5C497F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D01E0B1F-DBEB-4271-A464-D64A5D5C497F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D01E0B1F-DBEB-4271-A464-D64A5D5C497F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D01E0B1F-DBEB-4271-A464-D64A5D5C497F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2815411B-1A87-436B-B3A7-76CB1C3E380F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2815411B-1A87-436B-B3A7-76CB1C3E380F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2815411B-1A87-436B-B3A7-76CB1C3E380F}.Release|Any CPU.ActiveCfg = Release|Any CPU

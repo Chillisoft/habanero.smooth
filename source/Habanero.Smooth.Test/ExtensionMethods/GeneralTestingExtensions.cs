@@ -268,10 +268,10 @@ namespace Habanero.Smooth.Test
         {
             actual.FirstOrDefault(expected).ShouldNotEqual(default(T), message);
         }
-/*        public static void ShouldContain<T>(this IEnumerable<T> actual, Func<T, bool> expected)
+        public static void ShouldContain<T>(this IEnumerable<T> actual, Func<T, bool> expected)
         {
             actual.FirstOrDefault(expected).ShouldNotEqual(default(T), "Should contain item");
-        }*/
+        }
 /*        public static void ShouldContain<T>(this IEnumerable<T> actual, Expression<Func<T, bool>> expected)
         {
             var codeString = expected.GetCodeString();

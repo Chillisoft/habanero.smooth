@@ -24,6 +24,7 @@ using FakeBosInSeperateAssembly;
 using Habanero.Base;
 using Habanero.BO.ClassDefinition;
 using Habanero.Smooth.ReflectionWrappers;
+using Habanero.Smooth.Test.ValidFakeBOs;
 using NUnit.Framework;
 using Rhino.Mocks;
 
@@ -631,7 +632,8 @@ namespace Habanero.Smooth.Test
             //---------------Set up test pack-------------------
             Func<TypeWrapper, bool> whereClause = type
                     => (type.Namespace == "Habanero.Smooth.Test.ValidFakeBOs");
-            AppDomainTypeSource source = new AppDomainTypeSource(whereClause);
+            var types = new List<Type> { typeof(ValidFakeBOs.FakeBOSuperClass), typeof(ValidFakeBOs.FakeBOSubClass), typeof(ValidFakeBOs.FakeBOSubSubClass), typeof(ValidFakeBOs.FakeBoNoProps), typeof(ValidFakeBOs.FakeBOSubClassWithRelationship), typeof(FakeBOWithNoRelationship), typeof(FakeBOWithMultipleRel), typeof(FakeBOWithOneToOneRel), typeof(FakeBOWithCompulsoryProp), typeof(FakeBOWithDefaultProp), typeof(FakeBOWithAutoIncrementingProp), typeof(FakeBOWithReadWriteRuleProp), typeof(FakeMergeableParent), typeof(FakeMergeableChild), typeof(FakeBOWithWithOneToOneAssociationRel), typeof(AFakeBO2WithOneToOneAssociationRel) };
+            CustomTypeSource source = new CustomTypeSource(types);
             AllClassesAutoMapper allClassesAutoMapper = new AllClassesAutoMapper(source);
             ClassDefCol classDefCol = allClassesAutoMapper.Map();
             ClassDefValidator validator = new ClassDefValidator(new DefClassFactory());

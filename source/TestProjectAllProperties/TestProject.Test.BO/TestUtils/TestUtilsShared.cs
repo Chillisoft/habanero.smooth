@@ -97,14 +97,14 @@ namespace TestProject.Test.BO
             lookupList.Values.CopyTo(values, 0);
             return values[TestUtilsShared.GetRandomInt(0, values.Length - 1)];
         }
-
+/*
         public static TEnum GetRandomEnum<TEnum>()
             where TEnum : struct
         {
             return GetRandomEnum<TEnum>(null);
-        }
+        }*/
 
-        public static TEnum GetRandomEnum<TEnum>(TEnum? excluded)
+/*        public static TEnum GetRandomEnum<TEnum>(TEnum? excluded)
             where TEnum : struct
         {
             Array values = Enum.GetValues(typeof(TEnum));
@@ -115,7 +115,7 @@ namespace TestProject.Test.BO
                 return GetRandomEnum(excluded);
             }
             return value;
-        }
+        }*/
         
         /// <summary>
         /// Waits for the garbage collector to clear dereferenced objects in order
