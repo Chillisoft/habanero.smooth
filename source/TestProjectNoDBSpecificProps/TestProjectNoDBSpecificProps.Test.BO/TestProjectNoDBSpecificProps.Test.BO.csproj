@@ -102,6 +102,10 @@
       <Project>{6750B8F7-AA4B-4E74-AF0F-9AF9BE05FEDC}</Project>
       <Name>Habanero.Smooth</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TestProjectNoDBSpecificProps.BO\TestProjectNoDBSpecificProps.BO.csproj">
+      <Project>{5C59BC0A-98C4-4F48-8D27-B16B5B1ECE74}</Project>
+      <Name>TestProjectNoDBSpecificProps.BO</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
