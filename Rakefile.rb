@@ -20,18 +20,18 @@ require 'rake-settings.rb'
 msbuild_settings = {
   :properties => {:configuration => :release},
   :targets => [:clean, :rebuild],
-  :verbosity => :quiet,
-  #:use => :net35  ;uncomment to use .net 3.5 - default is 4.0
+  :verbosity => :quiet
+  
 }
 
 #------------------------dependency settings---------------------
-$habanero_version = 'trunk'
+$habanero_version = 'branches/v2.6-DotNet2CompactFramework'
 require 'rake-habanero.rb'
 
 
 #------------------------project settings------------------------
-$basepath = 'http://delicious:8080/svn/habanero/HabaneroCommunity/SmoothHabanero/trunk'
-$solution = 'source/SmoothHabanero_2010.sln'
+$basepath = 'http://delicious:8080/svn/habanero/HabaneroCommunity/SmoothHabanero/branches/v1.5_CF_Stargate'
+$solution = 'source/SmoothHabanero_2008.sln'
 
 #______________________________________________________________________________
 #---------------------------------TASKS----------------------------------------
@@ -39,11 +39,14 @@ $solution = 'source/SmoothHabanero_2010.sln'
 desc "Runs the build all task"
 task :default => [:build_all]
 
+# desc "builds only, no building of habanero"
+# task :build_smooth_only => [:create_temp, :build, :delete_temp]
+
 desc "Rakes habanero, builds Smooth"
 task :build_all => [:create_temp, :rake_habanero, :build, :delete_temp]
 
 desc "Builds Smooth, including tests"
-task :build => [:clean, :updatelib, :build_FakeBOs, :msbuild, :test, :commitlib]
+task :build => [:clean, :updatelib, :build_FakeBOs, :msbuild, :test]
 
 desc "builds the FakeBOs dll and copies to the lib folder"
 task :build_FakeBOs => [:msbuild_FakeBOsInSeperateAssembly,:copy_dll_to_smooth_lib] 
@@ -102,10 +105,5 @@ end
 desc "Runs the tests"
 nunit :test do |nunit|
 	puts cyan("Running tests")
-	nunit.assemblies 'bin\Habanero.Smooth.Test.dll','bin\Habanero.Naked.Tests.dll', 'bin\Habanero.Fluent.Tests.dll' ,'bin\TestProject.Test.BO.dll','bin\TestProjectNoDBSpecificProps.Test.BO.dll' 
-end
-
-svn :commitlib do |s|
-	puts cyan("Commiting lib")
-	s.parameters "ci lib -m autocheckin"
+	nunit.assemblies 'bin\Habanero.Smooth.Test.dll','bin\TestProject.Test.BO.dll','bin\TestProjectNoDBSpecificProps.Test.BO.dll' 
 end
