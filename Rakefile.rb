@@ -31,7 +31,7 @@ require 'rake-habanero.rb'
 
 #------------------------project settings------------------------
 $basepath = 'http://delicious:8080/svn/habanero/HabaneroCommunity/SmoothHabanero/branches/v1.5_CF_Stargate'
-$solution = 'source/SmoothHabanero_2008_Cf_WithoutSampelProjects.sln'
+$solution = 'source/SmoothHabanero_2008_CF.sln'
 
 #______________________________________________________________________________
 #---------------------------------TASKS----------------------------------------
