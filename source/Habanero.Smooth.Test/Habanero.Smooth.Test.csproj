@@ -44,6 +44,10 @@
     <GenerateSerializationAssemblies>off</GenerateSerializationAssemblies>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FakeBosInSeperateAssembly, Version=9.9.9.991, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\FakeBosInSeperateAssembly.dll</HintPath>
+    </Reference>
     <Reference Include="Habanero.Base">
       <HintPath>..\..\lib\Habanero.Base.dll</HintPath>
     </Reference>
@@ -60,44 +64,13 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Program Files (x86)\Microsoft.NET\SDK\CompactFramework\v3.5\WindowsCE\mscorlib.dll</HintPath>
     </Reference>
-    <Reference Include="System, Version=3.5.0.0, Culture=neutral, PublicKeyToken=969db8053d3322ac, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files (x86)\Microsoft.NET\SDK\CompactFramework\v3.5\WindowsCE\System.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="System.Core, Version=3.5.0.0, Culture=neutral, PublicKeyToken=969db8053d3322ac, processorArchitecture=MSIL">
-      <SpecificVersion>True</SpecificVersion>
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>c:\Program Files (x86)\Microsoft.NET\SDK\CompactFramework\v3.5\WindowsCE\System.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Data, Version=3.5.0.0, Culture=neutral, PublicKeyToken=969db8053d3322ac, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files (x86)\Microsoft.NET\SDK\CompactFramework\v3.5\WindowsCE\System.Data.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="System.Data.DataSetExtensions, Version=3.5.0.0, Culture=neutral, PublicKeyToken=969db8053d3322ac, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files (x86)\Microsoft.NET\SDK\CompactFramework\v3.5\WindowsCE\System.Data.DataSetExtensions.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="System.Drawing, Version=3.5.0.0, Culture=neutral, PublicKeyToken=969db8053d3322ac, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files (x86)\Microsoft.NET\SDK\CompactFramework\v3.5\WindowsCE\System.Drawing.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="System.Windows.Forms, Version=3.5.0.0, Culture=neutral, PublicKeyToken=969db8053d3322ac, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files (x86)\Microsoft.NET\SDK\CompactFramework\v3.5\WindowsCE\System.Windows.Forms.dll</HintPath>
-      <Private>False</Private>
     </Reference>
     <Reference Include="System.Xml, Version=3.5.0.0, Culture=neutral, PublicKeyToken=969db8053d3322ac, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files (x86)\Microsoft.NET\SDK\CompactFramework\v3.5\WindowsCE\System.Xml.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="System.Xml.Linq, Version=3.5.0.0, Culture=neutral, PublicKeyToken=969db8053d3322ac, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files (x86)\Microsoft.NET\SDK\CompactFramework\v3.5\WindowsCE\System.Xml.Linq.dll</HintPath>
-      <Private>False</Private>
+      <HintPath>c:\Program Files (x86)\Microsoft.NET\SDK\CompactFramework\v3.5\WindowsCE\System.Xml.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -138,10 +111,6 @@
     <Compile Include="TestUniqueConstraintAutoMapper.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\FakeBosInSeperateAssembly\FakeBosInSeperateAssembly.csproj">
-      <Project>{6F817092-27AD-45F0-973B-51200707FC71}</Project>
-      <Name>FakeBosInSeperateAssembly</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Habanero.Smooth\Habanero.Smooth.csproj">
       <Project>{6750B8F7-AA4B-4E74-AF0F-9AF9BE05FEDC}</Project>
       <Name>Habanero.Smooth</Name>

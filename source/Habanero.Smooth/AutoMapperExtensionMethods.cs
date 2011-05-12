@@ -18,7 +18,6 @@
 // ---------------------------------------------------------------------------------
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 using Habanero.Smooth.ReflectionWrappers;
 using Habanero.Base;
