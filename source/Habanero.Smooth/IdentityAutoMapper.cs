@@ -36,6 +36,9 @@ namespace Habanero.Smooth
             return autoMapper.MapIdentity();
         }
     }
+    /// <summary>
+    /// Maps the Identity 
+    /// </summary>
     public class IdentityAutoMapper
     {
         private TypeWrapper _classType;

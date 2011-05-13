@@ -34,6 +34,7 @@ namespace Habanero.Smooth.Test
     [TestFixture]
     public class TestIdentityAutoMapper
     {
+// ReSharper disable InconsistentNaming
         [SetUp]
         public void Setup()
         {

@@ -7,8 +7,16 @@ using Habanero.Smooth.ReflectionWrappers;
 
 namespace Habanero.Smooth
 {
+    ///<summary>
+    /// Extension methods to make the syntax of Automapping unique costraints easier
+    ///</summary>
     public static class UniqueConstraintAutoMapperExtensions
     {
+        /// <summary>
+        /// Automaps all the unique constrainst for the ClassType defined by the <paramref name="classDef"/> using reflection
+        /// </summary>
+        /// <param name="classDef"></param>
+        /// <returns></returns>
         public static IList<IKeyDef> MapUniqueConstraints(this IClassDef classDef)
         {
             if (classDef == null) return new List<IKeyDef>();
@@ -17,7 +25,10 @@ namespace Habanero.Smooth
             return autoMapper.MapUniqueConstraints();
         }
     }
-
+    /// <summary>
+    /// Automatically maps all unique constraints defined on a class using a the appropriate attributes
+    /// (e.g. <see cref="AutoMapUniqueConstraintAttribute"/>) via reflection.
+    /// </summary>
     public class UniqueConstraintAutoMapper
     {
         private IClassDef ClassDef { get; set; }
@@ -29,11 +40,14 @@ namespace Habanero.Smooth
             ClassDef = classDef;
             _classType = this.ClassDef.ClassType.ToTypeWrapper();
         }
-
+        /// <summary>
+        /// Maps all the Unique Constraints for the Class.
+        /// </summary>
+        /// <returns></returns>
         public IList<IKeyDef> MapUniqueConstraints()
         {
             var ucNames = from propWrapper in _classType.GetProperties()
-                          where propWrapper.HasUniqueConstraintAttribute
+                          where propWrapper.HasUniqueConstraintAttribute && !propWrapper.IsInherited
                           select propWrapper.GetAttribute<AutoMapUniqueConstraintAttribute>().UniqueConstraintName;
 
             //var keyDefsLinq = from propWrapper in _classType.GetProperties()
@@ -59,6 +73,17 @@ namespace Habanero.Smooth
                                 });
 
             return keyDefs;
+        }
+
+
+        private static IPrimaryKeyDef GetPrimaryKeyDef(IClassDef classDef)
+        {
+            var primaryKeyDef = classDef.PrimaryKeyDef;
+            if (primaryKeyDef == null && classDef.SuperClassDef != null)
+            {
+                primaryKeyDef = GetPrimaryKeyDef(classDef.SuperClassDef.SuperClassClassDef);
+            }
+            return primaryKeyDef;
         }
     }
 }

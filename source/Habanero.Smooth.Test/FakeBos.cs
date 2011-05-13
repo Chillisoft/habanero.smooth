@@ -122,7 +122,7 @@ namespace Habanero.Smooth.Test
 		public int PublicIntProp { get; private set; }
 		public FakeEnum PublicEnumProp { get; set; }
 		public FakeEnum? PublicNullableEnumProp { get; set; }
-        public System.Drawing.Image PublicImageProp { get; set; }
+		public System.Drawing.Image PublicImageProp { get; set; }
 
 		[FakeAttribute]
 		public float? PublicPropWithAtt { get; set; }
@@ -510,8 +510,8 @@ namespace Habanero.Smooth.Test
 
 	public class FakeBOWithMultipleRelWithProp : BusinessObject
 	{
-        public Guid? FakeBOWithMultipleRelationshipID { get; set; }
-        public BusinessObjectCollection<FakeBOWithSingleRelAndFKProp> MyMultipleRel { get; set; }
+		public Guid? FakeBOWithMultipleRelationshipID { get; set; }
+		public BusinessObjectCollection<FakeBOWithSingleRelAndFKProp> MyMultipleRel { get; set; }
 	}
 
 	public class FakeBOWithOneToOneRel : BusinessObject
@@ -524,14 +524,14 @@ namespace Habanero.Smooth.Test
 	{
 	}
 
-    public class FakeBoNoPropsOfT : BusinessObject<FakeBoNoPropsOfT>
-    {
-    }
+	public class FakeBoNoPropsOfT : BusinessObject<FakeBoNoPropsOfT>
+	{
+	}
 
-    public interface IFakeBO : IBusinessObject
-    {
-        string FakeBOSuperClassWithDescType { get; set; }
-    }
+	public interface IFakeBO : IBusinessObject
+	{
+		string FakeBOSuperClassWithDescType { get; set; }
+	}
 	public class FakeBOSubClass : FakeBOSuperClass
 	{
 	}
@@ -573,16 +573,16 @@ namespace Habanero.Smooth.Test
 	{
 	}
 
-    public class FakeBOSubClassWithSuperHasUC : FakeBOSuperClassWithUC
-    {
-        
-    }
+	public class FakeBOSubClassWithSuperHasUC : FakeBOSuperClassWithUC
+	{
+		
+	}
 
-    public class FakeBOSuperClassWithUC : BusinessObject
-    {
-        [AutoMapUniqueConstraint("UC_Fake")]
-        public string FakeUCProp { get; set; }
-    }
+	public class FakeBOSuperClassWithUC : BusinessObject
+	{
+		[AutoMapUniqueConstraint("UC_Fake")]
+		public string FakeUCProp { get; set; }
+	}
 
 	public class FakeBOSubClassWithRelationships : FakeBOSuperClass
 	{

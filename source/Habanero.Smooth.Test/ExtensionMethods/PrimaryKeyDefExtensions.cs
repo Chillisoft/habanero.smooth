@@ -43,6 +43,11 @@ namespace Habanero.Smooth.Test.ExtensionMethods
             var propertyInfo = cDef.ClassType.GetPropertyWrapper(propName);
             return propertyInfo.HasAttribute<AutoMapPrimaryKeyAttribute>();
         }
+        public static bool HasUniqueConstraintAttribute(this IClassDef cDef, string propName)
+        {
+            var propertyInfo = cDef.ClassType.GetPropertyWrapper(propName);
+            return propertyInfo.HasAttribute<AutoMapUniqueConstraintAttribute>();
+        }
         public static bool HasPrimaryKeyAttribute(this Type classType, string propName)
         {
             var propertyInfo = classType.GetPropertyWrapper(propName);

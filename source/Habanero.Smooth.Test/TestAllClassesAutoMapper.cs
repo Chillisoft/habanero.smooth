@@ -605,7 +605,7 @@ namespace Habanero.Smooth.Test
         public void Test_Map_WhenSubClassHasSuperClassWithUniqueConstraint_ShouldNotCreateDuplicate()
         {
             //---------------Set up test pack-------------------
-            var superClass = typeof(FakeBOSubClassWithSuperHasUC);
+            var superClass = typeof(FakeBOSuperClassWithUC);
             var subClass = typeof(FakeBOSubClassWithSuperHasUC);
             var source = new FakeTypeSource(
                 new[] { superClass, subClass });
@@ -624,7 +624,6 @@ namespace Habanero.Smooth.Test
             Assert.AreEqual(0, subClassDef.KeysCol.Count);
             Assert.AreEqual(1, superClassClassDef.KeysCol.Count);
             Assert.AreEqual("UC_Fake", superClassClassDef.KeysCol["UC_Fake"].KeyName);
-            //Assert.Fail("Test Not Yet Implemented");
         }
 
         [Test]
