@@ -602,6 +602,32 @@ namespace Habanero.Smooth.Test
         }
 
         [Test]
+        public void Test_Map_WhenSubClassHasSuperClassWithUniqueConstraint_ShouldNotCreateDuplicate()
+        {
+            //---------------Set up test pack-------------------
+            var superClass = typeof(FakeBOSubClassWithSuperHasUC);
+            var subClass = typeof(FakeBOSubClassWithSuperHasUC);
+            var source = new FakeTypeSource(
+                new[] { superClass, subClass });
+            //---------------Assert Precondition----------------
+            Assert.AreEqual(2, source.GetTypes().Count());
+            //---------------Execute Test ----------------------
+            AllClassesAutoMapper allClassesAutoMapper = new AllClassesAutoMapper(source);
+            ClassDefCol classDefCol = allClassesAutoMapper.Map();
+
+            //---------------Test Result -----------------------
+            IClassDef subClassDef = classDefCol.First(def => def.ClassName == "FakeBOSubClassWithSuperHasUC");
+            ISuperClassDef inheritanceDef = subClassDef.SuperClassDef;
+            var superClassClassDef = inheritanceDef.SuperClassClassDef;
+
+
+            Assert.AreEqual(0, subClassDef.KeysCol.Count);
+            Assert.AreEqual(1, superClassClassDef.KeysCol.Count);
+            Assert.AreEqual("UC_Fake", superClassClassDef.KeysCol["UC_Fake"].KeyName);
+            //Assert.Fail("Test Not Yet Implemented");
+        }
+
+        [Test]
         public void Test_IdentityNameConvention_ShouldBeDefaultIfNotSet()
         {
             //---------------Set up test pack-------------------

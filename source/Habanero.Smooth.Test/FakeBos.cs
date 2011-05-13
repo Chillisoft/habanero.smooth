@@ -573,7 +573,16 @@ namespace Habanero.Smooth.Test
 	{
 	}
 
-	
+    public class FakeBOSubClassWithSuperHasUC : FakeBOSuperClassWithUC
+    {
+        
+    }
+
+    public class FakeBOSuperClassWithUC : BusinessObject
+    {
+        [AutoMapUniqueConstraint("UC_Fake")]
+        public string FakeUCProp { get; set; }
+    }
 
 	public class FakeBOSubClassWithRelationships : FakeBOSuperClass
 	{

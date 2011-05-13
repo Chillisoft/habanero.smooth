@@ -133,6 +133,7 @@ namespace Habanero.Smooth
                     ClassDefCol.Remove(superClassType);
                     ClassDefCol.Add(superClassClassDef);
                 }
+
             }
             ClassDefCol.Add(classDef);
         }
