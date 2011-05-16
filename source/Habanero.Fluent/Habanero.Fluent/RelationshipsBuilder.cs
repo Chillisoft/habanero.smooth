@@ -21,7 +21,7 @@ namespace Habanero.Fluent
             _multipleRelationshipDefBuilders = multipleRelationshipDefBuilders;
         }
 
-        public SingleRelKeyDefBuilder<T, TRelatedType> WithNewSingleRelationship<TRelatedType>(string relationshipName) where TRelatedType : BusinessObject
+        public SingleRelKeyDefBuilder<T, TRelatedType> WithSingleRelationship<TRelatedType>(string relationshipName) where TRelatedType : BusinessObject
         {
             SingleRelationshipDefBuilder<T, TRelatedType> singleRelationshipDefBuilder = new SingleRelationshipDefBuilder<T, TRelatedType>(this, relationshipName);
             _singleRelationshipDefBuilders.Add(singleRelationshipDefBuilder);
@@ -30,7 +30,7 @@ namespace Habanero.Fluent
             return relKeyDefBuilder;
         }
 
-        public SingleRelKeyDefBuilder<T, TRelatedType> WithNewSingleRelationship<TRelatedType>(Expression<Func<T, TRelatedType>> relationshipExpression) where TRelatedType : BusinessObject
+        public SingleRelKeyDefBuilder<T, TRelatedType> WithSingleRelationship<TRelatedType>(Expression<Func<T, TRelatedType>> relationshipExpression) where TRelatedType : BusinessObject
         {
             SingleRelationshipDefBuilder<T, TRelatedType> singleRelationshipDefBuilder = new SingleRelationshipDefBuilder<T, TRelatedType>(this, relationshipExpression);
             _singleRelationshipDefBuilders.Add(singleRelationshipDefBuilder);
@@ -39,7 +39,7 @@ namespace Habanero.Fluent
             return relKeyDefBuilder;
         }
 
-        public MultipleRelKeyDefBuilder<T, TRelatedType> WithNewMultipleRelationship<TRelatedType>(string relationshipName) where TRelatedType : BusinessObject
+        public MultipleRelKeyDefBuilder<T, TRelatedType> WithMultipleRelationship<TRelatedType>(string relationshipName) where TRelatedType : BusinessObject
         {
             MultipleRelationshipDefBuilder<T, TRelatedType> multipleRelationshipDefBuilder = new MultipleRelationshipDefBuilder<T, TRelatedType>(this);
             multipleRelationshipDefBuilder.WithRelationshipName(relationshipName);
@@ -51,7 +51,7 @@ namespace Habanero.Fluent
         }
 
 
-        public MultipleRelKeyDefBuilder<T, TBusinessObject> WithNewMultipleRelationship<TBusinessObject>(Expression<Func<T, BusinessObjectCollection<TBusinessObject>>> relationshipExpression)
+        public MultipleRelKeyDefBuilder<T, TBusinessObject> WithMultipleRelationship<TBusinessObject>(Expression<Func<T, BusinessObjectCollection<TBusinessObject>>> relationshipExpression)
             where TBusinessObject : class, IBusinessObject, new()
         {
             string relationshipName = GetPropertyName(relationshipExpression);

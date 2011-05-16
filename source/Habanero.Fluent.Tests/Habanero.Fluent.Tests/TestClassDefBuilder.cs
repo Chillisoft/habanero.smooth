@@ -13,7 +13,6 @@ namespace Habanero.Fluent.Tests
     public class TestClassDefBuilder
     {
 
-
         [Test]
         public void Test_WithRelDef_WithSingleRelKey_ShouldBuildOneRelProp()
         {
@@ -28,7 +27,7 @@ namespace Habanero.Fluent.Tests
                                     .Property(c=>c.Make).EndProperty()
                                 .EndProperties()
                                 .WithRelationships()
-                                    .WithNewSingleRelationship(car => car.SteeringWheel)
+                                    .WithSingleRelationship(car => car.SteeringWheel)
                                        .WithRelProp(GetRandomString(), GetRandomString())
                                     .EndSingleRelationship()
                                 .EndRelationships()
@@ -58,7 +57,7 @@ namespace Habanero.Fluent.Tests
                                     .Property(c => c.Make).EndProperty()
                                 .EndProperties()
                                 .WithRelationships()
-                                    .WithNewSingleRelationship(car => car.SteeringWheel)
+                                    .WithSingleRelationship(car => car.SteeringWheel)
                                         .WithRelProp(GetRandomString(), GetRandomString())
                                     .EndSingleRelationship()
                                 .EndRelationships()
@@ -87,7 +86,7 @@ namespace Habanero.Fluent.Tests
                                     .Property(c => c.Make).EndProperty()
                                 .EndProperties()
                                 .WithRelationships()
-                                    .WithNewSingleRelationship(car => car.SteeringWheel)
+                                    .WithSingleRelationship(car => car.SteeringWheel)
                                         .WithCompositeRelationshipKey()
                                             .WithRelProp(GetRandomString(), GetRandomString())
                                             .WithRelProp(GetRandomString(), GetRandomString())
@@ -148,51 +147,51 @@ namespace Habanero.Fluent.Tests
             Assert.AreSame(typeof(string), propDef.PropertyType);
         }
 
-        //[Test]
-        //public void Test_CreateClassDef_WithProperty_WithIsCompulsory_ShouldSetAsCompulsory()
-        //{
-        //    //---------------Set up test pack-------------------
-        //    string propertyName1 = "A" + GetRandomString();
-        //    string propertyName2 = "B" + GetRandomString();
-        //    //---------------Assert Precondition----------------
+        [Test]
+        public void Test_CreateClassDef_WithProperty_WithIsCompulsory_ShouldSetAsCompulsory()
+        {
+            //---------------Set up test pack-------------------
+            string propertyName1 = "A" + GetRandomString();
+            string propertyName2 = "B" + GetRandomString();
+            //---------------Assert Precondition----------------
 
-        //    //---------------Execute Test ----------------------
-        //    var classDefBuilder = GetClassDefBuilderForTypeOf_Car();
-        //    var classDef = classDefBuilder
-        //                        .WithPrimaryKey(c=>c.VehicleID)
-        //                        .WithProperties()
-        //                            .Property<int>(propertyName1)
-        //                                .IsCompulsory()
-        //                            .EndProperty()
-        //                            .Property(propertyName2)
-        //                                .WithReadWriteRule(PropReadWriteRule.ReadWrite)
-        //                            .EndProperty()
-        //                        .EndProperties()
-        //        .Build();
-        //    //---------------Test Result -----------------------
-        //    Assert.AreEqual(3, classDef.PropDefcol.Count, "The primarykey prop will also automatically be built");//Should not Be Empty
-        //    var propDef = classDef.PropDefcol.FirstOrDefault();
-        //    Assert.IsTrue(propDef.Compulsory, "Should be compulsory");
-        //    Assert.AreSame(typeof(int), propDef.PropertyType);
-        //}
+            //---------------Execute Test ----------------------
+            var classDefBuilder = GetClassDefBuilderForTypeOf_Car();
+            var classDef = classDefBuilder
+                                .WithPrimaryKey(c => c.VehicleID)
+                                .WithProperties()
+                                    .Property<int>(propertyName1)
+                                        .IsCompulsory()
+                                    .EndProperty()
+                                    .Property(propertyName2)
+                                        .WithReadWriteRule(PropReadWriteRule.ReadWrite)
+                                    .EndProperty()
+                                .EndProperties()
+                .Build();
+            //---------------Test Result -----------------------
+            Assert.AreEqual(3, classDef.PropDefcol.Count, "The primarykey prop will also automatically be built");//Should not Be Empty
+            var propDef = classDef.PropDefcol.FirstOrDefault();
+            Assert.IsTrue(propDef.Compulsory, "Should be compulsory");
+            Assert.AreSame(typeof(int), propDef.PropertyType);
+        }
 
-        //[Test]
-        //public void Test_CreateClassDef_WithProperty_ShouldBeDefaultPropTypeString()
-        //{
+        [Test]
+        public void Test_CreateClassDef_WithProperty_ShouldBeDefaultPropTypeString()
+        {
 
-        //    //---------------Execute Test ----------------------
-        //    var classDefBuilder = GetClassDefBuilderForTypeOf_Car();
-        //    var classDef = classDefBuilder
-        //                        .WithPrimaryKey(c => c.VehicleID)
-        //                        .WithProperties()
-        //                            .Property(c => c.NoOfDoors).EndProperty()
-        //                        .EndProperties()
-        //        .Build();
-        //    //---------------Test Result -----------------------
-        //    Assert.AreEqual(2, classDef.PropDefcol.Count, "The primarykey prop will also automatically be built");//Should not Be Empty
-        //    var propDef = classDef.PropDefcol.FirstOrDefault();
-        //    Assert.AreSame(typeof(int), propDef.PropertyType);
-        //}
+            //---------------Execute Test ----------------------
+            var classDefBuilder = GetClassDefBuilderForTypeOf_Car();
+            var classDef = classDefBuilder
+                                .WithPrimaryKey(c => c.VehicleID)
+                                .WithProperties()
+                                    .Property(c => c.NoOfDoors).EndProperty()
+                                .EndProperties()
+                .Build();
+            //---------------Test Result -----------------------
+            Assert.AreEqual(2, classDef.PropDefcol.Count, "The primarykey prop will also automatically be built");//Should not Be Empty
+            var propDef = classDef.PropDefcol.FirstOrDefault();
+            Assert.AreSame(typeof(int), propDef.PropertyType);
+        }
 
 
         //[Ignore("Need to work out why propertyTypeNameAssembly is being returned as CommonLanguageRuntime")] //TODO Andrew Russell 03 Feb 2011: Ignored Test - Need to work out why propertyTypeNameAssembly is being returned as CommonLanguageRuntime
@@ -220,90 +219,99 @@ namespace Habanero.Fluent.Tests
         //    Assert.AreSame(typeof(Guid), propDef.PropertyType);
         //}
 
-        //[Test]
-        //public void Test_CreateClassDef_WithSingleRelationship_Lambda_ShouldBuildRelationships()
-        //{
-        //    //---------------Set up test pack-------------------
-        //    //---------------Assert Precondition----------------
+        [Test]
+        public void Test_CreateClassDef_WithSingleRelationship_Lambda_ShouldBuildRelationships()
+        {
+            //---------------Set up test pack-------------------
+            //---------------Assert Precondition----------------
 
-        //    //---------------Execute Test ----------------------
-        //    var classDefBuilder = GetClassDefBuilderForTypeOf_Car();
-        //    var classDef = classDefBuilder
-        //                    .WithPrimaryKey(c => c.VehicleID)
-        //                    .WithRelationships()
-        //                        .WithNewSingleRelationship(c => c.SteeringWheel)
-        //                            .WithRelProp("VehicleID", "CarID")
-        //                        .EndSingleRelationship()
-        //                    .EndRelationships()
-        //            .Build();
+            //---------------Execute Test ----------------------
+            var classDefBuilder = GetClassDefBuilderForTypeOf_Car();
+            var classDef = classDefBuilder
+                            .WithPrimaryKey(c => c.VehicleID)
+                            .WithProperties()
+                                .Property(car => car.Make).EndProperty()
+                            .EndProperties()
+                            .WithRelationships()
+                                .WithSingleRelationship(c => c.SteeringWheel)
+                                    .WithRelProp("VehicleID", "CarID")
+                                .EndSingleRelationship()
+                            .EndRelationships()
+                    .Build();
 
-        //    //---------------Test Result -----------------------
-        //    Assert.AreEqual(1, classDef.RelationshipDefCol.Count);
+            //---------------Test Result -----------------------
+            Assert.AreEqual(1, classDef.RelationshipDefCol.Count);
 
-        //    var relationshipDef1 = classDef.RelationshipDefCol["SteeringWheel"];
-        //    Assert.IsNotNull(relationshipDef1.RelationshipName);
-        //    Assert.AreEqual("SteeringWheel", relationshipDef1.RelatedObjectClassName);
-        //    Assert.AreEqual(RelationshipType.Association, relationshipDef1.RelationshipType);
-        //    //var relationshipDef2 = classDef.RelationshipDefCol["Drivers"];
-        //    //Assert.IsNotNull(relationshipDef2.RelationshipName);
-        //    //Assert.AreEqual("Driver", relationshipDef2.RelatedObjectClassName);
-        //}
+            var relationshipDef1 = classDef.RelationshipDefCol["SteeringWheel"];
+            Assert.IsNotNull(relationshipDef1.RelationshipName);
+            Assert.AreEqual("SteeringWheel", relationshipDef1.RelatedObjectClassName);
+            Assert.AreEqual(RelationshipType.Association, relationshipDef1.RelationshipType);
+            //var relationshipDef2 = classDef.RelationshipDefCol["Drivers"];
+            //Assert.IsNotNull(relationshipDef2.RelationshipName);
+            //Assert.AreEqual("Driver", relationshipDef2.RelatedObjectClassName);
+        }
 
-        //[Test]
-        //public void Test_CreateClassDef_WithMultipleRelationship_Lambda_ShouldBuildRelationships()
-        //{
-        //    //---------------Set up test pack-------------------
-        //    //---------------Assert Precondition----------------
+        [Test]
+        public void Test_CreateClassDef_WithMultipleRelationship_Lambda_ShouldBuildRelationships()
+        {
+            //---------------Set up test pack-------------------
+            //---------------Assert Precondition----------------
 
-        //    //---------------Execute Test ----------------------
-        //    var classDefBuilder = GetClassDefBuilderForTypeOf_Car();
-        //    var classDef = classDefBuilder
-        //                    .WithPrimaryKey(c => c.VehicleID)
-        //                    .WithRelationships()
-        //                        .WithNewMultipleRelationship(car => car.Drivers)
-        //                                .WithRelProp("VehicleID", "CarID")
-        //                        .EndMultipleRelationship()
-        //                    .EndRelationships()
-        //            .Build();
+            //---------------Execute Test ----------------------
+            var classDefBuilder = GetClassDefBuilderForTypeOf_Car();
+            var classDef = classDefBuilder
+                            .WithPrimaryKey(c => c.VehicleID)
+                            .WithProperties()
+                                .Property(car1 => car1.Make).EndProperty()
+                            .EndProperties()
+                            .WithRelationships()
+                                .WithMultipleRelationship(car => car.Drivers)
+                                        .WithRelProp("VehicleID", "CarID")
+                                .EndMultipleRelationship()
+                            .EndRelationships()
+                    .Build();
 
-        //    //---------------Test Result -----------------------
-        //    Assert.AreEqual(1, classDef.RelationshipDefCol.Count);
+            //---------------Test Result -----------------------
+            Assert.AreEqual(1, classDef.RelationshipDefCol.Count);
 
 
-        //    var relationshipDef1 = classDef.RelationshipDefCol["Drivers"];
-        //    Assert.IsNotNull(relationshipDef1.RelationshipName);
-        //    Assert.AreEqual("Driver", relationshipDef1.RelatedObjectClassName);
-        //    Assert.AreEqual(RelationshipType.Association, relationshipDef1.RelationshipType);
+            var relationshipDef1 = classDef.RelationshipDefCol["Drivers"];
+            Assert.IsNotNull(relationshipDef1.RelationshipName);
+            Assert.AreEqual("Driver", relationshipDef1.RelatedObjectClassName);
+            Assert.AreEqual(RelationshipType.Association, relationshipDef1.RelationshipType);
 
-        //}
+        }
 
-        //[Test]
-        //public void Test_Build_WhenCreatingSingleRelationship_ShouldSetRelationshipDefProps()
-        //{
-        //    //---------------Set up test pack-------------------
-        //    var classDef = new ClassDefBuilder<Car>()
-        //        .WithPrimaryKey(c => c.VehicleID)
-        //        .WithRelationships()
-        //            .WithNewSingleRelationship(c => c.SteeringWheel)
-        //                .WithRelProp("VehicleID", "CarID")
-        //            .EndSingleRelationship()
-        //        .EndRelationships();
+        [Test]
+        public void Test_Build_WhenCreatingSingleRelationship_ShouldSetRelationshipDefProps()
+        {
+            //---------------Set up test pack-------------------
+            var classDef = new ClassDefBuilder<Car>()
+                .WithPrimaryKey(c => c.VehicleID)
+                .WithProperties()
+                    .Property(car => car.Make).EndProperty()
+                .EndProperties()
+                .WithRelationships()
+                    .WithSingleRelationship(c => c.SteeringWheel)
+                        .WithRelProp("VehicleID", "CarID")
+                    .EndSingleRelationship()
+                .EndRelationships();
 
-        //    //---------------Assert Precondition----------------
-        //    //---------------Test Result -----------------------
-        //    IClassDef builtClassDef = classDef.Build();
+            //---------------Assert Precondition----------------
+            //---------------Test Result -----------------------
+            IClassDef builtClassDef = classDef.Build();
 
-        //    var singleRelationshipDef = builtClassDef.GetRelationship("SteeringWheel");
-        //    Assert.AreEqual("SteeringWheel", singleRelationshipDef.RelationshipName);
-        //    Assert.IsTrue(singleRelationshipDef.KeepReferenceToRelatedObject);
-        //    Assert.AreEqual(DeleteParentAction.DoNothing, singleRelationshipDef.DeleteParentAction);
-        //    Assert.AreEqual("Car", singleRelationshipDef.OwningClassName);
-        //    Assert.AreEqual("TestProject.BO", singleRelationshipDef.RelatedObjectAssemblyName);
-        //    Assert.AreEqual("SteeringWheel", singleRelationshipDef.RelatedObjectClassName);
-        //    Assert.AreEqual(1, singleRelationshipDef.RelKeyDef.Count);
-        //    Assert.AreEqual(InsertParentAction.InsertRelationship, singleRelationshipDef.InsertParentAction);
-        //    Assert.AreEqual(RelationshipType.Association, singleRelationshipDef.RelationshipType);
-        //}
+            var singleRelationshipDef = builtClassDef.GetRelationship("SteeringWheel");
+            Assert.AreEqual("SteeringWheel", singleRelationshipDef.RelationshipName);
+            Assert.IsTrue(singleRelationshipDef.KeepReferenceToRelatedObject);
+            Assert.AreEqual(DeleteParentAction.DoNothing, singleRelationshipDef.DeleteParentAction);
+            Assert.AreEqual("Car", singleRelationshipDef.OwningClassName);
+            Assert.AreEqual("TestProject.BO", singleRelationshipDef.RelatedObjectAssemblyName);
+            Assert.AreEqual("SteeringWheel", singleRelationshipDef.RelatedObjectClassName);
+            Assert.AreEqual(1, singleRelationshipDef.RelKeyDef.Count);
+            Assert.AreEqual(InsertParentAction.InsertRelationship, singleRelationshipDef.InsertParentAction);
+            Assert.AreEqual(RelationshipType.Association, singleRelationshipDef.RelationshipType);
+        }
 
 
         //[Ignore("Currently this test is not testing anything as you can no longer create a relationship without a relprop")] //TODO Andrew Russell 07 Feb 2011: Ignored Test - Currently this test is not testing anything as you can no longer create a relationship without a relprop
@@ -318,7 +326,7 @@ namespace Habanero.Fluent.Tests
         //    var classDef = classDefBuilder
         //            .WithPrimaryKey(car1 => car1.VehicleID)
         //            .WithRelationships()
-        //                .WithNewSingleRelationship<SteeringWheel>(relationshipName)
+        //                .WithSingleRelationship<SteeringWheel>(relationshipName)
         //                    .WithRelProp("VehicleID", "CarID")
         //                .EndSingleRelationship()
         //            .EndRelationships()
@@ -333,7 +341,7 @@ namespace Habanero.Fluent.Tests
         //                //.Property(wheel => wheel.SteeringWheelID).EndProperty()
         //            .EndProperties()
         //            .WithRelationships()
-        //                .WithNewSingleRelationship(wheel => wheel.Car)
+        //                .WithSingleRelationship(wheel => wheel.Car)
         //                    .WithRelProp("CarID", "VehicleID")
         //                .EndSingleRelationship()
         //            .EndRelationships()
@@ -345,143 +353,155 @@ namespace Habanero.Fluent.Tests
         //}
 
 
-        //[Test]
-        //public void Test_CreateClassDef_WithRelationships_ShouldBuildRelationships()
-        //{
-        //    //---------------Set up test pack-------------------
-        //    var relationshipName1 = "C" + GetRandomString();
-        //    var relationshipName2 = "F" + GetRandomString();
-        //    //---------------Assert Precondition----------------
+        [Test]
+        public void Test_CreateClassDef_WithRelationships_ShouldBuildRelationships()
+        {
+            //---------------Set up test pack-------------------
+            var relationshipName1 = "C" + GetRandomString();
+            var relationshipName2 = "F" + GetRandomString();
+            //---------------Assert Precondition----------------
 
-        //    //---------------Execute Test ----------------------
-        //    var classDefBuilder = GetClassDefBuilderForTypeOf_Car();
-        //    var classDef = classDefBuilder
-        //            .WithPrimaryKey(c => c.VehicleID)
-        //            .WithRelationships()
-        //                .WithNewSingleRelationship<SteeringWheel>(relationshipName1)
-        //                    .WithRelProp(c => c.VehicleID, wheel => wheel.CarID)
-        //                .EndSingleRelationship()
-        //                .WithNewMultipleRelationship<Driver>(relationshipName2)
-        //                    .WithRelProp(c => c.VehicleID, driver => driver.CarID)
-        //                .EndMultipleRelationship()
-        //            .EndRelationships()
-        //    .Build();
-        //    //---------------Test Result -----------------------
-        //    Assert.AreEqual(2, classDef.RelationshipDefCol.Count);
-        //    classDef.RelationshipDefCol.ShouldContain(def => def.RelationshipName == relationshipName1);
-        //    classDef.RelationshipDefCol.ShouldContain(def => def.RelationshipName == relationshipName2);
-        //}
+            //---------------Execute Test ----------------------
+            var classDefBuilder = GetClassDefBuilderForTypeOf_Car();
+            var classDef = classDefBuilder
+                    .WithPrimaryKey(c => c.VehicleID)
+                    .WithProperties()
+                        .Property(car => car.Make).EndProperty()
+                    .EndProperties()
+                    .WithRelationships()
+                        .WithSingleRelationship<SteeringWheel>(relationshipName1)
+                            .WithRelProp(c => c.VehicleID, wheel => wheel.CarID)
+                        .EndSingleRelationship()
+                        .WithMultipleRelationship<Driver>(relationshipName2)
+                            .WithRelProp(c => c.VehicleID, driver => driver.CarID)
+                        .EndMultipleRelationship()
+                    .EndRelationships()
+            .Build();
+            //---------------Test Result -----------------------
+            Assert.AreEqual(2, classDef.RelationshipDefCol.Count);
+            classDef.RelationshipDefCol.ShouldContain(def => def.RelationshipName == relationshipName1);
+            classDef.RelationshipDefCol.ShouldContain(def => def.RelationshipName == relationshipName2);
+        }
 
 
-        //[Test]
-        //public void Test_Build_WithLambdaProp_ShouldSetRelationshipProperties()
-        //{
-        //    //---------------Set up test pack-------------------
-        //    //---------------Assert Precondition----------------
+        [Test]
+        public void Test_Build_WithLambdaProp_ShouldSetRelationshipProperties()
+        {
+            //---------------Set up test pack-------------------
+            //---------------Assert Precondition----------------
 
-        //    //---------------Execute Test ----------------------
-        //    var multipleRelationshipDef = GetClassDefBuilderForTypeOf_Car()
-        //                                        .WithPrimaryKey(c => c.VehicleID)
-        //                                        .WithRelationships()
-        //                                            .WithNewMultipleRelationship(c => c.Drivers)
-        //                                                    .WithRelProp(car => car.VehicleID, driver => driver.CarID)
-        //                                            .Build();
+            //---------------Execute Test ----------------------
+            var multipleRelationshipDef = GetClassDefBuilderForTypeOf_Car()
+                                                .WithPrimaryKey(c => c.VehicleID)
+                                                .WithProperties()
+                                                    .Property(car1 => car1.Make).EndProperty()
+                                                .EndProperties()
+                                                .WithRelationships()
+                                                    .WithMultipleRelationship(c => c.Drivers)
+                                                            .WithRelProp(car => car.VehicleID, driver => driver.CarID)
+                                                    .Build();
 
-        //    //---------------Test Result -----------------------
-        //    Assert.AreEqual("Drivers", multipleRelationshipDef.RelationshipName);
-        //    var relPropDef = multipleRelationshipDef.RelKeyDef["VehicleID"];
-        //    Assert.IsNotNull(relPropDef);
-        //    Assert.AreEqual("VehicleID", relPropDef.OwnerPropertyName);
-        //    Assert.AreEqual("CarID", relPropDef.RelatedClassPropName);
-        //}
+            //---------------Test Result -----------------------
+            Assert.AreEqual("Drivers", multipleRelationshipDef.RelationshipName);
+            var relPropDef = multipleRelationshipDef.RelKeyDef["VehicleID"];
+            Assert.IsNotNull(relPropDef);
+            Assert.AreEqual("VehicleID", relPropDef.OwnerPropertyName);
+            Assert.AreEqual("CarID", relPropDef.RelatedClassPropName);
+        }
 
-        //[Test]
-        //public void Test_CreateClassDef_WithPrimaryKey_IntProp_ShouldBuildPrimary_WithIsGuidObjectID_False()
-        //{
-        //    //---------------Set up test pack-------------------
-        //    string propertyName1 = "A" + GetRandomString();
-        //    string propertyName2 = "B" + GetRandomString();
-        //    //---------------Assert Precondition----------------
+        [Test]
+        public void Test_CreateClassDef_WithPrimaryKey_IntProp_ShouldBuildPrimary_WithIsGuidObjectID_False()
+        {
+            //---------------Set up test pack-------------------
+            string propertyName1 = "A" + GetRandomString();
+            string propertyName2 = "B" + GetRandomString();
+            //---------------Assert Precondition----------------
 
-        //    //---------------Execute Test ----------------------
-        //    var classDefBuilder = GetClassDefBuilderForTypeOf_Car();
-        //    var classDef = classDefBuilder
-        //         .WithPrimaryKey(propertyName1)
-        //         .WithProperties()
-        //            .Property<int>(propertyName1).EndProperty()
-        //            .Property(propertyName2).EndProperty()
-        //        .EndProperties()
-        //        .Build();
-        //    //---------------Test Result -----------------------
-        //    Assert.AreEqual(1, classDef.PrimaryKeyDef.Count);
-        //    Assert.IsFalse(classDef.PrimaryKeyDef.IsGuidObjectID);
-        //    var def = classDef.PrimaryKeyDef[0];
-        //    Assert.AreSame(typeof(int), def.PropertyType);
-        //    Assert.AreEqual(propertyName1, def.PropertyName);
-        //}
+            //---------------Execute Test ----------------------
+            var classDefBuilder = GetClassDefBuilderForTypeOf_Car();
+            var classDef = classDefBuilder
+                 .WithPrimaryKey(propertyName1)
+                 .WithProperties()
+                    .Property<int>(propertyName1).EndProperty()
+                    .Property(propertyName2).EndProperty()
+                .EndProperties()
+                .Build();
+            //---------------Test Result -----------------------
+            Assert.AreEqual(1, classDef.PrimaryKeyDef.Count);
+            Assert.IsFalse(classDef.PrimaryKeyDef.IsGuidObjectID);
+            var def = classDef.PrimaryKeyDef[0];
+            Assert.AreSame(typeof(int), def.PropertyType);
+            Assert.AreEqual(propertyName1, def.PropertyName);
+        }
 
-        //[Test]
-        //public void Test_CreateClassDef_WithPrimaryKeyWithLamba_ShouldBuildPrimary_WithPropName()
-        //{
-        //    //---------------Set up test pack-------------------
+        [Test]
+        public void Test_CreateClassDef_WithPrimaryKeyWithLamba_ShouldBuildPrimary_WithPropName()
+        {
+            //---------------Set up test pack-------------------
 
-        //    //---------------Assert Precondition----------------
+            //---------------Assert Precondition----------------
 
-        //    //---------------Execute Test ----------------------
-        //    var classDefBuilder = GetClassDefBuilderForTypeOf_Car();
-        //    var classDef = classDefBuilder
-        //            .WithPrimaryKey(car => car.Make)
-        //        .Build();
-        //    //---------------Test Result -----------------------
-        //    Assert.AreEqual(1, classDef.PrimaryKeyDef.Count);
-        //    Assert.IsFalse(classDef.PrimaryKeyDef.IsGuidObjectID);
-        //    var def = classDef.PrimaryKeyDef[0];
-        //    Assert.AreEqual("Make", def.PropertyName);
-        //}
+            //---------------Execute Test ----------------------
+            var classDefBuilder = GetClassDefBuilderForTypeOf_Car();
+            var classDef = classDefBuilder
+                    .WithPrimaryKey(car => car.Make)
+                    .WithProperties()
+                        .Property(car1 => car1.Make).EndProperty()
+                    .EndProperties()
+                .Build();
+            //---------------Test Result -----------------------
+            Assert.AreEqual(1, classDef.PrimaryKeyDef.Count);
+            Assert.IsFalse(classDef.PrimaryKeyDef.IsGuidObjectID);
+            var def = classDef.PrimaryKeyDef[0];
+            Assert.AreEqual("Make", def.PropertyName);
+        }
 
-        //[Test]
-        //public void Test_CreateClassDef_WithPrimaryKeyWithLamba_WhenGuidID_ShouldBuildPrimary_WithGuidID()
-        //{
-        //    //---------------Set up test pack-------------------
+        [Test]
+        public void Test_CreateClassDef_WithPrimaryKeyWithLamba_WhenGuidID_ShouldBuildPrimary_WithGuidID()
+        {
+            //---------------Set up test pack-------------------
 
-        //    //---------------Assert Precondition----------------
+            //---------------Assert Precondition----------------
 
-        //    //---------------Execute Test ----------------------
-        //    var classDefBuilder = GetClassDefBuilderForTypeOf_Car();
-        //    var classDef = classDefBuilder
-        //            .WithPrimaryKey(n => n.VehicleID)
-        //        .Build();
-        //    //---------------Test Result -----------------------
-        //    Assert.AreEqual(1, classDef.PrimaryKeyDef.Count);
-        //    var def = classDef.PrimaryKeyDef[0];
-        //    Assert.AreEqual("VehicleID", def.PropertyName);
-        //    Assert.AreSame(typeof(Guid), def.PropertyType);
-        //    Assert.IsTrue(classDef.PrimaryKeyDef.IsGuidObjectID, "Should set to ISGuidObjectID since NonCompositeGuid");
-        //}
+            //---------------Execute Test ----------------------
+            var classDefBuilder = GetClassDefBuilderForTypeOf_Car();
+            var classDef = classDefBuilder
+                    .WithPrimaryKey(n => n.VehicleID)
+                    .WithProperties()
+                        .Property(car => car.Make).EndProperty()
+                    .EndProperties()
+                .Build();
+            //---------------Test Result -----------------------
+            Assert.AreEqual(1, classDef.PrimaryKeyDef.Count);
+            var def = classDef.PrimaryKeyDef[0];
+            Assert.AreEqual("VehicleID", def.PropertyName);
+            Assert.AreSame(typeof(Guid), def.PropertyType);
+            Assert.IsTrue(classDef.PrimaryKeyDef.IsGuidObjectID, "Should set to ISGuidObjectID since NonCompositeGuid");
+        }
 
-        //[Test]
-        //public void Test_CreateClassDef_WithStringPrimaryKey_ShouldBuildPrimaryKey_WithIsGuidObjectID_True_ByDefault()
-        //{
-        //    //---------------Set up test pack-------------------
-        //    string propertyName1 = "A" + GetRandomString();
-        //    string propertyName2 = "B" + GetRandomString();
-        //    //---------------Assert Precondition----------------
+        [Test]
+        public void Test_CreateClassDef_WithStringPrimaryKey_ShouldBuildPrimaryKey_WithIsGuidObjectID_True_ByDefault()
+        {
+            //---------------Set up test pack-------------------
+            string propertyName1 = "A" + GetRandomString();
+            string propertyName2 = "B" + GetRandomString();
+            //---------------Assert Precondition----------------
 
-        //    //---------------Execute Test ----------------------
-        //    var classDefBuilder = GetClassDefBuilderForTypeOf_Car();
-        //    var classDef = classDefBuilder
-        //            .WithPrimaryKey(propertyName1)
-        //            .WithProperties()
-        //                .Property(propertyName2).EndProperty()
-        //            .EndProperties()
-        //        .Build();
-        //    //---------------Test Result -----------------------
-        //    Assert.AreEqual(1, classDef.PrimaryKeyDef.Count);
-        //    var def = classDef.PrimaryKeyDef[0];
-        //    Assert.AreSame(typeof(Guid), def.PropertyType);
-        //    Assert.AreEqual(propertyName1, def.PropertyName);
-        //    Assert.IsTrue(classDef.PrimaryKeyDef.IsGuidObjectID);
-        //}
+            //---------------Execute Test ----------------------
+            var classDefBuilder = GetClassDefBuilderForTypeOf_Car();
+            var classDef = classDefBuilder
+                    .WithPrimaryKey(propertyName1)
+                    .WithProperties()
+                        .Property(propertyName2).EndProperty()
+                    .EndProperties()
+                .Build();
+            //---------------Test Result -----------------------
+            Assert.AreEqual(1, classDef.PrimaryKeyDef.Count);
+            var def = classDef.PrimaryKeyDef[0];
+            Assert.AreSame(typeof(Guid), def.PropertyType);
+            Assert.AreEqual(propertyName1, def.PropertyName);
+            Assert.IsTrue(classDef.PrimaryKeyDef.IsGuidObjectID);
+        }
 
         [Test]
         public void Test_CreateClassDef_WithPrimaryKeyComposite_ShouldBuildPrimary_WithIsGuidObjectID_False()
@@ -510,121 +530,121 @@ namespace Habanero.Fluent.Tests
         }
 
 
-        //[Test]
-        //public void Test_CreateClassDef_WithUniqueConstraint_ShouldBuildKeyDef()
-        //{
-        //    //---------------Set up test pack-------------------
-        //    string propertyName1 = "A" + GetRandomString();
-        //    string propertyName2 = "B" + GetRandomString();
-        //    //---------------Assert Precondition----------------
+        [Test]
+        public void Test_CreateClassDef_WithUniqueConstraint_ShouldBuildKeyDef()
+        {
+            //---------------Set up test pack-------------------
+            string propertyName1 = "A" + GetRandomString();
+            string propertyName2 = "B" + GetRandomString();
+            //---------------Assert Precondition----------------
 
-        //    //---------------Execute Test ----------------------
-        //    var classDefBuilder = GetClassDefBuilderForTypeOf_Car();
-        //    var classDef = classDefBuilder
-        //         .WithPrimaryKey(car => car.VehicleID)
-        //         .WithProperties()
-        //            .Property<int>(propertyName1).EndProperty()
-        //            .Property(propertyName2).EndProperty()
-        //        .EndProperties()
-        //        .WithUniqueConstraints()
-        //            .UniqueConstraint()
-        //                .AddProperty(propertyName1)
-        //            .EndUniqueConstraint()
-        //        .EndUniqueConstraints()
-        //        .Build();
-        //    //---------------Test Result -----------------------
-        //    Assert.AreEqual(1, classDef.KeysCol.Count);//Should Be Empty
-        //    IKeyDef keyDef = classDef.KeysCol.FirstOrDefault();
-        //    Assert.AreEqual(propertyName1, keyDef.KeyName);
-        //    Assert.AreEqual(1, keyDef.Count);
-        //    Assert.AreEqual(propertyName1, keyDef[0].PropertyName);
-        //}
+            //---------------Execute Test ----------------------
+            var classDefBuilder = GetClassDefBuilderForTypeOf_Car();
+            var classDef = classDefBuilder
+                 .WithPrimaryKey(car => car.VehicleID)
+                 .WithProperties()
+                    .Property<int>(propertyName1).EndProperty()
+                    .Property(propertyName2).EndProperty()
+                .EndProperties()
+                .WithUniqueConstraints()
+                    .UniqueConstraint()
+                        .AddProperty(propertyName1)
+                    .EndUniqueConstraint()
+                .EndUniqueConstraints()
+                .Build();
+            //---------------Test Result -----------------------
+            Assert.AreEqual(1, classDef.KeysCol.Count);//Should Be Empty
+            IKeyDef keyDef = classDef.KeysCol.FirstOrDefault();
+            Assert.AreEqual(propertyName1, keyDef.KeyName);
+            Assert.AreEqual(1, keyDef.Count);
+            Assert.AreEqual(propertyName1, keyDef[0].PropertyName);
+        }
 
-        //[Test]
-        //public void Test_CreateClassDef_WithUniqueConstraint_TwoProps_ShouldBuildKeyDefWithTwoProps()
-        //{
-        //    //---------------Set up test pack-------------------
-        //    string propertyName1 = "A" + GetRandomString();
-        //    string propertyName2 = "B" + GetRandomString();
-        //    //---------------Assert Precondition----------------
+        [Test]
+        public void Test_CreateClassDef_WithUniqueConstraint_TwoProps_ShouldBuildKeyDefWithTwoProps()
+        {
+            //---------------Set up test pack-------------------
+            string propertyName1 = "A" + GetRandomString();
+            string propertyName2 = "B" + GetRandomString();
+            //---------------Assert Precondition----------------
 
-        //    //---------------Execute Test ----------------------
-        //    var classDefBuilder = GetClassDefBuilderForTypeOf_Car();
-        //    var classDef = classDefBuilder
-        //        .WithPrimaryKey(car => car.VehicleID)
-        //        .WithProperties()
-        //            .Property(propertyName1).EndProperty()
-        //            .Property(propertyName2).EndProperty()
-        //        .EndProperties()
-        //        .WithUniqueConstraints()
-        //            .UniqueConstraint()
-        //                .AddProperty(propertyName1)
-        //                .AddProperty(propertyName2)
-        //            .EndUniqueConstraint()
-        //        .EndUniqueConstraints()
-        //    .Build();
-        //    //---------------Test Result -----------------------
-        //    Assert.AreEqual(1, classDef.KeysCol.Count);//Should Be Empty
-        //    IKeyDef keyDef = classDef.KeysCol.FirstOrDefault();
-        //    Assert.AreEqual(2, keyDef.Count);
-        //    Assert.AreEqual(propertyName1, keyDef[0].PropertyName);
-        //    Assert.AreEqual(propertyName2, keyDef[1].PropertyName);
-        //}
+            //---------------Execute Test ----------------------
+            var classDefBuilder = GetClassDefBuilderForTypeOf_Car();
+            var classDef = classDefBuilder
+                .WithPrimaryKey(car => car.VehicleID)
+                .WithProperties()
+                    .Property(propertyName1).EndProperty()
+                    .Property(propertyName2).EndProperty()
+                .EndProperties()
+                .WithUniqueConstraints()
+                    .UniqueConstraint()
+                        .AddProperty(propertyName1)
+                        .AddProperty(propertyName2)
+                    .EndUniqueConstraint()
+                .EndUniqueConstraints()
+            .Build();
+            //---------------Test Result -----------------------
+            Assert.AreEqual(1, classDef.KeysCol.Count);//Should Be Empty
+            IKeyDef keyDef = classDef.KeysCol.FirstOrDefault();
+            Assert.AreEqual(2, keyDef.Count);
+            Assert.AreEqual(propertyName1, keyDef[0].PropertyName);
+            Assert.AreEqual(propertyName2, keyDef[1].PropertyName);
+        }
 
         //TODO andrew 21 Feb 2011: this should be invalid syntax UC with no props
-        //[Test]
-        //public void Test_CreateClassDef_WithUniqueConstraint_WithKeyName_ShouldBuildKeyDefWithKeyName()
-        //{
-        //    //---------------Set up test pack-------------------
-        //    string propertyName1 = "A" + GetRandomString();
-        //    string propertyName2 = "B" + GetRandomString();
-        //    string keyName = "K" + GetRandomString();
-        //    //---------------Assert Precondition----------------
+        [Test]
+        public void Test_CreateClassDef_WithUniqueConstraint_WithKeyName_ShouldBuildKeyDefWithKeyName()
+        {
+            //---------------Set up test pack-------------------
+            string propertyName1 = "A" + GetRandomString();
+            string propertyName2 = "B" + GetRandomString();
+            string keyName = "K" + GetRandomString();
+            //---------------Assert Precondition----------------
 
-        //    //---------------Execute Test ----------------------
-        //    var classDefBuilder = GetClassDefBuilderForTypeOf_Car();
-        //    var classDef = classDefBuilder
-        //        .WithPrimaryKey(car => car.VehicleID)
-        //        .WithProperties()
-        //            .Property<int>(propertyName1).EndProperty()
-        //            .Property(propertyName2).EndProperty()
-        //        .EndProperties()
-        //        .WithUniqueConstraints()
-        //            .UniqueConstraint(keyName).EndUniqueConstraint()
-        //        .EndUniqueConstraints()
-        //    .Build();
-        //    //---------------Test Result -----------------------
-        //    Assert.AreEqual(1, classDef.PrimaryKeyDef.Count);//PrimaryKey is required
-        //    Assert.AreEqual(1, classDef.KeysCol.Count);//Should Be Empty
-        //    IKeyDef keyDef = classDef.KeysCol.FirstOrDefault();
-        //    Assert.AreEqual(keyName, keyDef.KeyName);
-        //}
+            //---------------Execute Test ----------------------
+            var classDefBuilder = GetClassDefBuilderForTypeOf_Car();
+            var classDef = classDefBuilder
+                .WithPrimaryKey(car => car.VehicleID)
+                .WithProperties()
+                    .Property<int>(propertyName1).EndProperty()
+                    .Property(propertyName2).EndProperty()
+                .EndProperties()
+                .WithUniqueConstraints()
+                    .UniqueConstraint(keyName).EndUniqueConstraint()
+                .EndUniqueConstraints()
+            .Build();
+            //---------------Test Result -----------------------
+            Assert.AreEqual(1, classDef.PrimaryKeyDef.Count);//PrimaryKey is required
+            Assert.AreEqual(1, classDef.KeysCol.Count);//Should Be Empty
+            IKeyDef keyDef = classDef.KeysCol.FirstOrDefault();
+            Assert.AreEqual(keyName, keyDef.KeyName);
+        }
 
-        //[Test]
-        //public void Test_CreateClassDef_WithUniqueConstraintWithLambaProp_ShouldBuildKeyDefWithProp()
-        //{
-        //    //---------------Set up test pack-------------------
-        //    string keyName = "K" + GetRandomString();
-        //    //---------------Assert Precondition----------------
+        [Test]
+        public void Test_CreateClassDef_WithUniqueConstraintWithLambaProp_ShouldBuildKeyDefWithProp()
+        {
+            //---------------Set up test pack-------------------
+            string keyName = "K" + GetRandomString();
+            //---------------Assert Precondition----------------
 
-        //    //---------------Execute Test ----------------------
-        //    var classDefBuilder = GetClassDefBuilderForTypeOf_Car();
-        //    var classDef = classDefBuilder
-        //        .WithPrimaryKey(car => car.VehicleID)
-        //        .WithProperties()
-        //            .Property(o => o.Make).EndProperty()
-        //        .EndProperties()
-        //        .WithUniqueConstraints()
-        //            .UniqueConstraint(keyName)
-        //                .AddProperty(o => o.Make)
-        //            .EndUniqueConstraint()
-        //        .EndUniqueConstraints()
-        //        .Build();
-        //    //---------------Test Result -----------------------
-        //    var keyDef = classDef.KeysCol.FirstOrDefault();
-        //    Assert.AreEqual(1, keyDef.Count);
-        //    Assert.AreEqual("Make", keyDef[0].PropertyName);
-        //}
+            //---------------Execute Test ----------------------
+            var classDefBuilder = GetClassDefBuilderForTypeOf_Car();
+            var classDef = classDefBuilder
+                .WithPrimaryKey(car => car.VehicleID)
+                .WithProperties()
+                    .Property(o => o.Make).EndProperty()
+                .EndProperties()
+                .WithUniqueConstraints()
+                    .UniqueConstraint(keyName)
+                        .AddProperty(o => o.Make)
+                    .EndUniqueConstraint()
+                .EndUniqueConstraints()
+                .Build();
+            //---------------Test Result -----------------------
+            var keyDef = classDef.KeysCol.FirstOrDefault();
+            Assert.AreEqual(1, keyDef.Count);
+            Assert.AreEqual("Make", keyDef[0].PropertyName);
+        }
 
         [Test]
         public void Test_CreateClassDef_WithSuperClass_ShouldBuildClassDefWithSuperClassDef()

@@ -49,5 +49,10 @@ namespace Habanero.Fluent
             return _propertiesDefBuilder;
         }
 
+        public RelationshipsBuilder<T> WithRelationships()
+        {
+            return _classDefBuilder2.WithRelationships();
+        }
+
     }
 }

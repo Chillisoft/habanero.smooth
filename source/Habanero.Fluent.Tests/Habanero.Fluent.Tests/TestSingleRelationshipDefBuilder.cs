@@ -131,7 +131,7 @@ namespace Habanero.Fluent.Tests
         public void Test_Build_WithLambdaProp_ShouldSetRelationshipProperties()
         {
             //---------------Set up test pack-------------------
-            var newSingleRelationshipDefBuilder = new RelationshipsBuilderStub<Car>().WithNewSingleRelationship(c => c.SteeringWheel).WithRelProp("VehicleID", "CarID");
+            var newSingleRelationshipDefBuilder = new RelationshipsBuilderStub<Car>().WithSingleRelationship(c => c.SteeringWheel).WithRelProp("VehicleID", "CarID");
             //---------------Assert Precondition----------------
 
             //---------------Execute Test ----------------------

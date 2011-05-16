@@ -147,7 +147,7 @@ namespace Habanero.Fluent.Tests
             //---------------Assert Precondition----------------
 
             //---------------Execute Test ----------------------
-            var multipleRelationshipDef = new RelationshipsBuilderStub<Car>().WithNewMultipleRelationship(c => c.Drivers).WithRelProp(propertyName, relatedPropName);
+            var multipleRelationshipDef = new RelationshipsBuilderStub<Car>().WithMultipleRelationship(c => c.Drivers).WithRelProp(propertyName, relatedPropName);
             IRelationshipDef relationshipDef = multipleRelationshipDef.Build();
             
 
@@ -173,7 +173,7 @@ namespace Habanero.Fluent.Tests
 
             //---------------Execute Test ----------------------
 
-            var multipleRelationshipDef = new RelationshipsBuilderStub<Car>().WithNewMultipleRelationship<Car>(relationshipName)
+            var multipleRelationshipDef = new RelationshipsBuilderStub<Car>().WithMultipleRelationship<Car>(relationshipName)
                 .WithCompositeRelationshipKey()
                     .WithRelProp(propertyName, relatedPropName)
                     .WithRelProp(propertyName2, relatedPropName2)
@@ -200,7 +200,7 @@ namespace Habanero.Fluent.Tests
             //---------------Assert Precondition----------------
 
             //---------------Execute Test ----------------------
-            var relationshipDef = new RelationshipsBuilderStub<Car>().WithNewMultipleRelationship(c => c.Drivers)
+            var relationshipDef = new RelationshipsBuilderStub<Car>().WithMultipleRelationship(c => c.Drivers)
                 .WithRelProp(c=>c.VehicleID,d=>d.CarID)
                 .Build();
 
@@ -215,7 +215,7 @@ namespace Habanero.Fluent.Tests
             //---------------Assert Precondition----------------
 
             //---------------Execute Test ----------------------
-            var relationshipDef = new RelationshipsBuilderStub<Car>().WithNewMultipleRelationship(c => c.Drivers)
+            var relationshipDef = new RelationshipsBuilderStub<Car>().WithMultipleRelationship(c => c.Drivers)
                 .WithRelProp(c => c.VehicleID, d => d.CarID)
                 .Build();
 
@@ -240,7 +240,7 @@ namespace Habanero.Fluent.Tests
                 .Build();*/
 
             IRelationshipDef relationshipDef = new RelationshipsBuilderStub<FakeBOWithMultipleRelWithProp>()
-                .WithNewMultipleRelationship(c => c.MyMultipleRel)
+                .WithMultipleRelationship(c => c.MyMultipleRel)
                 //.WithRelProp("FakeBOWithMultipleRelationshipID", "MySingleRelationshipID")
                 .WithRelProp(x=> x.FakeBOWithMultipleRelationshipID, n=> n.MySingleRelationshipID)
                 .Build();
