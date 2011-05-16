@@ -34,6 +34,11 @@ namespace Habanero.Fluent.Tests
                 .Build();
 
             //---------------Test Result -----------------------
+            var primaryKeyDef = classDef.PrimaryKeyDef;
+            Assert.AreEqual(PropReadWriteRule.WriteNew, classDef.PropDefColIncludingInheritance["VehicleID"].ReadWriteRule);
+            Assert.AreEqual(PropReadWriteRule.WriteNew, primaryKeyDef[0].ReadWriteRule);
+            
+
             Assert.IsNotNull(classDef);
             Assert.AreEqual(1, classDef.RelationshipDefCol.Count);
             var relationshipDef = classDef.RelationshipDefCol["SteeringWheel"];

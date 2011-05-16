@@ -53,8 +53,8 @@ namespace Habanero.Fluent
         {
             Type type = typeof(T);
             SetupPropDefCol();
-            SetupRelationshipDefCol();
             SetupPrimaryKey();
+            SetupRelationshipDefCol();
             SetupKeysCol();
             var classDef = new ClassDef(type.Namespace, type.Name, _primaryKeyDef, _propDefCol, _keyDefCol, _relationshipDefCol, new UIDefCol());
             if (_superClassDefBuilder != null)
