@@ -64,12 +64,19 @@ namespace Habanero.Smooth
                                               propWrapper.GetAttribute<AutoMapUniqueConstraintAttribute>().UniqueConstraintName == keyDef.KeyName
                                         select propWrapper.Name;
 
+                                    var p = propNames.ToList();
+
                                     var propDefs =
                                         from propDef in ClassDef.PropDefcol
                                         where propNames.Contains(propDef.PropertyName)
                                         select propDef;
 
                                     propDefs.ToList().ForEach(keyDef.Add);
+
+                                    var col = ClassDef.RelationshipDefCol;
+                                    var rels = col.Where(def => propNames.Contains(def.RelationshipName));
+                                    var props = rels.SelectMany(def => def.RelKeyDef.Select(propDef => ClassDef.PropDefcol[propDef.OwnerPropertyName]));
+                                    props.ForEach(keyDef.Add);
                                 });
 
             return keyDefs;

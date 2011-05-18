@@ -634,6 +634,24 @@ namespace Habanero.Smooth.Test
 		public virtual string UCProp { get; set; }
 	}
 
+	public class FakeBOWithUniqueConstraint_Relationship : BusinessObject
+	{
+		[AutoMapUniqueConstraint("UC")]
+        [AutoMapManyToOne]
+        public FakeBOWithNoRelationship RelatedObject { get; set; }
+	}
+
+	public class FakeBOWithUniqueConstraint_TwoRelationship : BusinessObject
+	{
+		[AutoMapUniqueConstraint("UC")]
+        [AutoMapManyToOne]
+        public FakeBOWithNoRelationship RelatedObject1 { get; set; }
+
+		[AutoMapUniqueConstraint("UC")]
+        [AutoMapManyToOne]
+        public FakeBOWithNoRelationship RelatedObject2 { get; set; }
+	}
+
 	public class FakeBOWithTwoUniqueConstraints_OnePropEach : BusinessObject
 	{
 		[AutoMapUniqueConstraint("UC1")]

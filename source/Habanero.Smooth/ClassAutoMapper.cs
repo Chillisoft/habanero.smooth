@@ -205,6 +205,14 @@ namespace Habanero.Smooth
             MapRelationships(info => info.MapOneToOne());
         }
 
+        //used by tests.
+        private void MapRelDefs()
+        {
+            MapManyToOneRelationships();
+            MapOneToManyRelationships();
+            MapOneToOneRelationships();
+        }
+
         private void MapRelationships(Func<PropertyWrapper, IRelationshipDef> mappingExpression)
         {
             IEnumerable<IRelationshipDef> relDefs = GetRelDefs(mappingExpression);

@@ -75,6 +75,37 @@ namespace Habanero.Smooth.Test
         }
 
         [Test]
+        public void Test_Map_WhenOneUniqueConstraintOnRelationship_ShouldCreateConstraintOnRelationshipProperty()
+        {
+            //---------------Set up test pack-------------------
+            ClassDef.ClassDefs.Add(typeof (FakeBOWithNoRelationship).MapClass());
+            IClassDef cDef = GetClassDefWithPropsMapped(typeof(FakeBOWithUniqueConstraint_Relationship));
+            //---------------Assert Precondition----------------
+            //---------------Execute Test ----------------------
+            IList<IKeyDef> keyDefs = cDef.MapUniqueConstraints();
+            //---------------Test Result -----------------------
+            Assert.AreEqual(1, keyDefs.Count);
+            Assert.AreEqual(1, keyDefs[0].Count);
+            Assert.AreSame(cDef.GetPropDef("RelatedObjectID"), keyDefs[0][0]);
+        }
+
+        [Test]
+        public void Test_Map_WhenOneUniqueConstraintOnTwoRelationship_ShouldCreateConstraintOnBothRelationshipProperties()
+        {
+            //---------------Set up test pack-------------------
+            ClassDef.ClassDefs.Add(typeof (FakeBOWithNoRelationship).MapClass());
+            IClassDef cDef = GetClassDefWithPropsMapped(typeof(FakeBOWithUniqueConstraint_TwoRelationship));
+            //---------------Assert Precondition----------------
+            //---------------Execute Test ----------------------
+            IList<IKeyDef> keyDefs = cDef.MapUniqueConstraints();
+            //---------------Test Result -----------------------
+            Assert.AreEqual(1, keyDefs.Count);
+            Assert.AreEqual(2, keyDefs[0].Count);
+            Assert.AreSame(cDef.GetPropDef("RelatedObject1ID"), keyDefs[0][0]);
+            Assert.AreSame(cDef.GetPropDef("RelatedObject2ID"), keyDefs[0][1]);
+        }
+
+        [Test]
         public void Test_Map_WhenTwoUniqueConstraintWithOnePropEach_ShouldReturnTwoKeyDefWithOnePropEach()
         {
             //---------------Set up test pack-------------------
@@ -126,6 +157,8 @@ namespace Habanero.Smooth.Test
             Assert.AreSame(cDef.GetPropDef("UC2Prop2"), keyDefs[1][1]);
         }
 
+
+
         [Test]
         public void Map_WhenUniqueConstraintOnSuperClass_ShouldNotTryMapTwice()
         {
@@ -145,6 +178,7 @@ namespace Habanero.Smooth.Test
             var classAutoMapper = new ClassAutoMapper(type.ToTypeWrapper());
             var classDef = CreateClassDef(classAutoMapper);
             ReflectionUtilities.ExecutePrivateMethod(classAutoMapper, "MapProperties");
+            ReflectionUtilities.ExecutePrivateMethod(classAutoMapper, "MapRelDefs");
             return classDef;
         }
         private static IClassDef CreateClassDef(ClassAutoMapper classAutoMapper)
