@@ -508,7 +508,23 @@ namespace Habanero.Smooth.Test
             Assert.AreEqual("UC2Prop1", keyDef2[0].PropertyName);
             Assert.AreEqual("UC2Prop2", keyDef2[1].PropertyName);
         }
-
+        
+        [Test]
+        public void Test_Map_WhenOneUniqueConstraintOnRelationship_ShouldCreateConstraintOnRelationshipProperty()
+        {
+            //---------------Set up test pack-------------------
+            ClassDef.ClassDefs.Add(typeof(FakeBOWithNoRelationship).MapClass());
+            
+            //---------------Assert Precondition----------------
+            //---------------Execute Test ----------------------
+            var classDef = typeof(FakeBOWithUniqueConstraint_Relationship).MapClass();
+            //---------------Test Result -----------------------
+            Assert.AreEqual(1, classDef.KeysCol.Count);
+            IKeyDef keyDef1 = classDef.KeysCol["UC"];
+            Assert.AreEqual(1, keyDef1.Count);
+            Assert.AreSame(classDef.GetPropDef("RelatedObjectID"), keyDef1[0]);
+        }
+        
         [Test]
         public void Test_Map_WhenInheritance_ShouldMapInheritenceRelationship()
         {

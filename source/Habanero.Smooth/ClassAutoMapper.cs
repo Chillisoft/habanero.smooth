@@ -128,13 +128,15 @@ namespace Habanero.Smooth
                 this.ClassDef = CreateClassDef();
                 MapSuperClassHierarchy();
                 MapProperties();
-                MapUniqueConstraints();
-
+                
                 this.ClassDef.MapIdentity();
 
                 MapManyToOneRelationships();
                 MapOneToManyRelationships();
                 MapOneToOneRelationships();
+
+                MapUniqueConstraints();
+
                 return this.ClassDef;
             }
             return null;
