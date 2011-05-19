@@ -123,6 +123,7 @@ namespace Habanero.Smooth.Test
 		public FakeEnum PublicEnumProp { get; set; }
 		public FakeEnum? PublicNullableEnumProp { get; set; }
 		public System.Drawing.Image PublicImageProp { get; set; }
+		public byte[] PublicByteArrayProp { get; set; }
 
 		[FakeAttribute]
 		public float? PublicPropWithAtt { get; set; }

@@ -255,6 +255,7 @@ namespace Habanero.Smooth
                    type == typeof (float?) ||
                    type == typeof (float) ||
                    type == typeof(System.Drawing.Image) ||
+                   type == typeof(byte[]) ||
                    type.IsEnumType();
         }
 

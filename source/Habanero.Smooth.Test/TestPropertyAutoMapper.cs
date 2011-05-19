@@ -80,6 +80,7 @@ namespace Habanero.Smooth.Test
         [TestCase("PublicNullableEnumProp", typeof(FakeEnum?), "Habanero.Smooth.Test.FakeEnum")]
         [TestCase("PublicPropWithAtt", typeof(float?), "System.Single")]
         [TestCase("PublicImageProp", typeof(System.Drawing.Image), "System.Drawing.Image")]
+        [TestCase("PublicByteArrayProp", typeof(byte[]), "System.Byte[]")]
         public void Test_MapProperty_WhenPublicProp_ShouldSetPropNameAndType(string propName, Type propType, string typeName)
         {
             //---------------Set up test pack-------------------

@@ -255,6 +255,7 @@ namespace Habanero.Smooth.Test
         [TestCase("PublicNullableEnumProp")]
         [TestCase("PublicPropWithAtt")]
         [TestCase("PublicImageProp")]
+        [TestCase("PublicByteArrayProp")]
         public void Test_Map_WhenHasProps_ShouldMapProps(string propName)
         {
             //---------------Set up test pack-------------------
