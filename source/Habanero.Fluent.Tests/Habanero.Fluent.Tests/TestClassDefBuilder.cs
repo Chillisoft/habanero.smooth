@@ -6,6 +6,11 @@ using Habanero.Smooth.Test;
 using NUnit.Framework;
 using TestProject.BO;
 
+
+//TODO andrew 30 May 2011: You should be able to build a classdef without any properties if it is a subclass.
+
+
+
 // ReSharper disable InconsistentNaming
 namespace Habanero.Fluent.Tests
 {
