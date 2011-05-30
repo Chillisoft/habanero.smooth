@@ -81,6 +81,12 @@ namespace Habanero.Fluent
             return this;
         }
 
+        public MultipleRelationshipDefBuilder<T, TRelatedType> WithDeleteParentAction(DeleteParentAction deleteParentAction)
+        {
+            _deleteAction = deleteParentAction;
+            return this;
+        }
+
         public MultipleRelationshipDefBuilder<T, TRelatedType> WithRelationshipType(RelationshipType relationshipType)
         {
             _relationshipType = relationshipType;

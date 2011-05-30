@@ -436,6 +436,7 @@ namespace Habanero.Fluent.Tests
             Assert.IsFalse(classDef.PrimaryKeyDef.IsGuidObjectID);
             var def = classDef.PrimaryKeyDef[0];
             Assert.AreSame(typeof(int), def.PropertyType);
+            Assert.IsFalse(def.Compulsory);
             Assert.AreEqual(propertyName1, def.PropertyName);
         }
 
@@ -481,6 +482,7 @@ namespace Habanero.Fluent.Tests
             var def = classDef.PrimaryKeyDef[0];
             Assert.AreEqual("VehicleID", def.PropertyName);
             Assert.AreSame(typeof(Guid), def.PropertyType);
+            Assert.IsTrue(def.Compulsory);
             Assert.IsTrue(classDef.PrimaryKeyDef.IsGuidObjectID, "Should set to ISGuidObjectID since NonCompositeGuid");
         }
 

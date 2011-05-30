@@ -82,6 +82,22 @@ namespace Habanero.Fluent.Tests
             Assert.AreEqual(InsertParentAction.DoNothing, multipleRelationshipDef.InsertParentAction);
         }
 
+        [Test]
+        public void Test_Build_WithDeleteParentActionIsDoNothing_ShouldSetDeleteParentActionToPrevent()
+        {
+            //---------------Set up test pack-------------------
+            string relationshipName = "R" + GetRandomString();
+            var multipleRelationshipDefBuilder = GetMultipleRelationshipDefBuilder<Car, Driver>(relationshipName)
+                .WithDeleteParentAction(DeleteParentAction.Prevent);
+            
+            //---------------Assert Precondition----------------
+
+            //---------------Execute Test ----------------------
+            var multipleRelationshipDef = multipleRelationshipDefBuilder.Build();
+
+            //---------------Test Result -----------------------
+            Assert.AreEqual(DeleteParentAction.Prevent, multipleRelationshipDef.DeleteParentAction);
+        }
 
 
         [Test]

@@ -88,6 +88,7 @@ namespace Habanero.Fluent
                 if (_primaryKeyPropNames.Count == 1)
                 {
                     _primaryKeyDef.IsGuidObjectID = propDef.PropertyType == typeof (Guid);
+                    if (_primaryKeyDef.IsGuidObjectID) propDef.Compulsory = true;
                 }
             }
         }
