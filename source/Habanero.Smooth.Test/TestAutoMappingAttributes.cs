@@ -37,7 +37,7 @@ namespace Habanero.Smooth.Test
             const string defaultValue = "Value";            
             //---------------Assert Precondition----------------
             //---------------Execute Test ----------------------
-            AutoMapDefaultAttribute attribute = new AutoMapDefaultAttribute(defaultValue);
+            var attribute = new AutoMapDefaultAttribute(defaultValue);
             //---------------Test Result -----------------------
             Assert.AreSame(defaultValue, attribute.DefaultValue);
         }

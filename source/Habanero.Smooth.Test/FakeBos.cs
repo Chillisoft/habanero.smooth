@@ -298,22 +298,37 @@ namespace Habanero.Smooth.Test
 		public FakeWithTwoSingleReverseRel MySingleWithTwoSingleReverse { get; set; }
 	}
 
-    public class FakeBOWithTwoMultipleRelToSameProp : BusinessObject
-    {
-       
+	public class FakeBOWithTwoMultipleRelToSameProp : BusinessObject
+	{
+		[AutoMapOneToMany("FakeBORel1")]
+		public BusinessObjectCollection<FakeBOWithTwoRelToSameProp> MyMultipleAutoMapWithTwoSingleReverse { get; set; }
 
-        [AutoMapOneToMany("FakeBORel1")]
-        public BusinessObjectCollection<FakeBOWithTwoRelToSameProp> MyMultipleAutoMapWithTwoSingleReverse { get; set; }
+		[AutoMapOneToMany("FakeBORel2")]
+		public BusinessObjectCollection<FakeBOWithTwoRelToSameProp> MyMultipleAutoMapWithTwoSingleReverse2 { get; set; }	   
+		
+	}
+	public class FakeBOWithTwoSingleRelToSameProp : BusinessObject
+	{
+		[AutoMapManyToOne("FakeBORel1")]
+		public FakeBOWithTwoRelToSameProp SingleRel1 { get; set; }
 
-        [AutoMapOneToMany("FakeBORel2")]
-        public BusinessObjectCollection<FakeBOWithTwoRelToSameProp> MyMultipleAutoMapWithTwoSingleReverse2 { get; set; }
+		[AutoMapManyToOne("FakeBORel2")]
+		public FakeBOWithTwoRelToSameProp SingleRel2 { get; set; }
+	}
 
-    }
+	public class FakeBOWithTwoSingleRelToSamePropWithSameName : BusinessObject
+	{
+		[AutoMapManyToOne("FakeBOWithTwoSingleRelToSamePropWithSameNames")]
+		public FakeBOWithTwoRelToSameProp FakeBOWithTwoRelToSameProp { get; set; }
 
-    public class FakeBOWithTwoRelToSameProp:BusinessObject
-    {
-        
-    }
+		[AutoMapManyToOne("FakeBORel2")]
+		public FakeBOWithTwoRelToSameProp SingleRel2 { get; set; }
+	}
+
+	public class FakeBOWithTwoRelToSameProp:BusinessObject
+	{
+		
+	}
 
 	public class FakeBoWithAutoMapOneToOne : BusinessObject
 	{
@@ -655,19 +670,19 @@ namespace Habanero.Smooth.Test
 	public class FakeBOWithUniqueConstraint_Relationship : BusinessObject
 	{
 		[AutoMapUniqueConstraint("UC")]
-        [AutoMapManyToOne]
-        public FakeBOWithNoRelationship RelatedObject { get; set; }
+		[AutoMapManyToOne]
+		public FakeBOWithNoRelationship RelatedObject { get; set; }
 	}
 
 	public class FakeBOWithUniqueConstraint_TwoRelationship : BusinessObject
 	{
 		[AutoMapUniqueConstraint("UC")]
-        [AutoMapManyToOne]
-        public FakeBOWithNoRelationship RelatedObject1 { get; set; }
+		[AutoMapManyToOne]
+		public FakeBOWithNoRelationship RelatedObject1 { get; set; }
 
 		[AutoMapUniqueConstraint("UC")]
-        [AutoMapManyToOne]
-        public FakeBOWithNoRelationship RelatedObject2 { get; set; }
+		[AutoMapManyToOne]
+		public FakeBOWithNoRelationship RelatedObject2 { get; set; }
 	}
 
 	public class FakeBOWithTwoUniqueConstraints_OnePropEach : BusinessObject

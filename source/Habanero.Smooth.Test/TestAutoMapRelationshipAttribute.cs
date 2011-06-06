@@ -11,6 +11,7 @@ namespace Habanero.Smooth.Test
     [TestFixture]
     public class TestAutoMapRelationshipAttribute
     {
+// ReSharper disable InconsistentNaming
         [Test]
         public void Test_ConstructRelationship_WithNoParams_ShouldSetRelationshipTypeAssociation()
         {
