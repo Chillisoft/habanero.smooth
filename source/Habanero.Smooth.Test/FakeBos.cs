@@ -298,6 +298,23 @@ namespace Habanero.Smooth.Test
 		public FakeWithTwoSingleReverseRel MySingleWithTwoSingleReverse { get; set; }
 	}
 
+    public class FakeBOWithTwoMultipleRelToSameProp : BusinessObject
+    {
+       
+
+        [AutoMapOneToMany("FakeBORel1")]
+        public BusinessObjectCollection<FakeBOWithTwoRelToSameProp> MyMultipleAutoMapWithTwoSingleReverse { get; set; }
+
+        [AutoMapOneToMany("FakeBORel2")]
+        public BusinessObjectCollection<FakeBOWithTwoRelToSameProp> MyMultipleAutoMapWithTwoSingleReverse2 { get; set; }
+
+    }
+
+    public class FakeBOWithTwoRelToSameProp:BusinessObject
+    {
+        
+    }
+
 	public class FakeBoWithAutoMapOneToOne : BusinessObject
 	{
 		[AutoMapOneToOne]
