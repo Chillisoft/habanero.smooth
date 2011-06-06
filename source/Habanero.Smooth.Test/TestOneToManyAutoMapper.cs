@@ -704,7 +704,7 @@ namespace Habanero.Smooth.Test
 			Assert.IsInstanceOf(typeof(DefaultPropNamingConventions), nameConvention);
 		}
 
-	 //   [Ignore("fdsafasdfsdafasd")] //TODO Brett 06 Jun 2011: Ignored Test - fdsafasdfsdafasd
+	    [Ignore("Working on this test")] //TODO Brett 06 Jun 2011: Ignored Test - working on this test
 		[Test]
 		public void TestAutoMap_WithTwoMultipleRelationshipsToTheSameBO()
 		{
@@ -790,12 +790,6 @@ namespace Habanero.Smooth.Test
 							<primaryKey isObjectID=""true"">
 								<prop name=""FakeBOWithTwoRelToSamePropID"" />
 							</primaryKey>
-							<relationship name=""FakeBOWithTwoSingleRelToSamePropWithSameNames"" type=""multiple"" relatedClass=""FakeBOWithTwoSingleRelToSamePropWithSameName"" reverseRelationship=""FakeBOWithTwoRelToSameProp"" relatedAssembly=""Habanero.Smooth.Test"">
-							<relatedProperty property=""FakeBOWithTwoRelToSamePropID"" relatedProperty=""FakeBOWithTwoRelToSamePropID"" />
-							</relationship>
-							<relationship name=""FakeBORel2"" type=""multiple"" relatedClass=""FakeBOWithTwoSingleRelToSamePropWithSameName"" reverseRelationship=""SingleRel2"" relatedAssembly=""Habanero.Smooth.Test"">
-							<relatedProperty property=""FakeBOWithTwoRelToSamePropID"" relatedProperty=""SingleRel2ID"" />
-							</relationship>
 						</class>
 					</classes>";
 			//---------------Assert Precondition----------------
@@ -818,5 +812,43 @@ namespace Habanero.Smooth.Test
 			validator.ValidateClassDefs(AllClassesAutoMapper.ClassDefCol);
 		}
 
+		[Test]
+		public void TestAutoMap_WithTwoSingleRelationshipToTheSameBO_WhereReverseRelsAreDefined_WithPropAndRelNameMatching()
+		{
+			//---------------Set up test pack-------------------
+			const string parentClassDefXML = @"<classes> 
+						<class name=""FakeBOWithTwoRelToSameProp"" assembly=""Habanero.Smooth.Test"">
+							<property name =""FakeBOWithTwoRelToSamePropID"" type=""Guid""/>
+							<primaryKey isObjectID=""true"">
+								<prop name=""FakeBOWithTwoRelToSamePropID"" />
+							</primaryKey>
+							<relationship name=""FakeBOWithTwoSingleRelToSamePropWithSameNames"" type=""multiple"" relatedClass=""FakeBOWithTwoSingleRelToSamePropWithSameName"" reverseRelationship=""FakeBOWithTwoRelToSameProp"" relatedAssembly=""Habanero.Smooth.Test"">
+							<relatedProperty property=""FakeBOWithTwoRelToSamePropID"" relatedProperty=""FakeBOWithTwoRelToSamePropID"" />
+							</relationship>
+							<relationship name=""FakeBORel2"" type=""multiple"" relatedClass=""FakeBOWithTwoSingleRelToSamePropWithSameName"" reverseRelationship=""SingleRel2"" relatedAssembly=""Habanero.Smooth.Test"">
+							<relatedProperty property=""FakeBOWithTwoRelToSamePropID"" relatedProperty=""SingleRel2ID"" />
+							</relationship>
+						</class>
+					</classes>";	
+
+			//---------------Assert Precondition----------------
+			//---------------Execute Test ----------------------
+			var xmlClassDefsLoader = new XmlClassDefsLoader(parentClassDefXML, new DtdLoader());
+			var loadedClassDefs = xmlClassDefsLoader.LoadClassDefs();
+			var relatedClassType = typeof(FakeBOWithTwoSingleRelToSamePropWithSameName);
+			var allClassesAutoMapper = new AllClassesAutoMapper(new CustomTypeSource(new[] { relatedClassType }));
+			AllClassesAutoMapper.ClassDefCol = loadedClassDefs;
+			allClassesAutoMapper.Map();
+			//---------------Test Result -----------------------
+			Assert.AreEqual(2, AllClassesAutoMapper.ClassDefCol.Count);
+			var relationshipDefCol = AllClassesAutoMapper.ClassDefCol[relatedClassType].RelationshipDefCol;
+			Assert.AreEqual(2, relationshipDefCol.Count);
+			var relationshipDef = relationshipDefCol["FakeBOWithTwoRelToSameProp"];
+			Assert.AreEqual("FakeBOWithTwoSingleRelToSamePropWithSameNames", relationshipDef.ReverseRelationshipName);
+			var relationshipDef2 = relationshipDefCol["SingleRel2"];
+			Assert.AreEqual("FakeBORel2", relationshipDef2.ReverseRelationshipName);
+			var validator = new ClassDefValidator(new DefClassFactory());
+			validator.ValidateClassDefs(AllClassesAutoMapper.ClassDefCol);
+		}
 	}
 }
