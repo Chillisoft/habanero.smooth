@@ -110,6 +110,11 @@ namespace Habanero.Smooth
                     propDef.AddPropRule(propRuleDate);
                 }
 
+                if (this.PropertyWrapper.HasKeepValuePrivateAttribute)
+                {
+                    propDef.KeepValuePrivate = true;
+                }
+
                 propDef.AutoIncrementing = this.PropertyWrapper.HasAutoIncrementingAttribute;
                 return propDef;
             }

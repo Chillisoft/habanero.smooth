@@ -338,6 +338,33 @@ namespace Habanero.Smooth.Test
             //---------------Test Result -----------------------
             Assert.IsFalse(hasIgnoreAttribute);
         }
+
+        [Test]
+        public void Test_HasKeepValuePrivateAttribute_WhenHas_ShouldReturnTrue()
+        {
+            //---------------Set up test pack-------------------
+            var propertyInfo = MockRepository.GenerateMock<PropertyInfo>();
+            propertyInfo.SetCustomAttribute<AutoMapKeepValuePrivate>();
+            var propertyWrapper = new PropertyWrapper(propertyInfo);
+            //---------------Execute Test ----------------------
+            var hasAttribute = propertyWrapper.HasKeepValuePrivateAttribute;
+            //---------------Test Result -----------------------
+            Assert.IsTrue(hasAttribute);
+        }
+
+        [Test]
+        public void Test_HasKeepValuePrivateAttribute_WhenNotHas_ShouldReturnFalse()
+        {
+            //---------------Set up test pack-------------------
+            var propertyInfo = MockRepository.GenerateMock<PropertyInfo>();
+            propertyInfo.ClearCustomAttributes<AutoMapKeepValuePrivate>();
+            var propertyWrapper = new PropertyWrapper(propertyInfo);
+            //---------------Execute Test ----------------------
+            var hasAttribute = propertyWrapper.HasKeepValuePrivateAttribute;
+            //---------------Test Result -----------------------
+            Assert.IsFalse(hasAttribute);
+        }
+
         [Test]
         public void Test_HasCompulsoryAttribute_WhenHas_ShouldReturnTrue()
         {

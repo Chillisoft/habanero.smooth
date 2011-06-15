@@ -213,6 +213,15 @@ namespace Habanero.Smooth
     {
     }
 
+     /// <summary>
+    /// Marks a property with KeepValuePrivate = true. This is for password fields etc.
+    /// </summary>
+    [AttributeUsage(AttributeTargets.Property)]
+    public class AutoMapKeepValuePrivate : Attribute
+     {
+         
+     }
+
     /// <summary>
     /// Marks an Integer range property rule.
     /// </summary>

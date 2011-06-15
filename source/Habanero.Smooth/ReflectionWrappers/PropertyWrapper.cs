@@ -194,6 +194,13 @@ namespace Habanero.Smooth.ReflectionWrappers
         public bool HasCompulsoryAttribute
         {
             get { return this.HasAttribute<AutoMapCompulsoryAttribute>(); }
+        }       
+        /// <summary>
+        /// Returns true if this property has the <see cref="AutoMapKeepValuePrivate"/>
+        /// </summary>
+        public bool HasKeepValuePrivateAttribute
+        {
+            get { return this.HasAttribute<AutoMapKeepValuePrivate>(); }
         }
         /// <summary>
         /// has an ManyToOne Attribute on the Property.

@@ -157,6 +157,32 @@ namespace Habanero.Smooth.Test
         }
 
         [Test]
+        public void MapProperty_WhenHasNoAttribute_ShouldSetKeepValuePrivateFalse()
+        {
+            //---------------Set up test pack-------------------
+            var classType = typeof(FakeBOWProps);
+            var propertyInfo = classType.GetProperty("PublicGetGuidProp");
+            var propertyAutoMapper = new PropertyAutoMapper(propertyInfo);
+            //---------------Execute Test ----------------------
+            var propDef = propertyAutoMapper.MapProperty();
+            //---------------Test Result -----------------------
+            Assert.IsFalse(propDef.KeepValuePrivate);
+        }
+
+        [Test]
+        public void MapProperty_WhenHasKeepValuePrivateAttribute_ShouldSetKeepValuePrivateTrue()
+        {
+            //---------------Set up test pack-------------------
+            var classType = typeof(FakeBOWProps);
+            var propertyInfo = classType.GetProperty("PublicWithKeepValuePrivateAtt");
+            var propertyAutoMapper = new PropertyAutoMapper(propertyInfo);
+            //---------------Execute Test ----------------------
+            var propDef = propertyAutoMapper.MapProperty();
+            //---------------Test Result -----------------------
+            Assert.IsTrue(propDef.KeepValuePrivate);
+        }
+
+        [Test]
         public void Test_PropWithNonIgnoreAttribute_ShouldReturnPropDef()
         {
             //---------------Set up test pack-------------------

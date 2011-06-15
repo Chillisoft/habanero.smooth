@@ -130,6 +130,9 @@ namespace Habanero.Smooth.Test
 
 		[AutoMapIgnore]
 		public Guid PublicWithIgnoreAtt { get; set; }
+
+        [AutoMapKeepValuePrivate]
+        public Guid PublicWithKeepValuePrivateAtt { get; set; }
 	}
 	public class FakeBOGeneric : BusinessObject<FakeBOGeneric>
 	{
