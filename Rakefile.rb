@@ -9,6 +9,7 @@ require 'albacore'
 # deeper in the repo you will need to add another ..
 bs = File.dirname(__FILE__)
 bs = File.join(bs, "..") if bs.index("branches") != nil
+bs = File.join(bs, "..") if bs.index("tags") != nil
 bs = File.join(bs, "../../../HabaneroCommunity/BuildScripts")
 $buildscriptpath = File.expand_path(bs)
 $:.unshift($buildscriptpath) unless
@@ -30,67 +31,69 @@ require 'rake-habanero.rb'
 
 
 #------------------------project settings------------------------
-$basepath = 'http://delicious:8080/svn/habanero/HabaneroCommunity/SmoothHabanero/branches/v1.6'
+$basepath = 'http://delicious:8080/svn/habanero/HabaneroCommunity/SmoothHabanero/tags/v1.6'
 $solution = 'source/SmoothHabanero_2010.sln'
 
 #______________________________________________________________________________
 #---------------------------------TASKS----------------------------------------
 
 desc "Runs the build all task"
-task :default => [:build_all]
+task :default => [:build]
 
-desc "Rakes habanero, builds Smooth"
-task :build_all => [:create_temp, :rake_habanero, :build, :delete_temp]
+task :build => [:msbuild, :test]
 
-desc "Builds Smooth, including tests"
-task :build => [:clean, :updatelib, :build_FakeBOs, :msbuild, :test, :commitlib]
+# desc "Rakes habanero, builds Smooth"
+# task :build_all => [:create_temp, :rake_habanero, :build, :delete_temp]
 
-desc "builds the FakeBOs dll and copies to the lib folder"
-task :build_FakeBOs => [:msbuild_FakeBOsInSeperateAssembly,:copy_dll_to_smooth_lib] 
+# desc "Builds Smooth, including tests"
+# task :build => [:clean, :updatelib, :build_FakeBOs, :msbuild, :test, :commitlib]
+
+# desc "builds the FakeBOs dll and copies to the lib folder"
+# task :build_FakeBOs => [:msbuild_FakeBOsInSeperateAssembly,:copy_dll_to_smooth_lib] 
 
 #------------------------build FakeBOsInSeperateAssembly---------
 
-$fakeBOsFolder = "temp/FakeBOsInSeperateAssembly"
+# $fakeBOsFolder = "temp/FakeBOsInSeperateAssembly"
 
-task :clean_FakeBOsInSeperateAssembly do 
-	FileUtils.rm_rf "#{$fakeBOsFolder}/bin"
-end
+# task :clean_FakeBOsInSeperateAssembly do 
+	# FileUtils.rm_rf "#{$fakeBOsFolder}/bin"
+# end
 
-svn :checkout_FakeBOsInSeperateAssembly => :clean_FakeBOsInSeperateAssembly do |s| 
-	s.parameters "co #{$basepath}/source/FakeBosInSeperateAssembly #{$fakeBOsFolder}"
-end
+# svn :checkout_FakeBOsInSeperateAssembly => :clean_FakeBOsInSeperateAssembly do |s| 
+	# s.parameters "co #{$basepath}/source/FakeBosInSeperateAssembly #{$fakeBOsFolder}"
+# end
 
-msbuild :msbuild_FakeBOsInSeperateAssembly => :checkout_FakeBOsInSeperateAssembly do |msb| 
-	puts cyan("building FakeBOsInSeperateAssembly in #{$fakeBOsFolder}")
-	msb.update_attributes msbuild_settings
-    msb.solution = "#{$fakeBOsFolder}/FakeBOsInSeperateAssembly.sln"
-end
+# msbuild :msbuild_FakeBOsInSeperateAssembly => :checkout_FakeBOsInSeperateAssembly do |msb| 
+	# puts cyan("building FakeBOsInSeperateAssembly in #{$fakeBOsFolder}")
+	# msb.update_attributes msbuild_settings
+    # msb.solution = "#{$fakeBOsFolder}/FakeBOsInSeperateAssembly.sln"
+# end
 
-task :copy_dll_to_smooth_lib do
-	FileUtils.cp Dir.glob("#{$fakeBOsFolder}/bin/FakeBosInSeperateAssembly.dll"), 'lib'
-end
+# task :copy_dll_to_smooth_lib do
+	# FileUtils.cp Dir.glob("#{$fakeBOsFolder}/bin/FakeBosInSeperateAssembly.dll"), 'lib'
+# end
 
-#------------------------build smooth itself --------------------
+# #------------------------build smooth itself --------------------
 
-desc "Cleans the bin folder"
-task :clean do
-	puts cyan("Cleaning bin folder")
-	FileUtils.rm_rf 'bin'
-end
+# desc "Cleans the bin folder"
+# task :clean do
+	# puts cyan("Cleaning bin folder")
+	# FileUtils.rm_rf 'bin'
+# end
 
-svn :update_lib_from_svn do |s|
-	s.parameters "update lib"
-end
+# svn :update_lib_from_svn do |s|
+	# s.parameters "update lib"
+# end
 
-task :updatelib => :update_lib_from_svn do 
-	puts cyan("Updating lib")
-	FileUtils.cp Dir.glob('temp/bin/Habanero.Base.dll'), 'lib'
-	FileUtils.cp Dir.glob('temp/bin/Habanero.Base.pdb'), 'lib'
-	FileUtils.cp Dir.glob('temp/bin/Habanero.Base.xml'), 'lib'
-	FileUtils.cp Dir.glob('temp/bin/Habanero.BO.dll'), 'lib'
-	FileUtils.cp Dir.glob('temp/bin/Habanero.BO.pdb'), 'lib'
-	FileUtils.cp Dir.glob('temp/bin/Habanero.BO.xml'), 'lib'
-end
+# task :updatelib => :update_lib_from_svn do 
+	# puts cyan("Updating lib")
+	# FileUtils.cp Dir.glob('temp/bin/Habanero.Base.dll'), 'lib'
+	# FileUtils.cp Dir.glob('temp/bin/Habanero.Base.pdb'), 'lib'
+	# FileUtils.cp Dir.glob('temp/bin/Habanero.Base.xml'), 'lib'
+	# FileUtils.cp Dir.glob('temp/bin/Habanero.BO.dll'), 'lib'
+	# FileUtils.cp Dir.glob('temp/bin/Habanero.BO.pdb'), 'lib'
+	# FileUtils.cp Dir.glob('temp/bin/Habanero.BO.xml'), 'lib'
+# end
 
 desc "Builds the solution with msbuild"
 msbuild :msbuild do |msb| 
