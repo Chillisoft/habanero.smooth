@@ -2,7 +2,7 @@ Habanero Smooth Change log
 
 For use of Smooth please see the sample projects included in the source code zip.
 
-v1.6.0 - 17 October 2011
+v1.6.0 - 24 October 2011
     This version is built against Habanero Core 2.6.0 and .NET 4.0
 
 #1182: SuperClassDefBuilder - Define Descriminator
