@@ -43,8 +43,8 @@ task :default => [:build]
 # desc "Rakes habanero, builds Smooth"
 # task :build_all => [:create_temp, :rake_habanero, :build, :delete_temp]
 
--desc "Builds Smooth, including tests"
--task :build => [:clean, :msbuild, :test, :commitlib]
+desc "Builds Smooth, including tests"
+task :build => [:clean, :msbuild, :test, :commitlib]
 
 #-desc "builds the FakeBOs dll and copies to the lib folder"
 #-task :build_FakeBOs => [:msbuild_FakeBOsInSeperateAssembly,:copy_dll_to_smooth_lib] 
