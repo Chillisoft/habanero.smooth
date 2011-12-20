@@ -1,4 +1,4 @@
-Smooth Habanero 1.4 - 1 December 2010
+Smooth Habanero 1.6.0 - 17 November 2011
 
 Smooth Habanero is a library that automatically maps your Habanero classes to a database schema based on assumptions and attributes.
 

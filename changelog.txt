@@ -2,6 +2,18 @@ Habanero Smooth Change log
 
 For use of Smooth please see the sample projects included in the source code zip.
 
+v1.6.0 - 17 November 2011
+    This version is built against Habanero Core 2.6.0 and .NET 4.0
+
+#1182: SuperClassDefBuilder - Define Descriminator
+#1355: AutomapManyToOne: Maps to Incorrect Primary Key when Inhertiance
+#1435: The ability to map table name via an attribute.
+#1594: Need to add support for Automapping DateTime Proprule as a string
+#1715: Support for reverse engineering Image properties
+#1718: ManyToOneAutoMapper does not support relationship types other than Association
+#1735: Unique constraints on relationships are not being mapped
+#1793: Support for KeepValuePrivate)
+
 v1.4 - 1 December 2010
 Built against Habanero Core 2.5.1
 
