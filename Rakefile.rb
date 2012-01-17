@@ -125,3 +125,11 @@ pushnugetpackages :publishSmoothNugetPackage do |package|
   package.Version = "9.9.999"
   package.Description = "Smooth.Base"
 end
+
+desc "Publish the Habanero.Naked nuget package"
+pushnugetpackages :publishNakedNugetPackage do |package|
+  package.InputFileWithPath = "bin/Habanero.Naked.dll"
+  package.Nugetid = "Habanero.Naked.Trunk"
+  package.Version = "9.9.999"
+  package.Description = "Naked"
+end
