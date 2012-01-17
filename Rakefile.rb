@@ -43,7 +43,7 @@ desc "Rakes habanero, builds Smooth"
 task :build_all => [:create_temp, :rake_habanero, :build, :delete_temp]
 
 desc "Pulls habanero from local nuget, builds and tests smooth"
-tesk :build_test_smooth => [:create_temp, :installNugetPackages, :build, :publishSmoothNugetPackage, :delete_temp]
+task :build_test_smooth => [:create_temp, :installNugetPackages, :build, :publishSmoothNugetPackage, :delete_temp]
 
 desc "Builds Smooth, including tests"
 task :build => [:clean, :updatelib, :build_FakeBOs, :msbuild, :test, :commitlib]
