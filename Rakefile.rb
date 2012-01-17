@@ -43,7 +43,7 @@ desc "Rakes habanero, builds Smooth"
 task :build_all => [:create_temp, :rake_habanero, :build, :delete_temp]
 
 desc "Pulls habanero from local nuget, builds and tests smooth"
-task :build_test_smooth => [:create_temp, :installNugetPackages, :build, :publishSmoothNugetPackage, :delete_temp]
+task :build_test_smooth => [:create_temp, :installNugetPackages, :build, :publishSmoothNugetPackage, :publishNakedNugetPackage, :delete_temp]
 
 desc "Builds Smooth, including tests"
 task :build => [:clean, :updatelib, :build_FakeBOs, :msbuild, :test, :commitlib]
@@ -124,4 +124,12 @@ pushnugetpackages :publishSmoothNugetPackage do |package|
   package.Nugetid = "Habanero.Smooth.v1.5_2011-08-24"
   package.Version = "1.5"
   package.Description = "Smooth"
+end
+
+desc "Publish the Habanero.Naked nuget package"
+pushnugetpackages :publishNakedNugetPackage do |package|
+  package.InputFileWithPath = "bin/Habanero.Naked.dll"
+  package.Nugetid = "Habanero.Naked.v1.5_2011-08-24"
+  package.Version = "1.5"
+  package.Description = "Naked"
 end
