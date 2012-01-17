@@ -122,6 +122,6 @@ desc "Publish the Habanero.Smooth nuget package"
 pushnugetpackages :publishSmoothNugetPackage do |package|
   package.InputFileWithPath = "bin/Habanero.Smooth.dll"
   package.Nugetid = "Habanero.Smooth.Trunk"
-  package.Version = "Trunk"
+  package.Version = "9.9.999"
   package.Description = "Smooth.Base"
 end
