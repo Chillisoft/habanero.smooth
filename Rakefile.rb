@@ -37,10 +37,13 @@ $solution = 'source/SmoothHabanero_2010.sln'
 #---------------------------------TASKS----------------------------------------
 
 desc "Runs the build all task"
-task :default => [:build_all]
+task :default => [:build_test_smooth]
 
 desc "Rakes habanero, builds Smooth"
 task :build_all => [:create_temp, :rake_habanero, :build, :delete_temp]
+
+desc "Pulls habanero from local nuget, builds and tests smooth"
+tesk :build_test_smooth => [:create_temp, :installNugetPackages, :build, :publishSmoothNugetPackage, :delete_temp]
 
 desc "Builds Smooth, including tests"
 task :build => [:clean, :updatelib, :build_FakeBOs, :msbuild, :test, :commitlib]
@@ -108,4 +111,17 @@ end
 svn :commitlib do |s|
 	#puts cyan("Commiting lib")
 	#s.parameters "ci lib -m autocheckin"
+end
+
+desc "Install nuget packages"
+getnugetpackages :installNugetPackages do |ip|
+    ip.package_names = ["Habanero.Base.V2.6_2011-08-24",  "Habanero.BO.V2.6_2011-08-24"]
+end
+
+desc "Publish the Habanero.Smooth nuget package"
+pushnugetpackages :publishSmoothNugetPackage do |package|
+  package.InputFileWithPath = "bin/Habanero.Smooth.dll"
+  package.Nugetid = "Habanero.Smooth.v1.5_2011-08-24"
+  package.Version = "1.5"
+  package.Description = "Smooth"
 end
