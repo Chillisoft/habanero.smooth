@@ -21,12 +21,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Habanero.Base;
-using Habanero.Smooth.Test.ExtensionMethods;
 using Habanero.Smooth.ReflectionWrappers;
 using Habanero.Smooth.Test.ValidFakeBOs;
 using NUnit.Framework;
 using Rhino.Mocks;
-
+// ReSharper disable InconsistentNaming
 namespace Habanero.Smooth.Test
 {
     [TestFixture]
@@ -45,12 +44,12 @@ namespace Habanero.Smooth.Test
         {
             //---------------Set up test pack-------------------
             const string expectedPropName = "ExpectedName";
-            FakePropertyInfo propertyInfo = new FakePropertyInfo(expectedPropName, typeof (FakeEnum));
-            PropertyWrapper propertyWrapper = propertyInfo.ToPropertyWrapper();
+            var propertyInfo = new FakePropertyInfo(expectedPropName, typeof (FakeEnum));
+            var propertyWrapper = propertyInfo.ToPropertyWrapper();
             //---------------Assert Precondition----------------
             Assert.AreEqual(expectedPropName, propertyInfo.Name);
             //---------------Execute Test ----------------------
-            string actualName = propertyWrapper.Name;
+            var actualName = propertyWrapper.Name;
             //---------------Test Result -----------------------
             Assert.AreEqual(expectedPropName, actualName);
         }
@@ -59,9 +58,9 @@ namespace Habanero.Smooth.Test
         public void Test_PropType_ShouldReturnPropInfoType()
         {
             //---------------Set up test pack-------------------
-            TypeWrapper expectedType = typeof (FakeEnum).ToTypeWrapper();
-            FakePropertyInfo propertyInfo = new FakePropertyInfo("fdafads", expectedType.UnderlyingType);
-            PropertyWrapper propertyWrapper = propertyInfo.ToPropertyWrapper();
+            var expectedType = typeof (FakeEnum).ToTypeWrapper();
+            var propertyInfo = new FakePropertyInfo("fdafads", expectedType.UnderlyingType);
+            var propertyWrapper = propertyInfo.ToPropertyWrapper();
             //---------------Assert Precondition----------------
             Assert.AreSame(expectedType.UnderlyingType, propertyInfo.PropertyType);
             //---------------Execute Test ----------------------
@@ -74,8 +73,8 @@ namespace Habanero.Smooth.Test
         public void Test_PropertyInfo_ShouldReturnPropInfo()
         {
             //---------------Set up test pack-------------------
-            FakePropertyInfo propertyInfo = new FakePropertyInfo(typeof (FakeEnum));
-            PropertyWrapper propertyWrapper = propertyInfo.ToPropertyWrapper();
+            var propertyInfo = new FakePropertyInfo(typeof (FakeEnum));
+            var propertyWrapper = propertyInfo.ToPropertyWrapper();
             //---------------Assert Precondition----------------
             //---------------Execute Test ----------------------
             var propInfo = propertyWrapper.PropertyInfo;
@@ -87,9 +86,9 @@ namespace Habanero.Smooth.Test
         public void Test_DeclaringType_ShouldReturnDeclaringTypeWrapped()
         {
             //---------------Set up test pack-------------------
-            Type expectedDeclaringType = typeof (FakeBoNoProps);
-            FakePropertyInfo propertyInfo = new FakePropertyInfo(expectedDeclaringType);
-            PropertyWrapper propertyWrapper = propertyInfo.ToPropertyWrapper();
+            var expectedDeclaringType = typeof (FakeBoNoProps);
+            var propertyInfo = new FakePropertyInfo(expectedDeclaringType);
+            var propertyWrapper = propertyInfo.ToPropertyWrapper();
             //---------------Assert Precondition----------------
             Assert.AreSame(expectedDeclaringType, propertyInfo.DeclaringType);
             //---------------Execute Test ----------------------
@@ -136,7 +135,7 @@ namespace Habanero.Smooth.Test
             TypeWrapper returnType = MockRepository.GenerateMock<FakeTypeWrapper>();
             var expectedReturnTypeName = RandomValueGenerator.GetRandomString();
             returnType.SetName(expectedReturnTypeName);
-            FakePropertyWrapper propertyWrapper = new FakePropertyWrapper {MyRelatedType = returnType};
+            var propertyWrapper = new FakePropertyWrapper {MyRelatedType = returnType};
             //---------------Assert Precondition----------------
             Assert.IsNotNull(propertyWrapper.RelatedClassType);
             //---------------Execute Test ----------------------
@@ -149,9 +148,9 @@ namespace Habanero.Smooth.Test
         public void Test_RelatedClassType_WhenNotGenericShouldReturnPropType()
         {
             //---------------Set up test pack-------------------
-            Type returnType = MockRepository.GenerateMock<Type>();
-            FakePropertyInfo info = new FakePropertyInfo("fdafasd", returnType);
-            PropertyWrapper propertyWrapper = new PropertyWrapper(info);
+            var returnType = MockRepository.GenerateMock<Type>();
+            var info = new FakePropertyInfo("fdafasd", returnType);
+            var propertyWrapper = new PropertyWrapper(info);
             //---------------Assert Precondition----------------
             Assert.IsNotNull(propertyWrapper.RelatedClassType);
             Assert.IsFalse(returnType.IsGenericType);
@@ -164,10 +163,10 @@ namespace Habanero.Smooth.Test
         public void Test_RelatedClassType_WhenIsGenericShouldReturnUnderlyingPropType()
         {
             //---------------Set up test pack-------------------
-            TypeWrapper underlying = new TypeWrapper(typeof(FakeBOWProps));
+            var underlying = new TypeWrapper(typeof(FakeBOWProps));
             var genericReturnType = underlying.MakeGenericBusinessObjectCollection();
-            FakePropertyInfo info = new FakePropertyInfo("fdafasd", genericReturnType.UnderlyingType);
-            PropertyWrapper propertyWrapper = new PropertyWrapper(info);
+            var info = new FakePropertyInfo("fdafasd", genericReturnType.UnderlyingType);
+            var propertyWrapper = new PropertyWrapper(info);
             
             //---------------Assert Precondition----------------
             Assert.IsTrue(genericReturnType.IsGenericType);
@@ -180,10 +179,10 @@ namespace Habanero.Smooth.Test
         public void Test_IsSingleRel_WhenIsGenericShouldReturnFalse()
         {
             //---------------Set up test pack-------------------
-            TypeWrapper underlying = new TypeWrapper(typeof(FakeBOWProps));
+            var underlying = new TypeWrapper(typeof(FakeBOWProps));
             var genericReturnType = underlying.MakeGenericBusinessObjectCollection();
-            FakePropertyInfo info = new FakePropertyInfo("fdafasd", genericReturnType.UnderlyingType);
-            PropertyWrapper propertyWrapper = new PropertyWrapper(info);
+            var info = new FakePropertyInfo("fdafasd", genericReturnType.UnderlyingType);
+            var propertyWrapper = new PropertyWrapper(info);
             
             //---------------Assert Precondition----------------
             Assert.IsTrue(genericReturnType.IsGenericType);
@@ -197,8 +196,8 @@ namespace Habanero.Smooth.Test
         public void Test_IsSingleRel_WhenIsStringShouldReturnFalse()
         {
             //---------------Set up test pack-------------------
-            FakePropertyInfo info = new FakePropertyInfo("fdafasd", typeof(string));
-            PropertyWrapper propertyWrapper = new PropertyWrapper(info);
+            var info = new FakePropertyInfo("fdafasd", typeof(string));
+            var propertyWrapper = new PropertyWrapper(info);
             
             //---------------Assert Precondition----------------
             //---------------Execute Test ----------------------
@@ -210,8 +209,8 @@ namespace Habanero.Smooth.Test
         public void Test_IsSingleRel_WhenIsBOShouldReturnTrue()
         {
             //---------------Set up test pack-------------------
-            FakePropertyInfo info = new FakePropertyInfo("fdafasd", typeof(FakeBOWProps));
-            PropertyWrapper propertyWrapper = new PropertyWrapper(info);
+            var info = new FakePropertyInfo("fdafasd", typeof(FakeBOWProps));
+            var propertyWrapper = new PropertyWrapper(info);
             
             //---------------Assert Precondition----------------
             //---------------Execute Test ----------------------
@@ -224,10 +223,10 @@ namespace Habanero.Smooth.Test
         public void Test_IsMultipleRel_WhenIsGenericShouldReturnTrue()
         {
             //---------------Set up test pack-------------------
-            TypeWrapper underlying = new TypeWrapper(typeof(FakeBOWProps));
+            var underlying = new TypeWrapper(typeof(FakeBOWProps));
             var genericReturnType = underlying.MakeGenericBusinessObjectCollection();
-            FakePropertyInfo info = new FakePropertyInfo("fdafasd", genericReturnType.UnderlyingType);
-            PropertyWrapper propertyWrapper = new PropertyWrapper(info);
+            var info = new FakePropertyInfo("fdafasd", genericReturnType.UnderlyingType);
+            var propertyWrapper = new PropertyWrapper(info);
 
             //---------------Assert Precondition----------------
             Assert.IsTrue(genericReturnType.IsGenericType);
@@ -241,8 +240,8 @@ namespace Habanero.Smooth.Test
         public void Test_IsMultipleRel_WhenIsStringShouldReturnFalse()
         {
             //---------------Set up test pack-------------------
-            FakePropertyInfo info = new FakePropertyInfo("fdafasd", typeof(string));
-            PropertyWrapper propertyWrapper = new PropertyWrapper(info);
+            var info = new FakePropertyInfo("fdafasd", typeof(string));
+            var propertyWrapper = new PropertyWrapper(info);
 
             //---------------Assert Precondition----------------
             //---------------Execute Test ----------------------
@@ -254,8 +253,8 @@ namespace Habanero.Smooth.Test
         public void Test_IsMultipleRel_WhenIsBOShouldReturnFalse()
         {
             //---------------Set up test pack-------------------
-            FakePropertyInfo info = new FakePropertyInfo("fdafasd", typeof(FakeBOWProps));
-            PropertyWrapper propertyWrapper = new PropertyWrapper(info);
+            var info = new FakePropertyInfo("fdafasd", typeof(FakeBOWProps));
+            var propertyWrapper = new PropertyWrapper(info);
 
             //---------------Assert Precondition----------------
             //---------------Execute Test ----------------------
@@ -268,10 +267,10 @@ namespace Habanero.Smooth.Test
         public void Test_IsRel_WhenIsGenericShouldReturnTrue()
         {
             //---------------Set up test pack-------------------
-            TypeWrapper underlying = new TypeWrapper(typeof(FakeBOWProps));
+            var underlying = new TypeWrapper(typeof(FakeBOWProps));
             var genericReturnType = underlying.MakeGenericBusinessObjectCollection();
-            FakePropertyInfo info = new FakePropertyInfo("fdafasd", genericReturnType.UnderlyingType);
-            PropertyWrapper propertyWrapper = new PropertyWrapper(info);
+            var info = new FakePropertyInfo("fdafasd", genericReturnType.UnderlyingType);
+            var propertyWrapper = new PropertyWrapper(info);
 
             //---------------Assert Precondition----------------
             Assert.IsTrue(genericReturnType.IsGenericType);
@@ -285,8 +284,8 @@ namespace Habanero.Smooth.Test
         public void Test_IsRel_WhenIsStringShouldReturnFalse()
         {
             //---------------Set up test pack-------------------
-            FakePropertyInfo info = new FakePropertyInfo("fdafasd", typeof(string));
-            PropertyWrapper propertyWrapper = new PropertyWrapper(info);
+            var info = new FakePropertyInfo("fdafasd", typeof(string));
+            var propertyWrapper = new PropertyWrapper(info);
 
             //---------------Assert Precondition----------------
             //---------------Execute Test ----------------------
@@ -298,8 +297,8 @@ namespace Habanero.Smooth.Test
         public void Test_IsRel_WhenIsBOShouldReturnTrue()
         {
             //---------------Set up test pack-------------------
-            FakePropertyInfo info = new FakePropertyInfo("fdafasd", typeof(FakeBOWProps));
-            PropertyWrapper propertyWrapper = new PropertyWrapper(info);
+            var info = new FakePropertyInfo("fdafasd", typeof(FakeBOWProps));
+            var propertyWrapper = new PropertyWrapper(info);
 
             //---------------Assert Precondition----------------
             //---------------Execute Test ----------------------
@@ -312,9 +311,9 @@ namespace Habanero.Smooth.Test
         public void Test_HasIgnoreAttribute_WhenHas_ShouldReturnTrue()
         {
             //---------------Set up test pack-------------------
-            PropertyInfo propertyInfo = MockRepository.GenerateMock<PropertyInfo>();
+            var propertyInfo = MockRepository.GenerateMock<PropertyInfo>();
             propertyInfo.SetCustomAttribute<AutoMapIgnoreAttribute>();
-            PropertyWrapper propertyWrapper = new PropertyWrapper(propertyInfo);
+            var propertyWrapper = new PropertyWrapper(propertyInfo);
             //---------------Assert Precondition----------------
             var customAttributes = propertyInfo.GetCustomAttributes(typeof (AutoMapIgnoreAttribute), true);
             Assert.AreEqual(1, customAttributes.Count());
@@ -327,9 +326,9 @@ namespace Habanero.Smooth.Test
         public void Test_HasIgnoreAttribute_WhenNotHas_ShouldReturnFalse()
         {
             //---------------Set up test pack-------------------
-            PropertyInfo propertyInfo = MockRepository.GenerateMock<PropertyInfo>();
+            var propertyInfo = MockRepository.GenerateMock<PropertyInfo>();
             propertyInfo.ClearCustomAttributes<AutoMapIgnoreAttribute>();
-            PropertyWrapper propertyWrapper = new PropertyWrapper(propertyInfo);
+            var propertyWrapper = new PropertyWrapper(propertyInfo);
             //---------------Assert Precondition----------------
             var customAttributes = propertyInfo.GetCustomAttributes(typeof (AutoMapIgnoreAttribute), true);
             Assert.AreEqual(0, customAttributes.Count());
@@ -369,9 +368,9 @@ namespace Habanero.Smooth.Test
         public void Test_HasCompulsoryAttribute_WhenHas_ShouldReturnTrue()
         {
             //---------------Set up test pack-------------------
-            PropertyInfo propertyInfo = MockRepository.GenerateMock<PropertyInfo>();
+            var propertyInfo = MockRepository.GenerateMock<PropertyInfo>();
             propertyInfo.SetCustomAttribute<AutoMapCompulsoryAttribute>();
-            PropertyWrapper propertyWrapper = new PropertyWrapper(propertyInfo);
+            var propertyWrapper = new PropertyWrapper(propertyInfo);
             //---------------Assert Precondition----------------
             var customAttributes = propertyInfo.GetCustomAttributes(typeof(AutoMapCompulsoryAttribute), true);
             Assert.AreEqual(1, customAttributes.Count());
@@ -385,9 +384,9 @@ namespace Habanero.Smooth.Test
         public void Test_HasCompulsoryAttribute_WhenNotHas_ShouldReturnFalse()
         {
             //---------------Set up test pack-------------------
-            PropertyInfo propertyInfo = MockRepository.GenerateMock<PropertyInfo>();
+            var propertyInfo = MockRepository.GenerateMock<PropertyInfo>();
             propertyInfo.ClearCustomAttributes<AutoMapCompulsoryAttribute>();
-            PropertyWrapper propertyWrapper = new PropertyWrapper(propertyInfo);
+            var propertyWrapper = new PropertyWrapper(propertyInfo);
             //---------------Assert Precondition----------------
             var customAttributes = propertyInfo.GetCustomAttributes(typeof(AutoMapCompulsoryAttribute), true);
             Assert.AreEqual(0, customAttributes.Count());
@@ -401,7 +400,7 @@ namespace Habanero.Smooth.Test
         {
             //---------------Set up test pack-------------------
             var classType = typeof(FakeBOWithCompulsoryProp);
-            PropertyInfo propertyInfo = classType.GetProperty("CompulsoryProp");
+            var propertyInfo = classType.GetProperty("CompulsoryProp");
             var propertyWrapper = propertyInfo.ToPropertyWrapper();
             //---------------Assert Precondition----------------
             var customAttributes = propertyInfo.GetCustomAttributes(typeof(AutoMapCompulsoryAttribute), true);
@@ -417,7 +416,7 @@ namespace Habanero.Smooth.Test
             //---------------Set up test pack-------------------
 
             var classType = typeof(FakeBOWithCompulsoryProp);
-            PropertyInfo propertyInfo = classType.GetProperty("NonCompulsoryProp");
+            var propertyInfo = classType.GetProperty("NonCompulsoryProp");
             var propertyWrapper = propertyInfo.ToPropertyWrapper();
             //---------------Assert Precondition----------------
             var customAttributes = propertyInfo.GetCustomAttributes(typeof(AutoMapCompulsoryAttribute), true);
@@ -431,9 +430,9 @@ namespace Habanero.Smooth.Test
         public void Test_HasManyToOneAttribute_WhenHas_ShouldReturnTrue()
         {
             //---------------Set up test pack-------------------
-            PropertyInfo propertyInfo = MockRepository.GenerateMock<PropertyInfo>();
+            var propertyInfo = MockRepository.GenerateMock<PropertyInfo>();
             propertyInfo.SetCustomAttribute<AutoMapManyToOneAttribute>();
-            PropertyWrapper propertyWrapper = new PropertyWrapper(propertyInfo);
+            var propertyWrapper = new PropertyWrapper(propertyInfo);
             //---------------Assert Precondition----------------
             var customAttributes = propertyInfo.GetCustomAttributes(typeof(AutoMapManyToOneAttribute), true);
             Assert.AreEqual(1, customAttributes.Count());
@@ -446,9 +445,9 @@ namespace Habanero.Smooth.Test
         public void Test_HasManyToOneAttribute_WhenNotHas_ShouldReturnFalse()
         {
             //---------------Set up test pack-------------------
-            PropertyInfo propertyInfo = MockRepository.GenerateMock<PropertyInfo>();
+            var propertyInfo = MockRepository.GenerateMock<PropertyInfo>();
             propertyInfo.ClearCustomAttributes<AutoMapManyToOneAttribute>();
-            PropertyWrapper propertyWrapper = new PropertyWrapper(propertyInfo);
+            var propertyWrapper = new PropertyWrapper(propertyInfo);
             //---------------Assert Precondition----------------
             var customAttributes = propertyInfo.GetCustomAttributes(typeof(AutoMapManyToOneAttribute), true);
             Assert.AreEqual(0, customAttributes.Count());
@@ -461,9 +460,9 @@ namespace Habanero.Smooth.Test
         public void Test_HasOneToOneAttribute_WhenHas_ShouldReturnTrue()
         {
             //---------------Set up test pack-------------------
-            PropertyInfo propertyInfo = MockRepository.GenerateMock<PropertyInfo>();
+            var propertyInfo = MockRepository.GenerateMock<PropertyInfo>();
             propertyInfo.SetCustomAttribute<AutoMapOneToOneAttribute>();
-            PropertyWrapper propertyWrapper = new PropertyWrapper(propertyInfo);
+            var propertyWrapper = new PropertyWrapper(propertyInfo);
             //---------------Assert Precondition----------------
             var customAttributes = propertyInfo.GetCustomAttributes(typeof(AutoMapOneToOneAttribute), true);
             Assert.AreEqual(1, customAttributes.Count());
@@ -476,9 +475,9 @@ namespace Habanero.Smooth.Test
         public void Test_HasOneToOneAttribute_WhenNotHas_ShouldReturnFalse()
         {
             //---------------Set up test pack-------------------
-            PropertyInfo propertyInfo = MockRepository.GenerateMock<PropertyInfo>();
+            var propertyInfo = MockRepository.GenerateMock<PropertyInfo>();
             propertyInfo.ClearCustomAttributes<AutoMapOneToOneAttribute>();
-            PropertyWrapper propertyWrapper = new PropertyWrapper(propertyInfo);
+            var propertyWrapper = new PropertyWrapper(propertyInfo);
             //---------------Assert Precondition----------------
             var customAttributes = propertyInfo.GetCustomAttributes(typeof(AutoMapOneToOneAttribute), true);
             Assert.AreEqual(0, customAttributes.Count());
@@ -491,9 +490,9 @@ namespace Habanero.Smooth.Test
         public void Test_HasAutoIncrementingAttribute_WhenHas_ShouldReturnTrue()
         {
             //---------------Set up test pack-------------------
-            PropertyInfo propertyInfo = MockRepository.GenerateMock<PropertyInfo>();
+            var propertyInfo = MockRepository.GenerateMock<PropertyInfo>();
             propertyInfo.SetCustomAttribute<AutoMapAutoIncrementingAttribute>();
-            PropertyWrapper propertyWrapper = new PropertyWrapper(propertyInfo);
+            var propertyWrapper = new PropertyWrapper(propertyInfo);
             //---------------Assert Precondition----------------
             var customAttributes = propertyInfo.GetCustomAttributes(typeof(AutoMapAutoIncrementingAttribute), true);
             Assert.AreEqual(1, customAttributes.Count());
@@ -507,9 +506,9 @@ namespace Habanero.Smooth.Test
         public void Test_HasAutoIncrementingAttribute_WhenNotHas_ShouldReturnFalse()
         {
             //---------------Set up test pack-------------------
-            PropertyInfo propertyInfo = MockRepository.GenerateMock<PropertyInfo>();
+            var propertyInfo = MockRepository.GenerateMock<PropertyInfo>();
             propertyInfo.ClearCustomAttributes<AutoMapAutoIncrementingAttribute>();
-            PropertyWrapper propertyWrapper = new PropertyWrapper(propertyInfo);
+            var propertyWrapper = new PropertyWrapper(propertyInfo);
             //---------------Assert Precondition----------------
             var customAttributes = propertyInfo.GetCustomAttributes(typeof(AutoMapAutoIncrementingAttribute), true);
             Assert.AreEqual(0, customAttributes.Count());
@@ -523,9 +522,9 @@ namespace Habanero.Smooth.Test
         public void Test_HasReadWriteRuleAttribute_WhenHas_ShouldReturnTrue()
         {
             //---------------Set up test pack-------------------
-            PropertyInfo propertyInfo = MockRepository.GenerateMock<PropertyInfo>();
+            var propertyInfo = MockRepository.GenerateMock<PropertyInfo>();
             propertyInfo.SetCustomAttribute(new AutoMapReadWriteRuleAttribute(PropReadWriteRule.ReadOnly));
-            PropertyWrapper propertyWrapper = new PropertyWrapper(propertyInfo);
+            var propertyWrapper = new PropertyWrapper(propertyInfo);
             //---------------Assert Precondition----------------
             var customAttributes = propertyInfo.GetCustomAttributes(typeof(AutoMapReadWriteRuleAttribute), true);
             Assert.AreEqual(1, customAttributes.Count());
@@ -539,9 +538,9 @@ namespace Habanero.Smooth.Test
         public void Test_HasReadWriteRuleAttribute_WhenNotHas_ShouldReturnFalse()
         {
             //---------------Set up test pack-------------------
-            PropertyInfo propertyInfo = MockRepository.GenerateMock<PropertyInfo>();
+            var propertyInfo = MockRepository.GenerateMock<PropertyInfo>();
             propertyInfo.ClearCustomAttributes<AutoMapReadWriteRuleAttribute>();
-            PropertyWrapper propertyWrapper = new PropertyWrapper(propertyInfo);
+            var propertyWrapper = new PropertyWrapper(propertyInfo);
             //---------------Assert Precondition----------------
             var customAttributes = propertyInfo.GetCustomAttributes(typeof(AutoMapReadWriteRuleAttribute), true);
             Assert.AreEqual(0, customAttributes.Count());
@@ -555,9 +554,9 @@ namespace Habanero.Smooth.Test
         public void Test_HasUniqueConstraintAttribute_WhenHas_ShouldReturnTrue()
         {
             //---------------Set up test pack-------------------
-            PropertyInfo propertyInfo = MockRepository.GenerateMock<PropertyInfo>();
+            var propertyInfo = MockRepository.GenerateMock<PropertyInfo>();
             propertyInfo.SetCustomAttribute(new AutoMapUniqueConstraintAttribute("UC1"));
-            PropertyWrapper propertyWrapper = new PropertyWrapper(propertyInfo);
+            var propertyWrapper = new PropertyWrapper(propertyInfo);
             //---------------Assert Precondition----------------
             var customAttributes = propertyInfo.GetCustomAttributes(typeof(AutoMapUniqueConstraintAttribute), true);
             Assert.AreEqual(1, customAttributes.Count());
@@ -571,9 +570,9 @@ namespace Habanero.Smooth.Test
         public void Test_HasUniqueConstraintAttribute_WhenNotHas_ShouldReturnFalse()
         {
             //---------------Set up test pack-------------------
-            PropertyInfo propertyInfo = MockRepository.GenerateMock<PropertyInfo>();
+            var propertyInfo = MockRepository.GenerateMock<PropertyInfo>();
             propertyInfo.ClearCustomAttributes<AutoMapUniqueConstraintAttribute>();
-            PropertyWrapper propertyWrapper = new PropertyWrapper(propertyInfo);
+            var propertyWrapper = new PropertyWrapper(propertyInfo);
             //---------------Assert Precondition----------------
             var customAttributes = propertyInfo.GetCustomAttributes(typeof(AutoMapUniqueConstraintAttribute), true);
             Assert.AreEqual(0, customAttributes.Count());
@@ -590,9 +589,9 @@ namespace Habanero.Smooth.Test
         public void Test_GetAttributes_WhenHas_ShouldReturnOne()
         {
             //---------------Set up test pack-------------------
-            PropertyInfo propertyInfo = MockRepository.GenerateMock<PropertyInfo>();
+            var propertyInfo = MockRepository.GenerateMock<PropertyInfo>();
             propertyInfo.SetCustomAttribute<AutoMapIgnoreAttribute>();
-            PropertyWrapper propertyWrapper = new PropertyWrapper(propertyInfo);
+            var propertyWrapper = new PropertyWrapper(propertyInfo);
             //---------------Assert Precondition----------------
             var customAttributes = propertyInfo.GetCustomAttributes(typeof (AutoMapIgnoreAttribute), true);
             Assert.AreEqual(1, customAttributes.Count());
@@ -605,9 +604,9 @@ namespace Habanero.Smooth.Test
         public void Test_GetAttributes_WhenNotHas_ShouldReturnNone()
         {
             //---------------Set up test pack-------------------
-            PropertyInfo propertyInfo = MockRepository.GenerateMock<PropertyInfo>();
+            var propertyInfo = MockRepository.GenerateMock<PropertyInfo>();
             propertyInfo.ClearCustomAttributes<AutoMapIgnoreAttribute>();
-            PropertyWrapper propertyWrapper = new PropertyWrapper(propertyInfo);
+            var propertyWrapper = new PropertyWrapper(propertyInfo);
             //---------------Assert Precondition----------------
             var customAttributes = propertyInfo.GetCustomAttributes(typeof (AutoMapIgnoreAttribute), true);
             Assert.AreEqual(0, customAttributes.Count());
@@ -623,8 +622,8 @@ namespace Habanero.Smooth.Test
             const string expectedPropName = "MySingleRelationship";
             var type = typeof(FakeBoWithStaticProperty);
             //---------------Assert Precondition----------------
-            PropertyInfo propertyInfo = type.GetProperty(expectedPropName);
-            PropertyWrapper property = propertyInfo.ToPropertyWrapper();
+            var propertyInfo = type.GetProperty(expectedPropName);
+            var property = propertyInfo.ToPropertyWrapper();
             Assert.IsTrue(propertyInfo.GetGetMethod().IsStatic);
             //---------------Execute Test ----------------------
             var isStatic = property.IsStatic;
@@ -637,8 +636,8 @@ namespace Habanero.Smooth.Test
             const string expectedPropName = "MySingleRelationship1";
             var type = typeof(FakeBOWithAllTypesOfRel);
             //---------------Assert Precondition----------------
-            PropertyInfo propertyInfo = type.GetProperty(expectedPropName);
-            PropertyWrapper property = propertyInfo.ToPropertyWrapper();
+            var propertyInfo = type.GetProperty(expectedPropName);
+            var property = propertyInfo.ToPropertyWrapper();
             Assert.IsFalse(propertyInfo.GetGetMethod().IsStatic);
             //---------------Execute Test ----------------------
             var isStatic = property.IsStatic;
@@ -650,8 +649,8 @@ namespace Habanero.Smooth.Test
         {
             const string expectedPropName = "PublicStringProp";
             var type = typeof(FakeBoWithPrivateProps);
-            PropertyInfo propertyInfo = type.GetProperty(expectedPropName);
-            PropertyWrapper property = propertyInfo.ToPropertyWrapper();
+            var propertyInfo = type.GetProperty(expectedPropName);
+            var property = propertyInfo.ToPropertyWrapper();
             //---------------Assert Precondition----------------
             Assert.IsNotNull(propertyInfo.GetGetMethod());
             Assert.IsTrue(propertyInfo.GetGetMethod().IsPublic);
@@ -665,8 +664,8 @@ namespace Habanero.Smooth.Test
         {
             const string expectedPropName = "PrivateStringProp";
             var type = typeof(FakeBoWithPrivateProps);
-            PropertyInfo propertyInfo = type.GetProperty(expectedPropName, BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.GetProperty);
-            PropertyWrapper property = propertyInfo.ToPropertyWrapper();
+            var propertyInfo = type.GetProperty(expectedPropName, BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.GetProperty);
+            var property = propertyInfo.ToPropertyWrapper();
             //---------------Assert Precondition----------------
             Assert.IsNotNull(propertyInfo);
             //---------------Execute Test ----------------------
@@ -680,8 +679,8 @@ namespace Habanero.Smooth.Test
         {
             const string expectedPropName = "InternalStringProp";
             var type = typeof(FakeBoWithPrivateProps);
-            PropertyInfo propertyInfo = type.GetProperty(expectedPropName, BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.GetProperty);
-            PropertyWrapper property = propertyInfo.ToPropertyWrapper();
+            var propertyInfo = type.GetProperty(expectedPropName, BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.GetProperty);
+            var property = propertyInfo.ToPropertyWrapper();
             //---------------Assert Precondition----------------
             Assert.IsNotNull(propertyInfo);
             //---------------Execute Test ----------------------
@@ -695,8 +694,8 @@ namespace Habanero.Smooth.Test
         {
             const string expectedPropName = "ProtectedStringProp";
             var type = typeof(FakeBoWithPrivateProps);
-            PropertyInfo propertyInfo = type.GetProperty(expectedPropName, BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.GetProperty);
-            PropertyWrapper property = propertyInfo.ToPropertyWrapper();
+            var propertyInfo = type.GetProperty(expectedPropName, BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.GetProperty);
+            var property = propertyInfo.ToPropertyWrapper();
             //---------------Assert Precondition----------------
             Assert.IsNotNull(propertyInfo);
             //---------------Execute Test ----------------------
@@ -721,8 +720,8 @@ namespace Habanero.Smooth.Test
             const string expectedPropName = "MySingleRelationship";
             var type = typeof (FakeBOWithSingleAttributeDeclaredRevRel);
             //---------------Assert Precondition----------------
-            PropertyInfo propertyInfo = type.GetProperty(expectedPropName);
-            PropertyWrapper property = propertyInfo.ToPropertyWrapper();
+            var propertyInfo = type.GetProperty(expectedPropName);
+            var property = propertyInfo.ToPropertyWrapper();
             Assert.IsTrue(property.IsSingleRelationhip);
             //---------------Execute Test ----------------------
             var hasSingleReverseRelationship = property.HasSingleReverseRelationship;
@@ -741,7 +740,7 @@ namespace Habanero.Smooth.Test
             //---------------Set up test pack-------------------
             PropertyInfo propInfo = new FakePropertyInfo();
             //---------------Assert Precondition----------------
-            PropertyWrapper property = propInfo.ToPropertyWrapper();
+            var property = propInfo.ToPropertyWrapper();
             Assert.IsNull(property.GetSingleReverseRelPropInfos());
             //---------------Execute Test ----------------------
             var hasSingleReverseRelationship = property.HasSingleReverseRelationship;
@@ -755,7 +754,7 @@ namespace Habanero.Smooth.Test
             //---------------Set up test pack-------------------
             var classType = typeof (FakeBOWithReverseSingleRel).ToTypeWrapper();
             const string expectedPropName = "MySingleRelationship";
-            PropertyWrapper propertyInfo = classType.GetProperty(expectedPropName);
+            var propertyInfo = classType.GetProperty(expectedPropName);
             var reverseClassType = propertyInfo.RelatedClassType;
             //---------------Assert Precondition----------------
             classType.AssertPropertyExists(expectedPropName);
@@ -777,7 +776,7 @@ namespace Habanero.Smooth.Test
             // single relationships that could be mapped back.
             var classType = typeof (FakeBoWithMultipleRel).ToTypeWrapper();
             const string expectedPropName = "MyMultipleWithTwoSingleReverse";
-            PropertyWrapper propertyInfo = classType.GetProperty(expectedPropName);
+            var propertyInfo = classType.GetProperty(expectedPropName);
             var reverseClassType = propertyInfo.RelatedClassType;
             //---------------Assert Precondition----------------
             classType.AssertPropertyExists(expectedPropName);
@@ -807,8 +806,8 @@ namespace Habanero.Smooth.Test
             //---------------Set up test pack-------------------
             const string expectedPropName = "MySingleRelationship";
             var type = typeof (FakeBoWithNoSingleReverse);
-            PropertyInfo propertyInfo = type.GetProperty(expectedPropName);
-            PropertyWrapper property = propertyInfo.ToPropertyWrapper();
+            var propertyInfo = type.GetProperty(expectedPropName);
+            var property = propertyInfo.ToPropertyWrapper();
             //---------------Assert Precondition----------------
             propertyInfo.AssertIsSingleRelationship();
             //---------------Execute Test ----------------------
@@ -825,8 +824,8 @@ namespace Habanero.Smooth.Test
             //---------------Set up test pack-------------------
             const string expectedPropName = "MySingleRelationshipRev";
             var type = typeof (FakeBOWithM1Attribute);
-            PropertyInfo propertyInfo = type.GetProperty(expectedPropName);
-            PropertyWrapper property = propertyInfo.ToPropertyWrapper();
+            var propertyInfo = type.GetProperty(expectedPropName);
+            var property = propertyInfo.ToPropertyWrapper();
             //---------------Assert Precondition----------------
             propertyInfo.AssertIsSingleRelationship();
             property.HasAttribute<AutoMapManyToOneAttribute>();
@@ -845,7 +844,7 @@ namespace Habanero.Smooth.Test
             const string expectedPropName = "MySingleRelationship";
             var ownerClassType = typeof (FakeBOWithReverseSingle).ToTypeWrapper();
             var propertyInfo = ownerClassType.GetProperty(expectedPropName);
-            PropertyWrapper property = propertyInfo;
+            var property = propertyInfo;
             var reverseClassType = property.RelatedClassType;
             //---------------Assert Precondition----------------
             propertyInfo.AssertIsSingleRelationship();
@@ -868,7 +867,7 @@ namespace Habanero.Smooth.Test
             //---------------Set up test pack-------------------
             var classType = typeof (FakeBOWithReverseSingleRel).ToTypeWrapper();
             const string expectedPropName = "MySingleRelationship";
-            PropertyWrapper propertyInfo = classType.GetProperty(expectedPropName);
+            var propertyInfo = classType.GetProperty(expectedPropName);
             var reverseClassType = propertyInfo.RelatedClassType;
 
             //---------------Assert Precondition----------------
@@ -890,7 +889,7 @@ namespace Habanero.Smooth.Test
             //---------------Set up test pack-------------------
             var classType = typeof (FakeBOWithReverseSingle).ToTypeWrapper();
             const string expectedPropName = "MySingleRelationship2";
-            PropertyWrapper propertyInfo = classType.GetProperty(expectedPropName);
+            var propertyInfo = classType.GetProperty(expectedPropName);
             var reverseClassType = propertyInfo.RelatedClassType;
 
             //---------------Assert Precondition----------------
@@ -918,7 +917,7 @@ namespace Habanero.Smooth.Test
             //---------------Set up test pack-------------------
             var classType = typeof (FakeBOWith11Attribute).ToTypeWrapper();
             const string expectedPropName = "MySingleRevRelationship";
-            PropertyWrapper propertyInfo = classType.GetProperty(expectedPropName);
+            var propertyInfo = classType.GetProperty(expectedPropName);
             var reverseClassType = propertyInfo.RelatedClassType;
             //---------------Assert Precondition----------------
             classType.AssertPropertyExists(expectedPropName);
@@ -943,7 +942,7 @@ namespace Habanero.Smooth.Test
             //---------------Set up test pack-------------------
             var classType = typeof (FakeBOWithReverseSingle).ToTypeWrapper();
             const string expectedPropName = "MySingleIgnorRelationship";
-            PropertyWrapper propertyInfo = classType.GetProperty(expectedPropName);
+            var propertyInfo = classType.GetProperty(expectedPropName);
             var reverseClassType = propertyInfo.RelatedClassType;
             //---------------Assert Precondition----------------
             classType.AssertPropertyExists(expectedPropName);
@@ -965,7 +964,7 @@ namespace Habanero.Smooth.Test
             //---------------Set up test pack-------------------
             var classType = typeof (FakeBOWithReverseSingle).ToTypeWrapper();
             const string expectedPropName = "MySingleWithReverseIgnore";
-            PropertyWrapper propertyInfo = classType.GetProperty(expectedPropName);
+            var propertyInfo = classType.GetProperty(expectedPropName);
             var reverseClassType = propertyInfo.RelatedClassType;
             //---------------Assert Precondition----------------
             classType.AssertPropertyExists(expectedPropName);
@@ -986,7 +985,7 @@ namespace Habanero.Smooth.Test
             //---------------Set up test pack-------------------
             var classType = typeof(FakeBoWithMultipleRel);
             const string expectedPropName = "MySingleWithTwoSingleReverse";
-            PropertyInfo propertyInfo = classType.GetProperty(expectedPropName);
+            var propertyInfo = classType.GetProperty(expectedPropName);
             var propertyWrapper = propertyInfo.ToPropertyWrapper();
             //---------------Assert Precondition----------------
             Assert.AreEqual(2, propertyInfo.ToPropertyWrapper().GetOneToOneReverseRelationshipInfos().Count);
@@ -1001,7 +1000,7 @@ namespace Habanero.Smooth.Test
             //---------------Set up test pack-------------------
             var classType = typeof (FakeBOWithReverseSingle).ToTypeWrapper();
             const string expectedPropName = "MySingleRelationship3";
-            PropertyWrapper propertyInfo = classType.GetProperty(expectedPropName);
+            var propertyInfo = classType.GetProperty(expectedPropName);
             var reverseClassType = propertyInfo.RelatedClassType;
             //---------------Assert Precondition----------------
             classType.AssertPropertyExists(expectedPropName);
@@ -1021,7 +1020,7 @@ namespace Habanero.Smooth.Test
         {
             var classType = typeof (FakeBoWithMultipleRel).ToTypeWrapper();
             const string expectedPropName = "MyMultipleWithTwoSingleReverse";
-            PropertyWrapper propertyInfo = classType.GetProperty(expectedPropName);
+            var propertyInfo = classType.GetProperty(expectedPropName);
             var relatedClassType = propertyInfo.RelatedClassType;
             //---------------Assert Precondition----------------
             classType.AssertPropertyExists(expectedPropName);
@@ -1039,7 +1038,7 @@ namespace Habanero.Smooth.Test
         {
             var classType = typeof(FakeBoWithMultipleRel).ToTypeWrapper();
             const string expectedPropName = "MyMultipleWithTwoSingleReverse";
-            PropertyWrapper propertyInfo = classType.GetProperty(expectedPropName);
+            var propertyInfo = classType.GetProperty(expectedPropName);
             //---------------Assert Precondition----------------
             propertyInfo.GetOneToOneReverseRelationshipInfos().ShouldBeEmpty();
             //---------------Execute Test ----------------------
@@ -1057,7 +1056,7 @@ namespace Habanero.Smooth.Test
             //---------------Set up test pack-------------------
             var classType = typeof(FakeBOWith11Attribute).ToTypeWrapper();
             const string expectedPropName = "MySingleRevRelationship";
-            PropertyWrapper propertyInfo = classType.GetProperty(expectedPropName);
+            var propertyInfo = classType.GetProperty(expectedPropName);
             //---------------Assert Precondition----------------
             propertyInfo.GetOneToOneReverseRelationshipInfos().ShouldHaveCount(1);
             //---------------Execute Test ----------------------
@@ -1082,7 +1081,7 @@ namespace Habanero.Smooth.Test
         {
             var classType = typeof (FakeBoWithMultipleRel).ToTypeWrapper();
             const string expectedPropName = "MyMultipleWithTwoSingleReverse";
-            PropertyWrapper propertyInfo = classType.GetProperty(expectedPropName);
+            var propertyInfo = classType.GetProperty(expectedPropName);
             var relatedClassType = propertyInfo.RelatedClassType;
             //---------------Assert Precondition----------------
             classType.AssertPropertyExists(expectedPropName);
@@ -1103,7 +1102,7 @@ namespace Habanero.Smooth.Test
         {
             var classType = typeof (FakeBoWithMultipleRel).ToTypeWrapper();
             const string expectedPropName = "MyMultipleRevRel";
-            PropertyWrapper propertyInfo = classType.GetProperty(expectedPropName);
+            var propertyInfo = classType.GetProperty(expectedPropName);
             //---------------Assert Precondition----------------
             classType.AssertPropertyExists(expectedPropName);
             propertyInfo.AssertIsMultipleRelationship();
@@ -1122,7 +1121,7 @@ namespace Habanero.Smooth.Test
             //---------------Set up test pack-------------------
             const string expectedPropName = "MyMultipleWithTwoSingleReverseOneIgnore";
             var classType = typeof (FakeBoWithMultipleRel).ToTypeWrapper();
-            PropertyWrapper propertyInfo = classType.GetProperty(expectedPropName);
+            var propertyInfo = classType.GetProperty(expectedPropName);
             var reverseClassType = propertyInfo.RelatedClassType;
 
             //---------------Assert Precondition----------------
@@ -1146,7 +1145,7 @@ namespace Habanero.Smooth.Test
             var classType = typeof (FakeBoWithMultipleRel).ToTypeWrapper();
 
             const string expectedPropName = "MyMultipleReverseAutoMapped";
-            PropertyWrapper propertyInfo = classType.GetProperty(expectedPropName);
+            var propertyInfo = classType.GetProperty(expectedPropName);
             var reverseClassType = propertyInfo.RelatedClassType;
             //---------------Assert Precondition----------------
             classType.AssertPropertyExists(expectedPropName);
@@ -1174,7 +1173,7 @@ namespace Habanero.Smooth.Test
             var classType = typeof (FakeBoWithMultipleRel).ToTypeWrapper();
 
             const string expectedPropName = "ReverseHasAutoMapOneToOne";
-            PropertyWrapper propertyInfo = classType.GetProperty(expectedPropName);
+            var propertyInfo = classType.GetProperty(expectedPropName);
             var reverseClassType = propertyInfo.RelatedClassType;
             //---------------Assert Precondition----------------
             classType.AssertPropertyExists(expectedPropName);
@@ -1195,7 +1194,7 @@ namespace Habanero.Smooth.Test
             // have any single relationships mapped back to this class.
             var classType = typeof (FakeBoWithMultipleRel).ToTypeWrapper();
             const string expectedPropName = "MyMultipleRevRel";
-            PropertyWrapper propertyInfo = classType.GetProperty(expectedPropName);
+            var propertyInfo = classType.GetProperty(expectedPropName);
             var reverseClassType = propertyInfo.RelatedClassType;
             //---------------Assert Precondition----------------
             classType.AssertPropertyExists(expectedPropName);
@@ -1214,7 +1213,7 @@ namespace Habanero.Smooth.Test
         {
             var classType = typeof (FakeBoWithMultipleRel).ToTypeWrapper();
             const string expectedPropName = "MyMultipleWithTwoSingleReverseThisIgnore";
-            PropertyWrapper propertyInfo = classType.GetProperty(expectedPropName);
+            var propertyInfo = classType.GetProperty(expectedPropName);
             var relatedClassType = propertyInfo.RelatedClassType;
             //---------------Assert Precondition----------------
             classType.AssertPropertyExists(expectedPropName);
@@ -1235,7 +1234,7 @@ namespace Habanero.Smooth.Test
             //---------------Set up test pack-------------------
             var classType = typeof (FakeBOWithReverseSingle).ToTypeWrapper();
             const string expectedPropName = "MySingleRelationship3";
-            PropertyWrapper propertyInfo = classType.GetProperty(expectedPropName);
+            var propertyInfo = classType.GetProperty(expectedPropName);
             var reverseClassType = propertyInfo.RelatedClassType;
             //---------------Assert Precondition----------------
             classType.AssertPropertyExists(expectedPropName);
@@ -1255,7 +1254,7 @@ namespace Habanero.Smooth.Test
         {
             var classType = typeof (FakeBoWithMultipleRel).ToTypeWrapper();
             const string expectedPropName = "MyMultipleAutoMapWithTwoSingleReverse";
-            PropertyWrapper propertyInfo = classType.GetProperty(expectedPropName);
+            var propertyInfo = classType.GetProperty(expectedPropName);
             var relatedClassType = propertyInfo.RelatedClassType;
             const string expectedMappedReverseRel = "MySingleRelationship2";
             //---------------Assert Precondition----------------
@@ -1277,7 +1276,7 @@ namespace Habanero.Smooth.Test
         {
             var classType = typeof (FakeBoWithMultipleRel).ToTypeWrapper();
             const string expectedPropName = "MultipleMappedToNonExistentReverse";
-            PropertyWrapper propertyInfo = classType.GetProperty(expectedPropName);
+            var propertyInfo = classType.GetProperty(expectedPropName);
             var relatedClassType = propertyInfo.RelatedClassType;
             const string expectedMappedReverseRel = "NonExistentReverseRel";
             //---------------Assert Precondition----------------
@@ -1299,14 +1298,14 @@ namespace Habanero.Smooth.Test
         public void Test_GetMappedReverseRelationshipName_WhenNoAttribute_ShouldReturnNull()
         {
             //---------------Set up test pack-------------------
-            PropertyInfo info = RandomValueGenerator.GetMockPropInfoWithNoAutoMapProp<AutoMapOneToManyAttribute>();
-            PropertyWrapper propertyWrapper = info.ToPropertyWrapper();
-            object[] customAttributes = info.GetCustomAttributes(typeof (AutoMapOneToManyAttribute), true);
+            var info = RandomValueGenerator.GetMockPropInfoWithNoAutoMapProp<AutoMapOneToManyAttribute>();
+            var propertyWrapper = info.ToPropertyWrapper();
+            var customAttributes = info.GetCustomAttributes(typeof (AutoMapOneToManyAttribute), true);
             //---------------Assert Precondition----------------
             Assert.IsNotNull(customAttributes);
             Assert.AreEqual(0, customAttributes.Count());
             //---------------Execute Test ----------------------
-            string mappedReverseRelationshipName = propertyWrapper.GetMappedReverseRelationshipName<AutoMapOneToManyAttribute>();
+            var mappedReverseRelationshipName = propertyWrapper.GetMappedReverseRelationshipName<AutoMapOneToManyAttribute>();
             //---------------Test Result -----------------------
             Assert.IsNull(mappedReverseRelationshipName);
         }
@@ -1315,9 +1314,9 @@ namespace Habanero.Smooth.Test
         public void Test_GetMappedReverseRelationshipName_WhenAutoMapPropNoReverseRel_ShouldReturnNull()
         {
             //---------------Set up test pack-------------------
-            PropertyInfo info = RandomValueGenerator.GetMockPropInfoWithAutoMapAttribute<AutoMapOneToManyAttribute>();
-            PropertyWrapper propertyWrapper = info.ToPropertyWrapper();
-            object[] customAttributes = info.GetCustomAttributes(typeof (AutoMapOneToManyAttribute), true);
+            var info = RandomValueGenerator.GetMockPropInfoWithAutoMapAttribute<AutoMapOneToManyAttribute>();
+            var propertyWrapper = info.ToPropertyWrapper();
+            var customAttributes = info.GetCustomAttributes(typeof (AutoMapOneToManyAttribute), true);
             //---------------Assert Precondition----------------
             Assert.IsNotNull(customAttributes);
             Assert.AreEqual(1, customAttributes.Count());
@@ -1325,7 +1324,7 @@ namespace Habanero.Smooth.Test
             Assert.IsNotNull(autoMapRelationshipAttribute);
             Assert.IsNull(autoMapRelationshipAttribute.ReverseRelationshipName);
             //---------------Execute Test ----------------------
-            string mappedReverseRelationshipName = propertyWrapper.GetMappedReverseRelationshipName<AutoMapOneToManyAttribute>();
+            var mappedReverseRelationshipName = propertyWrapper.GetMappedReverseRelationshipName<AutoMapOneToManyAttribute>();
             //---------------Test Result -----------------------
             Assert.IsNull(mappedReverseRelationshipName);
         }
@@ -1335,9 +1334,9 @@ namespace Habanero.Smooth.Test
         {
             //---------------Set up test pack-------------------
             const string expectedRevRelName = "MappedRevRel";
-            PropertyInfo info = RandomValueGenerator.GetMockPropInfoWithAutoMapAttribute<AutoMapOneToManyAttribute>(expectedRevRelName);
-            PropertyWrapper propertyWrapper = info.ToPropertyWrapper();
-            object[] customAttributes = info.GetCustomAttributes(typeof (AutoMapOneToManyAttribute), true);
+            var info = RandomValueGenerator.GetMockPropInfoWithAutoMapAttribute<AutoMapOneToManyAttribute>(expectedRevRelName);
+            var propertyWrapper = info.ToPropertyWrapper();
+            var customAttributes = info.GetCustomAttributes(typeof (AutoMapOneToManyAttribute), true);
             //---------------Assert Precondition----------------
             Assert.IsNotNull(customAttributes);
             Assert.AreEqual(1, customAttributes.Count());
@@ -1345,7 +1344,7 @@ namespace Habanero.Smooth.Test
             Assert.IsNotNull(autoMapRelationshipAttribute);
             Assert.IsNotNullOrEmpty(autoMapRelationshipAttribute.ReverseRelationshipName);
             //---------------Execute Test ----------------------
-            string mappedReverseRelationshipName = propertyWrapper.GetMappedReverseRelationshipName<AutoMapOneToManyAttribute>();
+            var mappedReverseRelationshipName = propertyWrapper.GetMappedReverseRelationshipName<AutoMapOneToManyAttribute>();
             //---------------Test Result -----------------------
             Assert.AreEqual(expectedRevRelName, mappedReverseRelationshipName);
         }
@@ -1361,13 +1360,13 @@ namespace Habanero.Smooth.Test
             //---------------Set up test pack-------------------
             var classType = typeof (FakeBOWithReverseSingle).ToTypeWrapper();
             const string relationshipName = "MySingleWithAutoMapNoReverse";
-            PropertyWrapper relPropInfo = classType.GetProperty(relationshipName);
+            var relPropInfo = classType.GetProperty(relationshipName);
             const string mappedRevRelName = "NoRevRel";
             //---------------Assert Precondition----------------
             relPropInfo.AssertHasAttribute<AutoMapOneToOneAttribute>(
                 attribute => attribute.ReverseRelationshipName == mappedRevRelName);
             //---------------Execute Test ----------------------
-            string reverseRelationshipName = relPropInfo.GetSingleReverseRelationshipName<AutoMapOneToOneAttribute>();
+            var reverseRelationshipName = relPropInfo.GetSingleReverseRelationshipName<AutoMapOneToOneAttribute>();
             //---------------Test Result -----------------------
             Assert.AreEqual(mappedRevRelName, reverseRelationshipName);
         }
@@ -1385,7 +1384,7 @@ namespace Habanero.Smooth.Test
             Assert.IsNotNull(relPropInfo);
             relatedClassType.AssertPropertyExists(foundRevRelationship);
             //---------------Execute Test ----------------------
-            string reverseRelationshipName = relPropInfo.GetSingleReverseRelationshipName<AutoMapOneToOneAttribute>();
+            var reverseRelationshipName = relPropInfo.GetSingleReverseRelationshipName<AutoMapOneToOneAttribute>();
             //---------------Test Result -----------------------
             Assert.AreEqual(foundRevRelationship, reverseRelationshipName);
         }
@@ -1397,12 +1396,12 @@ namespace Habanero.Smooth.Test
             //---------------Set up test pack-------------------
             var classType = typeof (FakeBOWithOneToOneAttribute).ToTypeWrapper();
             const string relationshipName = "MySingleRelationship";
-            PropertyWrapper relPropInfo = classType.GetProperty(relationshipName);
+            var relPropInfo = classType.GetProperty(relationshipName);
 
             //---------------Assert Precondition----------------
             relPropInfo.AssertHasAttribute<AutoMapOneToOneAttribute>(attribute => attribute.ReverseRelationshipName == null);
             //---------------Execute Test ----------------------
-            string reverseRelationshipName = relPropInfo.GetSingleReverseRelationshipName<AutoMapOneToOneAttribute>();
+            var reverseRelationshipName = relPropInfo.GetSingleReverseRelationshipName<AutoMapOneToOneAttribute>();
             //---------------Test Result -----------------------
             Assert.AreEqual(classType.Name, reverseRelationshipName);
         }
@@ -1413,15 +1412,15 @@ namespace Habanero.Smooth.Test
             //---------------Set up test pack-------------------
             var classType = typeof (FakeBOAttributePKAndPKNaming).ToTypeWrapper();
             const string expectedPropName = "MyMultipleRevRel2";
-            PropertyWrapper propertyInfo = classType.GetProperty(expectedPropName);
-            PropertyWrapper reverseRelPropInfo = propertyInfo.GetSingleReverseRelPropInfos()[0];
+            var propertyInfo = classType.GetProperty(expectedPropName);
+            var reverseRelPropInfo = propertyInfo.GetSingleReverseRelPropInfos()[0];
             //---------------Assert Precondition----------------
             propertyInfo.AssertIsMultipleRelationship();
             Assert.IsTrue(propertyInfo.HasSingleReverseRelationship, "There is no reverse single rel");
 
             Assert.AreNotEqual(classType.Name, reverseRelPropInfo.Name);
             //---------------Execute Test ----------------------
-            string reverseRelationshipName = propertyInfo.GetSingleReverseRelationshipName<AutoMapOneToManyAttribute>();
+            var reverseRelationshipName = propertyInfo.GetSingleReverseRelationshipName<AutoMapOneToManyAttribute>();
             //---------------Test Result -----------------------
             Assert.AreEqual(reverseRelPropInfo.Name, reverseRelationshipName);
         }
@@ -1441,7 +1440,7 @@ namespace Habanero.Smooth.Test
         {
             //---------------Set up test pack-------------------
             var propInfo = new FakePropertyInfo(typeof(FakeBOWProps));
-            PropertyWrapper propertyWrapper = new PropertyWrapper(propInfo);
+            var propertyWrapper = new PropertyWrapper(propInfo);
             //---------------Assert Precondition----------------
 
             //---------------Execute Test ----------------------
@@ -1457,7 +1456,7 @@ namespace Habanero.Smooth.Test
         {
             //---------------Set up test pack-------------------
             var propInfo = new FakePropertyInfo(typeof(FakeBOWProps));
-            PropertyWrapper propertyWrapper = new PropertyWrapper(propInfo);
+            var propertyWrapper = new PropertyWrapper(propInfo);
             //---------------Assert Precondition----------------
 
             //---------------Execute Test ----------------------
@@ -1471,7 +1470,7 @@ namespace Habanero.Smooth.Test
             //---------------Set up test pack-------------------
             var propInfo = new FakePropertyInfo(typeof(FakeBOWProps));
             var otherPropInfo = new FakePropertyInfo(typeof(FakeBOWProps));
-            PropertyWrapper propertyWrapper = new PropertyWrapper(propInfo);
+            var propertyWrapper = new PropertyWrapper(propInfo);
             //---------------Assert Precondition----------------
 
             //---------------Execute Test ----------------------
@@ -1485,7 +1484,7 @@ namespace Habanero.Smooth.Test
             //---------------Set up test pack-------------------
             var propInfo = new FakePropertyInfo(typeof(FakeBOWProps));
             PropertyInfo otherPropInfo = null;
-            PropertyWrapper propertyWrapper = new PropertyWrapper(propInfo);
+            var propertyWrapper = new PropertyWrapper(propInfo);
             //---------------Assert Precondition----------------
 
             //---------------Execute Test ----------------------
@@ -1499,7 +1498,7 @@ namespace Habanero.Smooth.Test
             //---------------Set up test pack-------------------
             var propInfo = MockRepository.GenerateMock<PropertyInfo>();
             propInfo.SetName(GetRandomString());
-            PropertyWrapper propertyWrapper = new PropertyWrapper(propInfo);
+            var propertyWrapper = new PropertyWrapper(propInfo);
             //---------------Assert Precondition----------------
             Assert.IsNotNullOrEmpty(propInfo.Name);
             //---------------Execute Test ----------------------
@@ -1512,7 +1511,7 @@ namespace Habanero.Smooth.Test
         {
             //---------------Set up test pack-------------------
             var propInfo = new FakePropertyInfo(typeof(FakeBOWProps));
-            PropertyWrapper propertyWrapper = new PropertyWrapper(propInfo);
+            var propertyWrapper = new PropertyWrapper(propInfo);
             //---------------Assert Precondition----------------
 
             //---------------Execute Test ----------------------
@@ -1527,7 +1526,7 @@ namespace Habanero.Smooth.Test
             //---------------Set up test pack-------------------
             var propInfo = new FakePropertyInfo(typeof(FakeBOWProps));
             string otherPropInfo = null;
-            PropertyWrapper propertyWrapper = new PropertyWrapper(propInfo);
+            var propertyWrapper = new PropertyWrapper(propInfo);
             //---------------Assert Precondition----------------
 
             //---------------Execute Test ----------------------
@@ -1540,7 +1539,7 @@ namespace Habanero.Smooth.Test
         {
             //---------------Set up test pack-------------------
             var propInfo = MockRepository.GenerateMock<PropertyInfo>();
-            PropertyWrapper propertyWrapper = new PropertyWrapper(propInfo);
+            var propertyWrapper = new PropertyWrapper(propInfo);
             //---------------Assert Precondition----------------
 
             //---------------Execute Test ----------------------
@@ -1553,7 +1552,7 @@ namespace Habanero.Smooth.Test
         {
             //---------------Set up test pack-------------------
             var propInfo = MockRepository.GenerateMock<PropertyInfo>();
-            PropertyWrapper propertyWrapper = new PropertyWrapper(propInfo);
+            var propertyWrapper = new PropertyWrapper(propInfo);
             PropertyWrapper nulPropWrap = null;
             //---------------Assert Precondition----------------
             Assert.IsNull(nulPropWrap);
@@ -1568,8 +1567,8 @@ namespace Habanero.Smooth.Test
         {
             //---------------Set up test pack-------------------
             var propInfo = MockRepository.GenerateMock<PropertyInfo>();
-            PropertyWrapper propertyWrapper = new PropertyWrapper(propInfo);
-            PropertyWrapper otherPropertyWrapper = new PropertyWrapper(propInfo);
+            var propertyWrapper = new PropertyWrapper(propInfo);
+            var otherPropertyWrapper = new PropertyWrapper(propInfo);
             //---------------Assert Precondition----------------
             Assert.AreSame(propertyWrapper.PropertyInfo, otherPropertyWrapper.PropertyInfo);
             //For some reason the dot net 4.0 framework has chnaged this 
@@ -1585,8 +1584,8 @@ namespace Habanero.Smooth.Test
         {
             //---------------Set up test pack-------------------
             var propInfo = MockRepository.GenerateMock<PropertyInfo>();
-            PropertyWrapper propertyWrapper = new PropertyWrapper(propInfo);
-            PropertyWrapper otherPropertyWrapper = new PropertyWrapper(MockRepository.GenerateMock<PropertyInfo>());
+            var propertyWrapper = new PropertyWrapper(propInfo);
+            var otherPropertyWrapper = new PropertyWrapper(MockRepository.GenerateMock<PropertyInfo>());
             //---------------Assert Precondition----------------
             Assert.AreNotSame(propertyWrapper.PropertyInfo, otherPropertyWrapper.PropertyInfo);
             //---------------Execute Test ----------------------
@@ -1602,7 +1601,7 @@ namespace Habanero.Smooth.Test
         {
             //---------------Set up test pack-------------------
             var propInfo = new FakePropertyInfo(typeof(FakeBOWProps));
-            PropertyWrapper propertyWrapper = new PropertyWrapper(propInfo);
+            var propertyWrapper = new PropertyWrapper(propInfo);
             //---------------Assert Precondition----------------
 
             //---------------Execute Test ----------------------
@@ -1616,7 +1615,7 @@ namespace Habanero.Smooth.Test
             //---------------Set up test pack-------------------
             var propInfo = new FakePropertyInfo(typeof(FakeBOWProps));
             var otherPropInfo = new FakePropertyInfo(typeof(FakeBOWProps));
-            PropertyWrapper propertyWrapper = new PropertyWrapper(propInfo);
+            var propertyWrapper = new PropertyWrapper(propInfo);
             //---------------Assert Precondition----------------
 
             //---------------Execute Test ----------------------
@@ -1631,7 +1630,7 @@ namespace Habanero.Smooth.Test
             //---------------Set up test pack-------------------
             var propInfo = new FakePropertyInfo(typeof(FakeBOWProps));
             PropertyInfo otherPropInfo = null;
-            PropertyWrapper propertyWrapper = new PropertyWrapper(propInfo);
+            var propertyWrapper = new PropertyWrapper(propInfo);
             //---------------Assert Precondition----------------
 
             //---------------Execute Test ----------------------
@@ -1646,7 +1645,7 @@ namespace Habanero.Smooth.Test
             //---------------Set up test pack-------------------
             var propInfo = new FakePropertyInfo(typeof(FakeBOWProps));
             PropertyInfo otherPropInfo = null;
-            PropertyWrapper propertyWrapper = new PropertyWrapper(propInfo);
+            var propertyWrapper = new PropertyWrapper(propInfo);
             //---------------Assert Precondition----------------
 
             //---------------Execute Test ----------------------
@@ -1661,7 +1660,7 @@ namespace Habanero.Smooth.Test
         {
             //---------------Set up test pack-------------------
             var propInfo = MockRepository.GenerateMock<PropertyInfo>();
-            PropertyWrapper propertyWrapper = new PropertyWrapper(propInfo);
+            var propertyWrapper = new PropertyWrapper(propInfo);
             //---------------Assert Precondition----------------
 
             //---------------Execute Test ----------------------
@@ -1676,7 +1675,7 @@ namespace Habanero.Smooth.Test
         {
             //---------------Set up test pack-------------------
             var propInfo = MockRepository.GenerateMock<PropertyInfo>();
-            PropertyWrapper propertyWrapper = new PropertyWrapper(propInfo);
+            var propertyWrapper = new PropertyWrapper(propInfo);
             PropertyWrapper nulPropWrap = null;
             //---------------Assert Precondition----------------
             Assert.IsNull(nulPropWrap);
@@ -1691,8 +1690,8 @@ namespace Habanero.Smooth.Test
         {
             //---------------Set up test pack-------------------
             var propInfo = MockRepository.GenerateMock<PropertyInfo>();
-            PropertyWrapper propertyWrapper = new PropertyWrapper(propInfo);
-            PropertyWrapper otherPropertyWrapper = new PropertyWrapper(propInfo);
+            var propertyWrapper = new PropertyWrapper(propInfo);
+            var otherPropertyWrapper = new PropertyWrapper(propInfo);
             //---------------Assert Precondition----------------
             Assert.AreSame(propertyWrapper.PropertyInfo, otherPropertyWrapper.PropertyInfo);
             Assert.IsTrue(propertyWrapper.Equals(otherPropertyWrapper), "Equals should work");
@@ -1706,8 +1705,8 @@ namespace Habanero.Smooth.Test
         {
             //---------------Set up test pack-------------------
             var propInfo = MockRepository.GenerateMock<PropertyInfo>();
-            PropertyWrapper propertyWrapper = new PropertyWrapper(propInfo);
-            PropertyWrapper otherPropertyWrapper = new PropertyWrapper(MockRepository.GenerateMock<PropertyInfo>());
+            var propertyWrapper = new PropertyWrapper(propInfo);
+            var otherPropertyWrapper = new PropertyWrapper(MockRepository.GenerateMock<PropertyInfo>());
             //---------------Assert Precondition----------------
             Assert.AreNotSame(propertyWrapper.PropertyInfo, otherPropertyWrapper.PropertyInfo);
             //---------------Execute Test ----------------------
@@ -1720,8 +1719,8 @@ namespace Habanero.Smooth.Test
         {
             //---------------Set up test pack-------------------
             var propInfo = MockRepository.GenerateMock<PropertyInfo>();
-            PropertyWrapper propertyWrapper = new PropertyWrapper(propInfo);
-            PropertyWrapper otherPropertyWrapper = new PropertyWrapper(MockRepository.GenerateMock<PropertyInfo>());
+            var propertyWrapper = new PropertyWrapper(propInfo);
+            var otherPropertyWrapper = new PropertyWrapper(MockRepository.GenerateMock<PropertyInfo>());
             //---------------Assert Precondition----------------
             Assert.AreNotSame(propertyWrapper.PropertyInfo, otherPropertyWrapper.PropertyInfo);
             //---------------Execute Test ----------------------
@@ -1734,7 +1733,7 @@ namespace Habanero.Smooth.Test
         {
             //---------------Set up test pack-------------------
             var propInfo = MockRepository.GenerateMock<PropertyInfo>();
-            PropertyWrapper propertyWrapper = new PropertyWrapper(propInfo);
+            var propertyWrapper = new PropertyWrapper(propInfo);
             var otherPropInfor = MockRepository.GenerateMock<PropertyInfo>();
             //---------------Assert Precondition----------------
             Assert.AreNotSame(propertyWrapper.PropertyInfo, otherPropInfor);
@@ -1748,7 +1747,7 @@ namespace Habanero.Smooth.Test
         {
             //---------------Set up test pack-------------------
             var propInfo = MockRepository.GenerateMock<PropertyInfo>();
-            PropertyWrapper propertyWrapper = new PropertyWrapper(propInfo);
+            var propertyWrapper = new PropertyWrapper(propInfo);
             var otherPropInfor = MockRepository.GenerateMock<PropertyInfo>();
             //---------------Assert Precondition----------------
             Assert.AreNotSame(propertyWrapper.PropertyInfo, otherPropInfor);
@@ -1778,7 +1777,7 @@ namespace Habanero.Smooth.Test
         {
             //---------------Set up test pack-------------------
             var propInfo = MockRepository.GenerateMock<PropertyInfo>();
-            PropertyWrapper propertyWrapper = new PropertyWrapper(propInfo);
+            var propertyWrapper = new PropertyWrapper(propInfo);
             //---------------Assert Precondition----------------
 
             //---------------Execute Test ----------------------
@@ -1793,7 +1792,7 @@ namespace Habanero.Smooth.Test
         {
             //---------------Set up test pack-------------------
             var propInfo = MockRepository.GenerateMock<PropertyInfo>();
-            PropertyWrapper propertyWrapper = new PropertyWrapper(propInfo);
+            var propertyWrapper = new PropertyWrapper(propInfo);
             //---------------Assert Precondition----------------
 
             //---------------Execute Test ----------------------
@@ -1808,7 +1807,7 @@ namespace Habanero.Smooth.Test
             //---------------Set up test pack-------------------
             var propInfo = new FakePropertyInfo(GetRandomString(), typeof(FakeBOWProps));
             var expectedHashCode = propInfo.GetHashCode() * 397 ^ propInfo.Name.GetHashCode();
-            PropertyWrapper propertyWrapper = new PropertyWrapper(propInfo);
+            var propertyWrapper = new PropertyWrapper(propInfo);
             //---------------Assert Precondition----------------
 
             //---------------Execute Test ----------------------
@@ -1822,7 +1821,7 @@ namespace Habanero.Smooth.Test
         {
             //---------------Set up test pack-------------------
             var classType = typeof(FakeBOSubClassSuperHasDesc);
-            PropertyInfo propertyInfo = classType.GetProperty("FakeBOSuperClassWithDescType");
+            var propertyInfo = classType.GetProperty("FakeBOSuperClassWithDescType");
             var propertyWrapper = propertyInfo.ToPropertyWrapper();
             //---------------Assert Precondition----------------
             Assert.AreNotSame(propertyInfo.ReflectedType, propertyInfo.DeclaringType);
@@ -1837,7 +1836,7 @@ namespace Habanero.Smooth.Test
         {
             //---------------Set up test pack-------------------
             var classType = typeof(FakeBOAttributePK);
-            PropertyInfo propertyInfo = classType.GetProperty("AnotherProp");
+            var propertyInfo = classType.GetProperty("AnotherProp");
             var propertyWrapper = propertyInfo.ToPropertyWrapper();
             //---------------Assert Precondition----------------
             Assert.AreSame(propertyInfo.ReflectedType, propertyInfo.DeclaringType);
@@ -1851,7 +1850,7 @@ namespace Habanero.Smooth.Test
         {
             //---------------Set up test pack-------------------
             var classType = typeof(FakeBOSuperClassWithDesc);
-            PropertyInfo propertyInfo = classType.GetProperty("FakeBOSuperClassWithDescType");
+            var propertyInfo = classType.GetProperty("FakeBOSuperClassWithDescType");
             var propertyWrapper = propertyInfo.ToPropertyWrapper();
             //---------------Assert Precondition----------------
             Assert.AreSame(propertyInfo.ReflectedType, propertyInfo.DeclaringType);
@@ -1889,7 +1888,7 @@ namespace Habanero.Smooth.Test
         {
             //---------------Set up test pack-------------------
             var classType = typeof(FakeBOSubClassSuperHasDesc);
-            PropertyInfo propertyInfo = classType.GetProperty("FakeBOSuperClassWithDescType");
+            var propertyInfo = classType.GetProperty("FakeBOSuperClassWithDescType");
             var propertyWrapper = propertyInfo.ToPropertyWrapper();
             //---------------Assert Precondition----------------
             Assert.IsNotNull(propertyInfo);
@@ -1905,7 +1904,7 @@ namespace Habanero.Smooth.Test
         {
             //---------------Set up test pack-------------------
             var classType = typeof(FakeBOSubClassWithOverridenProps);
-            PropertyInfo propertyInfo = classType.GetProperty("OverriddenProp");
+            var propertyInfo = classType.GetProperty("OverriddenProp");
             var propertyWrapper = propertyInfo.ToPropertyWrapper();
             //---------------Assert Precondition----------------
             Assert.IsNotNull(propertyInfo);
@@ -1919,7 +1918,7 @@ namespace Habanero.Smooth.Test
         {
             //---------------Set up test pack-------------------
             var classType = typeof(FakeBOSubClassWithOverridenProps);
-            PropertyInfo propertyInfo = classType.GetProperty("OverriddenProp");
+            var propertyInfo = classType.GetProperty("OverriddenProp");
             var propertyWrapper = propertyInfo.ToPropertyWrapper();
             //---------------Assert Precondition----------------
             Assert.IsNotNull(propertyInfo);
@@ -1933,7 +1932,7 @@ namespace Habanero.Smooth.Test
         {
             //---------------Set up test pack-------------------
             var classType = typeof(FakeBOImplementingInterface);
-            PropertyInfo propertyInfo = classType.GetProperty("ImplementedProp");
+            var propertyInfo = classType.GetProperty("ImplementedProp");
             var propertyWrapper = propertyInfo.ToPropertyWrapper();
             //---------------Assert Precondition----------------
             Assert.IsNotNull(propertyInfo);
@@ -1949,7 +1948,7 @@ namespace Habanero.Smooth.Test
             //---------------Set up test pack-------------------
             const string expectedPropName = "PublicGetGuidProp";
             var classType = typeof(FakeBOWProps);
-            PropertyInfo propertyInfo = classType.GetProperty(expectedPropName);
+            var propertyInfo = classType.GetProperty(expectedPropName);
             var propertyWrapper = propertyInfo.ToPropertyWrapper();
             //---------------Assert Precondition----------------
             Assert.IsNotNull(propertyInfo);
@@ -1966,12 +1965,12 @@ namespace Habanero.Smooth.Test
             //---------------Set up test pack-------------------
             const string expectedPropName = "DefaultProp";
             var classType = typeof(FakeBOWithDefaultProp);
-            PropertyInfo propertyInfo = classType.GetProperty(expectedPropName);
+            var propertyInfo = classType.GetProperty(expectedPropName);
             var propertyWrapper = propertyInfo.ToPropertyWrapper();
             //---------------Assert Precondition----------------
 
             //---------------Execute Test ----------------------
-            bool hasDefaultAttribute = propertyWrapper.HasDefaultAttribute;
+            var hasDefaultAttribute = propertyWrapper.HasDefaultAttribute;
             //---------------Test ResultpropertyWrapper -----------------------
             Assert.IsTrue(hasDefaultAttribute);
         }
@@ -1982,15 +1981,48 @@ namespace Habanero.Smooth.Test
             //---------------Set up test pack-------------------
             const string expectedPropName = "NonDefaultProp";
             var classType = typeof(FakeBOWithDefaultProp);
-            PropertyInfo propertyInfo = classType.GetProperty(expectedPropName);
+            var propertyInfo = classType.GetProperty(expectedPropName);
             var propertyWrapper = propertyInfo.ToPropertyWrapper();
             //---------------Assert Precondition----------------
 
             //---------------Execute Test ----------------------
-            bool hasDefaultAttribute = propertyWrapper.HasDefaultAttribute;
+            var hasDefaultAttribute = propertyWrapper.HasDefaultAttribute;
             //---------------Test ResultpropertyWrapper -----------------------
             Assert.IsFalse(hasDefaultAttribute);
         }
+
+        [Test]
+        public void Test_HasDisplayNameAttribute_WhenHasOne_ShouldReturnTrue()
+        {
+            //---------------Set up test pack-------------------
+            const string expectedPropName = "DisplayNameProp";
+            var classType = typeof(FakeBOWitDisplayNameProp);
+            var propertyInfo = classType.GetProperty(expectedPropName);
+            var propertyWrapper = propertyInfo.ToPropertyWrapper();
+            //---------------Assert Precondition----------------
+
+            //---------------Execute Test ----------------------
+            var hasDisplayNameAttribute = propertyWrapper.HasDisplayNameAttribute;
+            //---------------Test ResultpropertyWrapper -----------------------
+            Assert.IsTrue(hasDisplayNameAttribute);
+        }
+        [Test]
+        public void Test_HasDisplayNameAttribute_WhenNotHasOne_ShouldReturnFalse()
+        {
+            //---------------Set up test pack-------------------
+            const string expectedPropName = "NonDisplayNameProp";
+            var classType = typeof(FakeBOWitDisplayNameProp);
+            var propertyInfo = classType.GetProperty(expectedPropName);
+            var propertyWrapper = propertyInfo.ToPropertyWrapper();
+            //---------------Assert Precondition----------------
+
+            //---------------Execute Test ----------------------
+            var hasDisplayNameAttribute = propertyWrapper.HasDisplayNameAttribute;
+            //---------------Test ResultpropertyWrapper -----------------------
+            Assert.IsFalse(hasDisplayNameAttribute);
+        }
+
+
 
         [Test]
         public void Test_GetAttribute_WhenHasAttribute_ShouldReturnAttribute()
@@ -1998,7 +2030,7 @@ namespace Habanero.Smooth.Test
             //---------------Set up test pack-------------------
             const string expectedPropName = "DefaultProp";
             var classType = typeof(FakeBOWithDefaultProp);
-            PropertyInfo propertyInfo = classType.GetProperty(expectedPropName);
+            var propertyInfo = classType.GetProperty(expectedPropName);
             var propertyWrapper = propertyInfo.ToPropertyWrapper();
             //---------------Assert Precondition----------------
 
@@ -2013,7 +2045,7 @@ namespace Habanero.Smooth.Test
             //---------------Set up test pack-------------------
             const string expectedPropName = "NonDefaultProp";
             var classType = typeof(FakeBOWithDefaultProp);
-            PropertyInfo propertyInfo = classType.GetProperty(expectedPropName);
+            var propertyInfo = classType.GetProperty(expectedPropName);
             var propertyWrapper = propertyInfo.ToPropertyWrapper();
             //---------------Assert Precondition----------------
 
@@ -2029,12 +2061,12 @@ namespace Habanero.Smooth.Test
             //---------------Set up test pack-------------------
             const string expectedPropName = "PublicGetNullableGuidProp";
             var classType = typeof(FakeBOWProps);
-            PropertyInfo propertyInfo = classType.GetProperty(expectedPropName);
+            var propertyInfo = classType.GetProperty(expectedPropName);
             var propertyWrapper = propertyInfo.ToPropertyWrapper();
             //---------------Assert Precondition----------------
             Assert.AreSame(typeof(Guid?), propertyInfo.PropertyType);
             //---------------Execute Test ----------------------
-            Type propType = propertyWrapper.UndelyingPropertyType;
+            var propType = propertyWrapper.UndelyingPropertyType;
             //---------------Test Result -----------------------
             Assert.AreEqual(typeof(Guid), propType);
         }
@@ -2045,12 +2077,12 @@ namespace Habanero.Smooth.Test
             //---------------Set up test pack-------------------
             const string expectedPropName = "PublicGetGuidProp";
             var classType = typeof(FakeBOWProps);
-            PropertyInfo propertyInfo = classType.GetProperty(expectedPropName);
+            var propertyInfo = classType.GetProperty(expectedPropName);
             var propertyWrapper = propertyInfo.ToPropertyWrapper();
             //---------------Assert Precondition----------------
             Assert.AreSame(typeof(Guid), propertyInfo.PropertyType);
             //---------------Execute Test ----------------------
-            Type propType = propertyWrapper.UndelyingPropertyType;
+            var propType = propertyWrapper.UndelyingPropertyType;
             //---------------Test Result -----------------------
             Assert.AreEqual(typeof(Guid), propType);
         }
@@ -2060,12 +2092,12 @@ namespace Habanero.Smooth.Test
             //---------------Set up test pack-------------------
             const string expectedPropName = "PublicIntProp";
             var classType = typeof(FakeBOWProps);
-            PropertyInfo propertyInfo = classType.GetProperty(expectedPropName);
+            var propertyInfo = classType.GetProperty(expectedPropName);
             var propertyWrapper = propertyInfo.ToPropertyWrapper();
             //---------------Assert Precondition----------------
             Assert.AreSame(typeof(int), propertyInfo.PropertyType);
             //---------------Execute Test ----------------------
-            Type propType = propertyWrapper.UndelyingPropertyType;
+            var propType = propertyWrapper.UndelyingPropertyType;
             //---------------Test Result -----------------------
             Assert.AreEqual(typeof(int), propType);
         }

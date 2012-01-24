@@ -69,6 +69,32 @@ namespace Habanero.Smooth.Test
         }
 
         [Test]
+        public void Test_AutoMapDisplayName_ConstructWithValue_ShouldSetValue()
+        {
+            //---------------Set up test pack-------------------
+            const string displayName = "myDisplayName";
+            //---------------Assert Precondition----------------
+
+            //---------------Execute Test ----------------------
+            var attribute = new AutoMapDisplayNameAttribute(displayName);
+            //---------------Test Result -----------------------
+            Assert.AreEqual(displayName, attribute.DisplayName);
+        }
+        [Test]
+        public void Test_AutoMapDisplayName_SetWithValue_ShouldSetValue()
+        {
+            //---------------Set up test pack-------------------
+            var attribute = new AutoMapDisplayNameAttribute("random");
+            const string displayName = "myDisplayName";
+            //---------------Assert Precondition----------------
+            Assert.AreNotEqual(displayName, attribute.DisplayName);
+            //---------------Execute Test ----------------------
+            attribute.DisplayName = displayName;
+            //---------------Test Result -----------------------
+            Assert.AreEqual(displayName, attribute.DisplayName);
+        }
+
+        [Test]
         public void Test_TableName_ConstructWithValue_ShouldSetValue()
         {
             //---------------Set up test pack-------------------

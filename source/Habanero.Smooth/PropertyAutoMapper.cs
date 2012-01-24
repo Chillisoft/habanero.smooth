@@ -66,7 +66,13 @@ namespace Habanero.Smooth
             if (MustMapProperty)
             {
                 var propertyType = this.PropertyWrapper.UndelyingPropertyType;
-                var propDef = new PropDef(this.PropertyWrapper.Name, propertyType, PropReadWriteRule.ReadWrite, null)
+
+                string displayName = "";
+                if (this.PropertyWrapper.HasDisplayNameAttribute)
+                {
+                    displayName = this.PropertyWrapper.GetAttribute<AutoMapDisplayNameAttribute>().DisplayName;
+                }
+                var propDef = new PropDef(this.PropertyWrapper.Name, propertyType, PropReadWriteRule.ReadWrite, null, null, false, false, int.MaxValue, displayName, "")
                                   {
                                       Compulsory = this.PropertyWrapper.HasCompulsoryAttribute
                                   };

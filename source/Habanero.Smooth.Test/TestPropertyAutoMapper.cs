@@ -84,9 +84,9 @@ namespace Habanero.Smooth.Test
         public void Test_MapProperty_WhenPublicProp_ShouldSetPropNameAndType(string propName, Type propType, string typeName)
         {
             //---------------Set up test pack-------------------
-            string expectedPropName = propName;
+            var expectedPropName = propName;
             var classType = typeof (FakeBOWProps);
-            PropertyInfo propertyInfo = classType.GetProperty(expectedPropName);
+            var propertyInfo = classType.GetProperty(expectedPropName);
             var propertyAutoMapper = new PropertyAutoMapper(propertyInfo);
             //---------------Assert Precondition----------------
             Assert.IsNotNull(propertyInfo);
@@ -108,7 +108,7 @@ namespace Habanero.Smooth.Test
         {
             //---------------Set up test pack-------------------
             var classType = typeof(FakeBOWProps);
-            PropertyInfo propertyInfo = classType.GetProperty("ClassDef");
+            var propertyInfo = classType.GetProperty("ClassDef");
             var propTypeName = propertyInfo.PropertyType.FullName;
             var propertyAutoMapper = new PropertyAutoMapper(propertyInfo);
             //---------------Assert Precondition----------------
@@ -126,7 +126,7 @@ namespace Habanero.Smooth.Test
         {
             //---------------Set up test pack-------------------
             var classType = typeof(FakeBoWithStaticProperty);
-            PropertyInfo propertyInfo = classType.GetProperty("PublicStringProp");
+            var propertyInfo = classType.GetProperty("PublicStringProp");
             var propertyAutoMapper = new PropertyAutoMapper(propertyInfo);
             //---------------Assert Precondition----------------
             Assert.IsFalse(propertyInfo.ToPropertyWrapper().HasIgnoreAttribute);
@@ -143,7 +143,7 @@ namespace Habanero.Smooth.Test
         {
             //---------------Set up test pack-------------------
             var classType = typeof(FakeBOWProps);
-            PropertyInfo propertyInfo = classType.GetProperty("PublicWithIgnoreAtt");
+            var propertyInfo = classType.GetProperty("PublicWithIgnoreAtt");
             var propertyAutoMapper = new PropertyAutoMapper(propertyInfo);
             //---------------Assert Precondition----------------
             Assert.IsNotNull(propertyInfo);
@@ -187,7 +187,7 @@ namespace Habanero.Smooth.Test
         {
             //---------------Set up test pack-------------------
             var classType = typeof(FakeBOWProps);
-            PropertyInfo propertyInfo = classType.GetProperty("PublicPropWithAtt");
+            var propertyInfo = classType.GetProperty("PublicPropWithAtt");
             var propertyAutoMapper = new PropertyAutoMapper(propertyInfo);
             //---------------Assert Precondition----------------
             Assert.IsNotNull(propertyInfo);
@@ -205,7 +205,7 @@ namespace Habanero.Smooth.Test
         {
             //---------------Set up test pack-------------------
             var classType = typeof(FakeBoWithPrivateProps);
-            PropertyInfo propertyInfo = classType.GetProperty("PrivateStringProp", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.GetProperty);
+            var propertyInfo = classType.GetProperty("PrivateStringProp", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.GetProperty);
             var propertyAutoMapper = new PropertyAutoMapper(propertyInfo);
             var propertyWrapper = propertyInfo.ToPropertyWrapper();
             //---------------Assert Precondition----------------
@@ -228,7 +228,7 @@ namespace Habanero.Smooth.Test
             // and should not be mapped as part of this class.
             //---------------Set up test pack-------------------
             var classType = typeof(FakeBOSubClassSuperHasDesc);
-            PropertyInfo propertyInfo = classType.GetProperty("FakeBOSuperClassWithDescType");
+            var propertyInfo = classType.GetProperty("FakeBOSuperClassWithDescType");
             var propertyAutoMapper = new PropertyAutoMapper(propertyInfo);
             var propertyWrapper = propertyInfo.ToPropertyWrapper();
             //---------------Assert Precondition----------------
@@ -252,7 +252,7 @@ namespace Habanero.Smooth.Test
             // and should not be mapped as part of this class.
             //---------------Set up test pack-------------------
             var classType = typeof(FakeBOSubClassWithOverridenProps);
-            PropertyInfo propertyInfo = classType.GetProperty("OverriddenProp");
+            var propertyInfo = classType.GetProperty("OverriddenProp");
             var propertyAutoMapper = new PropertyAutoMapper(propertyInfo);
             var propertyWrapper = propertyInfo.ToPropertyWrapper();
             //---------------Assert Precondition----------------
@@ -274,7 +274,7 @@ namespace Habanero.Smooth.Test
             //When Prop is implemented as part of an interface it should still be mapped
             //---------------Set up test pack-------------------
             var classType = typeof(FakeBOImplementingInterface);
-            PropertyInfo propertyInfo = classType.GetProperty("ImplementedProp");
+            var propertyInfo = classType.GetProperty("ImplementedProp");
             var propertyAutoMapper = new PropertyAutoMapper(propertyInfo);
             var propertyWrapper = propertyInfo.ToPropertyWrapper();
             //---------------Assert Precondition----------------
@@ -297,7 +297,7 @@ namespace Habanero.Smooth.Test
             //---------------Set up test pack-------------------
             var classType = typeof(FakeBOWithCompulsoryProp);
             const string propName = "CompulsoryProp";
-            PropertyInfo propertyInfo = classType.GetProperty(propName);
+            var propertyInfo = classType.GetProperty(propName);
             var propertyWrapper = propertyInfo.ToPropertyWrapper();
             var propertyAutoMapper = new PropertyAutoMapper(propertyInfo);
             //---------------Assert Precondition----------------
@@ -318,7 +318,7 @@ namespace Habanero.Smooth.Test
         public void Test_MapWithFake_WhenHasDefaultAttribute_ShouldReturnPropDefWithDefault()
         {
             //---------------Set up test pack-------------------
-            PropertyWrapper wrapper = GetMockPropWrapper();
+            var wrapper = GetMockPropWrapper();
             SetHasDefaultAttribute(wrapper, true, GetRandomString());
             var propertyAutoMapper = new PropertyAutoMapper(wrapper);
             //---------------Assert Precondition----------------
@@ -328,14 +328,15 @@ namespace Habanero.Smooth.Test
             var propDef = propertyAutoMapper.MapProperty();
             //---------------Test Result -----------------------
             Assert.IsNotNull(propDef);
-            string defaultValueString = propDef.DefaultValueString;
+            var defaultValueString = propDef.DefaultValueString;
             Assert.IsNotNull(defaultValueString);
         }
+
         [Test]
         public void Test_MapWithFake_WhenNotHasDefaultAttribute_ShouldReturnPropDefWithDefaultNull()
         {
             //---------------Set up test pack-------------------
-            PropertyWrapper wrapper = GetMockPropWrapper();
+            var wrapper = GetMockPropWrapper();
             SetHasDefaultAttribute(wrapper, false, GetRandomString());
             var propertyAutoMapper = new PropertyAutoMapper(wrapper);
             //---------------Assert Precondition----------------
@@ -345,7 +346,7 @@ namespace Habanero.Smooth.Test
             var propDef = propertyAutoMapper.MapProperty();
             //---------------Test Result -----------------------
             Assert.IsNotNull(propDef);
-            string defaultValueString = propDef.DefaultValueString;
+            var defaultValueString = propDef.DefaultValueString;
             Assert.IsNull(defaultValueString);
         }
 
@@ -355,7 +356,7 @@ namespace Habanero.Smooth.Test
             //---------------Set up test pack-------------------
             var classType = typeof(FakeBOWithDefaultProp);
             const string propName = "DefaultProp";
-            PropertyInfo propertyInfo = classType.GetProperty(propName);
+            var propertyInfo = classType.GetProperty(propName);
             var propertyWrapper = propertyInfo.ToPropertyWrapper();
             var propertyAutoMapper = new PropertyAutoMapper(propertyWrapper);
             //---------------Assert Precondition----------------
@@ -371,13 +372,82 @@ namespace Habanero.Smooth.Test
             Assert.NotNull(propDef.DefaultValueString);
         }
 
+        #region DisplayName
+        
+        [Test]
+        public void Test_MapWithFake_WhenNotHasDisplayNameAttribute_ShouldReturnPropDefWithDefaultDisplayName()
+        {
+            //---------------Set up test pack-------------------
+            var wrapper = GetMockPropWrapper();
+            var expectedDisplayName = GetRandomString();
+            SetHasDisplayNameAttribute(wrapper, false, expectedDisplayName);
+            var propertyAutoMapper = new PropertyAutoMapper(wrapper);
+            //---------------Assert Precondition----------------
+            Assert.IsFalse(wrapper.HasDisplayNameAttribute);
+            Assert.IsNull(wrapper.GetAttribute<AutoMapDisplayNameAttribute>());
+            //---------------Execute Test ----------------------
+            var propDef = propertyAutoMapper.MapProperty();
+            //---------------Test Result -----------------------
+            Assert.IsNotNull(propDef);
+            var actualDisplayName = propDef.DisplayName;
+            Assert.AreNotEqual(expectedDisplayName, actualDisplayName);
+        }
+
+        [Test]
+        public void Test_MapWithFake_WhenHasDisplayNameAttribute_ShouldReturnPropDefWithDisplayName()
+        {
+            //---------------Set up test pack-------------------
+            var wrapper = GetMockPropWrapper();
+            var expectedDisplayName = GetRandomString();
+            SetHasDisplayNameAttribute(wrapper, true, expectedDisplayName);
+            var propertyAutoMapper = new PropertyAutoMapper(wrapper);
+            //---------------Assert Precondition----------------
+            Assert.IsTrue(wrapper.HasDisplayNameAttribute);
+            //            Assert.IsTrue(wrapper.);
+            //---------------Execute Test ----------------------
+            var propDef = propertyAutoMapper.MapProperty();
+            //---------------Test Result -----------------------
+            Assert.IsNotNull(propDef);
+            var actualDisplayName = propDef.DisplayName;
+            Assert.IsNotNull(actualDisplayName);
+            Assert.AreEqual(expectedDisplayName, actualDisplayName);
+        }
+
+        [Test]
+        public void Test_Map_WhenHasDisplayNameAttribute_ShouldReturnPropDefWithDisplayNameSet()
+        {
+            //---------------Set up test pack-------------------
+            var classType = typeof(FakeBOWitDisplayNameProp);
+            const string propName = "DisplayNameProp";
+            var propertyInfo = classType.GetProperty(propName);
+            var propertyWrapper = propertyInfo.ToPropertyWrapper();
+            var propertyAutoMapper = new PropertyAutoMapper(propertyWrapper);
+            //---------------Assert Precondition----------------
+            Assert.IsNotNull(propertyInfo);
+            Assert.IsTrue(propertyWrapper.HasDisplayNameAttribute);
+
+            Assert.IsTrue(propertyInfo.PropertyType.CanMapToProp());
+            //---------------Execute Test ----------------------
+            var propDef = propertyAutoMapper.MapProperty();
+            //---------------Test Result -----------------------
+            Assert.IsNotNull(propDef);
+            Assert.AreEqual(propName, propDef.PropertyName);
+            Assert.NotNull(propDef.DisplayName);
+            Assert.AreEqual("MyDisplayName", propDef.DisplayName);
+        }
+
+        #endregion
+
+
+
+
         [Test]
         public void Test_Map_WhenNoCompulsoryAttribute_ShouldReturnMakePropDefCompulsoryFalse()
         {
             //---------------Set up test pack-------------------
             var classType = typeof(FakeBOWithCompulsoryProp);
             const string propName = "NonCompulsoryProp";
-            PropertyInfo propertyInfo = classType.GetProperty(propName);
+            var propertyInfo = classType.GetProperty(propName);
             var propertyWrapper = propertyInfo.ToPropertyWrapper();
             var propertyAutoMapper = new PropertyAutoMapper(propertyInfo);
             //---------------Assert Precondition----------------
@@ -399,7 +469,7 @@ namespace Habanero.Smooth.Test
             //---------------Set up test pack-------------------
             var classType = typeof(FakeBOWithAutoIncrementingProp);
             const string propName = "AutoIncrementingProp";
-            PropertyInfo propertyInfo = classType.GetProperty(propName);
+            var propertyInfo = classType.GetProperty(propName);
             var propertyWrapper = propertyInfo.ToPropertyWrapper();
             var propertyAutoMapper = new PropertyAutoMapper(propertyInfo);
             //---------------Assert Precondition----------------
@@ -420,7 +490,7 @@ namespace Habanero.Smooth.Test
             //---------------Set up test pack-------------------
             var classType = typeof(FakeBOWithAutoIncrementingProp);
             const string propName = "NonAutoIncrementingProp";
-            PropertyInfo propertyInfo = classType.GetProperty(propName);
+            var propertyInfo = classType.GetProperty(propName);
             var propertyWrapper = propertyInfo.ToPropertyWrapper();
             var propertyAutoMapper = new PropertyAutoMapper(propertyInfo);
             //---------------Assert Precondition----------------
@@ -439,7 +509,7 @@ namespace Habanero.Smooth.Test
         public void Test_MapWithFake_WhenHasReadWriteAttribute_ShouldReturnPropDefWithAttribute()
         {
             //---------------Set up test pack-------------------
-            PropertyWrapper wrapper = GetMockPropWrapper();
+            var wrapper = GetMockPropWrapper();
             var expectedReadWriteRule = RandomValueGenerator.GetRandomEnum<PropReadWriteRule>();
             SetReadWriteAttribute(wrapper, expectedReadWriteRule);
             var propertyAutoMapper = new PropertyAutoMapper(wrapper);
@@ -457,7 +527,7 @@ namespace Habanero.Smooth.Test
         public void Test_MapWithFake_WhenNotHasReadWriteAttribute_ShouldReturnPropDefWithReadWrite()
         {
             //---------------Set up test pack-------------------
-            PropertyWrapper wrapper = GetMockPropWrapper();
+            var wrapper = GetMockPropWrapper();
             var propertyAutoMapper = new PropertyAutoMapper(wrapper);
             //---------------Assert Precondition----------------
             Assert.IsNull(wrapper.GetAttribute<AutoMapReadWriteRuleAttribute>());
@@ -465,7 +535,7 @@ namespace Habanero.Smooth.Test
             var propDef = propertyAutoMapper.MapProperty();
             //---------------Test Result -----------------------
             Assert.IsNotNull(propDef);
-            string defaultValueString = propDef.DefaultValueString;
+            var defaultValueString = propDef.DefaultValueString;
             Assert.IsNull(defaultValueString);
         }
 
@@ -475,7 +545,7 @@ namespace Habanero.Smooth.Test
             //---------------Set up test pack-------------------
             const string expectedPropName = "PublicGetGuidProp";
             var classType = typeof(FakeBOWProps);
-            PropertyInfo propertyInfo = classType.GetProperty(expectedPropName);
+            var propertyInfo = classType.GetProperty(expectedPropName);
             //---------------Assert Precondition----------------
             Assert.IsNotNull(propertyInfo);
             //---------------Execute Test ----------------------
@@ -489,7 +559,7 @@ namespace Habanero.Smooth.Test
         {
             //---------------Set up test pack-------------------
             var classType = typeof(FakeBOSubClassSuperHasDesc);
-            PropertyInfo propertyInfo = classType.GetProperty("FakeBOSuperClassWithDescType");
+            var propertyInfo = classType.GetProperty("FakeBOSuperClassWithDescType");
             var propertyWrapper = propertyInfo.ToPropertyWrapper();
             //---------------Assert Precondition----------------
             Assert.IsNotNull(propertyInfo);
@@ -505,7 +575,7 @@ namespace Habanero.Smooth.Test
         {
             //---------------Set up test pack-------------------
             var classType = typeof(FakeBOSubClassWithOverridenProps);
-            PropertyInfo propertyInfo = classType.GetProperty("OverriddenProp");
+            var propertyInfo = classType.GetProperty("OverriddenProp");
             //---------------Assert Precondition----------------
             Assert.IsNotNull(propertyInfo);
             //---------------Execute Test ----------------------
@@ -518,7 +588,7 @@ namespace Habanero.Smooth.Test
         public void Test_MapWithFake_WhenIntPropRuleAttribute_ShouldReturnPropDefWithIntMinMaxRuleDefault()
         {
             //---------------Set up test pack-------------------
-            PropertyWrapper wrapper = GetMockPropWrapper();
+            var wrapper = GetMockPropWrapper();
             var propertyAutoMapper = new PropertyAutoMapper(wrapper);
             //---------------Assert Precondition----------------
             Assert.IsNull(wrapper.GetAttribute<AutoMapIntPropRuleAttribute>());
@@ -527,8 +597,8 @@ namespace Habanero.Smooth.Test
             var propDef = propertyAutoMapper.MapProperty();
             //---------------Test Result -----------------------
             Assert.IsNotNull(propDef);
-            int defaultMinValue = (int) propDef.PropRules[0].Parameters["min"];
-            int defaultMaxValue = (int) propDef.PropRules[0].Parameters["max"];
+            var defaultMinValue = (int) propDef.PropRules[0].Parameters["min"];
+            var defaultMaxValue = (int) propDef.PropRules[0].Parameters["max"];
             Assert.AreEqual(int.MinValue,defaultMinValue);
             Assert.AreEqual(int.MaxValue,defaultMaxValue);
         }        
@@ -537,7 +607,7 @@ namespace Habanero.Smooth.Test
         public void Test_MapWithFake_WhenIntPropRuleAttribute_ShouldReturnPropDefWithIntMinMaxRuleWithValues()
         {
             //---------------Set up test pack-------------------
-            PropertyWrapper wrapper = GetMockPropWrapper();
+            var wrapper = GetMockPropWrapper();
             var propertyAutoMapper = new PropertyAutoMapper(wrapper);
             var minValue = 9;
             var maxValue = 89;
@@ -548,8 +618,8 @@ namespace Habanero.Smooth.Test
             var propDef = propertyAutoMapper.MapProperty();
             //---------------Test Result -----------------------
             Assert.IsNotNull(propDef);
-            int propMinValue = (int) propDef.PropRules[0].Parameters["min"];
-            int propMaxValue = (int) propDef.PropRules[0].Parameters["max"];
+            var propMinValue = (int) propDef.PropRules[0].Parameters["min"];
+            var propMaxValue = (int) propDef.PropRules[0].Parameters["max"];
             Assert.AreEqual(minValue, propMinValue);
             Assert.AreEqual(maxValue, propMaxValue);
         }
@@ -558,7 +628,7 @@ namespace Habanero.Smooth.Test
         public void Test_MapWithFake_WhenStringLengthPropRuleAttribute_ShouldReturnPropDefWithStringLengthPropRuleDefault()
         {
             //---------------Set up test pack-------------------
-            PropertyWrapper wrapper = GetMockPropWrapper();
+            var wrapper = GetMockPropWrapper();
             var propertyAutoMapper = new PropertyAutoMapper(wrapper);
           
             //---------------Assert Precondition----------------
@@ -568,8 +638,8 @@ namespace Habanero.Smooth.Test
             var propDef = propertyAutoMapper.MapProperty();
             //---------------Test Result -----------------------
             Assert.IsNotNull(propDef);
-            int propMinValue = (int)propDef.PropRules[0].Parameters["minLength"];
-            int propMaxValue = (int)propDef.PropRules[0].Parameters["maxLength"];
+            var propMinValue = (int)propDef.PropRules[0].Parameters["minLength"];
+            var propMaxValue = (int)propDef.PropRules[0].Parameters["maxLength"];
             Assert.AreEqual(0, propMinValue);
             Assert.AreEqual(255, propMaxValue);
         }
@@ -578,7 +648,7 @@ namespace Habanero.Smooth.Test
         public void Test_MapWithFake_WhenStringLengthPropRuleAttribute_ShouldReturnPropDefWithStringLengthPropRuleWithValues()
         {
             //---------------Set up test pack-------------------
-            PropertyWrapper wrapper = GetMockPropWrapper();
+            var wrapper = GetMockPropWrapper();
             var propertyAutoMapper = new PropertyAutoMapper(wrapper);
             var minLength = 10;
             var maxLength = 100;
@@ -590,8 +660,8 @@ namespace Habanero.Smooth.Test
             var propDef = propertyAutoMapper.MapProperty();
             //---------------Test Result -----------------------
             Assert.IsNotNull(propDef);
-            int propMinValue = (int)propDef.PropRules[0].Parameters["minLength"];
-            int propMaxValue = (int)propDef.PropRules[0].Parameters["maxLength"];
+            var propMinValue = (int)propDef.PropRules[0].Parameters["minLength"];
+            var propMaxValue = (int)propDef.PropRules[0].Parameters["maxLength"];
             Assert.AreEqual(minLength, propMinValue);
             Assert.AreEqual(maxLength, propMaxValue);
         }      
@@ -600,7 +670,7 @@ namespace Habanero.Smooth.Test
         public void Test_MapWithFake_WhenDateTimePropRuleAttribute_ShouldReturnPropDefWithDateTimePropRuleWithValues()
         {
             //---------------Set up test pack-------------------
-            PropertyWrapper wrapper = GetMockPropWrapper();
+            var wrapper = GetMockPropWrapper();
             var propertyAutoMapper = new PropertyAutoMapper(wrapper);
             var StartDate = DateTime.Now;
             var EndDate = StartDate.AddDays(10);
@@ -619,10 +689,10 @@ namespace Habanero.Smooth.Test
         public void Test_MapWithFake_WhenDateTimeStringPropRuleAttribute_ShouldReturnPropDefWithDateTimePropRuleWithValues()
         {
             //---------------Set up test pack-------------------
-            PropertyWrapper wrapper = GetMockPropWrapper();
+            var wrapper = GetMockPropWrapper();
             var propertyAutoMapper = new PropertyAutoMapper(wrapper);
-            string StartDate = "Today";
-            string EndDate = "Tomorrow";
+            var StartDate = "Today";
+            var EndDate = "Tomorrow";
             //---------------Assert Precondition----------------
             Assert.IsNull(wrapper.GetAttribute<AutoMapDateTimePropRuleAttribute>());
             //---------------Execute Test ----------------------
@@ -640,7 +710,7 @@ namespace Habanero.Smooth.Test
         public void Test_MapWithFake_WhenStringPatternMatchPropRuleAttribute_ShouldReturnPropDefWithStringPatternMatchPropRuleWithValue()
         {
             //---------------Set up test pack-------------------
-            PropertyWrapper wrapper = GetMockPropWrapper();
+            var wrapper = GetMockPropWrapper();
             var propertyAutoMapper = new PropertyAutoMapper(wrapper);
             const string emailPatternMatch = @"\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b";
             //---------------Assert Precondition----------------
@@ -661,10 +731,10 @@ namespace Habanero.Smooth.Test
         public void Test_MapWithFake_WhenStringPatternMatchPropRuleAttribute_WhenMessageSet_ShouldReturnPropDefWithStringPatternMatchPropRuleWithMessage()
         {
             //---------------Set up test pack-------------------
-            PropertyWrapper wrapper = GetMockPropWrapper();
+            var wrapper = GetMockPropWrapper();
             var propertyAutoMapper = new PropertyAutoMapper(wrapper);
             const string fourDigitStringRegex = @"^\d{4}$";
-            string expectedMessage = GetRandomString();
+            var expectedMessage = GetRandomString();
             //---------------Assert Precondition----------------
             Assert.IsNull(wrapper.GetAttribute<AutoMapStringPatternMatchPropRuleAttribute>());
             //---------------Execute Test ----------------------
@@ -715,6 +785,17 @@ namespace Habanero.Smooth.Test
                     new AutoMapDefaultAttribute(defaultValue));
             }
         }
+        private static void SetHasDisplayNameAttribute(PropertyWrapper wrapper, bool hasDisplayName, string displayName)
+        {
+            wrapper.Stub(wrapper1 => wrapper1.HasDisplayNameAttribute).Return(hasDisplayName);
+            if (hasDisplayName)
+            {
+                wrapper.Stub(propertyWrapper => propertyWrapper.GetAttribute<AutoMapDisplayNameAttribute>()).Return(
+                    new AutoMapDisplayNameAttribute(displayName));
+            }
+        }
+
+
         private static void SetReadWriteAttribute(PropertyWrapper wrapper, PropReadWriteRule rule)
         {
             wrapper.Stub(propertyWrapper => propertyWrapper.GetAttribute<AutoMapReadWriteRuleAttribute>()).Return(

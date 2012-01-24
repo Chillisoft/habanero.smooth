@@ -189,6 +189,13 @@ namespace Habanero.Smooth.ReflectionWrappers
             get { return this.HasAttribute<AutoMapDefaultAttribute>(); }
         }
         /// <summary>
+        /// Returns true if the Property has a <see cref="AutoMapDisplayNameAttribute"/> set on it.
+        /// </summary>
+        public bool HasDisplayNameAttribute
+        {
+            get { return this.HasAttribute<AutoMapDisplayNameAttribute>(); }
+        }
+        /// <summary>
         /// Returns true if this property has the <see cref="AutoMapCompulsoryAttribute"/>
         /// </summary>
         public bool HasCompulsoryAttribute

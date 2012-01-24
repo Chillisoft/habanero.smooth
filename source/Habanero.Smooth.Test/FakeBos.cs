@@ -789,6 +789,13 @@ namespace Habanero.Smooth.Test.ValidFakeBOs
 
 		public String NonDefaultProp { get; set; }
 	}
+	public class FakeBOWitDisplayNameProp : BusinessObject
+	{
+		[AutoMapDisplayName("MyDisplayName")]
+        public String DisplayNameProp { get; set; }
+
+		public String NonDisplayNameProp { get; set; }
+	}
 	public class FakeBOWithAutoIncrementingProp : BusinessObject
 	{
 		[AutoMapAutoIncrementing]
