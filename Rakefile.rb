@@ -25,19 +25,19 @@ msbuild_settings = {
 }
 
 #------------------------dependency settings---------------------
-$habanero_version = 'trunk'
+$habanero_version = 'branches/v2.6'
 require 'rake-habanero.rb'
 
 
 #------------------------project settings------------------------
-$basepath = 'http://delicious:8080/svn/habanero/HabaneroCommunity/SmoothHabanero/trunk'
+$basepath = 'http://delicious:8080/svn/habanero/HabaneroCommunity/SmoothHabanero/branches/v1.6-13_02_2012'
 $solution = 'source/SmoothHabanero_2010.sln'
 
 #______________________________________________________________________________
 #---------------------------------TASKS----------------------------------------
 
 desc "Runs the build all task"
-task :default => [:build_test_smooth]
+task :default => [:build_all]
 
 desc "Rakes habanero, builds Smooth"
 task :build_all => [:create_temp, :rake_habanero, :build, :delete_temp]
