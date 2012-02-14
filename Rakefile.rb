@@ -46,7 +46,7 @@ desc "Pulls habanero from local nuget, builds and tests smooth"
 task :build_test_smooth => [:create_temp, :installNugetPackages, :build, :publishSmoothNugetPackage, :publishNakedNugetPackage, :delete_temp]
 
 desc "Builds Smooth, including tests"
-task :build => [:clean, :updatelib, :build_FakeBOs, :msbuild, :test, :commitlib]
+task :build => [:clean, :updatelib, :build_FakeBOs, :msbuild, :test]
 
 desc "builds the FakeBOs dll and copies to the lib folder"
 task :build_FakeBOs => [:msbuild_FakeBOsInSeperateAssembly,:copy_dll_to_smooth_lib] 
