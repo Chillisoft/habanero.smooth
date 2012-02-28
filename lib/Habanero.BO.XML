@@ -15001,8 +15001,11 @@
         </member>
         <member name="M:Habanero.BO.TransactionalBusinessObject.TransactionID">
             <summary>
+             This is the ID that uniquely identifies this item of the transaction.
+             This must be the same for the lifetime of the transaction object. 
+             This assumption is relied upon for certain optimisations in the Transaction Comitter.
             </summary>
-            <returns>The ID that uniquelty identifies this item of the transaction. In the case of business objects the object Id.
+            <returns>The ID that uniquely identifies this item of the transaction. In the case of business objects the object Id.
              for non business objects that no natural id exists for the particular transactional item a guid that uniquely identifies 
              transactional item should be generated. This is used by the transaction committer to ensure that the transactional item
              is not added twice in error.</returns>
@@ -15108,8 +15111,11 @@
         </member>
         <member name="M:Habanero.BO.TransactionalSingleRelationship.TransactionID">
             <summary>
+             This is the ID that uniquely identifies this item of the transaction.
+             This must be the same for the lifetime of the transaction object. 
+             This assumption is relied upon for certain optimisations in the Transaction Comitter.
             </summary>
-            <returns>The ID that uniquelty identifies this item of the transaction. In the case of business objects the object Id.
+            <returns>The ID that uniquely identifies this item of the transaction. In the case of business objects the object Id.
              for non business objects that no natural id exists for the particular transactional item a guid that uniquely identifies 
              transactional item should be generated. This is used by the transaction committer to ensure that the transactional item
              is not added twice in error.</returns>
@@ -15256,11 +15262,18 @@
             <param name="businessObject"></param>
         </member>
         <member name="M:Habanero.BO.TransactionCommitter.AddTransaction(Habanero.Base.ITransactional)">
-             
             <summary>
              This method adds an <see cref="T:Habanero.Base.ITransactional"/> to the list of transactions.
             </summary>
-            <param name="transaction"></param>
+            <param name="transaction">The transaction to add to the <see cref="T:Habanero.Base.ITransactionCommitter"/>.</param>
+        </member>
+        <member name="M:Habanero.BO.TransactionCommitter.AddTransactionInternal(Habanero.Base.ITransactional)">
+            <summary>
+            This method adds an <see cref="T:Habanero.Base.ITransactional"/> to the list of transactions and 
+            returns true or false if the provided object was added or not.
+            </summary>
+            <param name="transaction">The transaction to add to the <see cref="T:Habanero.Base.ITransactionCommitter"/>.</param>
+            <returns>True or false if the provided object was added or not.</returns>
         </member>
         <member name="M:Habanero.BO.TransactionCommitter.CommitTransaction">
             <summary>

@@ -1147,6 +1147,178 @@
             The name of the property type assembly
             </summary>
         </member>
+        <member name="T:Habanero.Base.Logging.IHabaneroLogger">
+            <summary>
+            This is an interface for a logger adapter.
+            It is expected that you can create a specific Adapter 
+            for the Logger that you use. 
+            In Habanero we use the <see cref="T:Habanero.Base.Logging.Log4NetLogger"/> by default.
+            You can change this in the BootStrapping of your application by registering the appropriate
+            Logger Factor see <see cref="T:Habanero.Base.Logging.IHabaneroLoggerFactory"/> for more details
+            </summary>
+        </member>
+        <member name="M:Habanero.Base.Logging.IHabaneroLogger.Log(System.String,Habanero.Base.Logging.LogCategory)">
+            <summary>
+            Creates a single log entry for with the message with the appropriate message
+            </summary>
+            <param name="message"></param>
+            <param name="logCategory"></param>
+        </member>
+        <member name="M:Habanero.Base.Logging.IHabaneroLogger.Log(System.Exception)">
+            <summary>
+            Creates a single log entry for with the appropriate exception message.
+            Although this is an interface and you can implement it as you wish for <see cref="T:Habanero.Base.Logging.Log4NetLogger"/>
+            We log an entry with <see cref="F:Habanero.Base.Logging.LogCategory.Exception"/> unless the exception inherits from
+            <see cref="T:Habanero.Base.Exceptions.UserException"/> in which case we log this with the <see cref="F:Habanero.Base.Logging.LogCategory.Info"/>
+            </summary>
+            <param name="exception"></param>
+        </member>
+        <member name="M:Habanero.Base.Logging.IHabaneroLogger.Log(System.String,System.Exception)">
+            <summary>
+            Creates a single log entry for with the appropriate exception message and message.
+            Although this is an interface and you can implement it as you wish for <see cref="T:Habanero.Base.Logging.Log4NetLogger"/>
+            We log an entry with <see cref="F:Habanero.Base.Logging.LogCategory.Exception"/> unless the exception inherits from
+            <see cref="T:Habanero.Base.Exceptions.UserException"/> in which case we log this with the <see cref="F:Habanero.Base.Logging.LogCategory.Info"/>
+            </summary>
+            <param name="message">The additional log message to be logged with the exception</param>
+            <param name="exception"></param>
+        </member>
+        <member name="M:Habanero.Base.Logging.IHabaneroLogger.Log(System.String,System.Exception,Habanero.Base.Logging.LogCategory)">
+            <summary>
+            Creates a single log entry for with appropriate exception message and message with the specified LogCategory.
+            </summary>
+            <param name="message">The additional log message to be logged with the exception</param>
+            <param name="exception">The exception being logged</param>
+            <param name="logCategory">The specified LogCategory</param>
+        </member>
+        <member name="M:Habanero.Base.Logging.IHabaneroLogger.IsLogging(Habanero.Base.Logging.LogCategory)">
+            <summary>
+             Checks the logger to see if it has been enabled to log messages of the specified <see cref="T:Habanero.Base.Logging.LogCategory"/> type.
+            </summary>
+            <param name="logCategory">The <see cref="T:Habanero.Base.Logging.LogCategory"/> for which to check if logging is enabled or not.</param>
+            <returns>true if the specified <see cref="T:Habanero.Base.Logging.LogCategory"/> messages will be logged, otherwise false.</returns>
+        </member>
+        <member name="P:Habanero.Base.Logging.IHabaneroLogger.ContextName">
+            <summary>
+             The Context of the Log message that is being logged.
+             This is typically the FullClassName e.g. namespace.ClassName
+             but can be anything else.
+            </summary>
+        </member>
+        <member name="T:Habanero.Base.Logging.IHabaneroLoggerFactory">
+            <summary>
+            </summary>
+        </member>
+        <member name="M:Habanero.Base.Logging.IHabaneroLoggerFactory.GetLogger(System.String)">
+            <summary>
+             Creates the Appropriate <see cref="T:Habanero.Base.Logging.IHabaneroLogger"/>
+             based on the LoggerFactory you have implemented.
+             By Default Habanero uses the <see cref="T:Habanero.Base.Logging.Log4NetLoggerFactory"/>.
+             You can change the logger factor by changing your the BootStrapper code when
+             Your Application starts up or by creating your own <see cref="T:Habanero.Base.HabaneroApp"/>
+             and overriding the <see cref="M:Habanero.Base.HabaneroApp.SetupLogging"/> or by calling
+             the following code in your app startup.
+             <code>
+             GlobalRegistry.LoggerFactory = new Log4NetLoggerFactory();
+             </code>
+            </summary>
+            <param name="contextName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Habanero.Base.Logging.IHabaneroLoggerFactory.GetLogger(System.Type)">
+            <summary>
+             Creates the Appropriate <see cref="T:Habanero.Base.Logging.IHabaneroLogger"/>
+             based on the LoggerFactory you have implemented.
+             See <see cref="M:Habanero.Base.Logging.IHabaneroLoggerFactory.GetLogger(System.String)"/> form more details
+            </summary>
+            <param name="type">The Type of BO this log is for</param>
+            <returns></returns>
+        </member>
+        <member name="T:Habanero.Base.Logging.Log4NetLogger">
+            <summary>
+             The Log4Net adapter.
+            </summary>
+        </member>
+        <member name="M:Habanero.Base.Logging.Log4NetLogger.#ctor(System.String)">
+            <summary>
+             Constructs the Logger with the appropriate context
+            </summary>
+            <param name="contextName"></param>
+        </member>
+        <member name="M:Habanero.Base.Logging.Log4NetLogger.#ctor(System.Type)">
+            <summary>
+             Constructs the Logger with the appropriate contextType
+            </summary>
+            <param name="contextType">The Type of object this context is for.</param>
+        </member>
+        <member name="M:Habanero.Base.Logging.Log4NetLogger.Log(System.String,Habanero.Base.Logging.LogCategory)">
+            <summary>
+             Logs the message to the configured loLog4Netgger with the 
+             appropriate <see cref="T:Habanero.Base.Logging.LogCategory"/>
+            </summary>
+            <param name="message"></param>
+            <param name="logCategory"></param>
+        </member>
+        <member name="M:Habanero.Base.Logging.Log4NetLogger.Log(System.Exception)">
+            <summary>
+            Creates a single log entry for with the message with the appropriate message.
+            The Log4NetLogger logs an entry with <see cref="F:Habanero.Base.Logging.LogCategory.Exception"/> unless the exception inherits from
+            <see cref="T:Habanero.Base.Exceptions.UserException"/> in which case we log this with the <see cref="F:Habanero.Base.Logging.LogCategory.Info"/>
+            </summary>
+            <param name="exception"></param>
+        </member>
+        <member name="P:Habanero.Base.Logging.Log4NetLogger.ContextName">
+            <summary>
+             The context that the Logger is currently running e.g. ComponentName.ClassName.MethodName
+            </summary>
+        </member>
+        <member name="T:Habanero.Base.Logging.Log4NetLoggerFactory">
+            <summary>
+            Logger factory for creating a <see cref="T:Habanero.Base.Logging.Log4NetLogger"/>
+            </summary>
+        </member>
+        <member name="M:Habanero.Base.Logging.Log4NetLoggerFactory.#ctor">
+            <summary>
+             Constructs the Log4net factory
+            </summary>
+        </member>
+        <member name="T:Habanero.Base.Logging.LogCategory">
+            <summary>
+            The Category of Log file that you want to log for.
+            This is typically used by your <see cref="T:Habanero.Base.Logging.IHabaneroLogger"/> implementation
+            to provide control for what is logged. Since logging is a time consuming procedure it is
+            critical that the log is created only where required for released applicatione etc
+            </summary>
+        </member>
+        <member name="F:Habanero.Base.Logging.LogCategory.Debug">
+            <summary>
+            Are you logging information specifically to be used when debugging an application
+            </summary>
+        </member>
+        <member name="F:Habanero.Base.Logging.LogCategory.Exception">
+            <summary>
+            Are you logging an exception i.e. an Exception has been thrown and you are logging it.
+            </summary>
+        </member>
+        <member name="F:Habanero.Base.Logging.LogCategory.Info">
+            <summary>
+            Are you logging general info e.g. Resolved ...
+            Bootstrapped application ...
+            Starting ....
+            </summary>
+        </member>
+        <member name="F:Habanero.Base.Logging.LogCategory.Warn">
+            <summary>
+            Has an error occured whereby you do not want to specifically throw an exception and prevent the 
+            user from continuing but you do want it logged so that your support team can look into it.
+            </summary>
+        </member>
+        <member name="F:Habanero.Base.Logging.LogCategory.Fatal">
+            <summary>
+            There is a Fatal Exception that has occured. 
+              You want to log this. Probably want to log and close the app down or something like that.
+            </summary>
+        </member>
         <member name="T:Habanero.Base.IOrderCriteriaField">
             <summary>
             Field represents one field in an OrderCriteria object.  Each OrderCriteriaField has a name and SortDirection.
@@ -5420,8 +5592,11 @@
         </member>
         <member name="M:Habanero.Base.ITransactional.TransactionID">
             <summary>
+             This is the ID that uniquely identifies this item of the transaction.
+             This must be the same for the lifetime of the transaction object. 
+             This assumption is relied upon for certain optimisations in the Transaction Comitter.
             </summary>
-            <returns>The ID that uniquelty identifies this item of the transaction. In the case of business objects the object Id.
+            <returns>The ID that uniquely identifies this item of the transaction. In the case of business objects the object Id.
              for non business objects that no natural id exists for the particular transactional item a guid that uniquely identifies 
              transactional item should be generated. This is used by the transaction committer to ensure that the transactional item
              is not added twice in error.</returns>
@@ -5514,7 +5689,7 @@
             <summary>
              This method adds an <see cref="T:Habanero.Base.ITransactional"/> to the list of transactions.
             </summary>
-            <param name="transaction"></param>
+            <param name="transaction">The transaction to add to the <see cref="T:Habanero.Base.ITransactionCommitter"/>.</param>
         </member>
         <member name="M:Habanero.Base.ITransactionCommitter.CommitTransaction">
             <summary>
@@ -6923,6 +7098,12 @@
         <member name="P:Habanero.Base.GlobalRegistry.SecurityController">
             <summary>
              Gets and sets the security controller for the application
+            </summary>
+        </member>
+        <member name="P:Habanero.Base.GlobalRegistry.LoggerFactory">
+            <summary>
+             Gets and sets the <see cref="T:Habanero.Base.Logging.IHabaneroLoggerFactory"/> that is used to create the <see cref="T:Habanero.Base.Logging.IHabaneroLogger"/>
+             for this application.
             </summary>
         </member>
         <member name="T:Habanero.Base.ConfirmationDelegate">
