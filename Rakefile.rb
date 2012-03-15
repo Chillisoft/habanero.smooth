@@ -42,6 +42,9 @@ task :default => [:build_all]
 desc "Rakes habanero, builds Smooth"
 task :build_all => [:create_temp, :rake_habanero, :build, :delete_temp]
 
+desc "Pulls habanero from local nuget, builds and tests smooth"
+task :build_test_smooth => [:create_temp, :installNugetPackages, :build, :publishSmoothNugetPackage, :publishNakedNugetPackage, :delete_temp]
+
 desc "Builds Smooth, including tests"
 task :build => [:clean, :updatelib, :build_FakeBOs, :msbuild, :test]
 
@@ -105,7 +108,27 @@ nunit :test do |nunit|
 	nunit.assemblies 'bin\Habanero.Smooth.Test.dll','bin\Habanero.Naked.Tests.dll', 'bin\Habanero.Fluent.Tests.dll' ,'bin\TestProject.Test.BO.dll','bin\TestProjectNoDBSpecificProps.Test.BO.dll' 
 end
 
-# svn :commitlib do |s|
+svn :commitlib do |s|
 	# puts cyan("Commiting lib")
 	# s.parameters "ci lib -m autocheckin"
-# end
+end
+
+desc "Install nuget packages"
+getnugetpackages :installNugetPackages do |ip|
+    ip.package_names = ["Habanero.Base.V2.6",  "Habanero.BO.V2.6"]
+end
+
+desc "Publish the Habanero.Smooth nuget package"
+pushnugetpackages :publishSmoothNugetPackage do |package|
+  package.InputFileWithPath = "bin/Habanero.Smooth.dll"
+  package.Nugetid = "Habanero.Smooth.v1.6"
+  package.Version = "1.6"
+  package.Description = "Smooth"
+end
+
+desc "Publish the Habanero.Naked nuget package"
+pushnugetpackages :publishNakedNugetPackage do |package|
+  package.InputFileWithPath = "bin/Habanero.Naked.dll"
+  package.Nugetid = "Habanero.Naked.v1.6"
+  package.Version = "1.6"
+  package.Description = "Naked"
