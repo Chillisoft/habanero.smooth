@@ -132,3 +132,4 @@ pushnugetpackages :publishNakedNugetPackage do |package|
   package.Nugetid = "Habanero.Naked.v1.6"
   package.Version = "1.6"
   package.Description = "Naked"
+end
