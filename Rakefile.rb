@@ -106,6 +106,6 @@ nunit :test do |nunit|
 end
 
 svn :commitlib do |s|
-	puts cyan("Commiting lib")
-	s.parameters "ci lib -m autocheckin"
+	#puts cyan("Commiting lib")
+	#s.parameters "ci lib -m autocheckin"
 end
