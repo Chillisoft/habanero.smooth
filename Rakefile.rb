@@ -43,13 +43,17 @@ task :default => [:build_all]
 # task :build_smooth_only => [:create_temp, :build, :delete_temp]
 
 desc "Rakes habanero, builds Smooth"
-task :build_all => [:create_temp, :rake_habanero, :build, :delete_temp]
+task :build_all => [:create_temp, :rake_habanero, :build, :delete_temp, :nuget]
 
 desc "Builds Smooth, including tests"
 task :build => [:clean, :updatelib, :build_FakeBOs, :msbuild, :test]
 
 desc "builds the FakeBOs dll and copies to the lib folder"
 task :build_FakeBOs => [:msbuild_FakeBOsInSeperateAssembly,:copy_dll_to_smooth_lib] 
+
+desc "Pushes Habanero into the local nuget folder"
+task :nuget => [:publishSmoothNugetPackage ]
+
 
 #------------------------build FakeBOsInSeperateAssembly---------
 
@@ -106,4 +110,12 @@ desc "Runs the tests"
 nunit :test do |nunit|
 	puts cyan("Running tests")
 	nunit.assemblies 'bin\Habanero.Smooth.Test.dll','bin\TestProject.Test.BO.dll','bin\TestProjectNoDBSpecificProps.Test.BO.dll' 
+end
+
+desc "Publish the Habanero.Smooth nuget package"
+pushnugetpackages :publishSmoothNugetPackage do |package|
+  package.InputFileWithPath = "bin/Habanero.Smooth.dll"
+  package.Nugetid = "Habanero.Smooth.v1.5_CF_Stargate"
+  package.Version = "1.5"
+  package.Description = "Habanero.Smooth"
 end
