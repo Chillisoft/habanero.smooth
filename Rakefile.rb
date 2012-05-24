@@ -37,7 +37,7 @@ $solution = 'source/SmoothHabanero_2010.sln'
 #---------------------------------TASKS----------------------------------------
 
 desc "Runs the build all task"
-task :default => [:build_all]
+task :default => [:build_test_smooth]
 
 desc "Rakes habanero, builds Smooth"
 task :build_all => [:create_temp, :rake_habanero, :build, :delete_temp]
@@ -106,11 +106,6 @@ desc "Runs the tests"
 nunit :test do |nunit|
 	puts cyan("Running tests")
 	nunit.assemblies 'bin\Habanero.Smooth.Test.dll','bin\Habanero.Naked.Tests.dll', 'bin\Habanero.Fluent.Tests.dll' ,'bin\TestProject.Test.BO.dll','bin\TestProjectNoDBSpecificProps.Test.BO.dll' 
-end
-
-svn :commitlib do |s|
-	# puts cyan("Commiting lib")
-	# s.parameters "ci lib -m autocheckin"
 end
 
 desc "Install nuget packages"
