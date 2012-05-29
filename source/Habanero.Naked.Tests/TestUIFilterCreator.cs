@@ -117,8 +117,10 @@ namespace Habanero.Naked.Tests
             //---------------Test Result -----------------------
             Assert.AreEqual(2, filterDef.FilterPropertyDefs.Count);
 
-            AssertIsControlOfType("TextBox", "System.Windows.Forms", filterDef.FilterPropertyDefs[0]);
-            AssertIsControlOfType("CheckBox", "System.Windows.Forms", filterDef.FilterPropertyDefs[1]);
+            //AssertIsControlOfType("TextBox", "System.Windows.Forms", filterDef.FilterPropertyDefs[0]);
+            //AssertIsControlOfType("CheckBox", "System.Windows.Forms", filterDef.FilterPropertyDefs[1]);
+            AssertIsControlOfType("StringTextBoxFilter", "Habanero.Faces.Base", filterDef.FilterPropertyDefs[0]);
+            AssertIsControlOfType("BoolCheckBoxFilter", "Habanero.Faces.Base", filterDef.FilterPropertyDefs[1]);
         }
 
         [Test]
@@ -211,7 +213,7 @@ namespace Habanero.Naked.Tests
             //---------------Execute Test ----------------------
             var filterPropertyDef = uiFilterCreator.CreateUIFilterProperty(propDef);
             //---------------Test Result -----------------------
-            AssertIsControlOfType("TextBox", "System.Windows.Forms", filterPropertyDef);
+            AssertIsControlOfType("StringTextBoxFilter", "Habanero.Faces.Base", filterPropertyDef);
         }
 
 
@@ -226,7 +228,7 @@ namespace Habanero.Naked.Tests
             //---------------Execute Test ----------------------
             var filterPropertyDef = uiFilterCreator.CreateUIFilterProperty(propDef);
             //---------------Test Result -----------------------
-            AssertIsControlOfType("CheckBox", "System.Windows.Forms", filterPropertyDef);
+            AssertIsControlOfType("BoolCheckBoxFilter", "Habanero.Faces.Base", filterPropertyDef);
         }
 
         [Test]
@@ -240,7 +242,7 @@ namespace Habanero.Naked.Tests
             //---------------Execute Test ----------------------
             var filterPropertyDef = uiFilterCreator.CreateUIFilterProperty(propDef);
             //---------------Test Result -----------------------
-            AssertIsControlOfType("DateTimePicker", "System.Windows.Forms", filterPropertyDef);
+            AssertIsControlOfType("DateTimePickerFilter", "Habanero.Faces.Base", filterPropertyDef);
         }
 
         [Test]
@@ -254,7 +256,7 @@ namespace Habanero.Naked.Tests
             //---------------Execute Test ----------------------
             var filterPropertyDef = uiFilterCreator.CreateUIFilterProperty(propDef);
             //---------------Test Result -----------------------
-            AssertIsControlOfType("TextBox", "System.Windows.Forms", filterPropertyDef);
+            AssertIsControlOfType("StringTextBoxFilter", "Habanero.Faces.Base", filterPropertyDef);
         }
 
         [Test]
@@ -271,7 +273,7 @@ namespace Habanero.Naked.Tests
             //---------------Execute Test ----------------------
             var filterPropertyDef = uiFilterCreator.CreateUIFilterProperty(propDef);
             //---------------Test Result -----------------------
-            AssertIsControlOfType("ComboBox", "System.Windows.Forms", filterPropertyDef);
+            AssertIsControlOfType("StringComboBoxFilter", "Habanero.Faces.Base", filterPropertyDef);
         }
 
         [Test]
