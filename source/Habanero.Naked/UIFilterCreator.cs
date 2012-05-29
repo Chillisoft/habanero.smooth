@@ -104,22 +104,22 @@ namespace Habanero.Naked
 
         private static UIControlType GetTextBoxControlType()
         {
-            return GetControlType("System.Windows.Forms", "TextBox");
+            return GetControlType("Habanero.Faces.Base", "StringTextBoxFilter");
         }
 
         private static UIControlType GetCheckBoxControlType()
         {
-            return GetControlType("System.Windows.Forms", "CheckBox");
+            return GetControlType("Habanero.Faces.Base", "BoolCheckBoxFilter");
         }
 
         private static UIControlType GetDateTimeControlType()
         {
-            return GetControlType("System.Windows.Forms", "DateTimePicker");
+            return GetControlType("Habanero.Faces.Base", "DateTimePickerFilter");
         }
 
         private static UIControlType GetComboBoxControlType()
         {
-            return GetControlType("System.Windows.Forms", "ComboBox");
+            return GetControlType("Habanero.Faces.Base", "StringComboBoxFilter");
         }
 
     }
