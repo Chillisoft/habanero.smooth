@@ -183,6 +183,17 @@ namespace Habanero.Smooth.ReflectionWrappers
         {
             get { return this.HasAttribute<AutoMapIgnoreAttribute>(); }
         }
+
+        public virtual bool HasDisplayNameAttribute
+        {
+            get { return this.HasAttribute<AutoMapDisplayNameAttribute>(); }
+        }
+
+        public virtual bool HasDescriptionAttribute
+        {
+            get { return this.HasAttribute<AutoMapDescriptionAttribute>(); }
+        }
+
         /// <summary>
         /// Returns true if the Property has a <see cref="AutoMapDefaultAttribute"/> set on it.
         /// </summary>

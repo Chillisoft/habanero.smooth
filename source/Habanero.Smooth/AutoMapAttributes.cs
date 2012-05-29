@@ -327,4 +327,28 @@ namespace Habanero.Smooth
         }
     }
 
+    /// <summary>
+    /// Sets an override DisplayName for a BO property
+    /// </summary>
+    public class AutoMapDisplayNameAttribute : Attribute
+    {
+        public string DisplayName { get; private set; }
+        public AutoMapDisplayNameAttribute(string displayName)
+        {
+            this.DisplayName = displayName;
+        }
+    }
+
+    /// <summary>
+    /// Sets an override Description for a BO property
+    /// </summary>
+    public class AutoMapDescriptionAttribute : Attribute
+    {
+        public string Description { get; private set; }
+        public AutoMapDescriptionAttribute(string description)
+        {
+            this.Description = description;
+        }
+    }
+
 }

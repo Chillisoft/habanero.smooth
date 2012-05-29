@@ -317,6 +317,63 @@ namespace Habanero.Smooth.Test
         }
 
         [Test]
+        public void Test_MapWithFake_WhenDisplayNameSet_ShouldReturnSetDisplayName()
+        {
+            //---------------Set up test pack-------------------
+            PropertyWrapper wrapper = GetMockPropWrapper();
+            var displayName = RandomValueGenerator.GetRandomString();
+            SetDisplayNameAttribute(wrapper, displayName);
+            var propertyAutoMapper = new PropertyAutoMapper(wrapper);
+
+            //---------------Assert Precondition----------------
+            Assert.IsTrue(wrapper.HasDisplayNameAttribute);
+            //---------------Execute Test ----------------------
+            var propDef = propertyAutoMapper.MapProperty();
+            //---------------Test Result -----------------------
+            Assert.IsNotNull(propDef.DisplayName);
+            Assert.AreEqual(displayName, propDef.DisplayName, "expected DisplayName not returned");
+        }
+
+        [Test]
+        public void Test_MapWithFake_WhenDescriptionPropertySet_ShouldReturnSetDescription()
+        {
+            //---------------Set up test pack-------------------
+            var wrapper = GetMockPropWrapper();
+            var description = RandomValueGenerator.GetRandomString();
+            SetDescriptionAttribute(wrapper, description);
+            var propertyAutoMapper = new PropertyAutoMapper(wrapper);
+
+            //---------------Assert Precondition----------------
+            Assert.IsTrue(wrapper.HasDescriptionAttribute);
+            //---------------Execute Test ----------------------
+            var propDef = propertyAutoMapper.MapProperty();
+            //---------------Test Result -----------------------
+            Assert.AreEqual(description, propDef.Description);
+        }
+
+        [Test]
+        public void Test_MapWithFake_When()
+        {
+            //---------------Set up test pack-------------------
+            var wrapper = GetMockPropWrapper();
+            var maxLen = RandomValueGenerator.GetRandomInt(100, 201);
+            SetMaxLengthAttribute(wrapper, maxLen);
+            var propertyAutoMapper = new PropertyAutoMapper(wrapper);
+
+            //---------------Assert Precondition----------------
+            Assert.IsTrue(wrapper.HasStringLengthRuleAttribute);
+            //---------------Execute Test ----------------------
+            var propDef = propertyAutoMapper.MapProperty();
+            //---------------Test Result -----------------------
+            Assert.AreNotEqual(0, propDef.PropRules.Count, "propDef has no rules -- should have at least one rule");
+            PropRuleString rule = null;
+            foreach (var r in propDef.PropRules)
+                rule = propDef.PropRules[0] as PropRuleString;
+            Assert.IsNotNull(rule, "propdef should have a PropRuleString rule");
+            Assert.AreEqual(maxLen, (int)rule.Parameters["maxLength"], "rule mismatches set maxlength");
+        }
+
+        [Test]
         public void Test_MapWithFake_WhenHasDefaultAttribute_ShouldReturnPropDefWithDefault()
         {
             //---------------Set up test pack-------------------
@@ -706,7 +763,23 @@ namespace Habanero.Smooth.Test
             return wrapper;
         }
 
+        private static void SetDisplayNameAttribute(PropertyWrapper wrapper, string displayName)
+        {
+            wrapper.Stub(w => w.HasDisplayNameAttribute).Return(true);
+            wrapper.Stub(w => w.GetAttribute<AutoMapDisplayNameAttribute>()).Return(new AutoMapDisplayNameAttribute(displayName));
+        }
 
+        private static void SetMaxLengthAttribute(PropertyWrapper wrapper, int maxLength)
+        {
+            wrapper.Stub(w => w.HasStringLengthRuleAttribute).Return(true);
+            wrapper.Stub(w => w.GetAttribute<AutoMapStringLengthPropRuleAttribute>()).Return(new AutoMapStringLengthPropRuleAttribute(0, maxLength));
+        }
+
+        private static void SetDescriptionAttribute(PropertyWrapper wrapper, string description)
+        {
+            wrapper.Stub(w => w.HasDescriptionAttribute).Return(true);
+            wrapper.Stub(w => w.GetAttribute<AutoMapDescriptionAttribute>()).Return(new AutoMapDescriptionAttribute(description));
+        }
 
         private static void SetHasDefaultAttribute(PropertyWrapper wrapper, bool hasDefault, string defaultValue)
         {

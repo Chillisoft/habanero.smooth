@@ -58,6 +58,27 @@ namespace Habanero.Smooth
 
         private PropertyWrapper PropertyWrapper { get; set; }
 
+        private string GetDisplayName()
+        {
+            if (this.PropertyWrapper.HasDisplayNameAttribute)
+                return this.PropertyWrapper.GetAttribute<AutoMapDisplayNameAttribute>().DisplayName;
+            return null;
+        }
+
+        private int GetMaxLength()
+        {
+            if (this.PropertyWrapper.HasStringLengthRuleAttribute)
+                return this.PropertyWrapper.GetAttribute<AutoMapStringLengthPropRuleAttribute>().MaxLength;
+            return int.MaxValue;
+        }
+
+        private string GetDescription()
+        {
+            if (this.PropertyWrapper.HasDescriptionAttribute)
+                return this.PropertyWrapper.GetAttribute<AutoMapDescriptionAttribute>().Description;
+            return null;
+        }
+
         /// <summary>
         /// Will attempt to map a PropertyInfo to an IPropDef.
         /// If it cannot be mapped then will return null.
@@ -68,7 +89,9 @@ namespace Habanero.Smooth
             if (MustMapProperty)
             {
                 var propertyType = this.PropertyWrapper.UndelyingPropertyType;
-                var propDef = new PropDef(this.PropertyWrapper.Name, propertyType, PropReadWriteRule.ReadWrite, null)
+                var propDef = new PropDef(this.PropertyWrapper.Name, propertyType, PropReadWriteRule.ReadWrite, null, null, 
+                    this.PropertyWrapper.HasCompulsoryAttribute, this.PropertyWrapper.HasAutoIncrementingAttribute, this.GetMaxLength(), 
+                    this.GetDisplayName(), this.GetDescription())
                                   {
                                       Compulsory = this.PropertyWrapper.HasCompulsoryAttribute
                                   };
