@@ -144,7 +144,7 @@ namespace Habanero.Smooth.Test
 
 	}
 
-    public class FakeGenericBOSubType : GenericBOSuperType<FakeBOGeneric>
+    public class FakeGenericBOSubType : GenericBOSuperType<FakeGenericBOSubType>
 	{
 
 	}
