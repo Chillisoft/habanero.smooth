@@ -531,6 +531,20 @@ namespace Habanero.Smooth.Test
         }
 
         [Test]
+        public void Test_GetPKPropName_WhenInheritsFromGenericBOSuperType_ShouldNotUseBasePropToDetermineName()
+        {
+            //---------------Set up test pack-------------------
+            var classType = typeof(FakeGenericBOSubType);
+            var typeWrapper = classType.ToTypeWrapper();
+            //---------------Assert Precondition----------------
+            Assert.IsTrue(typeWrapper.BaseType.IsGenericType);
+            //---------------Execute Test ----------------------
+            var pkPropName = typeWrapper.GetPKPropName();
+            //---------------Test Result -----------------------
+            Assert.AreEqual("FakeGenericBOSubTypeID", pkPropName);
+        }
+
+        [Test]
         public void Test_GetPKPropName_WhenSubClass_WhenIDPropDeclaredInClassDefXml_ShouldReturnDefinedClassDef_FixBug1355()
         {
             //---------------Set up test pack-------------------

@@ -134,11 +134,22 @@ namespace Habanero.Smooth.Test
         [AutoMapKeepValuePrivate]
         public Guid PublicWithKeepValuePrivateAtt { get; set; }
 	}
+
 	public class FakeBOGeneric : BusinessObject<FakeBOGeneric>
 	{
 
 	}
 	public class FakeBOGenericSubType : FakeBOGeneric
+	{
+
+	}
+
+    public class GenericBOSuperType<T> : BusinessObject<T>
+	{
+
+	}
+
+    public class FakeGenericBOSubType : GenericBOSuperType<FakeGenericBOSubType>
 	{
 
 	}

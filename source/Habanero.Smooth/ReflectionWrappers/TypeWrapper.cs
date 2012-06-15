@@ -107,7 +107,7 @@ namespace Habanero.Smooth.ReflectionWrappers
         }
 
         /// <summary>
-        /// Returns true if this type si a Generic Type
+        /// Returns true if this type is a Generic Type
         /// </summary>
         public virtual bool IsGenericType
         {
@@ -310,7 +310,7 @@ namespace Habanero.Smooth.ReflectionWrappers
         ///<returns></returns>
         public virtual string GetPKPropName()
         {
-            if(!this.IsBaseTypeBusinessObject && this.HasBaseType)
+            if(!this.IsBaseTypeBusinessObject && this.HasBaseType && !this.BaseType.IsGenericType)
             {
                 return this.BaseType.GetPKPropName();
             }
