@@ -40,8 +40,7 @@ msbuild_settings = {
 }
 
 #------------------------dependency settings---------------------
-$habanero_version = 'branches/v2.6'
-require 'rake-habanero.rb'
+
 #------------------------project settings------------------------
 $solution = 'source/SmoothHabanero_2010.sln'
 
