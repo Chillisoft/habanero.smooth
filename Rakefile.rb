@@ -25,8 +25,8 @@ if (bs.index("branches") == nil)
 else
 	$nuget_habanero_version	= 'v2.6'
 	
-	$nuget_publish_version = 'v2.6-13_02_2012'
-	$nuget_publish_version_id = '2.6'
+	$nuget_publish_version = 'v1.6-13_02_2012'
+	$nuget_publish_version_id = '1.6'
 end		
 
 #------------------------build settings--------------------------
