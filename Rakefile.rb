@@ -14,6 +14,21 @@ $buildscriptpath = File.expand_path(bs)
 $:.unshift($buildscriptpath) unless
     $:.include?(bs) || $:.include?($buildscriptpath)
 
+if (bs.index("branches") == nil)	
+	nuget_version = 'Trunk'
+	nuget_version_id = '9.9.999'
+	
+	$nuget_habanero_version	= nuget_version
+	
+	$nuget_publish_version = nuget_version
+	$nuget_publish_version_id = nuget_version_id
+else
+	$nuget_habanero_version	= 'v2.6'
+	
+	$nuget_publish_version = 'v2.6-13_02_2012'
+	$nuget_publish_version_id = '2.6'
+end		
+
 #------------------------build settings--------------------------
 require 'rake-settings.rb'
 
@@ -27,23 +42,18 @@ msbuild_settings = {
 #------------------------dependency settings---------------------
 $habanero_version = 'branches/v2.6'
 require 'rake-habanero.rb'
-
-
 #------------------------project settings------------------------
-$basepath = 'http://delicious:8080/svn/habanero/HabaneroCommunity/SmoothHabanero/branches/v1.6-13_02_2012'
 $solution = 'source/SmoothHabanero_2010.sln'
 
 #______________________________________________________________________________
 #---------------------------------TASKS----------------------------------------
 
 desc "Runs the build all task"
-task :default => [:build_all]
+task :default => [:build_test_smooth]
 
-desc "Rakes habanero, builds Smooth"
-task :build_all => [:create_temp, :rake_habanero, :build, :delete_temp]
 
 desc "Pulls habanero from local nuget, builds and tests smooth"
-task :build_test_smooth => [:create_temp, :installNugetPackages, :build, :publishSmoothNugetPackage, :publishNakedNugetPackage, :delete_temp]
+task :build_test_smooth => [:create_temp, :installNugetPackages, :msbuild, :test, :publishSmoothNugetPackage, :publishNakedNugetPackage, :delete_temp]
 
 desc "Builds Smooth, including tests"
 task :build => [:clean, :updatelib, :build_FakeBOs, :msbuild, :test]
@@ -105,7 +115,11 @@ end
 desc "Runs the tests"
 nunit :test do |nunit|
 	puts cyan("Running tests")
-	nunit.assemblies 'bin\Habanero.Smooth.Test.dll','bin\Habanero.Naked.Tests.dll', 'bin\Habanero.Fluent.Tests.dll' ,'bin\TestProject.Test.BO.dll','bin\TestProjectNoDBSpecificProps.Test.BO.dll' 
+	nunit.assemblies 'bin\Habanero.Smooth.Test.dll',
+					 'bin\Habanero.Naked.Tests.dll', 
+					 'bin\Habanero.Fluent.Tests.dll',
+					 'bin\TestProject.Test.BO.dll',
+					 'bin\TestProjectNoDBSpecificProps.Test.BO.dll' 
 end
 
 svn :commitlib do |s|
@@ -115,21 +129,22 @@ end
 
 desc "Install nuget packages"
 getnugetpackages :installNugetPackages do |ip|
-    ip.package_names = ["Habanero.Base.Trunk",  "Habanero.BO.Trunk"]
+    ip.package_names = ["Habanero.Base.#{$nuget_habanero_version}",  
+						"Habanero.BO.#{$nuget_habanero_version}"]
 end
 
 desc "Publish the Habanero.Smooth nuget package"
 pushnugetpackages :publishSmoothNugetPackage do |package|
   package.InputFileWithPath = "bin/Habanero.Smooth.dll"
-  package.Nugetid = "Habanero.Smooth.Trunk"
-  package.Version = "9.9.999"
+  package.Nugetid = "Habanero.Smooth.#{$nuget_publish_version}"
+  package.Version = $nuget_publish_version_id
   package.Description = "Smooth.Base"
 end
 
 desc "Publish the Habanero.Naked nuget package"
 pushnugetpackages :publishNakedNugetPackage do |package|
   package.InputFileWithPath = "bin/Habanero.Naked.dll"
-  package.Nugetid = "Habanero.Naked.Trunk"
-  package.Version = "9.9.999"
+  package.Nugetid = "Habanero.Naked.#{$nuget_publish_version}"
+  package.Version = $nuget_publish_version_id
   package.Description = "Naked"
 end
