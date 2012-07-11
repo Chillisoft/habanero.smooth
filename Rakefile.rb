@@ -48,17 +48,16 @@ $solution = 'source/SmoothHabanero_2010.sln'
 #---------------------------------TASKS----------------------------------------
 
 desc "Runs the build all task"
-task :default => [:build_test_smooth]
-
+task :default => [:build_all_nuget]
 
 desc "Pulls habanero from local nuget, builds and tests smooth"
-task :build_test_smooth => [:create_temp, :installNugetPackages, :msbuild, :test, :publishSmoothNugetPackage, :publishNakedNugetPackage, :delete_temp]
+task :build_all_nuget => [:create_temp, :installNugetPackages, :msbuild, :test, :publishSmoothNugetPackage, :publishNakedNugetPackage, :delete_temp]
 
 desc "Builds Smooth, including tests"
-task :build => [:clean, :updatelib, :build_FakeBOs, :msbuild, :test]
+task :build => [:clean, :build_FakeBOs, :msbuild, :test]
 
 desc "builds the FakeBOs dll and copies to the lib folder"
-task :build_FakeBOs => [:msbuild_FakeBOsInSeperateAssembly,:copy_dll_to_smooth_lib] 
+task :build_FakeBOs => [:clean_FakeBOsInSeperateAssembly, :checkout_FakeBOsInSeperateAssembly,:msbuild_FakeBOsInSeperateAssembly,:copy_dll_to_smooth_lib] 
 
 #------------------------build FakeBOsInSeperateAssembly---------
 
@@ -88,20 +87,6 @@ desc "Cleans the bin folder"
 task :clean do
 	puts cyan("Cleaning bin folder")
 	FileUtils.rm_rf 'bin'
-end
-
-svn :update_lib_from_svn do |s|
-	s.parameters "update lib"
-end
-
-task :updatelib => :update_lib_from_svn do 
-	puts cyan("Updating lib")
-	FileUtils.cp Dir.glob('temp/bin/Habanero.Base.dll'), 'lib'
-	FileUtils.cp Dir.glob('temp/bin/Habanero.Base.pdb'), 'lib'
-	FileUtils.cp Dir.glob('temp/bin/Habanero.Base.xml'), 'lib'
-	FileUtils.cp Dir.glob('temp/bin/Habanero.BO.dll'), 'lib'
-	FileUtils.cp Dir.glob('temp/bin/Habanero.BO.pdb'), 'lib'
-	FileUtils.cp Dir.glob('temp/bin/Habanero.BO.xml'), 'lib'
 end
 
 desc "Builds the solution with msbuild"
