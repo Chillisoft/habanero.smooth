@@ -23,7 +23,7 @@ if (bs.index("branches") == nil)
 	$nuget_publish_version = nuget_version
 	$nuget_publish_version_id = nuget_version_id
 else
-	$nuget_habanero_version	= 'v2.6'
+	$nuget_habanero_version	= 'v2.6-13_02_2012'
 	
 	$nuget_publish_version = 'v1.6-13_02_2012'
 	$nuget_publish_version_id = '1.6'
@@ -51,24 +51,24 @@ desc "Runs the build all task"
 task :default => [:build_all_nuget]
 
 desc "Pulls habanero from local nuget, builds and tests smooth"
-task :build_all_nuget => [:create_temp, :installNugetPackages, :msbuild, :test, :publishSmoothNugetPackage, :publishNakedNugetPackage, :delete_temp]
+task :build_all_nuget => [:installNugetPackages, :build, :publishSmoothNugetPackage, :publishNakedNugetPackage]
 
 desc "Builds Smooth, including tests"
 task :build => [:clean, :build_FakeBOs, :msbuild, :test]
 
 desc "builds the FakeBOs dll and copies to the lib folder"
-task :build_FakeBOs => [:clean_FakeBOsInSeperateAssembly, :checkout_FakeBOsInSeperateAssembly,:msbuild_FakeBOsInSeperateAssembly,:copy_dll_to_smooth_lib] 
+task :build_FakeBOs => [:msbuild_FakeBOsInSeperateAssembly,:copy_dll_to_smooth_lib] 
 
 #------------------------build FakeBOsInSeperateAssembly---------
 
-$fakeBOsFolder = "temp/FakeBOsInSeperateAssembly"
+$fakeBOsFolder = "source/FakeBOsInSeperateAssembly"
 
 task :clean_FakeBOsInSeperateAssembly do 
 	FileUtils.rm_rf "#{$fakeBOsFolder}/bin"
 end
 
 svn :checkout_FakeBOsInSeperateAssembly => :clean_FakeBOsInSeperateAssembly do |s| 
-	s.parameters "co #{$basepath}/source/FakeBosInSeperateAssembly #{$fakeBOsFolder}"
+	s.parameters "co #{Dir.pwd}/source/FakeBosInSeperateAssembly #{$fakeBOsFolder}"
 end
 
 msbuild :msbuild_FakeBOsInSeperateAssembly => :checkout_FakeBOsInSeperateAssembly do |msb| 
