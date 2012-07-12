@@ -20,5 +20,6 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.6.0.500")]
-[assembly: AssemblyFileVersion("1.6.0.500")]
+// revision number set to svn revision number @ branch creation
+[assembly: AssemblyVersion("1.6.0.22715")]
+[assembly: AssemblyFileVersion("1.6.0.22715")]
