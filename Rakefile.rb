@@ -14,6 +14,21 @@ $buildscriptpath = File.expand_path(bs)
 $:.unshift($buildscriptpath) unless
     $:.include?(bs) || $:.include?($buildscriptpath)
 
+if (bs.index("branches") == nil)	
+	nuget_version = 'Trunk'
+	nuget_version_id = '9.9.999'
+	
+	$nuget_habanero_version	= nuget_version
+	
+	$nuget_publish_version = nuget_version
+	$nuget_publish_version_id = nuget_version_id
+else
+	$nuget_habanero_version	= 'v2.6-13_02_2012'
+	
+	$nuget_publish_version = 'v1.6-13_02_2012'
+	$nuget_publish_version_id = '1.6'
+end		
+
 #------------------------build settings--------------------------
 require 'rake-settings.rb'
 
@@ -25,42 +40,35 @@ msbuild_settings = {
 }
 
 #------------------------dependency settings---------------------
-$habanero_version = 'trunk'
-require 'rake-habanero.rb'
-
 
 #------------------------project settings------------------------
-$basepath = 'http://delicious:8080/svn/habanero/HabaneroCommunity/SmoothHabanero/trunk'
 $solution = 'source/SmoothHabanero_2010.sln'
 
 #______________________________________________________________________________
 #---------------------------------TASKS----------------------------------------
 
 desc "Runs the build all task"
-task :default => [:build_test_smooth]
-
-desc "Rakes habanero, builds Smooth"
-task :build_all => [:create_temp, :rake_habanero, :build, :delete_temp]
+task :default => [:build_all_nuget]
 
 desc "Pulls habanero from local nuget, builds and tests smooth"
-task :build_test_smooth => [:create_temp, :installNugetPackages, :build, :publishSmoothNugetPackage, :publishNakedNugetPackage, :delete_temp]
+task :build_all_nuget => [:installNugetPackages, :build, :publishSmoothNugetPackage, :publishNakedNugetPackage]
 
 desc "Builds Smooth, including tests"
-task :build => [:clean, :updatelib, :build_FakeBOs, :msbuild, :test, :commitlib]
+task :build => [:clean, :build_FakeBOs, :msbuild, :test]
 
 desc "builds the FakeBOs dll and copies to the lib folder"
 task :build_FakeBOs => [:msbuild_FakeBOsInSeperateAssembly,:copy_dll_to_smooth_lib] 
 
 #------------------------build FakeBOsInSeperateAssembly---------
 
-$fakeBOsFolder = "temp/FakeBOsInSeperateAssembly"
+$fakeBOsFolder = "source/FakeBOsInSeperateAssembly"
 
 task :clean_FakeBOsInSeperateAssembly do 
 	FileUtils.rm_rf "#{$fakeBOsFolder}/bin"
 end
 
 svn :checkout_FakeBOsInSeperateAssembly => :clean_FakeBOsInSeperateAssembly do |s| 
-	s.parameters "co #{$basepath}/source/FakeBosInSeperateAssembly #{$fakeBOsFolder}"
+	s.parameters "co #{Dir.pwd}/source/FakeBosInSeperateAssembly #{$fakeBOsFolder}"
 end
 
 msbuild :msbuild_FakeBOsInSeperateAssembly => :checkout_FakeBOsInSeperateAssembly do |msb| 
@@ -81,20 +89,6 @@ task :clean do
 	FileUtils.rm_rf 'bin'
 end
 
-svn :update_lib_from_svn do |s|
-	s.parameters "update lib"
-end
-
-task :updatelib => :update_lib_from_svn do 
-	puts cyan("Updating lib")
-	FileUtils.cp Dir.glob('temp/bin/Habanero.Base.dll'), 'lib'
-	FileUtils.cp Dir.glob('temp/bin/Habanero.Base.pdb'), 'lib'
-	FileUtils.cp Dir.glob('temp/bin/Habanero.Base.xml'), 'lib'
-	FileUtils.cp Dir.glob('temp/bin/Habanero.BO.dll'), 'lib'
-	FileUtils.cp Dir.glob('temp/bin/Habanero.BO.pdb'), 'lib'
-	FileUtils.cp Dir.glob('temp/bin/Habanero.BO.xml'), 'lib'
-end
-
 desc "Builds the solution with msbuild"
 msbuild :msbuild do |msb| 
 	puts cyan("Building #{$solution} with msbuild")
@@ -105,7 +99,11 @@ end
 desc "Runs the tests"
 nunit :test do |nunit|
 	puts cyan("Running tests")
-	nunit.assemblies 'bin\Habanero.Smooth.Test.dll','bin\Habanero.Naked.Tests.dll', 'bin\Habanero.Fluent.Tests.dll' ,'bin\TestProject.Test.BO.dll','bin\TestProjectNoDBSpecificProps.Test.BO.dll' 
+	nunit.assemblies 'bin\Habanero.Smooth.Test.dll',
+					 'bin\Habanero.Naked.Tests.dll', 
+					 'bin\Habanero.Fluent.Tests.dll',
+					 'bin\TestProject.Test.BO.dll',
+					 'bin\TestProjectNoDBSpecificProps.Test.BO.dll' 
 end
 
 svn :commitlib do |s|
@@ -115,21 +113,22 @@ end
 
 desc "Install nuget packages"
 getnugetpackages :installNugetPackages do |ip|
-    ip.package_names = ["Habanero.Base.Trunk",  "Habanero.BO.Trunk"]
+    ip.package_names = ["Habanero.Base.#{$nuget_habanero_version}",  
+						"Habanero.BO.#{$nuget_habanero_version}"]
 end
 
 desc "Publish the Habanero.Smooth nuget package"
 pushnugetpackages :publishSmoothNugetPackage do |package|
   package.InputFileWithPath = "bin/Habanero.Smooth.dll"
-  package.Nugetid = "Habanero.Smooth.Trunk"
-  package.Version = "9.9.999"
+  package.Nugetid = "Habanero.Smooth.#{$nuget_publish_version}"
+  package.Version = $nuget_publish_version_id
   package.Description = "Smooth.Base"
 end
 
 desc "Publish the Habanero.Naked nuget package"
 pushnugetpackages :publishNakedNugetPackage do |package|
   package.InputFileWithPath = "bin/Habanero.Naked.dll"
-  package.Nugetid = "Habanero.Naked.Trunk"
-  package.Version = "9.9.999"
+  package.Nugetid = "Habanero.Naked.#{$nuget_publish_version}"
+  package.Version = $nuget_publish_version_id
   package.Description = "Naked"
 end
