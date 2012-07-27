@@ -71,12 +71,14 @@ namespace Habanero.Smooth
         protected AutoMapRelationshipAttribute(RelationshipType relationshipType)
         {
             this.RelationshipType = relationshipType;
-        }
+        }        
+
         protected AutoMapRelationshipAttribute(string reverseRelationshipName, RelationshipType relationshipType)
         {
             this.ReverseRelationshipName = reverseRelationshipName;
             this.RelationshipType = relationshipType;
         }
+
         /// <summary>
         /// The specified Reverse RelationshipName
         /// </summary>
@@ -86,6 +88,7 @@ namespace Habanero.Smooth
         /// The RelationshipType that is specified.
         /// </summary>
         public RelationshipType RelationshipType { get; set; }
+
 
     }
     /// <summary>
@@ -120,7 +123,15 @@ namespace Habanero.Smooth
     /// AutoMap a One to Many Relationship between two Business Objects.
     /// </summary>
     [AttributeUsage(AttributeTargets.Property)]
-    public class AutoMapOneToManyAttribute : AutoMapRelationshipAttribute {
+    public class AutoMapOneToManyAttribute : AutoMapRelationshipAttribute 
+    {
+                /// <summary>
+        /// Defines the action that should be taken when the Parent of the relationship is deleted
+        /// </summary>
+        public DeleteParentAction DeleteParentAction { get; set; }
+        /// <summary>
+        /// Default constructor for OneToMany
+        /// </summary>
         public AutoMapOneToManyAttribute()
         {
         }
@@ -134,9 +145,15 @@ namespace Habanero.Smooth
         {
         }
 
-        public AutoMapOneToManyAttribute(string reverseRelationshipName, RelationshipType relationshipType) : base(reverseRelationshipName, relationshipType)
+        public AutoMapOneToManyAttribute(string reverseRelationshipName, RelationshipType relationshipType, DeleteParentAction deleteParentAction) : base(reverseRelationshipName, relationshipType)
         {
+            this.DeleteParentAction = deleteParentAction;
         }
+/*
+        protected AutoMapOneToManyAttribute(DeleteParentAction deleteParentAction)
+        {
+            this.DeleteParentAction = deleteParentAction;
+        }*/
     }
 
     /// <summary>

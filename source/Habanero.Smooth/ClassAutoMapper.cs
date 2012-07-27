@@ -207,17 +207,19 @@ namespace Habanero.Smooth
             MapRelationships(info => info.MapOneToOne());
         }
 
-        //used by tests.
+        // ReSharper disable UnusedMember.Local
+        //used by tests. Pls do not delete
         private void MapRelDefs()
         {
             MapManyToOneRelationships();
             MapOneToManyRelationships();
             MapOneToOneRelationships();
         }
+        // ReSharper restore UnusedMember.Local
 
         private void MapRelationships(Func<PropertyWrapper, IRelationshipDef> mappingExpression)
         {
-            IEnumerable<IRelationshipDef> relDefs = GetRelDefs(mappingExpression);
+            var relDefs = GetRelDefs(mappingExpression).ToList();
             CreateOwningPropIfRequired(relDefs);
             this.ClassDef.AddRelationshipDefs(relDefs);
         }

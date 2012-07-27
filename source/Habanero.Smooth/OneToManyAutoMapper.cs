@@ -30,6 +30,9 @@ using Habanero.Util;
 namespace Habanero.Smooth
 {
     // ReSharper disable ClassWithVirtualMembersNeverInherited.Global
+    /// <summary>
+    /// Extension methods to make the automapping testing and using easier through a fluent style interface
+    /// </summary>
     public static class OneToManyAutoMapperExtensions
     {
         /// <summary>
@@ -41,10 +44,15 @@ namespace Habanero.Smooth
         {
             return propInfo.ToPropertyWrapper().MapOneToMany();
         }
+        /// <summary>
+        /// Map this property to a Relationship definition based on its Defintiion
+        /// </summary>
+        /// <param name="propertyWrapper"></param>
+        /// <returns></returns>
         public static IRelationshipDef MapOneToMany(this PropertyWrapper propertyWrapper)
         {
             if (propertyWrapper == null) return null;
-            OneToManyAutoMapper autoMapper = new OneToManyAutoMapper(propertyWrapper);
+            var autoMapper = new OneToManyAutoMapper(propertyWrapper);
 
             return autoMapper.MapOneToMany();
         }
@@ -91,7 +99,7 @@ namespace Habanero.Smooth
                     + this.PropertyWrapper.RelatedClassType + "' that reference the BusinessObject Class '"
                     + this.PropertyWrapper.DeclaringClassName + "'. Please map using ClassDef.XML or Attributes");
             }
-            var relationshipAttribute = this.PropertyWrapper.GetAttribute<AutoMapRelationshipAttribute>();
+            var relationshipAttribute = this.PropertyWrapper.GetAttribute<AutoMapOneToManyAttribute>();
             MultipleRelationshipDef relDef;
             if (propertyType.IsGenericType)
             {
@@ -107,10 +115,11 @@ namespace Habanero.Smooth
             if(relationshipAttribute != null)
             {
                 relDef.RelationshipType = relationshipAttribute.RelationshipType;
+                relDef.DeleteParentAction = relationshipAttribute.DeleteParentAction;
             }
             relDef.ReverseRelationshipName = GetReverseRelationshipName();
 
-            IRelPropDef relPropDef = CreateRelPropDef();
+            var relPropDef = CreateRelPropDef();
             relDef.RelKeyDef.Add(relPropDef);
             return relDef;
         }

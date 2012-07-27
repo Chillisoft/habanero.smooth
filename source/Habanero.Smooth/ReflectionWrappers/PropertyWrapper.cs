@@ -436,6 +436,7 @@ namespace Habanero.Smooth.ReflectionWrappers
         {
             get { return this.PropertyType.IsOfType<BusinessObject>(); }
         }
+
         /// <summary>
         /// Is the wrapped <see cref="PropertyInfo"/> a declaration for a Multiple Relationship.
         /// i.e. returns a BusinessObjectCollection.
@@ -444,6 +445,7 @@ namespace Habanero.Smooth.ReflectionWrappers
         {
             get { return this.PropertyType.IsOfType<IBusinessObjectCollection>(); }
         }
+
         /// <summary>
         /// Is the wrapped <see cref="PropertyInfo"/> a declaration for a relationship.
         /// I.e. it returns a BusinessObject or a BusinessObjectCollection.

@@ -644,6 +644,46 @@ namespace Habanero.Smooth.Test
 			var relationshipDef = propertyInfo.MapOneToMany();
 			//---------------Test Result -----------------------
 			Assert.AreEqual(RelationshipType.Composition, relationshipDef.RelationshipType);
+		}		
+        
+        [Test]
+		public void Test_Map_WhenDeleteParentActionDefined_ShouldSetToDeleteRelated()
+		{
+			//---------------Set up test pack-------------------
+			SetFakeNameConvention();
+            var classType = typeof(FakeBoWithDeleteParentActionDeleteRelatedRel);
+			const string expectedPropName = "MyMultipleRevRel";
+			var propertyInfo = classType.GetProperty(expectedPropName);
+   //         propertyInfo.SetCustomAttribute(new AutoMapOneToManyAttribute(RelationshipType.Composition));
+			//---------------Assert Precondition----------------
+			classType.AssertPropertyExists(expectedPropName);
+			propertyInfo.AssertIsMultipleRelationship();
+			var customAttributes = propertyInfo.GetCustomAttributes(typeof(AutoMapOneToManyAttribute), true);
+			var onToManyAtt = (AutoMapOneToManyAttribute)customAttributes[0];
+            Assert.AreEqual(DeleteParentAction.DeleteRelated, onToManyAtt.DeleteParentAction);
+			//---------------Execute Test ----------------------
+			var relationshipDef = propertyInfo.MapOneToMany();
+			//---------------Test Result -----------------------
+			Assert.AreEqual(DeleteParentAction.DeleteRelated, relationshipDef.DeleteParentAction);
+		}   
+     
+        [Test]
+		public void Test_Map_WhenNoDeleteParentActionDefined_ShouldSetToPrevent()
+		{
+			//---------------Set up test pack-------------------
+			SetFakeNameConvention();
+            var classType = typeof(FakeBoWithMultipleRel);
+			const string expectedPropName = "MyMultipleRevRel";
+			var propertyInfo = classType.GetProperty(expectedPropName);
+   //         propertyInfo.SetCustomAttribute(new AutoMapOneToManyAttribute(RelationshipType.Composition));
+			//---------------Assert Precondition----------------
+			classType.AssertPropertyExists(expectedPropName);
+			propertyInfo.AssertIsMultipleRelationship();
+			var customAttributes = propertyInfo.GetCustomAttributes(typeof(AutoMapOneToManyAttribute), true);
+			//---------------Execute Test ----------------------
+			var relationshipDef = propertyInfo.MapOneToMany();
+			//---------------Test Result -----------------------
+			Assert.AreEqual(DeleteParentAction.Prevent, relationshipDef.DeleteParentAction);
 		}
 
 		[Test]
@@ -652,7 +692,7 @@ namespace Habanero.Smooth.Test
 			//---------------Set up test pack-------------------
 			var classType = typeof(FakeBoWithStaticProperty);
 			const string expectedPropName = "MyMultiple";
-			PropertyInfo propertyInfo = classType.GetProperty(expectedPropName);
+			var propertyInfo = classType.GetProperty(expectedPropName);
 			var propertyWrapper = propertyInfo.ToPropertyWrapper();
 			//---------------Assert Precondition----------------
 			Assert.IsTrue(propertyWrapper.IsMultipleRelationship);
