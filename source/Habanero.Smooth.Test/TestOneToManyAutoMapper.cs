@@ -353,7 +353,7 @@ namespace Habanero.Smooth.Test
 			propertyWrapper.Stub(wrapper => wrapper.IsMultipleRelationship).Return(true);
 //            propertyWrapper.Stub(wrapper => wrapper.PropertyInfo).Return(GetFakePropertyInfo());
 			propertyWrapper.Stub(wrapper => wrapper.DeclaringType).Return(GetFakeTypeWrapper());
-			OneToManyAutoMapper mapper = new OneToManyAutoMapper(propertyWrapper);
+			var mapper = new OneToManyAutoMapper(propertyWrapper);
 			//---------------Assert Precondition----------------
 
 			Assert.IsFalse(propertyWrapper.IsStatic);
@@ -390,7 +390,7 @@ namespace Habanero.Smooth.Test
 			var classType = typeof(FakeBoWithMultipleRel);
 			var reverseClassType = typeof(FakeWithTwoSingleReverseRel);
 			const string expectedPropName = "MyMultipleWithTwoSingleReverse";
-			PropertyInfo propertyInfo = classType.GetProperty(expectedPropName);
+			var propertyInfo = classType.GetProperty(expectedPropName);
 
 			//---------------Assert Precondition----------------
 			classType.AssertPropertyExists(expectedPropName);
@@ -423,7 +423,7 @@ namespace Habanero.Smooth.Test
 			//---------------Set up test pack-------------------
 			var classType = typeof(FakeBoWithMultipleRel);
 			const string expectedPropName = "MyMultipleRevRel";
-			PropertyInfo propertyInfo = classType.GetProperty(expectedPropName);
+			var propertyInfo = classType.GetProperty(expectedPropName);
 			//---------------Assert Precondition----------------
 			classType.AssertPropertyExists(expectedPropName);
 			propertyInfo.AssertIsMultipleRelationship();
@@ -529,6 +529,41 @@ namespace Habanero.Smooth.Test
 			Assert.IsNotNull(relationshipDef.RelKeyDef);
 			Assert.AreEqual(expectedMappedReverseRel, relationshipDef.ReverseRelationshipName);
 		}
+
+	    [Test]
+	    public void Map_WhenHasOneToManyAssociation_ShouldMapPreventDelete()
+	    {
+	        //---------------Set up test pack-------------------
+	        //FakeBoWithOneToManyAssociation
+
+            var classType = typeof(FakeBoWithOneToManyAssociation);
+            const string expectedPropName = "MultipleRel";
+            var propertyInfo = classType.GetProperty(expectedPropName);
+	        //---------------Assert Precondition----------------
+            classType.AssertPropertyExists(expectedPropName);
+            propertyInfo.AssertIsMultipleRelationship();
+	        //---------------Execute Test ----------------------
+            var relationshipDef = propertyInfo.MapOneToMany();
+	        //---------------Test Result -----------------------
+	        Assert.IsNotNull(relationshipDef);
+	        Assert.AreEqual(DeleteParentAction.Prevent, relationshipDef.DeleteParentAction);
+	    }
+
+	    [Test]
+	    public void GetRelationshipAttributeDef_WhenOneToManyAssociation_ShouldSetDeleteParentActionPrevent()
+	    {
+	        //---------------Set up test pack-------------------
+            var classType = typeof(FakeBoWithOneToManyAssociation);
+            const string expectedPropName = "MultipleRel";
+            var propertyInfo = classType.GetProperty(expectedPropName);
+	        var propertyWrapper = propertyInfo.ToPropertyWrapper();
+	        //---------------Assert Precondition----------------
+
+	        //---------------Execute Test ----------------------
+            var relationshipAttribute = propertyWrapper.GetAttribute<AutoMapOneToManyAttribute>();
+	        //---------------Test Result -----------------------
+            Assert.AreEqual(DeleteParentAction.Prevent, relationshipAttribute.DeleteParentAction);
+	    }
 
 
 		[Test]

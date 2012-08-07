@@ -115,7 +115,8 @@ namespace Habanero.Smooth
             if(relationshipAttribute != null)
             {
                 relDef.RelationshipType = relationshipAttribute.RelationshipType;
-                relDef.DeleteParentAction = relationshipAttribute.DeleteParentAction;
+                DeleteParentAction deleteParentAction = relationshipAttribute.DeleteParentAction;
+                relDef.DeleteParentAction = deleteParentAction;
             }
             relDef.ReverseRelationshipName = GetReverseRelationshipName();
 

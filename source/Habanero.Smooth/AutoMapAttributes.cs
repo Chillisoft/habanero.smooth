@@ -139,10 +139,12 @@ namespace Habanero.Smooth
         public AutoMapOneToManyAttribute(string reverseRelationshipName)
             : base(reverseRelationshipName)
         {
+            this.DeleteParentAction = DeleteParentAction.Prevent;
         }
 
         public AutoMapOneToManyAttribute(RelationshipType relationshipType) : base(relationshipType)
         {
+            this.DeleteParentAction = DeleteParentAction.Prevent;
         }
 
         public AutoMapOneToManyAttribute(string reverseRelationshipName, RelationshipType relationshipType, DeleteParentAction deleteParentAction) : base(reverseRelationshipName, relationshipType)

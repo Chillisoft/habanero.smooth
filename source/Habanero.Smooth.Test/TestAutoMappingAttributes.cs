@@ -216,6 +216,30 @@ namespace Habanero.Smooth.Test
         }
 
         [Test]
+        public void CreateAutoMapOneToManyAttribute_WhenAssociation_ShouldSetPreventDelete()
+        {
+            //---------------Set up test pack-------------------
+            //---------------Assert Precondition----------------
+            //---------------Execute Test ----------------------
+            var attribute = new AutoMapOneToManyAttribute(RelationshipType.Association);
+            //---------------Test Result -----------------------
+            Assert.AreEqual(DeleteParentAction.Prevent, attribute.DeleteParentAction);
+        }
+
+        [Test]
+        public void CreateAutoMapOneToManyAttribute_WhenHasReverseRelName_ShouldSetReverseRelNameAndDeleteActionPrevent()
+        {
+            //---------------Set up test pack-------------------
+            var reverseRelationshipName = RandomValueGenerator.GetRandomString();
+            //---------------Assert Precondition----------------
+            //---------------Execute Test ----------------------
+            var attribute = new AutoMapOneToManyAttribute(reverseRelationshipName);
+            //---------------Test Result -----------------------
+            Assert.AreEqual(reverseRelationshipName, attribute.ReverseRelationshipName);
+            Assert.AreEqual(DeleteParentAction.Prevent, attribute.DeleteParentAction);
+        }
+
+        [Test]
         public void Test_StringLengthPropRule_ShouldSetValue()
         {
             //---------------Set up test pack-------------------

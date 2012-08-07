@@ -286,6 +286,11 @@ namespace Habanero.Smooth.Test
 		[AutoMapOneToMany(DeleteParentAction = DeleteParentAction.DeleteRelated)]
 		public BusinessObjectCollection<FakeBOWithUndefinableSingleRel> MyMultipleRevRel { get; set; }
 	}
+    public class FakeBoWithOneToManyAssociation : BusinessObject
+	{
+        [AutoMapOneToMany(RelationshipType.Association)]
+		public BusinessObjectCollection<FakeBOWithUndefinableSingleRel> MultipleRel { get; set; }
+	}
 	public class FakeBoWithMultipleRel : BusinessObject
 	{
 		public BusinessObjectCollection<FakeBOWithUndefinableSingleRel> MyMultipleRevRel { get; set; }
