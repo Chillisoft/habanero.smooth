@@ -59,6 +59,8 @@ task :build => [:clean, :build_FakeBOs, :msbuild, :test]
 desc "builds the FakeBOs dll and copies to the lib folder"
 task :build_FakeBOs => [:msbuild_FakeBOsInSeperateAssembly,:copy_dll_to_smooth_lib] 
 
+task :msbuild => [:autoUpdateVersions]
+
 #------------------------build FakeBOsInSeperateAssembly---------
 
 $fakeBOsFolder = "source/FakeBOsInSeperateAssembly"
