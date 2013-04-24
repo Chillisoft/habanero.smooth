@@ -16,6 +16,7 @@
 //      You should have received a copy of the GNU Lesser General Public License
 //      along with the Habanero framework.  If not, see <http://www.gnu.org/licenses/>.
 // ---------------------------------------------------------------------------------
+
 using System;
 using System.Collections.Generic;
 using System.Reflection;
@@ -26,24 +27,38 @@ using Habanero.Util;
 
 namespace Habanero.Smooth
 {
+    /// <summary>
+    /// Extension methods developed for syntactic sugar to allow you to do Identity Mapping easier
+    /// </summary>
     public static class IdentityAutoMapperExtensions
     {
+        /// <summary>
+        /// gets the Primary Key Def for a ClassDef
+        /// </summary>
+        /// <param name="classDef"></param>
+        /// <returns></returns>
         public static IPrimaryKeyDef MapIdentity(this IClassDef classDef)
         {
             if (classDef == null) return null;
-            IdentityAutoMapper autoMapper = new IdentityAutoMapper(classDef);
+            var autoMapper = new IdentityAutoMapper(classDef);
 
             return autoMapper.MapIdentity();
         }
     }
+
     /// <summary>
     /// Maps the Identity 
     /// </summary>
     public class IdentityAutoMapper
     {
-        private TypeWrapper _classType;
+        private readonly TypeWrapper _classType;
         private IClassDef ClassDef { get; set; }
 
+        /// <summary>
+        /// Construct
+        /// </summary>
+        /// <param name="classDef"></param>
+        /// <exception cref="ArgumentNullException"></exception>
         public IdentityAutoMapper(IClassDef classDef)
         {
             ClassDef = classDef;
@@ -51,26 +66,42 @@ namespace Habanero.Smooth
             _classType = this.ClassDef.ClassType.ToTypeWrapper();
         }
 
+        /// <summary>
+        /// Map the Identity for the given ClassDef
+        /// </summary>
+        /// <returns></returns>
         public IPrimaryKeyDef MapIdentity()
         {
-            IClassDef classDef = this.ClassDef;
+            var classDef = this.ClassDef;
 
             var primaryKeyDef = GetPrimaryKeyDef(classDef);
             if (primaryKeyDef == null)
             {
-                IPropDef propDef = GetPrimaryKeyPropDef();
+                var propDef = GetPrimaryKeyPropDef();
                 if (propDef == null) return null;
-                classDef.PrimaryKeyDef = new PrimaryKeyDef();
-                classDef.PrimaryKeyDef.Add(propDef);
+                var keyDef = new PrimaryKeyDef {propDef};
+
+                keyDef.IsGuidObjectID = IsGuidObjectID(propDef);
+                classDef.PrimaryKeyDef = keyDef;
             }
-            
+
             return classDef.PrimaryKeyDef;
         }
 
+        private static bool IsGuidObjectID(IPropDef propDef)
+        {
+            return propDef.PropertyType == typeof (Guid);
+        }
+
+        /// <summary>
+        /// Gets the Primary Key def from this ClassDef or one of its Super Class Defs
+        /// </summary>
+        /// <param name="classDef"></param>
+        /// <returns></returns>
         private static IPrimaryKeyDef GetPrimaryKeyDef(IClassDef classDef)
         {
             var primaryKeyDef = classDef.PrimaryKeyDef;
-            if(primaryKeyDef == null && classDef.SuperClassDef !=null)
+            if (primaryKeyDef == null && classDef.SuperClassDef != null)
             {
                 primaryKeyDef = GetPrimaryKeyDef(classDef.SuperClassDef.SuperClassClassDef);
             }
@@ -80,8 +111,8 @@ namespace Habanero.Smooth
 
         private IPropDef GetPrimaryKeyPropDef()
         {
-            IPropDef propDef = FindExistingPKPropDef() 
-                    ?? CreatePrimaryKeyProp();
+            var propDef = FindExistingPKPropDef()
+                          ?? CreatePrimaryKeyProp();
 
             propDef.ReadWriteRule = PropReadWriteRule.WriteNew;
             propDef.Compulsory = true;
@@ -94,7 +125,6 @@ namespace Habanero.Smooth
             return this.ClassDef.GetPropDef(pkPropName, false);
         }
 
-
         private IPropDef CreatePrimaryKeyProp()
         {
             var propertyName = PropNamingConvention.GetIDPropertyName(_classType);
@@ -103,17 +133,12 @@ namespace Habanero.Smooth
             return propDef;
         }
 
+        /// <summary>
+        /// The Naming convention being used for AutoMapping
+        /// </summary>
         public static INamingConventions PropNamingConvention
         {
-            get
-            {
-                return ClassAutoMapper.PropNamingConvention;
-            }
-
+            get { return ClassAutoMapper.PropNamingConvention; }
         }
-
     }
-
-  
 }
-

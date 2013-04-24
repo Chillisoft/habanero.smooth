@@ -27,10 +27,12 @@ using Rhino.Mocks;
 
 namespace Habanero.Smooth.Test
 {
+    // ReSharper disable InconsistentNaming
     [TestFixture]
     public class TestPropertyAutoMapper
     {
-        // ReSharper disable InconsistentNaming
+        // ReSharper disable ObjectCreationAsStatement
+        // ReSharper disable ExpressionIsAlwaysNull
         [Test]
         public void Test_ConstructWithNullPropInfo_ShouldRaiseError()
         {
@@ -71,7 +73,8 @@ namespace Habanero.Smooth.Test
                 StringAssert.Contains("propertyWrapper", ex.ParamName);
             }
         }
-
+        // ReSharper restore ExpressionIsAlwaysNull
+        // ReSharper restore ObjectCreationAsStatement
         [TestCase("PublicGetGuidProp", typeof(Guid), "System.Guid")]
         [TestCase("PublicGetNullableGuidProp", typeof(Guid?), "System.Guid")]
         [TestCase("PublicStringProp", typeof(String), "System.String")]
@@ -348,6 +351,48 @@ namespace Habanero.Smooth.Test
             Assert.IsNotNull(propDef);
             var defaultValueString = propDef.DefaultValueString;
             Assert.IsNull(defaultValueString);
+        }
+
+        [Test]
+        public void Test_MapWithFake_GivenHasPropFieldNameAttribute_ShouldMapWithExpectedFieldName()
+        {
+            //---------------Set up test pack-------------------
+            var wrapper = GetMockPropWrapper();
+            var expectedDatabaseFieldName = GetRandomString();
+            wrapper.Stub(wrapper1 => wrapper1.HasAttribute<AutoMapFieldNameAttribute>()).Return(true);
+//            if(false)
+//            {
+            wrapper.Stub(propertyWrapper => propertyWrapper.GetAttribute<AutoMapFieldNameAttribute>()).Return(
+                    new AutoMapFieldNameAttribute(expectedDatabaseFieldName));
+            //}
+            var propertyAutoMapper = new PropertyAutoMapper(wrapper);
+            //---------------Assert Precondition----------------
+            Assert.IsNotNull(wrapper.GetAttribute<AutoMapFieldNameAttribute>());
+            //---------------Assert Precondition----------------
+            //---------------Execute Test ----------------------
+            var propDef = propertyAutoMapper.MapProperty();
+            //---------------Test Result -----------------------
+            Assert.IsNotNull(propDef);
+            var databaseFieldName = propDef.DatabaseFieldName;
+            Assert.AreEqual(expectedDatabaseFieldName,  databaseFieldName);
+        }
+
+        [Test]
+        public void Test_MapWithFake_GivenNotHasPropFieldNameAttribute_ShouldMapWithPropertyName()
+        {
+            //---------------Set up test pack-------------------
+            var wrapper = GetMockPropWrapper();
+            wrapper.Stub(wrapper1 => wrapper1.HasAttribute<AutoMapFieldNameAttribute>()).Return(false);
+            var propertyAutoMapper = new PropertyAutoMapper(wrapper);
+            //---------------Assert Precondition----------------
+            Assert.IsNull(wrapper.GetAttribute<AutoMapFieldNameAttribute>());
+            //---------------Assert Precondition----------------
+            //---------------Execute Test ----------------------
+            var propDef = propertyAutoMapper.MapProperty();
+            //---------------Test Result -----------------------
+            Assert.IsNotNull(propDef);
+            var databaseFieldName = propDef.DatabaseFieldName;
+            Assert.AreEqual(propDef.PropertyName, databaseFieldName);
         }
 
         [Test]
@@ -775,7 +820,6 @@ namespace Habanero.Smooth.Test
         }
 
 
-
         private static void SetHasDefaultAttribute(PropertyWrapper wrapper, bool hasDefault, string defaultValue)
         {
             wrapper.Stub(wrapper1 => wrapper1.HasDefaultAttribute).Return(hasDefault);
@@ -844,11 +888,11 @@ namespace Habanero.Smooth.Test
                    new AutoMapDateTimePropRuleAttribute(startDate, endDate));
             wrapper.Stub(propertyWrapper => propertyWrapper.HasDateTimeStringRuleAttribute).Return(true);
         }
-
-        private TypeWrapper GetFakeTypeWrapper()
-        {
-            return MockRepository.GenerateMock<FakeTypeWrapper>();
-        }
+//
+//        private TypeWrapper GetFakeTypeWrapper()
+//        {
+//            return MockRepository.GenerateMock<FakeTypeWrapper>();
+//        }
     }
 
 }

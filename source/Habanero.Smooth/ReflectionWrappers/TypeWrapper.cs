@@ -351,8 +351,8 @@ namespace Habanero.Smooth.ReflectionWrappers
 
         private string GetPKPropNameFromAttribute()
         {
-            var propertyInfos = this.GetProperties();
-            var noPropsWithPKAttribute =
+            var propertyInfos = this.GetProperties().ToList();
+            var noPropsWithPKAttribute = 
                 propertyInfos.Count(propInfo => propInfo.HasAttribute<AutoMapPrimaryKeyAttribute>());
             if (noPropsWithPKAttribute > 1)
             {

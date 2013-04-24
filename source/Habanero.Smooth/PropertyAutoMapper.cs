@@ -120,7 +120,11 @@ namespace Habanero.Smooth
                 {
                     propDef.KeepValuePrivate = true;
                 }
-
+                if (this.PropertyWrapper.HasAttribute<AutoMapFieldNameAttribute>())
+                {
+                    var autoMapFieldNameAttribute = this.PropertyWrapper.GetAttribute<AutoMapFieldNameAttribute>();
+                    propDef.DatabaseFieldName = autoMapFieldNameAttribute.FieldName;
+                }
                 propDef.AutoIncrementing = this.PropertyWrapper.HasAutoIncrementingAttribute;
                 return propDef;
             }

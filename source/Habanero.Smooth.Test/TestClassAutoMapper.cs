@@ -270,6 +270,7 @@ namespace Habanero.Smooth.Test
             classDef.PropDefcol.ShouldContain(propDef => propDef.PropertyName == propName);
         }
 
+
         [Test]
         public void Test_MapClass_ShouldAssignPropDefToClassDef()
         {

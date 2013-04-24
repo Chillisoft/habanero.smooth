@@ -1992,6 +1992,73 @@ namespace Habanero.Smooth.Test
         }
 
         [Test]
+        public void Test_HasFieldNameAttribute_WhenHasOne_ShouldReturnTrue()
+        {
+            //---------------Set up test pack-------------------
+            const string expectedPropName = "PropWithFieldName";
+            var classType = typeof(FakeBoWithTableName);
+            var propertyInfo = classType.GetProperty(expectedPropName);
+            var propertyWrapper = propertyInfo.ToPropertyWrapper();
+            //---------------Assert Precondition----------------
+
+            //---------------Execute Test ----------------------
+            var hasDefaultAttribute = propertyWrapper.HasAttribute<AutoMapFieldNameAttribute>();
+            //---------------Test ResultpropertyWrapper -----------------------
+            Assert.IsTrue(hasDefaultAttribute);
+        }
+
+        [Test]
+        public void Test_HasFieldNameAttribute_WhenNotHasOne_ShouldReturnFalse()
+        {
+            //---------------Set up test pack-------------------
+            const string expectedPropName = "PropNoFieldName";
+            var classType = typeof(FakeBoWithTableName);
+            var propertyInfo = classType.GetProperty(expectedPropName);
+            var propertyWrapper = propertyInfo.ToPropertyWrapper();
+            //---------------Assert Precondition----------------
+
+            //---------------Execute Test ----------------------
+            var hasDefaultAttribute = propertyWrapper.HasAttribute<AutoMapFieldNameAttribute>();
+            //---------------Test ResultpropertyWrapper -----------------------
+            Assert.IsFalse(hasDefaultAttribute);
+        }
+        [Test]
+        public void Test_GetFieldNameAttribute_WhenShouldReturnAttributeWithFieldNameSet()
+        {
+            //---------------Set up test pack-------------------
+            const string fieldName = "MyFieldName";
+            var classType = typeof(FakeBoWithTableName);
+            const string expectedPropName = "PropWithFieldName";
+            var propertyInfo = classType.GetProperty(expectedPropName);
+            var propertyWrapper = propertyInfo.ToPropertyWrapper();
+            //---------------Assert Precondition----------------
+
+            //---------------Execute Test ----------------------
+            var fieldNameAttribute = propertyWrapper.GetAttribute<AutoMapFieldNameAttribute>();
+            //---------------Test Result -----------------------
+            Assert.IsNotNull(fieldNameAttribute);
+            Assert.AreEqual(fieldName, fieldNameAttribute.FieldName);
+        }
+
+//
+//        [Test]
+//        public void Test_HasDefaultAttribute_WhenHasOne_ShouldReturnTrue()
+//        {
+//            //---------------Set up test pack-------------------
+//            const string expectedPropName = "DefaultProp";
+//            var classType = typeof(FakeBOWithDefaultProp);
+//            var propertyInfo = classType.GetProperty(expectedPropName);
+//            var propertyWrapper = propertyInfo.ToPropertyWrapper();
+//            //---------------Assert Precondition----------------
+//
+//            //---------------Execute Test ----------------------
+//            var hasDefaultAttribute = propertyWrapper.HasDefaultAttribute;
+//            //---------------Test ResultpropertyWrapper -----------------------
+//            Assert.IsTrue(hasDefaultAttribute);
+//        }
+
+
+        [Test]
         public void Test_HasDisplayNameAttribute_WhenHasOne_ShouldReturnTrue()
         {
             //---------------Set up test pack-------------------

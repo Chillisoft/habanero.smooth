@@ -23,7 +23,7 @@ using System.Reflection;
 using Habanero.Smooth.ReflectionWrappers;
 using Habanero.Base;
 using NUnit.Framework;
-
+using System.Runtime.InteropServices;
 namespace Habanero.Smooth.Test
 {
     [TestFixture]
@@ -34,7 +34,7 @@ namespace Habanero.Smooth.Test
         public void Test_Default_Construct_WithValue_ShouldSetValue()
         {
             //---------------Set up test pack-------------------
-            const string defaultValue = "Value";            
+            string defaultValue = RandomValueGenerator.GetRandomString();            
             //---------------Assert Precondition----------------
             //---------------Execute Test ----------------------
             var attribute = new AutoMapDefaultAttribute(defaultValue);
@@ -46,11 +46,11 @@ namespace Habanero.Smooth.Test
         public void Test_ReadWriteRule_Construct_WithValue_ShouldSetValue()
         {
             //---------------Set up test pack-------------------
-            PropReadWriteRule expecteRwRule = RandomValueGenerator.GetRandomEnum<PropReadWriteRule>();
+            var expecteRwRule = RandomValueGenerator.GetRandomEnum<PropReadWriteRule>();
 
             //---------------Assert Precondition----------------
             //---------------Execute Test ----------------------
-            AutoMapReadWriteRuleAttribute attribute = new AutoMapReadWriteRuleAttribute(expecteRwRule);
+            var attribute = new AutoMapReadWriteRuleAttribute(expecteRwRule);
             //---------------Test Result -----------------------
             Assert.AreEqual(expecteRwRule, attribute.ReadWriteRule);
         }
@@ -63,7 +63,7 @@ namespace Habanero.Smooth.Test
             //---------------Assert Precondition----------------
 
             //---------------Execute Test ----------------------
-            AutoMapUniqueConstraintAttribute attribute = new AutoMapUniqueConstraintAttribute(uniqueConstraintName);
+            var attribute = new AutoMapUniqueConstraintAttribute(uniqueConstraintName);
             //---------------Test Result -----------------------
             Assert.AreEqual(uniqueConstraintName, attribute.UniqueConstraintName);
         }
@@ -95,7 +95,7 @@ namespace Habanero.Smooth.Test
         }
 
         [Test]
-        public void Test_TableName_ConstructWithValue_ShouldSetValue()
+        public void Test_TableNameAttribute_ConstructWithValue_ShouldSetValue()
         {
             //---------------Set up test pack-------------------
             string tableName;
@@ -106,6 +106,20 @@ namespace Habanero.Smooth.Test
             //---------------Test Result -----------------------
             Assert.IsInstanceOf<Attribute>(attribute);
             Assert.AreEqual(tableName, attribute.TableName);
+        }
+
+        [Test]
+        public void Test_TableNameAttribute_ShouldHaveAttributeUsageEqClass()
+        {
+            //---------------Set up test pack-------------------
+            var tableNameWrapper = new TypeWrapper(typeof (AutoMapTableNameAttribute));
+            //---------------Assert Precondition----------------
+
+            //---------------Execute Test ----------------------
+            var attributeUsageAttribute = tableNameWrapper.GetAttribute<AttributeUsageAttribute>();
+            //---------------Test Result -----------------------
+            Assert.IsNotNull(attributeUsageAttribute);
+            Assert.AreEqual(AttributeTargets.Class, attributeUsageAttribute.ValidOn);
         }
 
         [Test]
@@ -255,12 +269,55 @@ namespace Habanero.Smooth.Test
             Assert.AreEqual(maxLengthValue, attribute.MaxLength);
         }
 
+        [Test]
+        public void AutoMapFieldNameAttribute_Construct_ShouldBeAttribute()
+        {
+            //---------------Set up test pack-------------------
+            
+            //---------------Assert Precondition----------------
+
+            //---------------Execute Test ----------------------
+            var autoMapFieldNameAttribute = new AutoMapFieldNameAttribute(GetRandomFieldName());
+            //---------------Test Result -----------------------
+            Assert.IsNotNull(autoMapFieldNameAttribute);
+            Assert.IsInstanceOf<Attribute>(autoMapFieldNameAttribute);
+        }
+
+        [Test]
+        public void AutoMapFieldNameAttribute_Construct_WithFieldName_ShouldSetFieldName()
+        {
+            //---------------Set up test pack-------------------
+            var expectedFieldName = GetRandomFieldName();
+            //---------------Assert Precondition----------------
+
+            //---------------Execute Test ----------------------
+            var autoMapFieldNameAttribute = new AutoMapFieldNameAttribute(expectedFieldName);
+            //---------------Test Result -----------------------
+            Assert.AreEqual(expectedFieldName,autoMapFieldNameAttribute.FieldName);
+        }
+        [Test]
+        public void AutoMapFieldNameAttribute_ShouldHaveAttributeUsageProperty()
+        {
+            //---------------Set up test pack-------------------
+            var fieldNameWrapper = new TypeWrapper(typeof (AutoMapFieldNameAttribute));
+            //---------------Assert Precondition----------------
+
+            //---------------Execute Test ----------------------
+            var attributeUsageAttribute = fieldNameWrapper.GetAttribute<AttributeUsageAttribute>();
+            //---------------Test Result -----------------------
+            Assert.IsNotNull(attributeUsageAttribute);
+            Assert.AreEqual(AttributeTargets.Property, attributeUsageAttribute.ValidOn);
+        }
+
+        private static string GetRandomFieldName()
+        {
+            return RandomValueGenerator.GetRandomString();
+        }
+
         private string GetRandomMessage()
         {
             return RandomValueGenerator.GetRandomString();
         }
     }
-
-   
 
 }

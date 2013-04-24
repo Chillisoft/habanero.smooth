@@ -543,7 +543,17 @@ namespace Habanero.Smooth.Test
 	[AutoMapTableName(TableName = "tbMyFakeBo")]
 	public class FakeBoWithTableName : BusinessObject
 	{
-	   
+        [AutoMapFieldName("MyFieldName")]
+	    public virtual string PropWithFieldName
+	    {
+	        get { return ((string) (base.GetPropertyValue("PropWithFieldName"))); }
+	        set { base.SetPropertyValue("PropWithFieldName", value); }
+	    }
+	    public virtual string PropNoFieldName
+	    {
+            get { return ((string)(base.GetPropertyValue("PropNoFieldName"))); }
+            set { base.SetPropertyValue("PropNoFieldName", value); }
+	    }
 	}
 
 	public class FakeBoWithoutTableName : BusinessObject
@@ -810,6 +820,20 @@ namespace Habanero.Smooth.Test.ValidFakeBOs
 
 		public String NonDefaultProp { get; set; }
 	}
+
+    public class FakeBoWithIntPK : BusinessObject
+    {
+        /// <summary>
+        /// 
+        /// </summary>
+        [AutoMapPrimaryKey]
+        public virtual int FakeBoWithIntPKID
+        {
+            get { return ((int) (base.GetPropertyValue("FakeBoWithIntPKID"))); }
+            set { base.SetPropertyValue("FakeBoWithIntPKID", value); }
+        }
+    }
+
 	public class FakeBOWitDisplayNameProp : BusinessObject
 	{
 		[AutoMapDisplayName("MyDisplayName")]

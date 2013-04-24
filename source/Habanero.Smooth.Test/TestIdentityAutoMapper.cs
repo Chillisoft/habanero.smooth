@@ -25,6 +25,7 @@ using Habanero.Smooth.Test.ExtensionMethods;
 using Habanero.Base;
 using Habanero.Base.Exceptions;
 using Habanero.BO.ClassDefinition;
+using Habanero.Smooth.Test.ValidFakeBOs;
 using Habanero.Util;
 using NUnit.Framework;
 using Rhino.Mocks;
@@ -52,7 +53,7 @@ namespace Habanero.Smooth.Test
             //---------------Test Result -----------------------
             primaryKey.AssertHasOneGuidProp();
         }
-
+        // ReSharper disable ObjectCreationAsStatement
         [Test]
         public void Test_Construct_WithNullclassDef_ShouldRaiseError()
         {
@@ -72,7 +73,20 @@ namespace Habanero.Smooth.Test
                 StringAssert.Contains("classDef", ex.ParamName);
             }
         }
-
+        // ReSharper restore ObjectCreationAsStatement
+        [Test]
+        public void Test_Map_WhenHasIntPKProp_ShouldMapPKAsIsObjectIDFalse()
+        {
+            //---------------Set up test pack-------------------
+            IClassDef cDef = GetClassDefWithPropsMapped(typeof(FakeBoWithIntPK));
+            //---------------Assert Precondition----------------
+            AssertPrimaryKeyPropExists<FakeBoWithIntPK>();
+            //---------------Execute Test ----------------------
+            var primaryKey = cDef.MapIdentity();
+            //---------------Test Result -----------------------
+            primaryKey.AssertHasOneIntProp();
+            primaryKey.AssertNotObjectID();
+        }
         [Test] public void Test_Map_WhenNullCDef_ShouldReturnNull()
         {
             //---------------Set up test pack-------------------

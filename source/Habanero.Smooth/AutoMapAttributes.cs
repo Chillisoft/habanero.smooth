@@ -28,21 +28,51 @@ namespace Habanero.Smooth
     /// </summary>
     public class AutoMapIgnoreAttribute : Attribute { }
     /// <summary>
-    /// Attribute to mark the mapped TableName on a class.
+    /// Attribute to mark the mapped Database TableName on a class.
     /// </summary>
     [AttributeUsage(AttributeTargets.Class)]
     public class AutoMapTableNameAttribute : Attribute
     {
+        /// <summary>
+        /// Constructs Attribute
+        /// </summary>
         public AutoMapTableNameAttribute()
         {
         }
 
+        /// <summary>
+        /// Constructs Attribute with tableName
+        /// </summary>
+        /// <param name="tableName"></param>
         public AutoMapTableNameAttribute(string tableName)
         {
             TableName = tableName;
         }
 
+        /// <summary>
+        /// The database table name that htis class is persisted to
+        /// </summary>
         public string TableName { get; set; }
+    }
+
+    /// <summary>
+    /// Attribute to mark the mapped Database FieldName on a Property
+    /// </summary>
+    [AttributeUsage(AttributeTargets.Property)]
+    public class AutoMapFieldNameAttribute: Attribute
+    {
+        /// <summary>
+        /// The Name of the Field in the Database
+        /// </summary>
+        public string FieldName { get; private set; }
+        /// <summary>
+        /// Constructs the attribute with teh field name
+        /// </summary>
+        /// <param name="fieldName"></param>
+        public AutoMapFieldNameAttribute(string fieldName)
+        {
+            FieldName = fieldName;
+        }
     }
     /// <summary>
     /// Attribute used for marking a specific property as the Primary Key.
@@ -88,14 +118,15 @@ namespace Habanero.Smooth
         /// The RelationshipType that is specified.
         /// </summary>
         public RelationshipType RelationshipType { get; set; }
-
-
     }
     /// <summary>
     /// Automap a relationship between two Business Objects as a One to One.
     /// </summary>
     [AttributeUsage(AttributeTargets.Property)]
     public class AutoMapOneToOneAttribute : AutoMapRelationshipAttribute {
+        /// <summary>
+        /// Construct the Attribute
+        /// </summary>
         public AutoMapOneToOneAttribute()
         {
         }

@@ -55,7 +55,7 @@ namespace Habanero.Smooth
         public static IClassDef MapClass(this TypeWrapper typeWrapper)
         {
             if (typeWrapper.IsNull()) return null;
-            ClassAutoMapper autoMapper = new ClassAutoMapper(typeWrapper);
+            var autoMapper = new ClassAutoMapper(typeWrapper);
             return autoMapper.Map();
         }
         /// <summary>
@@ -67,7 +67,7 @@ namespace Habanero.Smooth
         public static bool MustBeMapped(this TypeWrapper typeWrapper)
         {
             if (typeWrapper.IsNull()) return false;
-            ClassAutoMapper autoMapper = new ClassAutoMapper(typeWrapper);
+            var autoMapper = new ClassAutoMapper(typeWrapper);
             return autoMapper.MustBeMapped();
         }
         /// <summary>
@@ -250,8 +250,6 @@ namespace Habanero.Smooth
                 .Select(info => info.MapProperty())
                 .Where(propDef => propDef != null);
         }
-
-
 
         private IClassDef ClassDef { get; set; }
         /// <summary>

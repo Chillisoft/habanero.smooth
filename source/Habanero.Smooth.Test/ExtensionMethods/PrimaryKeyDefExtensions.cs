@@ -33,10 +33,28 @@ namespace Habanero.Smooth.Test.ExtensionMethods
             Assert.AreEqual(1, primaryKey.Count, "Should have one prop");
             Assert.IsFalse(primaryKey.IsCompositeKey, "should not be composite");
             Assert.IsTrue(primaryKey.IsGuidObjectID, "Should be object ID");
-            IPropDef pkProp = primaryKey[0];
+            var pkProp = primaryKey[0];
             Assert.AreEqual(PropReadWriteRule.WriteNew, pkProp.ReadWriteRule);
             Assert.IsTrue(pkProp.Compulsory);
             Assert.AreEqual(typeof(Guid), pkProp.PropertyType);
+        }
+        public static void AssertHasOneIntProp(this IPrimaryKeyDef primaryKey)
+        {
+            Assert.IsNotNull(primaryKey, "primary Key Should not be null");
+            Assert.AreEqual(1, primaryKey.Count, "Should have one prop");
+            Assert.IsFalse(primaryKey.IsCompositeKey, "should not be composite");
+            Assert.IsFalse(primaryKey.IsGuidObjectID, "Should be object ID");
+            var pkProp = primaryKey[0];
+            Assert.AreEqual(PropReadWriteRule.WriteNew, pkProp.ReadWriteRule);
+            Assert.IsTrue(pkProp.Compulsory);
+            Assert.AreEqual(typeof(int), pkProp.PropertyType);
+        }
+        public static void AssertNotObjectID(this IPrimaryKeyDef primaryKey)
+        {
+            Assert.IsNotNull(primaryKey, "primary Key Should not be null");
+            Assert.AreEqual(1, primaryKey.Count, "Should have one prop");
+            Assert.IsFalse(primaryKey.IsCompositeKey, "should not be composite");
+            Assert.IsFalse(primaryKey.IsGuidObjectID, "Should be object ID");
         }
         public static bool HasPrimaryKeyAttribute(this IClassDef cDef, string propName)
         {

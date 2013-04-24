@@ -849,7 +849,7 @@ namespace Habanero.Smooth.Test
         {
             //---------------Set up test pack-------------------
             var type = typeof(FakeEnum);
-            TypeWrapper typeWrapper = new TypeWrapper(type);
+            var typeWrapper = new TypeWrapper(type);
             //---------------Assert Precondition----------------
 
             //---------------Execute Test ----------------------
@@ -916,12 +916,14 @@ namespace Habanero.Smooth.Test
             //---------------Test Result -----------------------
             Assert.IsTrue(isEqual);
         }
+
+        // ReSharper disable ExpressionIsAlwaysNull
         [Test]
         public void Test_Equals_WhenStringNull_ShouldReturnFalse()
         {
             //---------------Set up test pack-------------------
             var type = typeof(FakeEnum);
-            TypeWrapper typeWrapper = new TypeWrapper(type);
+            var typeWrapper = new TypeWrapper(type);
             string someString = null;
             //---------------Assert Precondition----------------
             Assert.IsNull(someString);
@@ -930,14 +932,15 @@ namespace Habanero.Smooth.Test
             //---------------Test Result -----------------------
             Assert.IsFalse(isEqual);
         }
+        // ReSharper restore ExpressionIsAlwaysNull
         [TestCase(typeof(FakeBoNoProps), false)]
         [TestCase(typeof(FakeEnum), true)]
         public void Test_Equals_WhenTypeWrapperWrapsType(Type otherType, bool expectedResult)
         {
             //---------------Set up test pack-------------------
             var type = typeof(FakeEnum);
-            TypeWrapper typeWrapper = new TypeWrapper(type);
-            TypeWrapper otherTypeWrapper = new TypeWrapper(otherType);
+            var typeWrapper = new TypeWrapper(type);
+            var otherTypeWrapper = new TypeWrapper(otherType);
             //---------------Assert Precondition----------------
 
             //---------------Execute Test ----------------------
@@ -1006,6 +1009,7 @@ namespace Habanero.Smooth.Test
             Assert.AreEqual(expectedResult, isEqual);
         }
 
+        // ReSharper disable ConditionIsAlwaysTrueOrFalse
         [Test]
         public void Test_EqualEquals_WhenBothNullTypeWrapper_ShouldRetTrue()
         {
@@ -1015,6 +1019,7 @@ namespace Habanero.Smooth.Test
 
             //---------------Execute Test ----------------------
             var isEqual = typeWrapper == (TypeWrapper)null;
+
             //---------------Test Result -----------------------
             Assert.IsTrue(isEqual);
         }
@@ -1023,7 +1028,7 @@ namespace Habanero.Smooth.Test
         {
             //---------------Set up test pack-------------------
             var type = typeof(FakeEnum);
-            TypeWrapper typeWrapper = new TypeWrapper(type);
+            var typeWrapper = new TypeWrapper(type);
             //---------------Assert Precondition----------------
 
             //---------------Execute Test ----------------------
@@ -1036,7 +1041,7 @@ namespace Habanero.Smooth.Test
         {
             //---------------Set up test pack-------------------
             var type = typeof(FakeEnum);
-            TypeWrapper typeWrapper = new TypeWrapper(type);
+            var typeWrapper = new TypeWrapper(type);
             //---------------Assert Precondition----------------
 
             //---------------Execute Test ----------------------
@@ -1044,14 +1049,14 @@ namespace Habanero.Smooth.Test
             //---------------Test Result -----------------------
             Assert.IsTrue(isNotEqual);
         }
-
+        // ReSharper restore ConditionIsAlwaysTrueOrFalse
         [Test]
         public void Test_GetHashCode_ShouldReturnCalculatedCode()
         {
             //---------------Set up test pack-------------------
             var type = typeof(FakeEnum);
             var expectedHashCode = type.GetHashCode() * 397 ^ type.Name.GetHashCode();
-            TypeWrapper typeWrapper = new TypeWrapper(type);
+            var typeWrapper = new TypeWrapper(type);
             //---------------Assert Precondition----------------
 
             //---------------Execute Test ----------------------
