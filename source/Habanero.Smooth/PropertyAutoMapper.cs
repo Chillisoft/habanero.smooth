@@ -240,7 +240,7 @@ namespace Habanero.Smooth
         /// <returns></returns>
         public static IPropDef MapProperty(this PropertyInfo propInfo)
         {
-            PropertyAutoMapper autoMapper = new PropertyAutoMapper(propInfo);
+            var autoMapper = new PropertyAutoMapper(propInfo);
             return autoMapper.MapProperty();
         }
 
