@@ -245,6 +245,13 @@ namespace Habanero.Smooth.ReflectionWrappers
             get { return this.HasAttribute<AutoMapIntPropRuleAttribute>(); }
         }   
         /// <summary>
+        /// has a ShortPropRule Attribute on the Property.
+        /// </summary>
+        public virtual bool HasShortPropRuleAttribute
+        {
+            get { return this.HasAttribute<AutoMapShortPropRuleAttribute>(); }
+        }   
+        /// <summary>
         /// has a UniqueConstraint Attribute on the Property.
         /// </summary>
         public virtual bool HasUniqueConstraintAttribute

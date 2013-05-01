@@ -16,6 +16,7 @@ using Habanero.Base;
 using Habanero.BO;
 using Habanero.BO.ClassDefinition;
 using NUnit.Framework;
+// ReSharper disable InconsistentNaming
 
 namespace TestProjectNoDBSpecificProps.Test.BO
 {
@@ -53,16 +54,16 @@ namespace TestProjectNoDBSpecificProps.Test.BO
             //---------------Assert Precondition----------------
 
             //---------------Execute Test ----------------------
-            Driver driver = new Driver();
+            var driver = new Driver();
 
             //---------------Test Result -----------------------
-                        Assert.IsNotNull(driver.DriverID);
-            Assert.IsInstanceOfType(driver.Props["DriverID"].PropertyType, driver.DriverID);
-                        Assert.IsNull(driver.DriverName);
-                        Assert.IsNull(driver.Age);
-                        Assert.IsNull(driver.DOB);
-                        Assert.IsNull(driver.LicenseRaing);
-                        Assert.IsNull(driver.CarID);
+            Assert.IsNotNull(driver.DriverID);
+            Assert.IsInstanceOf(driver.Props["DriverID"].PropertyType, driver.DriverID);
+            Assert.IsNull(driver.DriverName);
+            Assert.IsNull(driver.Age);
+            Assert.IsNull(driver.DOB);
+            Assert.IsNull(driver.LicenseRaing);
+            Assert.IsNull(driver.CarID);
         }
 
         [Test]  // Ensures that a class can be successfully saved
@@ -74,7 +75,7 @@ namespace TestProjectNoDBSpecificProps.Test.BO
 
             //---------------Assert Precondition----------------
             Assert.IsTrue(driver.Status.IsNew);
-            BusinessObjectCollection<Driver> col = new BusinessObjectCollection<Driver>();
+            var col = new BusinessObjectCollection<Driver>();
             col.LoadAll();
             Assert.AreEqual(0, col.Count);
 
@@ -93,18 +94,18 @@ namespace TestProjectNoDBSpecificProps.Test.BO
         {
             CheckIfTestShouldBeIgnored();
             //---------------Set up test pack-------------------
-            Driver driver = TestUtilsDriver.CreateSavedDriver();
+            var driver = TestUtilsDriver.CreateSavedDriver();
 
             //---------------Execute Test ----------------------
-            Driver loadedDriver = Broker.GetBusinessObject<Driver>(driver.ID);
+            var loadedDriver = Broker.GetBusinessObject<Driver>(driver.ID);
 
             //---------------Test Result -----------------------
-                        Assert.AreEqual(driver.DriverID, loadedDriver.DriverID);
-                        Assert.AreEqual(driver.DriverName, loadedDriver.DriverName);
-                        Assert.AreEqual(driver.Age, loadedDriver.Age);
-                        Assert.AreEqual(driver.DOB, loadedDriver.DOB);
-                        Assert.AreEqual(driver.LicenseRaing, loadedDriver.LicenseRaing);
-                        Assert.AreEqual(driver.CarID, loadedDriver.CarID);
+            Assert.AreEqual(driver.DriverID, loadedDriver.DriverID);
+            Assert.AreEqual(driver.DriverName, loadedDriver.DriverName);
+            Assert.AreEqual(driver.Age, loadedDriver.Age);
+            Assert.AreEqual(driver.DOB, loadedDriver.DOB);
+            Assert.AreEqual(driver.LicenseRaing, loadedDriver.LicenseRaing);
+            Assert.AreEqual(driver.CarID, loadedDriver.CarID);
         }
         
         [Test]  // Ensures that a class can be deleted
@@ -121,7 +122,7 @@ namespace TestProjectNoDBSpecificProps.Test.BO
             //---------------Test Result -----------------------
             try
             {
-                Driver retrievedDriver = Broker.GetBusinessObject<Driver>(driver.ID);
+                Broker.GetBusinessObject<Driver>(driver.ID);
                 Assert.Fail("expected Err");
             }
             catch (BusObjDeleteConcurrencyControlException ex)
@@ -136,7 +137,7 @@ namespace TestProjectNoDBSpecificProps.Test.BO
         {
             CheckIfTestShouldBeIgnored();
             //---------------Set up test pack-------------------
-            Driver driver = TestUtilsDriver.CreateSavedDriver();
+            var driver = TestUtilsDriver.CreateSavedDriver();
             //---------------Assert Precondition----------------
 
             //---------------Execute Test ----------------------
@@ -147,7 +148,9 @@ namespace TestProjectNoDBSpecificProps.Test.BO
             object valueForDOB = TestUtilsShared.GetRandomDate();
             driver.DOB = (System.DateTime) valueForDOB;
             object valueForLicenseRaing = (double)TestUtilsShared.GetRandomInt();
+// ReSharper disable PossibleInvalidCastException
             driver.LicenseRaing = (System.Double) valueForLicenseRaing;
+// ReSharper restore PossibleInvalidCastException
             object valueForCarID = Guid.NewGuid();
             driver.CarID = (System.Guid) valueForCarID;
             driver.Save();
@@ -156,7 +159,7 @@ namespace TestProjectNoDBSpecificProps.Test.BO
             BusinessObjectManager.Instance.ClearLoadedObjects();
             GC.Collect();
             TestUtilsShared.WaitForGC();
-            Driver retrievedDriver =
+            var retrievedDriver =
                     Broker.GetBusinessObject<Driver>(driver.ID);
             
             Assert.AreEqual(valueForDriverName, retrievedDriver.DriverName);
@@ -171,7 +174,7 @@ namespace TestProjectNoDBSpecificProps.Test.BO
         {
             CheckIfTestShouldBeIgnored();
             //---------------Set up test pack-------------------
-            Driver driver = new Driver();
+            var driver = new Driver();
             //---------------Assert Precondition----------------
 
             //---------------Execute Test ----------------------
@@ -182,7 +185,9 @@ namespace TestProjectNoDBSpecificProps.Test.BO
             object valueForDOB = TestUtilsShared.GetRandomDate();
             driver.DOB = (System.DateTime) valueForDOB;
             object valueForLicenseRaing = (double)TestUtilsShared.GetRandomInt();
+// ReSharper disable PossibleInvalidCastException
             driver.LicenseRaing = (System.Double) valueForLicenseRaing;
+// ReSharper restore PossibleInvalidCastException
             object valueForCarID = Guid.NewGuid();
             driver.CarID = (System.Guid) valueForCarID;
             
@@ -199,18 +204,18 @@ namespace TestProjectNoDBSpecificProps.Test.BO
         {
             CheckIfTestShouldBeIgnored();
             //---------------Set up test pack-------------------
-            Driver driver = new Driver();
+            var driver = new Driver();
             //---------------Assert Precondition----------------
 
             //---------------Execute Test ----------------------
             string valueForDriverName = TestUtilsShared.GetRandomString();
-            driver.DriverName = (System.String) valueForDriverName;
+            driver.DriverName = valueForDriverName;
             int valueForAge = TestUtilsShared.GetRandomInt();
-            driver.Age = (System.Int32) valueForAge;
-            DateTime valueForDOB = TestUtilsShared.GetRandomDate();
-            driver.DOB = (System.DateTime) valueForDOB;
-            Double valueForLicenseRaing = (double)TestUtilsShared.GetRandomInt();
-            driver.LicenseRaing = (System.Double) valueForLicenseRaing;
+            driver.Age = valueForAge;
+            var valueForDOB = TestUtilsShared.GetRandomDate();
+            driver.DOB = valueForDOB;
+            var valueForLicenseRaing = (double)TestUtilsShared.GetRandomInt();
+            driver.LicenseRaing = valueForLicenseRaing;
             
             //---------------Test Result -----------------------
             Assert.AreEqual(valueForDriverName, driver.GetPropertyValue("DriverName"));
@@ -224,7 +229,7 @@ namespace TestProjectNoDBSpecificProps.Test.BO
         {
             CheckIfTestShouldBeIgnored();
             //---------------Set up test pack-------------------
-            Driver driver = new Driver();
+            var driver = new Driver();
             //---------------Assert Precondition----------------
 
             //---------------Execute Test ----------------------
@@ -263,7 +268,7 @@ namespace TestProjectNoDBSpecificProps.Test.BO
             BusinessObjectManager.Instance.ClearLoadedObjects();
             GC.Collect();
             TestUtilsShared.WaitForGC();
-            Driver retrievedDriver =
+            var retrievedDriver =
                     Broker.GetBusinessObject<Driver>(driver.ID);
             
             Assert.IsNull(retrievedDriver.DriverName);
@@ -317,8 +322,8 @@ namespace TestProjectNoDBSpecificProps.Test.BO
             GC.Collect();
             TestUtilsShared.WaitForGC();
             //---------------Execute Test ----------------------
-            TestProjectNoDBSpecificProps.BO.Car loadedRelatedBO = Broker.GetBusinessObject<TestProjectNoDBSpecificProps.BO.Car>(boForRelationshipCar.ID);
-            Driver loadedDriver = Broker.GetBusinessObject<Driver>(driver.ID);
+            var loadedRelatedBO = Broker.GetBusinessObject<TestProjectNoDBSpecificProps.BO.Car>(boForRelationshipCar.ID);
+            var loadedDriver = Broker.GetBusinessObject<Driver>(driver.ID);
             //---------------Test Result -----------------------
             Assert.AreEqual(boForRelationshipCar, loadedDriver.Car);
             Assert.AreEqual(loadedRelatedBO, loadedDriver.Car);
@@ -358,7 +363,7 @@ namespace TestProjectNoDBSpecificProps.Test.BO
                 StringAssert.Contains("There are no records in the database for the Class: Driver", ex.Message);
             }            
             
-            TestProjectNoDBSpecificProps.BO.Car relatedBO = Broker.GetBusinessObject<TestProjectNoDBSpecificProps.BO.Car>(boForRelationshipCar.ID);
+            var relatedBO = Broker.GetBusinessObject<TestProjectNoDBSpecificProps.BO.Car>(boForRelationshipCar.ID);
             Assert.AreEqual(relatedBO.ID.ToString(),boForRelationshipCar.ID.ToString());
             
         }

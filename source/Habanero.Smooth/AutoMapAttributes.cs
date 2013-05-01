@@ -131,14 +131,26 @@ namespace Habanero.Smooth
         {
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="reverseRelationshipName"></param>
         public AutoMapOneToOneAttribute(string reverseRelationshipName) : base(reverseRelationshipName)
         {
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="relationshipType"></param>
         public AutoMapOneToOneAttribute(RelationshipType relationshipType) : base(relationshipType)
         {
         }
 
+        /// <summary>
+        /// </summary>
+        /// <param name="reverseRelationshipName"></param>
+        /// <param name="relationshipType"></param>
         public AutoMapOneToOneAttribute(string reverseRelationshipName, RelationshipType relationshipType) : base(reverseRelationshipName, relationshipType)
         {
         }
@@ -166,18 +178,21 @@ namespace Habanero.Smooth
         public AutoMapOneToManyAttribute()
         {
         }
-
+        /// <summary>
+        /// </summary>
         public AutoMapOneToManyAttribute(string reverseRelationshipName)
             : base(reverseRelationshipName)
         {
             this.DeleteParentAction = DeleteParentAction.Prevent;
         }
-
+        /// <summary>
+        /// </summary>
         public AutoMapOneToManyAttribute(RelationshipType relationshipType) : base(relationshipType)
         {
             this.DeleteParentAction = DeleteParentAction.Prevent;
         }
-
+        /// <summary>
+        /// </summary>
         public AutoMapOneToManyAttribute(string reverseRelationshipName, RelationshipType relationshipType, DeleteParentAction deleteParentAction) : base(reverseRelationshipName, relationshipType)
         {
             this.DeleteParentAction = deleteParentAction;
@@ -195,18 +210,23 @@ namespace Habanero.Smooth
     [AttributeUsage(AttributeTargets.Property)]
     public class AutoMapManyToOneAttribute : AutoMapRelationshipAttribute
     {
+        /// <summary>
+        /// </summary>
         public AutoMapManyToOneAttribute()
         {
         }
-
+        /// <summary>
+        /// </summary>
         public AutoMapManyToOneAttribute(string reverseRelationshipName) : base(reverseRelationshipName)
         {
         }
-
+        /// <summary>
+        /// </summary>
         public AutoMapManyToOneAttribute(RelationshipType relationshipType) : base(relationshipType)
         {
         }
-
+        /// <summary>
+        /// </summary>
         public AutoMapManyToOneAttribute(string reverseRelationshipName, RelationshipType relationshipType) : base(reverseRelationshipName, relationshipType)
         {
         }
@@ -220,11 +240,14 @@ namespace Habanero.Smooth
     [AttributeUsage(AttributeTargets.Property)]
     public class AutoMapUniqueConstraintAttribute : Attribute
     {
+        /// <summary>
+        /// </summary>
         public AutoMapUniqueConstraintAttribute(string uniqueConstraintName)
         {
             UniqueConstraintName = uniqueConstraintName;
         }
-
+        /// <summary>
+        /// </summary>
         public string UniqueConstraintName { get; set; }
     }
     /// <summary>
@@ -243,7 +266,8 @@ namespace Habanero.Smooth
         {
             DisplayName = displayName;
         }
-
+        /// <summary>
+        /// </summary>
         public string DisplayName { get; set; }
     }
 
@@ -261,7 +285,8 @@ namespace Habanero.Smooth
         {
             this.DefaultValue = defaultValue;
         }
-
+        /// <summary>
+        /// </summary>
         public string DefaultValue { get; private set; }
     }
 
@@ -270,12 +295,15 @@ namespace Habanero.Smooth
     /// </summary>
     [AttributeUsage(AttributeTargets.Property)]
     public class AutoMapReadWriteRuleAttribute : Attribute
-    {
+    {        
+        /// <summary>
+        /// </summary>
         public AutoMapReadWriteRuleAttribute(PropReadWriteRule readWriteRule)
         {
             ReadWriteRule = readWriteRule;
         }
-
+        /// <summary>
+        /// </summary>
         public PropReadWriteRule ReadWriteRule { get; private set; }
     }
     /// <summary>
@@ -301,20 +329,51 @@ namespace Habanero.Smooth
     [AttributeUsage(AttributeTargets.Property)]
     public class AutoMapIntPropRuleAttribute : Attribute
     {
+        /// <summary>
+        /// </summary>
         public AutoMapIntPropRuleAttribute()
             : this(int.MinValue, int.MaxValue)
         {
         }
-
+        /// <summary>
+        /// </summary>
         public AutoMapIntPropRuleAttribute(int min, int max)
         {
             Min = min;
             Max = max;
         }
-
+        /// <summary>
+        /// </summary>
         public int Max { get; private set; }
-
+        /// <summary>
+        /// </summary>
         public int Min { get; private set; }
+    }
+    /// <summary>
+    /// Marks an Short range property rule.
+    /// </summary>
+    [AttributeUsage(AttributeTargets.Property)]
+    public class AutoMapShortPropRuleAttribute : Attribute
+    {
+        /// <summary>
+        /// </summary>
+        public AutoMapShortPropRuleAttribute()
+            : this(short.MinValue, short.MaxValue)
+        {
+        }
+        /// <summary>
+        /// </summary>
+        public AutoMapShortPropRuleAttribute(short min, short max)
+        {
+            Min = min;
+            Max = max;
+        }
+        /// <summary>
+        /// </summary>
+        public short Max { get; private set; }
+        /// <summary>
+        /// </summary>
+        public short Min { get; private set; }
     }
 
     /// <summary>
@@ -324,14 +383,22 @@ namespace Habanero.Smooth
     public class AutoMapStringLengthPropRuleAttribute : Attribute
     {
 
+        /// <summary>
+        /// </summary>
         public int MinLength { get; private set; }
+        /// <summary>
+        /// </summary>
         public int MaxLength { get; private set; }
 
+        /// <summary>
+        /// </summary>
         public AutoMapStringLengthPropRuleAttribute()
             : this(0, 255)
         {
         }
 
+        /// <summary>
+        /// </summary>
         public AutoMapStringLengthPropRuleAttribute(int minLength, int maxLength)
         {
             MinLength = minLength;
@@ -380,17 +447,29 @@ namespace Habanero.Smooth
     /// </summary>
     public class AutoMapDateTimePropRuleAttribute : Attribute
     {
+        /// <summary>
+        /// </summary>
         public DateTime StartDate { get; private set; }
+        /// <summary>
+        /// </summary>
         public DateTime EndDate { get; private set; }
+        /// <summary>
+        /// </summary>
         public string StartDateString { get; private set; }
+        /// <summary>
+        /// </summary>
         public string EndDateString { get; private set; }
 
+        /// <summary>
+        /// </summary>
         public AutoMapDateTimePropRuleAttribute(DateTime startDateValue, DateTime endDateValue)
         {
             StartDate = startDateValue;
             EndDate = endDateValue;
         }
 
+        /// <summary>
+        /// </summary>
         public AutoMapDateTimePropRuleAttribute(string startDateValue, string endDateValue)
         {
             StartDateString = startDateValue;

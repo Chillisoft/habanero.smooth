@@ -79,6 +79,7 @@ namespace Habanero.Smooth.Test
         [TestCase("PublicGetNullableGuidProp", typeof(Guid?), "System.Guid")]
         [TestCase("PublicStringProp", typeof(String), "System.String")]
         [TestCase("PublicIntProp", typeof(Int32), "System.Int32")]
+        [TestCase("PublicShortProp", typeof(Int16), "System.Int16")]
         [TestCase("PublicEnumProp", typeof(FakeEnum), "Habanero.Smooth.Test.FakeEnum")]
         [TestCase("PublicNullableEnumProp", typeof(FakeEnum?), "Habanero.Smooth.Test.FakeEnum")]
         [TestCase("PublicPropWithAtt", typeof(float?), "System.Single")]
@@ -103,8 +104,6 @@ namespace Habanero.Smooth.Test
             Assert.AreEqual(typeName, propDef.PropertyTypeName);
             Assert.AreEqual(PropReadWriteRule.ReadWrite, propDef.ReadWriteRule);
         }
-
-        
 
         [Test]
         public void Test_Map_WhenTypeNotSystem_ShouldReturnNull()
@@ -630,7 +629,7 @@ namespace Habanero.Smooth.Test
         }
 
         [Test]
-        public void Test_MapWithFake_WhenIntPropRuleAttribute_ShouldReturnPropDefWithIntMinMaxRuleDefault()
+        public void Test_MapWithFake_WhenNoIntPropRuleAttribute_ShouldReturnPropDefWithIntMinMaxRuleDefault()
         {
             //---------------Set up test pack-------------------
             var wrapper = GetMockPropWrapper();
@@ -649,13 +648,34 @@ namespace Habanero.Smooth.Test
         }        
         
         [Test]
+        public void Test_MapWithFake_WhenNoShortPropRuleAttribute_ShouldReturnPropDefWithShortMinMaxRuleDefault()
+        {
+            //---------------Set up test pack-------------------
+            var wrapper = GetMockPropWrapper();
+            var propertyAutoMapper = new PropertyAutoMapper(wrapper);
+            //---------------Assert Precondition----------------
+            Assert.IsNull(wrapper.GetAttribute<AutoMapShortPropRuleAttribute>());
+            //---------------Execute Test ----------------------
+            SetShortPropRuleAttributeWithDefaultConstructor(wrapper);
+            var propDef = propertyAutoMapper.MapProperty();
+            //---------------Test Result -----------------------
+            Assert.IsNotNull(propDef);
+            var propRule = propDef.PropRules[0];
+            Assert.IsInstanceOf<PropRuleShort>(propRule);
+            var defaultMinValue = (short) propRule.Parameters["min"];
+            var defaultMaxValue = (short) propRule.Parameters["max"];
+            Assert.AreEqual(short.MinValue,defaultMinValue);
+            Assert.AreEqual(short.MaxValue, defaultMaxValue);
+        }        
+        
+        [Test]
         public void Test_MapWithFake_WhenIntPropRuleAttribute_ShouldReturnPropDefWithIntMinMaxRuleWithValues()
         {
             //---------------Set up test pack-------------------
             var wrapper = GetMockPropWrapper();
             var propertyAutoMapper = new PropertyAutoMapper(wrapper);
-            var minValue = 9;
-            var maxValue = 89;
+            const int minValue = 9;
+            const int maxValue = 89;
             //---------------Assert Precondition----------------
             Assert.IsNull(wrapper.GetAttribute<AutoMapIntPropRuleAttribute>());
             //---------------Execute Test ----------------------
@@ -665,6 +685,26 @@ namespace Habanero.Smooth.Test
             Assert.IsNotNull(propDef);
             var propMinValue = (int) propDef.PropRules[0].Parameters["min"];
             var propMaxValue = (int) propDef.PropRules[0].Parameters["max"];
+            Assert.AreEqual(minValue, propMinValue);
+            Assert.AreEqual(maxValue, propMaxValue);
+        }
+        [Test]
+        public void Test_MapWithFake_WhenShortPropRuleAttribute_ShouldReturnPropDefWithShortMinMaxRuleWithValues()
+        {
+            //---------------Set up test pack-------------------
+            var wrapper = GetMockPropWrapper();
+            var propertyAutoMapper = new PropertyAutoMapper(wrapper);
+            const short minValue = 9;
+            const short maxValue = 89;
+            //---------------Assert Precondition----------------
+            Assert.IsNull(wrapper.GetAttribute<AutoMapShortPropRuleAttribute>());
+            //---------------Execute Test ----------------------
+            SetShortPropRuleAttributeWithDefaultConstructor(wrapper,minValue,maxValue);
+            var propDef = propertyAutoMapper.MapProperty();
+            //---------------Test Result -----------------------
+            Assert.IsNotNull(propDef);
+            var propMinValue = (short) propDef.PropRules[0].Parameters["min"];
+            var propMaxValue = (short) propDef.PropRules[0].Parameters["max"];
             Assert.AreEqual(minValue, propMinValue);
             Assert.AreEqual(maxValue, propMaxValue);
         }
@@ -736,8 +776,8 @@ namespace Habanero.Smooth.Test
             //---------------Set up test pack-------------------
             var wrapper = GetMockPropWrapper();
             var propertyAutoMapper = new PropertyAutoMapper(wrapper);
-            var StartDate = "Today";
-            var EndDate = "Tomorrow";
+            const string StartDate = "Today";
+            const string EndDate = "Tomorrow";
             //---------------Assert Precondition----------------
             Assert.IsNull(wrapper.GetAttribute<AutoMapDateTimePropRuleAttribute>());
             //---------------Execute Test ----------------------
@@ -749,8 +789,6 @@ namespace Habanero.Smooth.Test
             Assert.AreEqual(1,propDef.PropRules.Count);
         }
 
-
-
         [Test]
         public void Test_MapWithFake_WhenStringPatternMatchPropRuleAttribute_ShouldReturnPropDefWithStringPatternMatchPropRuleWithValue()
         {
@@ -761,8 +799,6 @@ namespace Habanero.Smooth.Test
             //---------------Assert Precondition----------------
             Assert.IsNull(wrapper.GetAttribute<AutoMapStringPatternMatchPropRuleAttribute>());
             //---------------Execute Test ----------------------
-
-           
             SetStringPatternMatchPropRuleAttributeWithDefaultConstructor(wrapper, emailPatternMatch);
             var propDef = propertyAutoMapper.MapProperty();
             //---------------Test Result -----------------------
@@ -804,7 +840,6 @@ namespace Habanero.Smooth.Test
             SetStringPatternMatchPropRuleAttributeWithDefaultConstructor(wrapper, emailPatternMatch, "");
         }
 
-
         private static string GetRandomString()
         {
             return RandomValueGenerator.GetRandomString();
@@ -818,7 +853,6 @@ namespace Habanero.Smooth.Test
             wrapper.Stub(wrapper1 => wrapper1.Name).Return(GetRandomString());
             return wrapper;
         }
-
 
         private static void SetHasDefaultAttribute(PropertyWrapper wrapper, bool hasDefault, string defaultValue)
         {
@@ -839,7 +873,6 @@ namespace Habanero.Smooth.Test
             }
         }
 
-
         private static void SetReadWriteAttribute(PropertyWrapper wrapper, PropReadWriteRule rule)
         {
             wrapper.Stub(propertyWrapper => propertyWrapper.GetAttribute<AutoMapReadWriteRuleAttribute>()).Return(
@@ -853,12 +886,24 @@ namespace Habanero.Smooth.Test
                     new AutoMapIntPropRuleAttribute());
             wrapper.Stub(propertyWrapper => propertyWrapper.HasIntPropRuleAttribute).Return(true);
         }
+        private static void SetShortPropRuleAttributeWithDefaultConstructor(PropertyWrapper wrapper)
+        {
+            wrapper.Stub(propertyWrapper => propertyWrapper.GetAttribute<AutoMapShortPropRuleAttribute>()).Return(
+                    new AutoMapShortPropRuleAttribute());
+            wrapper.Stub(propertyWrapper => propertyWrapper.HasShortPropRuleAttribute).Return(true);
+        }
         
         private static void SetIntPropRuleAttributeWithDefaultConstructor(PropertyWrapper wrapper,int minValue,int maxValue)
         {
             wrapper.Stub(propertyWrapper => propertyWrapper.GetAttribute<AutoMapIntPropRuleAttribute>()).Return(
                     new AutoMapIntPropRuleAttribute(minValue,maxValue));
             wrapper.Stub(propertyWrapper => propertyWrapper.HasIntPropRuleAttribute).Return(true);
+        }
+        private static void SetShortPropRuleAttributeWithDefaultConstructor(PropertyWrapper wrapper, short minValue, short maxValue)
+        {
+            wrapper.Stub(propertyWrapper => propertyWrapper.GetAttribute<AutoMapShortPropRuleAttribute>()).Return(
+                    new AutoMapShortPropRuleAttribute(minValue, maxValue));
+            wrapper.Stub(propertyWrapper => propertyWrapper.HasShortPropRuleAttribute).Return(true);
         }
 
         private void SetStringLengthPropRuleAttributeWithDefaultConstructor(PropertyWrapper wrapper)

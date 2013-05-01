@@ -90,27 +90,23 @@ namespace Habanero.Smooth
                 {
                     var intPropRule = CreateIntPropRule();
                     propDef.AddPropRule(intPropRule);
-                }
-
-                if (this.PropertyWrapper.HasStringLengthRuleAttribute)
+                }else if (this.PropertyWrapper.HasShortPropRuleAttribute)
+                {
+                    var shortPropRule = CreateShortPropRule();
+                    propDef.AddPropRule(shortPropRule);
+                } else if (this.PropertyWrapper.HasStringLengthRuleAttribute)
                 {
                     var stringPropRule = CreateStringLengthPropRule();
                     propDef.AddPropRule(stringPropRule);
-                }
-
-                if (this.PropertyWrapper.HasStringPatternMatchRuleAttribute)
+                } else if (this.PropertyWrapper.HasStringPatternMatchRuleAttribute)
                 {
                     var stringPropRule = CreatePatternMatchPropRule();
                     propDef.AddPropRule(stringPropRule);
-                }
-
-                if (this.PropertyWrapper.HasDateTimeRuleAttribute)
+                } else if (this.PropertyWrapper.HasDateTimeRuleAttribute)
                 {
                     var propRuleDate = CreateDateTimePropRule();
                     propDef.AddPropRule(propRuleDate);
-                }
-
-                if (this.PropertyWrapper.HasDateTimeStringRuleAttribute)
+                } else if (this.PropertyWrapper.HasDateTimeStringRuleAttribute)
                 {
                     var propRuleDate = CreateDateTimeStringPropRule();
                     propDef.AddPropRule(propRuleDate);
@@ -195,6 +191,12 @@ namespace Habanero.Smooth
             var min = this.PropertyWrapper.GetAttribute<AutoMapIntPropRuleAttribute>().Min;
             var max = this.PropertyWrapper.GetAttribute<AutoMapIntPropRuleAttribute>().Max;
             return new PropRuleInteger("", "", min, max);
+        }
+        private IPropRule CreateShortPropRule()
+        {
+            var min = this.PropertyWrapper.GetAttribute<AutoMapShortPropRuleAttribute>().Min;
+            var max = this.PropertyWrapper.GetAttribute<AutoMapShortPropRuleAttribute>().Max;
+            return new PropRuleShort("", "", min, max);
         }
 
         private bool MustMapProperty

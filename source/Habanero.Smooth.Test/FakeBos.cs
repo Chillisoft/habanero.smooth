@@ -120,6 +120,7 @@ namespace Habanero.Smooth.Test
 		public Guid? PublicGetNullableGuidProp { get; private set; }
 		public string PublicStringProp { get; private set; }
 		public int PublicIntProp { get; private set; }
+        public short PublicShortProp { get; private set; }
 		public FakeEnum PublicEnumProp { get; set; }
 		public FakeEnum? PublicNullableEnumProp { get; set; }
 		public System.Drawing.Image PublicImageProp { get; set; }

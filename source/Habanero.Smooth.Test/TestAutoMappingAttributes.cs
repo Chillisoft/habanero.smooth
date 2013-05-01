@@ -154,6 +154,37 @@ namespace Habanero.Smooth.Test
         }
 
         [Test]
+        public void Test_ShortPropRule_ShouldSetDefaultValue()
+        {
+            //---------------Set up test pack-------------------
+            
+            //---------------Assert Precondition----------------
+
+            //---------------Execute Test ----------------------
+            var attribute = new AutoMapShortPropRuleAttribute();
+            //---------------Test Result -----------------------
+            Assert.IsInstanceOf<Attribute>(attribute);
+            Assert.AreEqual(short.MinValue, attribute.Min);
+            Assert.AreEqual(short.MaxValue, attribute.Max);
+        }
+
+        [Test]
+        public void Test_ShortPropRule_ShouldSetValue()
+        {
+            //---------------Set up test pack-------------------
+            const short min = 1;
+            const short max = 10;
+            //---------------Assert Precondition----------------
+
+            //---------------Execute Test ----------------------
+            var attribute = new AutoMapShortPropRuleAttribute(min, max);
+            //---------------Test Result -----------------------
+            Assert.IsInstanceOf<Attribute>(attribute);
+            Assert.AreEqual(min, attribute.Min);
+            Assert.AreEqual(max, attribute.Max);
+        }
+
+        [Test]
         public void Test_DateTimePropRule_ShouldSetValue()
         {
             //---------------Set up test pack-------------------
