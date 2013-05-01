@@ -94,14 +94,6 @@ namespace Habanero.Smooth
                 {
                     var shortPropRule = CreateShortPropRule();
                     propDef.AddPropRule(shortPropRule);
-                } else if (this.PropertyWrapper.HasStringLengthRuleAttribute)
-                {
-                    var stringPropRule = CreateStringLengthPropRule();
-                    propDef.AddPropRule(stringPropRule);
-                } else if (this.PropertyWrapper.HasStringPatternMatchRuleAttribute)
-                {
-                    var stringPropRule = CreatePatternMatchPropRule();
-                    propDef.AddPropRule(stringPropRule);
                 } else if (this.PropertyWrapper.HasDateTimeRuleAttribute)
                 {
                     var propRuleDate = CreateDateTimePropRule();
@@ -110,7 +102,17 @@ namespace Habanero.Smooth
                 {
                     var propRuleDate = CreateDateTimeStringPropRule();
                     propDef.AddPropRule(propRuleDate);
-                }
+                } 
+
+                if (this.PropertyWrapper.HasStringLengthRuleAttribute)
+                {
+                    var stringPropRule = CreateStringLengthPropRule();
+                    propDef.AddPropRule(stringPropRule);
+                } else if (this.PropertyWrapper.HasStringPatternMatchRuleAttribute)
+                {
+                    var stringPropRule = CreatePatternMatchPropRule();
+                    propDef.AddPropRule(stringPropRule);
+                } 
 
                 if (this.PropertyWrapper.HasKeepValuePrivateAttribute)
                 {
@@ -213,6 +215,7 @@ namespace Habanero.Smooth
             }
         }
 
+// ReSharper disable InconsistentNaming
         private bool IsInheritedFromBO
         {
             get
@@ -221,6 +224,7 @@ namespace Habanero.Smooth
                 return propName == "DirtyXML" || propName == "ClassDefName";
             }
         }
+        // ReSharper restore InconsistentNaming
     }
 
     /// <summary>
