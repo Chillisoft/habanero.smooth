@@ -105,24 +105,25 @@ namespace Habanero.Smooth
         /// Maps the <see cref="IBusinessObject"/> classes in the <see cref="ITypeSource"/>.
         /// </summary>
         /// <returns></returns>
+        /// 
         public ClassDefCol Map()
         {
-            IEnumerable<TypeWrapper> typesToBeMapped = Source.GetTypes().Where(type => type.MustBeMapped());
-            var classDefsMapped = typesToBeMapped.Select(type => type.MapClass()).ToList();
-            foreach (var classDef in classDefsMapped)
-            {
-                MergeClassDefs(classDef);
-            }
-
+            var typesToBeMapped = Source.GetTypes().Where(type => type.MustBeMapped());
+            var classDefsMapped = typesToBeMapped.Select(MapAndStoreClassDefFor).ToList();
             MapAllReverseRelationships(classDefsMapped);
-
-            
             return ClassDefCol;
+        }
+
+        private IClassDef MapAndStoreClassDefFor(TypeWrapper type)
+        {
+            var classDef = type.MapClass();
+            MergeClassDefs(classDef);
+            return classDef;
         }
 
         private static void MergeClassDefs(IClassDef classDef)
         {
-            if(classDef.SuperClassDef != null)
+            if (classDef.SuperClassDef != null)
             {
                 //You always want the classDef that has been
                 // Mapped via its subClass

@@ -602,6 +602,10 @@ namespace Habanero.Smooth.Test
 	}
 	public class FakeBOSubClass : FakeBOSuperClass
 	{
+	}	
+    
+    public class FakeBOSubClassA : FakeBOSuperClass
+	{
 	}
 
 	public class FakeBOSubSubClass : FakeBOSubClass

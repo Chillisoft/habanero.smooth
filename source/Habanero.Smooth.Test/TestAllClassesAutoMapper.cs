@@ -24,6 +24,7 @@ using FakeBosInSeperateAssembly;
 using Habanero.Base;
 using Habanero.BO.ClassDefinition;
 using Habanero.Smooth.ReflectionWrappers;
+using Habanero.Smooth.Test.ValidFakeBOs;
 using NUnit.Framework;
 using Rhino.Mocks;
 
@@ -487,6 +488,26 @@ namespace Habanero.Smooth.Test
             var superClassDef = classDefCol.First(def => def.ClassType == superClass);
             Assert.AreEqual(superClassDef.ClassType, subClassDef.SuperClassDef.SuperClassClassDef.ClassType);
             Assert.AreSame(superClassDef, subClassDef.SuperClassDef.SuperClassClassDef);
+        }
+
+        [Test]
+        public void Test_Map_WhenInheritanceWithMultipleDerivatives_ShouldSameSuperClass()
+        {
+            //---------------Set up test pack-------------------
+            var parentSuperClass = typeof(FakeBOSuperClass);
+            var parentSubClassA = typeof(FakeBOSubClass);
+            var parentSubClassB = typeof(FakeBOSubClassA);
+            var source = new FakeTypeSource(new[] {  parentSuperClass, parentSubClassA, parentSubClassB });
+            var allClassesAutoMapper = new AllClassesAutoMapper(source);
+            //---------------Assert Precondition----------------
+            Assert.AreEqual(3, source.GetTypes().Count());
+            //---------------Execute Test ----------------------
+            var classDefCol = allClassesAutoMapper.Map();
+            //---------------Test Result -----------------------
+            classDefCol.ShouldHaveCount(3);
+            Assert.AreSame(classDefCol[parentSubClassA].SuperClassClassDef, classDefCol[parentSuperClass]);
+            Assert.AreSame(classDefCol[parentSubClassB].SuperClassClassDef, classDefCol[parentSuperClass]);
+            Assert.AreSame(classDefCol[parentSubClassA].SuperClassClassDef, classDefCol[parentSubClassB].SuperClassClassDef);
         }
 
         [Test]
