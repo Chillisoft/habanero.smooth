@@ -2361,6 +2361,11 @@ namespace Habanero.Smooth.Test
             return randomPropInfo;
         }
 
+        public static void SetOneToOneAttributeOnStub(this PropertyWrapper propertyWrapper, bool owningBOHasForeignKey)
+        {
+            propertyWrapper.Stub(pw => pw.GetAttribute<AutoMapOneToOneAttribute>()).Return(
+                new AutoMapOneToOneAttribute(owningBOHasForeignKey));
+        }
         public static void SetOneToOneAttributeOnStub(this PropertyWrapper propertyWrapper, RelationshipType relationshipType)
         {
             propertyWrapper.Stub(pw => pw.GetAttribute<AutoMapOneToOneAttribute>()).Return(

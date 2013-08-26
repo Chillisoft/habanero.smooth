@@ -398,7 +398,7 @@ namespace Habanero.Smooth.Test
 		[AutoMapOneToOne(false, "MySingleRevRelationship")]
 		public FakeBOWith11Attribute MySingleRelationship2 { get; set; }
 
-		[AutoMapOneToOne(false, "NoRevRel")]
+		[AutoMapOneToOne(true, "NoRevRel")]
 		public FakeBOWith11Attribute MySingleWithAutoMapNoReverse { get; set; }
 
 		public FakeBOWith11Attribute MySingleRelationship3 { get; set; }
@@ -866,14 +866,14 @@ namespace Habanero.Smooth.Test.ValidFakeBOs
 
 	public class FakeMergeableParent : BusinessObject
 	{
-		[AutoMapOneToOne(false, "FakeMergeableParentReverse", RelationshipType.Aggregation)]
-		public virtual FakeMergeableChild FakeMergeableChild { get; set; }
+//		[AutoMapOneToOne(true, "FakeMergeableParentReverse", RelationshipType.Aggregation)]
+//		public virtual FakeMergeableChild FakeMergeableChild { get; set; }
 
-		[AutoMapOneToOne(false, "FakeMergeableParentReverseNoType", RelationshipType.Composition)]
+        [AutoMapOneToOne(true, "FakeMergeableParentReverseNoType", RelationshipType.Aggregation)]
 		public virtual FakeMergeableChild FakeMergeableChildNoType { get; set; }
+       // public Guid FakeMergeableChildNoTypeID { get; set; }
 
-
-		[AutoMapOneToOne(false, "FakeMergeableParentReverseFKDefined", RelationshipType.Composition)]
+		[AutoMapOneToOne(true, "FakeMergeableParentReverseFKDefined", RelationshipType.Composition)]
 		public virtual FakeMergeableChild FakeMergeableChildNoTypeRelatedFK { get; set; }
 		public Guid FakeMergeableChildNoTypeRelatedFKID { get; set; }
 	}
@@ -881,9 +881,9 @@ namespace Habanero.Smooth.Test.ValidFakeBOs
 	public class FakeMergeableChild : BusinessObject
 	{
 
-		[AutoMapOneToOne(false, "FakeMergeableChild", RelationshipType.Association)]
-		public virtual FakeMergeableParent FakeMergeableParentReverse { get; set; }
-
+//		[AutoMapOneToOne(false, "FakeMergeableChild", RelationshipType.Association)]
+//		public virtual FakeMergeableParent FakeMergeableParentReverse { get; set; }
+        [AutoMapOneToOne(false, "FakeMergeableParentReverse", RelationshipType.Association)]
 		public virtual FakeMergeableParent FakeMergeableParentReverseNoType { get; set; }
 
 		public virtual FakeMergeableParent FakeMergeableParentReverseFKDefined { get; set; }
@@ -896,11 +896,11 @@ namespace Habanero.Smooth.Test.ValidFakeBOs
 	{
 
 		[AutoMapOneToOneAttribute(false, "FakeMergeableRel", RelationshipType.Association)]
-		public virtual AFakeBO2WithOneToOneAssociationRel FakeParentReverse
+        public virtual AFakeBO2WithOneToOneAssociationRel FakeParentReverse
 		{
 			get
 			{
-				return Relationships.GetRelatedObject<AFakeBO2WithOneToOneAssociationRel>("FakeParentReverse");
+                return Relationships.GetRelatedObject<AFakeBO2WithOneToOneAssociationRel>("FakeParentReverse");
 			}
 			set
 			{
@@ -908,6 +908,8 @@ namespace Habanero.Smooth.Test.ValidFakeBOs
 			}
 		}
 	}
+
+    
 	public class AFakeBO2WithOneToOneAssociationRel : BusinessObject
 	{
 
@@ -936,6 +938,53 @@ namespace Habanero.Smooth.Test.ValidFakeBOs
 		}
 
 	}
+
+	public class FakeBOWithWithOneToOneRel: BusinessObject
+	{
+
+
+        public virtual AFakeBO2WithOneToOneRel FakeParentReverse
+		{
+			get
+			{
+                return Relationships.GetRelatedObject<AFakeBO2WithOneToOneRel>("FakeParentReverse");
+			}
+			set
+			{
+				Relationships.SetRelatedObject("FakeParentReverse", value);
+			}
+		}
+	}
+
+    public class AFakeBO2WithOneToOneRel : BusinessObject
+    {
+
+        public virtual Guid? FakeMergeableRelID
+        {
+            get
+            {
+                return ((Guid?)(base.GetPropertyValue("FakeMergeableRelID")));
+            }
+            set
+            {
+                base.SetPropertyValue("FakeMergeableRelID", value);
+            }
+        }
+
+        public virtual FakeBOWithWithOneToOneRel FakeMergeableRel
+        {
+            get
+            {
+                return Relationships.GetRelatedObject<FakeBOWithWithOneToOneRel>("FakeMergeableRel");
+            }
+            set
+            {
+                Relationships.SetRelatedObject("FakeMergeableRel", value);
+            }
+        }
+
+    }
+
 
 
 }

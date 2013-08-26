@@ -71,7 +71,7 @@ namespace Habanero.Smooth.Test
 
         #region CreateRelPropDef
 
-        #region OwningBoHasForeignKey
+        #region OwningBOHasForeignKey
 
         //Conventions
         // 1) If no single reverse relationship and no Attribute is found then it is assumed that relationship is a M:1 i.e. its rev is a 1:M
@@ -93,6 +93,26 @@ namespace Habanero.Smooth.Test
         //     owningBOHasForeignKey = false;
         // Else
         //    owningBOHasForeignKey = true;
+
+        [Test]
+        public void OwningBoHasForeignKey_WhenOwnerBOHasForeignKeyIsDefinedAsTrueOnAttribute_ShouldReturnTrue()
+        {
+            //---------------Set up test pack-------------------
+            TypeWrapper ownerType;
+            TypeWrapper relatedType;
+            string relatedFKPropName;
+            string owningFKPropName;
+            var propertyWrapper
+                = GetPropertyWrapper(out ownerType, out relatedType, out relatedFKPropName, out owningFKPropName);
+
+            propertyWrapper.SetOneToOneAttributeOnStub(true);
+            var autoMapper = new OneToOneAutoMapper(propertyWrapper);
+            //---------------Assert Precondition----------------
+            //---------------Execute Test ----------------------
+            var owningBoHasForeignKey = autoMapper.OwningBOHasForeignKey;
+            //---------------Test Result -----------------------
+            Assert.IsTrue(owningBoHasForeignKey);
+        }
 
         /// <summary>
         /// if ownerClass.HasProp(RelName+ID) and relatedClass.NotHasProp(RevRelName+ID) 
@@ -116,7 +136,7 @@ namespace Habanero.Smooth.Test
             Assert.IsFalse(relatedType.HasProperty(relatedFKPropName));
 
             //---------------Execute Test ----------------------
-            var owningBoHasForeignKey = autoMapper.OwningBoHasForeignKey;
+            var owningBoHasForeignKey = autoMapper.OwningBOHasForeignKey;
             //---------------Test Result -----------------------
             Assert.IsTrue(owningBoHasForeignKey);
         }
@@ -143,7 +163,7 @@ namespace Habanero.Smooth.Test
             Assert.IsTrue(relatedType.HasProperty(relatedFKPropName));
 
             //---------------Execute Test ----------------------
-            var owningBoHasForeignKey = autoMapper.OwningBoHasForeignKey;
+            var owningBoHasForeignKey = autoMapper.OwningBOHasForeignKey;
             //---------------Test Result -----------------------
             Assert.IsFalse(owningBoHasForeignKey);
         }
@@ -170,7 +190,7 @@ namespace Habanero.Smooth.Test
             Assert.IsTrue(relatedType.HasProperty(relatedFKPropName));
             Assert.AreNotEqual(propertyWrapper.Name, relatedType.Name);
             //---------------Execute Test ----------------------
-            var owningBoHasForeignKey = autoMapper.OwningBoHasForeignKey;
+            var owningBoHasForeignKey = autoMapper.OwningBOHasForeignKey;
             //---------------Test Result -----------------------
             Assert.IsTrue(owningBoHasForeignKey);
         }
@@ -210,7 +230,7 @@ namespace Habanero.Smooth.Test
             Assert.AreEqual(1, relatedType.Name.CompareTo(ownerType.Name));
 
             //---------------Execute Test ----------------------
-            var owningBoHasForeignKey = autoMapper.OwningBoHasForeignKey;
+            var owningBoHasForeignKey = autoMapper.OwningBOHasForeignKey;
             //---------------Test Result -----------------------
             Assert.IsFalse(owningBoHasForeignKey);
         }
@@ -241,7 +261,7 @@ namespace Habanero.Smooth.Test
 //            AssertMockPropSetupCorrectly(propertyWrapper, ownerType, relatedType, relationshipName, reverseRelName);
 
             //---------------Execute Test ----------------------
-            var owningBoHasForeignKey = autoMapper.OwningBoHasForeignKey;
+            var owningBoHasForeignKey = autoMapper.OwningBOHasForeignKey;
             //---------------Test Result -----------------------
             Assert.IsTrue(owningBoHasForeignKey);
         }
@@ -273,7 +293,7 @@ namespace Habanero.Smooth.Test
             Assert.AreEqual(-1, ownerType.Name.CompareTo(relatedType.Name));
 //            AssertMockPropSetupCorrectly(propertyWrapper, ownerType, relatedType, relationshipName, reverseRelName);
             //---------------Execute Test ----------------------
-            var owningBoHasForeignKey = autoMapper.OwningBoHasForeignKey;
+            var owningBoHasForeignKey = autoMapper.OwningBOHasForeignKey;
             //---------------Test Result -----------------------
             Assert.IsFalse(owningBoHasForeignKey);
         }
@@ -303,7 +323,7 @@ namespace Habanero.Smooth.Test
             Assert.IsTrue(relatedType.HasProperty(relatedFKPropName));
             Assert.AreNotEqual(propertyWrapper.Name, relatedType.Name);
             //---------------Execute Test ----------------------
-            var owningBoHasForeignKey = autoMapper.OwningBoHasForeignKey;
+            var owningBoHasForeignKey = autoMapper.OwningBOHasForeignKey;
             //---------------Test Result -----------------------
             Assert.IsTrue(owningBoHasForeignKey);
         }
@@ -336,7 +356,7 @@ namespace Habanero.Smooth.Test
             Assert.IsFalse(relatedType.HasProperty(relatedFKPropName));
             Assert.AreEqual(RelationshipType.Aggregation, GetAutomapAttribute(propertyWrapper).RelationshipType);
             //---------------Execute Test ----------------------
-            var owningBoHasForeignKey = autoMapper.OwningBoHasForeignKey;
+            var owningBoHasForeignKey = autoMapper.OwningBOHasForeignKey;
             //---------------Test Result -----------------------
             Assert.IsFalse(owningBoHasForeignKey);
         }
@@ -369,7 +389,7 @@ namespace Habanero.Smooth.Test
             Assert.IsFalse(relatedType.HasProperty(relatedFKPropName));
             Assert.AreEqual(RelationshipType.Composition, GetAutomapAttribute(propertyWrapper).RelationshipType);
             //---------------Execute Test ----------------------
-            var owningBoHasForeignKey = autoMapper.OwningBoHasForeignKey;
+            var owningBoHasForeignKey = autoMapper.OwningBOHasForeignKey;
             //---------------Test Result -----------------------
             Assert.IsFalse(owningBoHasForeignKey);
         }
@@ -380,8 +400,7 @@ namespace Habanero.Smooth.Test
         /// </summary>
         [Test]
         public void
-            OwningBOHasForeignKey_WhenIsAssociation_AndNeitherHaveProps_WhenOwnerGTRelated_ShouldReturnTrue_FixBug909
-            ()
+            OwningBOHasForeignKey_WhenIsAssociation_AndNeitherHaveProps_AndDoesNotHaveOneToOneAttribute_WhenOwnerGTRelated_ShouldReturnTrue_FixBug909()
         {
             //---------------Set up test pack-------------------
             SetNonDefaultNamingConvention();
@@ -394,15 +413,15 @@ namespace Habanero.Smooth.Test
                 = GetPropertyWrapper(out ownerType, out relatedType, out relatedFKPropName, out owningFKPropName);
             ownerType.ClearReturnValue();
             ownerType.SetName("ZZZZZZ" + relatedType.Name);
-            propertyWrapper.SetOneToOneAttributeOnStub(RelationshipType.Association);
+          //  propertyWrapper.SetOneToOneAttributeOnStub(RelationshipType.Association);
             var autoMapper = new OneToOneAutoMapper(propertyWrapper);
             //---------------Assert Precondition----------------
             Assert.IsFalse(ownerType.HasProperty(owningFKPropName));
             Assert.IsFalse(relatedType.HasProperty(relatedFKPropName));
-            Assert.AreEqual(RelationshipType.Association, GetAutomapAttribute(propertyWrapper).RelationshipType);
+            //Assert.AreEqual(RelationshipType.Association, GetAutomapAttribute(propertyWrapper).RelationshipType);
             Assert.AreEqual(1, ownerType.Name.CompareTo(relatedType.Name), "OwnerNameShouldBeGreaterThanRelatedName");
             //---------------Execute Test ----------------------
-            var owningBoHasForeignKey = autoMapper.OwningBoHasForeignKey;
+            var owningBoHasForeignKey = autoMapper.OwningBOHasForeignKey;
             //---------------Test Result -----------------------
             Assert.IsTrue(owningBoHasForeignKey);
         }
@@ -437,7 +456,7 @@ namespace Habanero.Smooth.Test
             Assert.AreEqual(RelationshipType.Association, GetAutomapAttribute(propertyWrapper).RelationshipType);
             Assert.Greater(ownerType.Name, relatedType.Name, "RelatedNameShouldBeGreaterThanOwnerName");
             //---------------Execute Test ----------------------
-            var owningBoHasForeignKey = autoMapper.OwningBoHasForeignKey;
+            var owningBoHasForeignKey = autoMapper.OwningBOHasForeignKey;
             //---------------Test Result -----------------------
             Assert.IsFalse(owningBoHasForeignKey, "ShouldNotBeOwningBOHasFK");
         }
@@ -448,7 +467,7 @@ namespace Habanero.Smooth.Test
             ()
         {
             //---------------Set up test pack-------------------
-            var classType = typeof (AFakeBO2WithOneToOneAssociationRel);
+            var classType = typeof(AFakeBO2WithOneToOneRel);
             const string expectedPropName = "FakeMergeableRel";
             var propertyInfo = classType.GetProperty(expectedPropName);
             var propertyWrapper = propertyInfo.ToPropertyWrapper();
@@ -456,7 +475,6 @@ namespace Habanero.Smooth.Test
             classType.AssertPropertyExists(expectedPropName);
             propertyInfo.AssertIsSingleRelationship();
             var oneToOneAtt = propertyWrapper.GetAttribute<AutoMapOneToOneAttribute>();
-            Assert.AreEqual(RelationshipType.Association, oneToOneAtt.RelationshipType);
             //---------------Execute Test ----------------------
             var relationshipDef = propertyWrapper.MapOneToOne();
             //---------------Test Result -----------------------
@@ -1114,7 +1132,7 @@ namespace Habanero.Smooth.Test
             propertyWrapper.SetIsSingleRelationship(true);
             var autoMapper = new OneToOneAutoMapper(propertyWrapper);
             //---------------Assert Precondition----------------
-            Assert.IsTrue(autoMapper.OwningBoHasForeignKey);
+            Assert.IsTrue(autoMapper.OwningBOHasForeignKey);
             Assert.IsTrue(propertyWrapper.IsSingleRelationhip);
             //---------------Execute Test ----------------------
             var relationshipDef = autoMapper.MapOneToOne();
@@ -1143,7 +1161,7 @@ namespace Habanero.Smooth.Test
             propertyWrapper.SetIsSingleRelationship(true);
             var autoMapper = new OneToOneAutoMapper(propertyWrapper);
             //---------------Assert Precondition----------------
-            Assert.IsFalse(autoMapper.OwningBoHasForeignKey);
+            Assert.IsFalse(autoMapper.OwningBOHasForeignKey);
             Assert.IsTrue(propertyWrapper.IsSingleRelationhip);
             Assert.IsTrue(propertyWrapper.IsPublic);
             Assert.IsFalse(propertyWrapper.IsInherited);

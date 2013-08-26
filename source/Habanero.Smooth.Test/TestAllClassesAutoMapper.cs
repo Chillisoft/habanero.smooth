@@ -678,10 +678,28 @@ namespace Habanero.Smooth.Test
             //---------------Set up test pack-------------------
             Func<TypeWrapper, bool> whereClause = type
                     => (type.Namespace == "Habanero.Smooth.Test.ValidFakeBOs");
-            AppDomainTypeSource source = new AppDomainTypeSource(whereClause);
-            AllClassesAutoMapper allClassesAutoMapper = new AllClassesAutoMapper(source);
-            ClassDefCol classDefCol = allClassesAutoMapper.Map();
-            ClassDefValidator validator = new ClassDefValidator(new DefClassFactory());
+            var source = new AppDomainTypeSource(whereClause);
+            var allClassesAutoMapper = new AllClassesAutoMapper(source);
+            var classDefCol = allClassesAutoMapper.Map();
+            var validator = new ClassDefValidator(new DefClassFactory());
+            //---------------Assert Precondition----------------
+            Assert.Greater(classDefCol.Count, 0);
+            //---------------Execute Test ----------------------
+            validator.ValidateClassDefs(classDefCol);
+            //---------------Test Result -----------------------
+            Assert.IsNotNull(classDefCol);
+            //Should Validate without Error if it gets here then it has validated
+        }
+        [Test]
+        public void TestAccept_Validate_WithOneToOneRelationshipOnly_ShouldBeTrue()
+        {
+            //---------------Set up test pack-------------------
+            Func<TypeWrapper, bool> whereClause = type
+                    => (type.Name == "FakeMergeableParent" || type.Name == "FakeMergeableChild");
+            var source = new AppDomainTypeSource(whereClause);
+            var allClassesAutoMapper = new AllClassesAutoMapper(source);
+            var classDefCol = allClassesAutoMapper.Map();
+            var validator = new ClassDefValidator(new DefClassFactory());
             //---------------Assert Precondition----------------
             Assert.Greater(classDefCol.Count, 0);
             //---------------Execute Test ----------------------

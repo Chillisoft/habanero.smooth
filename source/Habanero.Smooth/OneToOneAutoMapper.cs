@@ -16,6 +16,7 @@
 //      You should have received a copy of the GNU Lesser General Public License
 //      along with the Habanero framework.  If not, see <http://www.gnu.org/licenses/>.
 // ---------------------------------------------------------------------------------
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,7 +26,9 @@ using Habanero.Base.Exceptions;
 using Habanero.BO.ClassDefinition;
 using Habanero.Smooth.ReflectionWrappers;
 using Habanero.Util;
+
 // ReSharper disable ClassWithVirtualMembersNeverInherited.Global
+
 namespace Habanero.Smooth
 {
     /// <summary>
@@ -35,6 +38,10 @@ namespace Habanero.Smooth
     /// 3) If no single rev rel and 1:1Att with RevRelName then RevRelName = DeclaredRevRelName
     /// 4) If has single rev rel then RevRelName = foundRevRelationshipName 
     /// Determing RelatedProps 
+    /// if 1:1Attribute then the owningBOHasForeignKey set to true then this is set else the reverse relationship owningBOHasForeignKeyIsSet
+    /// Note this has now been set as compulsory.
+    /// 
+    /// --------------------------------------------------------------------------------------------------------------------
     /// if ownerClass.HasProp(RelName+ID) and relatedClass.NotHasProp(RevRelName+ID) 
     ///      owningBOHasForeignKey = true;
     ///      ownerProp = foundOwnerPropName
@@ -70,6 +77,7 @@ namespace Habanero.Smooth
             if (propWrap == null) throw new ArgumentNullException("propWrap");
             this.PropertyWrapper = propWrap;
         }
+
         /// <summary>
         /// Maps the <see cref="ReflectionWrappers.PropertyWrapper"/> to a <see cref="IRelationshipDef"/>.
         /// </summary>
@@ -78,19 +86,19 @@ namespace Habanero.Smooth
         {
             if (!MustBeMapped()) return null;
             CheckReverseRelationshipValid();
-            
+
             var relatedClassType = PropertyWrapper.RelatedClassType.UnderlyingType;
-            DeleteParentAction deleteAction = GetDeleteAction();
+            var deleteAction = GetDeleteAction();
 
             var relDef = new SingleRelationshipDef(this.PropertyWrapper.Name, relatedClassType
-                                            , new RelKeyDef(), true, deleteAction)
-                      {
-                          OwningBOHasForeignKey = this.OwningBoHasForeignKey,
-                          ReverseRelationshipName = this.ReverseRelationshipName
-                      };
+                                                   , new RelKeyDef(), true, deleteAction)
+                {
+                    OwningBOHasForeignKey = this.OwningBOHasForeignKey,
+                    ReverseRelationshipName = this.ReverseRelationshipName
+                };
             SetRelationshipType(relDef);
             relDef.SetAsOneToOne();
-            IRelPropDef relPropDef = this.CreateRelPropDef();
+            var relPropDef = this.CreateRelPropDef();
             relDef.RelKeyDef.Add(relPropDef);
             return relDef;
         }
@@ -98,11 +106,12 @@ namespace Habanero.Smooth
         private DeleteParentAction GetDeleteAction()
         {
             if (IsDefinedAsCompositionOrAggregation()) return DeleteParentAction.Prevent;
-            if (IsDefinedAsAssociation() || ReverseRelationshipIsDefinedAsAggregationOrComposition()) return DeleteParentAction.DoNothing;
-           
+            if (IsDefinedAsAssociation() || ReverseRelationshipIsDefinedAsAggregationOrComposition())
+                return DeleteParentAction.DoNothing;
+
             //Else base on the OwningBOHasFK
-            return this.OwningBoHasForeignKey 
-                       ? DeleteParentAction.DoNothing 
+            return this.OwningBOHasForeignKey
+                       ? DeleteParentAction.DoNothing
                        : DeleteParentAction.Prevent;
         }
 
@@ -122,17 +131,18 @@ namespace Habanero.Smooth
         public bool MustBeMapped()
         {
             if (PropertyWrapper == null) return false;
-            if(this.PropertyWrapper.IsInherited) return false;
+            if (this.PropertyWrapper.IsInherited) return false;
             if (this.PropertyWrapper.IsStatic) return false;
             if (!this.PropertyWrapper.IsPublic) return false;
             if (!PropertyWrapper.IsSingleRelationhip) return false;
             if (PropertyWrapper.HasIgnoreAttribute) return false;
             if (this.PropertyWrapper.PropertyInfo == null) return false;
             if (this.PropertyWrapper.DeclaringType.IsNull()) return false;
-            return (this.PropertyWrapper.HasSingleReverseRelationship 
-                    && !this.PropertyWrapper.HasMultipleReverseRelationship) 
-                    || this.PropertyWrapper.HasOneToOneAttribute;
+            return (this.PropertyWrapper.HasSingleReverseRelationship
+                    && !this.PropertyWrapper.HasMultipleReverseRelationship)
+                   || this.PropertyWrapper.HasOneToOneAttribute;
         }
+
         /// <summary>
         /// Using a set of heuristics the Owning Property Name
         /// is determined from the RelationshipName and any attributes on the
@@ -147,8 +157,8 @@ namespace Habanero.Smooth
             var ownerClassType = this.PropertyWrapper.DeclaringType;
             var owningFKPropName = GetFkPropName(this.RelationshipName);
 
-            return this.OwningBoHasForeignKey 
-                       ? owningFKPropName 
+            return this.OwningBOHasForeignKey
+                       ? owningFKPropName
                        : ownerClassType.GetPKPropName();
         }
 
@@ -161,6 +171,7 @@ namespace Habanero.Smooth
         {
             get { return this.PropertyWrapper.Name; }
         }
+
         /// <summary>
         /// Using a set of heuristics the Related Property Name
         /// is determined from the RelationshipName and any attributes on the
@@ -178,12 +189,11 @@ namespace Habanero.Smooth
             return this.RelatedBoHasForeignKey
                        ? relatedRelPropName
                        : relatedClassType.GetPKPropName();
-
         }
 
         private static bool OwnerClassNameGTRelatedClassName(TypeWrapper ownerClassType, TypeWrapper relatedClassType)
         {
-            if(ownerClassType.Name == null) return false;
+            if (ownerClassType.Name == null) return false;
             return ownerClassType.Name.CompareTo(relatedClassType.Name) == 1;
         }
 
@@ -193,10 +203,7 @@ namespace Habanero.Smooth
         /// </summary>
         public static INamingConventions PropNamingConvention
         {
-            get
-            {
-                return ClassAutoMapper.PropNamingConvention;
-            }
+            get { return ClassAutoMapper.PropNamingConvention; }
         }
 
         // ReSharper disable ConditionIsAlwaysTrueOrFalse
@@ -204,15 +211,17 @@ namespace Habanero.Smooth
         /// Determines whether the Owning Class or the related class has the foriegn key.
         /// This is determined by looking at the Primary keys of each class.
         /// </summary>
-        public bool OwningBoHasForeignKey
+        public bool OwningBOHasForeignKey
         {
             get
             {
+                var relationshipAttribute = this.PropertyWrapper.GetAttribute<AutoMapOneToOneAttribute>();
+                if (relationshipAttribute != null) return relationshipAttribute.OwningBOHasForeignKey;
                 var relatedClassType = this.PropertyWrapper.RelatedClassType;
                 var relatedClassHasFKProperty = FKFoundOnRelatedClass();
 
                 var ownerClassType = this.PropertyWrapper.DeclaringType;
-                bool owningClassHasFKProperty = FKFoundOnOwnerClass();
+                var owningClassHasFKProperty = FKFoundOnOwnerClass();
 
                 if (owningClassHasFKProperty && !relatedClassHasFKProperty) return true;
                 if (relatedClassHasFKProperty && !owningClassHasFKProperty) return false;
@@ -232,6 +241,7 @@ namespace Habanero.Smooth
                 return OwnerClassNameGTRelatedClassName(ownerClassType, relatedClassType);
             }
         }
+
         /// <summary>
         /// If the reverse relationship is defined as Composition or Aggregation via attrubutes then return true.
         /// </summary>
@@ -241,13 +251,14 @@ namespace Habanero.Smooth
             var revRelInfos = this.PropertyWrapper.GetOneToOneReverseRelationshipInfos();
             if (revRelInfos == null) return false;
             var revRelProp = revRelInfos.FirstOrDefault(wrapper => wrapper.Name == reverseRelationshipName);
-            return IsDefinedAsCompositionOrAggregation(revRelProp);  
+            return IsDefinedAsCompositionOrAggregation(revRelProp);
         }
 
         private bool IsDefinedAsCompositionOrAggregation()
         {
             return IsDefinedAsCompositionOrAggregation(this.PropertyWrapper);
         }
+
         /// <summary>
         /// If the <paramref name="propertyWrapper"/> is defined as Composition or Aggregation via attrubutes then return true.
         /// </summary>
@@ -255,7 +266,7 @@ namespace Habanero.Smooth
         /// <returns></returns>
         private static bool IsDefinedAsCompositionOrAggregation(PropertyWrapper propertyWrapper)
         {
-            if(propertyWrapper == null) return false;
+            if (propertyWrapper == null) return false;
             var autoMapAttribute = propertyWrapper.GetAttribute<AutoMapOneToOneAttribute>();
             if (autoMapAttribute == null) return false;
             return (autoMapAttribute.RelationshipType != RelationshipType.Association);
@@ -272,6 +283,7 @@ namespace Habanero.Smooth
             if (autoMapAttribute == null) return false;
             return (autoMapAttribute.RelationshipType == RelationshipType.Association);
         }
+
         // ReSharper restore ConditionIsAlwaysTrueOrFalse
 
         private bool FKFoundOnOwnerClass()
@@ -292,10 +304,7 @@ namespace Habanero.Smooth
 
         private bool RelatedBoHasForeignKey
         {
-            get
-            {
-                return FKFoundOnRelatedClass() ? true : !this.OwningBoHasForeignKey;
-            }
+            get { return FKFoundOnRelatedClass() ? true : !this.OwningBOHasForeignKey; }
         }
 
         /// <summary>
@@ -331,6 +340,7 @@ namespace Habanero.Smooth
             }
         }
     }
+
     /// <summary>
     /// Provides extension methods to provide a more fluent mechanism for 
     /// determining a RelationshipDef from the Property.
@@ -345,10 +355,10 @@ namespace Habanero.Smooth
         public static IRelationshipDef MapOneToOne(this PropertyWrapper propWrapper)
         {
             if (propWrapper == null) return null;
-            OneToOneAutoMapper autoMapper = new OneToOneAutoMapper(propWrapper);
+            var autoMapper = new OneToOneAutoMapper(propWrapper);
             return autoMapper.MapOneToOne();
         }
     }
-    // ReSharper restore ClassWithVirtualMembersNeverInherited.Global
 
+    // ReSharper restore ClassWithVirtualMembersNeverInherited.Global
 }
