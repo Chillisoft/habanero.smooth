@@ -301,10 +301,6 @@ namespace Habanero.Smooth.Test
  
         }
 
-        public static void AssertHasOneToOneWithReverseRelationship(this PropertyWrapper propWrapper, string expectedRevRelName)
-        {
-            Assert.IsTrue(propWrapper.HasAutoMapOneToOneAttribute(expectedRevRelName), string.Format("Should have AutoMapOneToOne with ReverseRelationship '{0}'", expectedRevRelName));
-        }
 
 
         public static void AssertHasAttribute<T>(this PropertyInfo propertyInfo) where T : class

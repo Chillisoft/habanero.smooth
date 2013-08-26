@@ -83,6 +83,8 @@
     <Compile Include="TestCustomTypeSource.cs" />
     <Compile Include="TestIdentityAutoMapper.cs" />
     <Compile Include="TestIdentityPropNameConvetion.cs" />
+    <Compile Include="TestingExtensions.cs" />
+    <Compile Include="TestMapperExtensionsSingleRelationships.cs" />
     <Compile Include="TestMutiTypeSource.cs" />
     <Compile Include="TestOneToManyAutoMapper.cs" />
     <Compile Include="TestOneToOneAutoMapper.cs" />
