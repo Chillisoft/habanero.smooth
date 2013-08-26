@@ -127,46 +127,33 @@ namespace Habanero.Smooth
         /// <summary>
         /// Construct the Attribute
         /// </summary>
-        /// <param name="owningBoHasForeignKey"></param>
-        public AutoMapOneToOneAttribute(bool owningBoHasForeignKey)
+        public AutoMapOneToOneAttribute()
         {
-            OwningBOHasForeignKey = owningBoHasForeignKey;
         }
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="owningBoHasForeignKey"></param>
         /// <param name="reverseRelationshipName"></param>
-        public AutoMapOneToOneAttribute(bool owningBoHasForeignKey, string reverseRelationshipName) : base(reverseRelationshipName)
+        public AutoMapOneToOneAttribute(string reverseRelationshipName) : base(reverseRelationshipName)
         {
-            OwningBOHasForeignKey = owningBoHasForeignKey;
         }
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="owningBoHasForeignKey"></param>
         /// <param name="relationshipType"></param>
-        public AutoMapOneToOneAttribute(bool owningBoHasForeignKey, RelationshipType relationshipType) : base(relationshipType)
+        public AutoMapOneToOneAttribute(RelationshipType relationshipType) : base(relationshipType)
         {
-            OwningBOHasForeignKey = owningBoHasForeignKey;
         }
 
         /// <summary>
         /// </summary>
-        /// <param name="owningBoHasForeignKey"></param>
         /// <param name="reverseRelationshipName"></param>
         /// <param name="relationshipType"></param>
-        public AutoMapOneToOneAttribute(bool owningBoHasForeignKey, string reverseRelationshipName, RelationshipType relationshipType) : base(reverseRelationshipName, relationshipType)
+        public AutoMapOneToOneAttribute(string reverseRelationshipName, RelationshipType relationshipType) : base(reverseRelationshipName, relationshipType)
         {
-            OwningBOHasForeignKey = owningBoHasForeignKey;
         }
-
-        /// <summary>
-        /// Must the Foreign Key be created on the class owning this relationship or must it be on the related class.
-        /// </summary>
-        public bool OwningBOHasForeignKey { get; private set; }
     }
     /// <summary>
     /// Automap a Property as Compulsory.

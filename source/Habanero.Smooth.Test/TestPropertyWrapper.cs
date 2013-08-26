@@ -461,14 +461,7 @@ namespace Habanero.Smooth.Test
         {
             //---------------Set up test pack-------------------
             var propertyInfo = MockRepository.GenerateMock<PropertyInfo>();
-            propertyInfo.Stub(propInfo => propInfo.GetCustomAttributes(true))
-                        .Return(new[]
-                            {
-                                MockRepository.GenerateMock<AutoMapOneToOneAttribute>(false)
-                            });
-            propertyInfo.Stub(propInfo
-                              => propInfo.GetCustomAttributes(typeof(AutoMapOneToOneAttribute), true))
-                        .Return(propertyInfo.GetCustomAttributes(true));
+            propertyInfo.SetCustomAttribute<AutoMapOneToOneAttribute>();
             var propertyWrapper = new PropertyWrapper(propertyInfo);
             //---------------Assert Precondition----------------
             var customAttributes = propertyInfo.GetCustomAttributes(typeof(AutoMapOneToOneAttribute), true);
@@ -2361,15 +2354,10 @@ namespace Habanero.Smooth.Test
             return randomPropInfo;
         }
 
-        public static void SetOneToOneAttributeOnStub(this PropertyWrapper propertyWrapper, bool owningBOHasForeignKey)
-        {
-            propertyWrapper.Stub(pw => pw.GetAttribute<AutoMapOneToOneAttribute>()).Return(
-                new AutoMapOneToOneAttribute(owningBOHasForeignKey));
-        }
         public static void SetOneToOneAttributeOnStub(this PropertyWrapper propertyWrapper, RelationshipType relationshipType)
         {
             propertyWrapper.Stub(pw => pw.GetAttribute<AutoMapOneToOneAttribute>()).Return(
-                new AutoMapOneToOneAttribute(false, relationshipType));
+                new AutoMapOneToOneAttribute(relationshipType));
         }
         private static PropertyInfo GetRandomPropInfo()
         {
