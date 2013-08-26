@@ -39,7 +39,9 @@ namespace Habanero.Smooth.Test
         // 2) If no single rev rel and 1:1Attribute with no RevRelName then RevRelName = ClassName
         // 3) If no single rev rel and 1:1Att with RevRelName then RevRelName = DeclaredRevRelName
         // 4) If has single rev rel then RevRelName = foundRevRelationshipName 
-        // Determing RelatedProps 
+        // Determing RelatedProps
+        // if 1:1Attribute then the owningBOHasForeignKey set to true then this is set else the reverse relationship owningBOHasForeignKeyIsSet
+        // Note this has now been set as compulsory. 
         // if ownerClass.HasProp(RelName+ID) and relatedClass.NotHasProp(RevRelName+ID) 
         //      ownerProp = foundOwnerPropName
         //      relatedProp = RelatedClassID.

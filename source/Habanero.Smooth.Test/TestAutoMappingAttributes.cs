@@ -349,6 +349,56 @@ namespace Habanero.Smooth.Test
         {
             return RandomValueGenerator.GetRandomString();
         }
+
+        [Test]
+        public void Construct_WithOwningBOHasPrimaryKey_AndRelationship_ShouldSet()
+        {
+            //---------------Set up test pack-------------------
+            var expectedOwningBoHasForeignKey = RandomValueGenerator.GetRandomBoolean();
+            //---------------Assert Precondition----------------
+
+            //---------------Execute Test ----------------------
+            var autoMapOneToOneAttribute = new AutoMapOneToOneAttribute(expectedOwningBoHasForeignKey, RandomValueGenerator.GetRandomString());
+            //---------------Test Result -----------------------
+            Assert.AreEqual(expectedOwningBoHasForeignKey, autoMapOneToOneAttribute.OwningBOHasForeignKey);
+        }
+
+        [Test]
+        public void Construct_WithOwningBOHasPrimaryKey_ShouldSet()
+        {
+            //---------------Set up test pack-------------------
+            var expectedOwningBoHasForeignKey = RandomValueGenerator.GetRandomBoolean();
+            //---------------Assert Precondition----------------
+
+            //---------------Execute Test ----------------------
+            var autoMapOneToOneAttribute = new AutoMapOneToOneAttribute(expectedOwningBoHasForeignKey);
+            //---------------Test Result -----------------------
+            Assert.AreEqual(expectedOwningBoHasForeignKey, autoMapOneToOneAttribute.OwningBOHasForeignKey);
+        }
+        [Test]
+        public void Construct_WithOwningBOHasPrimaryKeyAndRelationshipType_ShouldSet()
+        {
+            //---------------Set up test pack-------------------
+            var expectedOwningBoHasForeignKey = RandomValueGenerator.GetRandomBoolean();
+            //---------------Assert Precondition----------------
+
+            //---------------Execute Test ----------------------
+            var autoMapOneToOneAttribute = new AutoMapOneToOneAttribute(expectedOwningBoHasForeignKey, RandomValueGenerator.GetRandomEnum<RelationshipType>());
+            //---------------Test Result -----------------------
+            Assert.AreEqual(expectedOwningBoHasForeignKey, autoMapOneToOneAttribute.OwningBOHasForeignKey);
+        }
+        [Test]
+        public void Construct_WithOwningBOHasPrimaryKey_AndRelationship_AndRelationshipType_ShouldSet()
+        {
+            //---------------Set up test pack-------------------
+            var expectedOwningBoHasForeignKey = RandomValueGenerator.GetRandomBoolean();
+            //---------------Assert Precondition----------------
+
+            //---------------Execute Test ----------------------
+            var autoMapOneToOneAttribute = new AutoMapOneToOneAttribute(expectedOwningBoHasForeignKey, RandomValueGenerator.GetRandomString(), RandomValueGenerator.GetRandomEnum<RelationshipType>());
+            //---------------Test Result -----------------------
+            Assert.AreEqual(expectedOwningBoHasForeignKey, autoMapOneToOneAttribute.OwningBOHasForeignKey);
+        }
     }
 
 }
