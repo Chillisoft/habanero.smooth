@@ -391,7 +391,7 @@ namespace Habanero.Smooth.Test
 		public FakeBOWithUndefinableSingleRel MySingleRelationship { get; set; }
 	}
 
-	public class FakeBOWithReverseSingle : BusinessObject
+    public class FakeBOWithReverseSingle : BusinessObject
 	{
 		public FakeBOWithM1Attribute MySingleRelationship { get; set; }
 

@@ -237,6 +237,28 @@ namespace Habanero.Smooth.Test
         }
 
         [Test]
+        public void Test_Get1_1RevRels_GivenHasReverseRelationshipMapped_ShouldSetRelKeyDef()
+        {
+            //---------------Set up test pack-------------------
+            var classType = typeof(FakeBOWith11Attribute).ToTypeWrapper();
+            const string expectedPropName = "MySingleRevRelationship";
+            var propertyWrapper = classType.GetProperty(expectedPropName);
+            var reverseClassType = propertyWrapper.RelatedClassType;
+            //---------------Assert Precondition----------------
+            classType.AssertPropertyExists(expectedPropName);
+            propertyWrapper.AssertIsOfType<FakeBOWithReverseSingle>();
+            propertyWrapper.AssertIsSingleRelationship();
+
+            classType.AssertRelationshipIsForOwnerClass(reverseClassType, "MySingleRelationship2");
+            reverseClassType.AssertRelationshipIsForOwnerClass(classType, "MySingleRevRelationship");
+
+            //---------------Execute Test ----------------------
+            var singleRevRels = propertyWrapper.GetOneToOneReverseRelationshipInfos();
+            //---------------Test Result -----------------------
+            Assert.AreEqual(1, singleRevRels.Count);
+        }
+
+        [Test]
         public void Test_Get1_1RevRels_WhenReverseHasIgnore_ShouldReturnNoItems()
         {
             //---------------Set up test pack-------------------
