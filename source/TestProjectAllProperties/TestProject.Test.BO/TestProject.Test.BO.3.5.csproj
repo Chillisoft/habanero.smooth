@@ -57,7 +57,7 @@
     <Reference Include="Habanero.BO">
       <HintPath>..\..\..\lib\DotNet35\Habanero.BO.dll</HintPath>
     </Reference>
-    <Reference Include="log4net">
+    <Reference Include="log4net"> 
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\lib\log4net.dll</HintPath>
     </Reference>
