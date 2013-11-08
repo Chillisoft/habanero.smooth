@@ -9,7 +9,7 @@ require 'albacore'
 # deeper in the repo you will need to add another ..
 bs = File.dirname(__FILE__)
 bs = File.join(bs, "..") if bs.index("branches") != nil
-bs = File.join(bs, "../../../HabaneroCommunity/BuildScripts")
+bs = File.join(bs, "../HabaneroCommunity/BuildScripts")
 $buildscriptpath = File.expand_path(bs)
 $:.unshift($buildscriptpath) unless
     $:.include?(bs) || $:.include?($buildscriptpath)
@@ -29,6 +29,9 @@ else
 	$nuget_publish_version_id = '1.6'
 end		
 
+$binaries_baselocation = "bin"
+$nuget_baselocation = "nugetArtifacts"
+$app_version ='9.9.9.999'
 #------------------------build settings--------------------------
 require 'rake-settings.rb'
 
@@ -43,22 +46,46 @@ msbuild_settings = {
 
 #------------------------project settings------------------------
 $solution = 'source/SmoothHabanero_2010.sln'
-
+$major_version = ''
+$minor_version = ''
+$patch_version = ''
 #______________________________________________________________________________
 #---------------------------------TASKS----------------------------------------
 
 desc "Runs the build all task"
-task :default => [:build_all_nuget]
+task :default, [:major, :minor, :patch] => [:build_all_nuget]
 
 desc "Pulls habanero from local nuget, builds and tests smooth"
-task :build_all_nuget => [:installNugetPackages, :build, :publishSmoothNugetPackage, :publishNakedNugetPackage]
+task :build_all_nuget => [:installNugetPackages, :setupversion, :set_assembly_version, :build, :copy_to_nuget, :publishSmoothNugetPackage, :publishNakedNugetPackage]
 
 desc "Builds Smooth, including tests"
-task :build => [:clean, :build_FakeBOs, :msbuild, :test]
+task :build => [:clean, :setupversion, :set_assembly_version, :build_FakeBOs, :msbuild, :copy_to_nuget, :test]
 
 desc "builds the FakeBOs dll and copies to the lib folder"
 task :build_FakeBOs => [:msbuild_FakeBOsInSeperateAssembly,:copy_dll_to_smooth_lib] 
 
+#------------------------Setup Versions---------
+desc "Setup Versions"
+task :setupversion,:major ,:minor,:patch do |t, args|
+	puts cyan("Setup Versions")
+	args.with_defaults(:major => "0")
+	args.with_defaults(:minor => "0")
+	args.with_defaults(:patch => "0000")
+	$major_version = "#{args[:major]}"
+	$minor_version = "#{args[:minor]}"
+	$patch_version = "#{args[:patch]}"
+	$app_version = "#{$major_version}.#{$minor_version}.#{$patch_version}.0"
+	puts cyan("Assembly Version #{$app_version}")	
+end
+
+task :set_assembly_version do
+	puts green("Setting Shared AssemblyVersion to: #{$app_version}")
+	file_path = "source/Common/AssemblyInfoShared.cs"
+	outdata = File.open(file_path).read.gsub(/"9.9.9.999"/, "\"#{$app_version}\"")
+	File.open(file_path, 'w') do |out|
+		out << outdata
+	end	
+end
 #------------------------build FakeBOsInSeperateAssembly---------
 
 $fakeBOsFolder = "source/FakeBOsInSeperateAssembly"
@@ -67,11 +94,7 @@ task :clean_FakeBOsInSeperateAssembly do
 	FileUtils.rm_rf "#{$fakeBOsFolder}/bin"
 end
 
-svn :checkout_FakeBOsInSeperateAssembly => :clean_FakeBOsInSeperateAssembly do |s| 
-	s.parameters "co #{Dir.pwd}/source/FakeBosInSeperateAssembly #{$fakeBOsFolder}"
-end
-
-msbuild :msbuild_FakeBOsInSeperateAssembly => :checkout_FakeBOsInSeperateAssembly do |msb| 
+msbuild :msbuild_FakeBOsInSeperateAssembly do |msb| 
 	puts cyan("building FakeBOsInSeperateAssembly in #{$fakeBOsFolder}")
 	msb.update_attributes msbuild_settings
     msb.solution = "#{$fakeBOsFolder}/FakeBOsInSeperateAssembly.sln"
@@ -106,9 +129,14 @@ nunit :test do |nunit|
 					 'bin\TestProjectNoDBSpecificProps.Test.BO.dll' 
 end
 
-svn :commitlib do |s|
-	puts cyan("Commiting lib")
-	s.parameters "ci lib -m autocheckin"
+def copy_nuget_files_to location
+	FileUtils.cp "#{$binaries_baselocation}/Habanero.Smooth.dll", location
+	FileUtils.cp "#{$binaries_baselocation}/Habanero.Naked.dll", location
+end
+
+task :copy_to_nuget do
+	puts cyan("Copying files to the nuget folder")	
+	copy_nuget_files_to $nuget_baselocation
 end
 
 desc "Install nuget packages"
