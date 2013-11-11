@@ -56,10 +56,10 @@ desc "Runs the build all task"
 task :default, [:major, :minor, :patch] => [:build_all_nuget]
 
 desc "Pulls habanero from local nuget, builds and tests smooth"
-task :build_all_nuget => [:installNugetPackages, :setupversion, :set_assembly_version, :build, :copy_to_nuget, :publishSmoothNugetPackage, :publishNakedNugetPackage]
+task :build_all_nuget, [:major, :minor, :patch] => [:installNugetPackages, :setupversion, :set_assembly_version, :build, :copy_to_nuget, :publishSmoothNugetPackage, :publishNakedNugetPackage]
 
 desc "Builds Smooth, including tests"
-task :build => [:clean, :setupversion, :set_assembly_version, :build_FakeBOs, :msbuild, :copy_to_nuget, :test]
+task :build, [:major, :minor, :patch] => [:clean, :setupversion, :set_assembly_version, :build_FakeBOs, :msbuild, :copy_to_nuget, :test]
 
 desc "builds the FakeBOs dll and copies to the lib folder"
 task :build_FakeBOs => [:msbuild_FakeBOsInSeperateAssembly,:copy_dll_to_smooth_lib] 
