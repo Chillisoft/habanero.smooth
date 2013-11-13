@@ -147,6 +147,7 @@ namespace Habanero.Smooth.Test
             get { throw new NotImplementedException(); }
         }
 
+#pragma warning disable
         public event EventHandler<BOEventArgs> Updated;
         public event EventHandler<BOEventArgs> Saved;
         public event EventHandler<BOEventArgs> Deleted;
@@ -154,7 +155,7 @@ namespace Habanero.Smooth.Test
         public event EventHandler<BOEventArgs> IDUpdated;
         public event EventHandler<BOPropUpdatedEventArgs> PropertyUpdated;
         public event EventHandler<BOEventArgs> MarkedForDeletion;
-
+#pragma warning enable
         #endregion
     }
 
