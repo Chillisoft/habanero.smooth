@@ -44,11 +44,18 @@ namespace Habanero.Smooth
             Add(types);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         protected IList<TypeWrapper> Types
         {
             get { return _types; }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<TypeWrapper> GetTypes()
         {
             return Types;

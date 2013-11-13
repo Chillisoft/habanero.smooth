@@ -64,6 +64,11 @@ namespace Habanero.Smooth
     /// </summary>
     public class InheritanceAutoMapper
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="typeWrapper"></param>
+        /// <exception cref="ArgumentNullException"></exception>
         public InheritanceAutoMapper(TypeWrapper typeWrapper)
         {
             if (typeWrapper.IsNull()) throw new ArgumentNullException("typeWrapper");
@@ -72,6 +77,10 @@ namespace Habanero.Smooth
         private TypeWrapper TypeWrapper { get; set; }
 
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public ISuperClassDef Map()
         {
             if (MustBeMapped())

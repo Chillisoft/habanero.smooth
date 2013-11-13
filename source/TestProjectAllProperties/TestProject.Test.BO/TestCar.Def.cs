@@ -11,7 +11,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using Habanero.BO.Exceptions;
 using TestProject.BO;
 using Habanero.Base;
 using Habanero.BO;
@@ -61,7 +60,7 @@ namespace TestProject.Test.BO
             Assert.IsNull(car.Make);
             Assert.IsNull(car.Model);
             Assert.IsNotNull(car.VehicleID);
-            Assert.IsInstanceOfType(car.Props["VehicleID"].PropertyType, car.VehicleID);
+            Assert.IsInstanceOf(car.Props["VehicleID"].PropertyType, car.VehicleID);
             Assert.IsNull(car.MaxSpeed);
         }
 
@@ -424,7 +423,7 @@ namespace TestProject.Test.BO
             //---------------Execute Test ----------------------
             Car car = TestUtilsCar.CreateUnsavedValidCar();
             //---------------Test Result -----------------------
-            Assert.IsInstanceOfType(typeof (TestProject.BO.Vehicle), car);
+            Assert.IsInstanceOf<Vehicle>(car);
         }
     }
     // ReSharper restore InconsistentNaming

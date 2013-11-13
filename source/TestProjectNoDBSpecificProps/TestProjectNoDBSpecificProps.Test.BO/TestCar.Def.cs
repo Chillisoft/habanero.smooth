@@ -11,7 +11,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using Habanero.BO.Exceptions;
 using TestProjectNoDBSpecificProps.BO;
 using Habanero.Base;
 using Habanero.BO;
@@ -410,7 +409,7 @@ namespace TestProjectNoDBSpecificProps.Test.BO
             //---------------Execute Test ----------------------
             Car car = TestUtilsCar.CreateUnsavedValidCar();
             //---------------Test Result -----------------------
-            Assert.IsInstanceOfType(typeof(TestProjectNoDBSpecificProps.BO.Vehicle), car);
+            Assert.IsInstanceOf<Vehicle>(car);
         }        
     }
 }

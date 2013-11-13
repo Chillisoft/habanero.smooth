@@ -11,7 +11,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using Habanero.BO.Exceptions;
 using TestProjectNoDBSpecificProps.BO;
 using Habanero.Base;
 using Habanero.BO;

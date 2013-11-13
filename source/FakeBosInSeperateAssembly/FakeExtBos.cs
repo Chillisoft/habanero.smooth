@@ -147,6 +147,7 @@ namespace FakeBosInSeperateAssembly
             get { throw new NotImplementedException(); }
         }
 
+#pragma warning disable 
         public event EventHandler<BOEventArgs> Updated;
         public event EventHandler<BOEventArgs> Saved;
         public event EventHandler<BOEventArgs> Deleted;
@@ -154,7 +155,7 @@ namespace FakeBosInSeperateAssembly
         public event EventHandler<BOEventArgs> IDUpdated;
         public event EventHandler<BOPropUpdatedEventArgs> PropertyUpdated;
         public event EventHandler<BOEventArgs> MarkedForDeletion;
-
+#pragma warning restore 
         #endregion
     }
     public class FakeExtBoShouldBeLoaded : BusinessObject

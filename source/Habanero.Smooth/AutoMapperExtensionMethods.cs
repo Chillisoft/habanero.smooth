@@ -30,8 +30,14 @@ namespace Habanero.Smooth
 {
 
 
+    /// <summary>
+    /// 
+    /// </summary>
     public static class AutoMapperExtensionMethods
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public static bool IsOfType<T>(this Type type)
         {
             return typeof(T).IsAssignableFrom(type);

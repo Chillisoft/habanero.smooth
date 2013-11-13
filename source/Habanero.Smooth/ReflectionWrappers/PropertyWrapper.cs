@@ -481,6 +481,9 @@ namespace Habanero.Smooth.ReflectionWrappers
             return singleReverseRelProp == null ? this.DeclaringClassName : singleReverseRelProp.Name;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         protected virtual PropertyWrapper SingleReverseRelProp
         {
             get { return this.GetSingleReverseRelPropInfos().FirstOrDefault(); }
@@ -560,11 +563,17 @@ namespace Habanero.Smooth.ReflectionWrappers
             get { return this.HasAttribute<AutoMapStringPatternMatchPropRuleAttribute>(); }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public virtual bool HasDateTimeRuleAttribute
         {
             get { return this.HasAttribute<AutoMapDateTimePropRuleAttribute>(); }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public virtual bool HasDateTimeStringRuleAttribute
         {
             get { return this.HasAttribute<AutoMapDateTimePropRuleAttribute>(); }
@@ -661,7 +670,9 @@ namespace Habanero.Smooth.ReflectionWrappers
             return ReferenceEquals(other.PropertyInfo, PropertyInfo);
             //return other.PropertyInfo.Equals(PropertyInfo);
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
         public override bool Equals(object obj)
         {
             if (ReferenceEquals(null, obj)) return false;
@@ -669,7 +680,9 @@ namespace Habanero.Smooth.ReflectionWrappers
             if (obj.GetType() != typeof (PropertyWrapper)) return false;
             return Equals((PropertyWrapper) obj);
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
         public override int GetHashCode()
         {
             unchecked

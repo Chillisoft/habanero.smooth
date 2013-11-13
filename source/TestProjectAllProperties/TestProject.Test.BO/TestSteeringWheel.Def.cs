@@ -11,7 +11,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using Habanero.BO.Exceptions;
 using TestProject.BO;
 //using TestProjectNoDBSpecificProps.BO
 using Habanero.Base;
@@ -59,7 +58,7 @@ namespace TestProject.Test.BO
 
             //---------------Test Result -----------------------
                         Assert.IsNotNull(steeringWheel.SteeringWheelID);
-            Assert.IsInstanceOfType(steeringWheel.Props["SteeringWheelID"].PropertyType, steeringWheel.SteeringWheelID);
+            Assert.IsInstanceOf(steeringWheel.Props["SteeringWheelID"].PropertyType, steeringWheel.SteeringWheelID);
                         Assert.IsNull(steeringWheel.CarID);
         }
 

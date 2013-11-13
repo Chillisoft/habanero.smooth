@@ -25,17 +25,31 @@ using Habanero.Smooth.ReflectionWrappers;
 
 namespace Habanero.Smooth
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class AssemblyTypeSource : ITypeSource
     {
         private readonly Func<Type, bool> _whereClause = _defaultWhereClause;
         private static readonly Func<Type, bool> _defaultWhereClause = type => true;
         private Assembly Assembly { get; set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="assembly"></param>
+        /// <exception cref="ArgumentNullException"></exception>
         public AssemblyTypeSource(Assembly assembly)
         {
             if (assembly == null) throw new ArgumentNullException("assembly");
             Assembly = assembly;
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="assembly"></param>
+        /// <param name="whereClause"></param>
+        /// <exception cref="ArgumentNullException"></exception>
         public AssemblyTypeSource(Assembly assembly, Func<Type, bool> whereClause)
         {
             if (assembly == null) throw new ArgumentNullException("assembly");
@@ -53,6 +67,10 @@ namespace Habanero.Smooth
             Assembly = type.Assembly;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<TypeWrapper> GetTypes()
         {
             var desiredType = typeof (IBusinessObject);

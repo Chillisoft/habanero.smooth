@@ -11,10 +11,8 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using Habanero.BO.Exceptions;
 using TestProject.BO;
 //using TestProjectNoDBSpecificProps.BO
-using Habanero.Base;
 using Habanero.BO;
 using Habanero.BO.ClassDefinition;
 using NUnit.Framework;
@@ -59,7 +57,7 @@ namespace TestProject.Test.BO
 
             //---------------Test Result -----------------------
                         Assert.IsNotNull(vehicle.VehicleID);
-            Assert.IsInstanceOfType(vehicle.Props["VehicleID"].PropertyType, vehicle.VehicleID);
+                        Assert.IsInstanceOf(vehicle.Props["VehicleID"].PropertyType, vehicle.VehicleID);
                         Assert.IsNull(vehicle.VehicleType);
                         Assert.IsNull(vehicle.MaxSpeed);
         }

@@ -11,7 +11,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using Habanero.BO.Exceptions;
 using TestProject.BO;
 //using TestProjectNoDBSpecificProps.BO
 using Habanero.Base;
@@ -59,7 +58,7 @@ namespace TestProject.Test.BO
 
             //---------------Test Result -----------------------
                         Assert.IsNotNull(driver.DriverID);
-            Assert.IsInstanceOfType(driver.Props["DriverID"].PropertyType, driver.DriverID);
+                        Assert.IsInstanceOf(driver.Props["DriverID"].PropertyType, driver.DriverID);
                         Assert.IsNull(driver.DriverName);
                         Assert.IsNull(driver.Age);
                         Assert.IsNull(driver.DOB);

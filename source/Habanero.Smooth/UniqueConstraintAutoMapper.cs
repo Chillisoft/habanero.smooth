@@ -34,6 +34,11 @@ namespace Habanero.Smooth
         private IClassDef ClassDef { get; set; }
         private TypeWrapper _classType;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="classDef"></param>
+        /// <exception cref="ArgumentNullException"></exception>
         public UniqueConstraintAutoMapper(IClassDef classDef)
         {
             if (classDef == null) throw new ArgumentNullException("classDef");

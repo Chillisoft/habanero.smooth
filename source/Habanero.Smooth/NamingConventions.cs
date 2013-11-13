@@ -52,19 +52,26 @@ namespace Habanero.Smooth
     /// The default naming conventions used by Chillisoft.
     ///</summary>
     public class DefaultPropNamingConventions : INamingConventions
-    {
+    {    
+        /// <summary>
+        /// 
+        /// </summary>
         public string GetIDPropertyName<T>()
         {
             var type = typeof (T).ToTypeWrapper();
             return GetIDPropertyName(type);
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
         public string GetIDPropertyName(TypeWrapper t)
         {
 
             return t.Name + "ID";
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
         public string GetSingleRelOwningPropName(string relationshipName)
         {
             return relationshipName + "ID";

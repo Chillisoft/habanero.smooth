@@ -24,45 +24,81 @@ namespace Habanero.Smooth.ReflectionWrappers
 
 
 
+    /// <summary>
+    /// 
+    /// </summary>
     public abstract class MemberWrapper : IEquatable<MemberWrapper>
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public abstract string Name { get; }
+        /// <summary>
+        /// 
+        /// </summary>
         public abstract TypeWrapper PropertyType { get; }
 //        public abstract bool IsPublic { get; }
 //        public abstract bool CanWrite { get; }
 //        public abstract MemberInfo MemberInfo { get; }
+        /// <summary>
+        /// 
+        /// </summary>
         public abstract TypeWrapper DeclaringType { get; }
+        /// <summary>
+        /// 
+        /// </summary>
         public abstract TypeWrapper ReflectedType { get; }
 //        public abstract bool HasIndexParameters { get; }
 //        public abstract bool IsMethod { get; }
 //        public abstract bool IsField { get; }
+        /// <summary>
+        /// 
+        /// </summary>
         public abstract bool IsProperty { get; }
 //        public abstract bool IsPrivate { get; }
 
         #region Equality
-
+        /// <summary>
+        /// 
+        /// </summary>
         public bool Equals(MemberWrapper other)
         {
             return !ReferenceEquals(null, other);
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
         public override bool Equals(object obj)
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
             return obj.GetType() == typeof(MemberWrapper) && Equals((MemberWrapper)obj);
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
         public override int GetHashCode()
         {
             return 0;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
         public static bool operator ==(MemberWrapper left, MemberWrapper right)
         {
             return Equals(left, right);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
         public static bool operator !=(MemberWrapper left, MemberWrapper right)
         {
             return !Equals(left, right);

@@ -24,19 +24,33 @@ using Habanero.Smooth.ReflectionWrappers;
 
 namespace Habanero.Smooth
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class AppDomainTypeSource : ITypeSource
     {
         private Func<TypeWrapper, bool> Where { get; set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="where"></param>
         public AppDomainTypeSource(Func<TypeWrapper, bool> where)
         {
             Where = where;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public AppDomainTypeSource()
         {
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<TypeWrapper> GetTypes()
         {
             return this.Where == null 

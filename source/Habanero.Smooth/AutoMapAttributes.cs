@@ -88,21 +88,37 @@ namespace Habanero.Smooth
     [AttributeUsage(AttributeTargets.Property)]
     public abstract class AutoMapRelationshipAttribute : Attribute
     {
+        /// <summary>
+        /// 
+        /// </summary>
         protected AutoMapRelationshipAttribute()
         {
             this.RelationshipType = Base.RelationshipType.Association;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="reverseRelationshipName"></param>
         protected AutoMapRelationshipAttribute(string reverseRelationshipName)
         {
             this.ReverseRelationshipName = reverseRelationshipName;
             this.RelationshipType = Base.RelationshipType.Association;
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="relationshipType"></param>
         protected AutoMapRelationshipAttribute(RelationshipType relationshipType)
         {
             this.RelationshipType = relationshipType;
         }        
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="reverseRelationshipName"></param>
+        /// <param name="relationshipType"></param>
         protected AutoMapRelationshipAttribute(string reverseRelationshipName, RelationshipType relationshipType)
         {
             this.ReverseRelationshipName = reverseRelationshipName;
