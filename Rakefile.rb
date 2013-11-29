@@ -72,7 +72,7 @@ end
 
 desc "Restore Nuget Packages"
 task :restorepackages do
-	system 'lib\nuget.exe restore #{$solution}'
+	system 'lib\nuget.exe restore source\#{$solution}'
 end
 
 task :set_assembly_version do
