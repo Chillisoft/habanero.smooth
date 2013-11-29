@@ -8,26 +8,10 @@ require 'albacore'
 # This should be the same for most projects, but if your project is a level
 # deeper in the repo you will need to add another ..
 bs = File.dirname(__FILE__)
-bs = File.join(bs, "..") if bs.index("branches") != nil
-bs = File.join(bs, "../HabaneroCommunity/BuildScripts")
+bs = File.join(bs, "/rake-tasks")
 $buildscriptpath = File.expand_path(bs)
 $:.unshift($buildscriptpath) unless
     $:.include?(bs) || $:.include?($buildscriptpath)
-
-if (bs.index("branches") == nil)	
-	nuget_version = 'Trunk'
-	nuget_version_id = '9.9.999'
-	
-	$nuget_habanero_version	= nuget_version
-	
-	$nuget_publish_version = nuget_version
-	$nuget_publish_version_id = nuget_version_id
-else
-	$nuget_habanero_version	= 'v2.6-13_02_2012'
-	
-	$nuget_publish_version = 'v1.6-13_02_2012'
-	$nuget_publish_version_id = '1.6'
-end		
 
 $binaries_baselocation = "bin"
 $nuget_baselocation = "nugetArtifacts"
@@ -49,33 +33,46 @@ $solution = 'source/SmoothHabanero_2010.sln'
 $major_version = ''
 $minor_version = ''
 $patch_version = ''
+$nuget_apikey = ''
+$nuget_sourceurl = ''
+$nuget_publish_version = 'Trunk'
 #______________________________________________________________________________
 #---------------------------------TASKS----------------------------------------
 
 desc "Runs the build all task"
-task :default, [:major, :minor, :patch] => [:build_all_nuget]
+task :default, [:major, :minor, :patch] => [:setupvars, :build]
 
 desc "Pulls habanero from local nuget, builds and tests smooth"
-task :build_all_nuget, [:major, :minor, :patch] => [:installNugetPackages, :setupversion, :set_assembly_version, :build, :copy_to_nuget, :publishSmoothNugetPackage, :publishNakedNugetPackage]
+task :build_test_push_internal, [:major, :minor, :patch, :apikey, :sourceurl] => [:setupvars, :installNugetPackages, :build, :nugetpush]
 
 desc "Builds Smooth, including tests"
-task :build, [:major, :minor, :patch] => [:clean, :setupversion, :set_assembly_version, :build_FakeBOs, :msbuild, :copy_to_nuget, :test]
+task :build, [:major, :minor, :patch] => [:clean, :restorepackages, :setupvars, :set_assembly_version, :build_FakeBOs, :msbuild, :copy_to_nuget, :test]
 
 desc "builds the FakeBOs dll and copies to the lib folder"
 task :build_FakeBOs => [:msbuild_FakeBOsInSeperateAssembly,:copy_dll_to_smooth_lib] 
 
 #------------------------Setup Versions---------
-desc "Setup Versions"
-task :setupversion,:major ,:minor,:patch do |t, args|
-	puts cyan("Setup Versions")
+desc "Setup Variables"
+task :setupvars,:major ,:minor,:patch, :apikey, :sourceurl do |t, args|
+	puts cyan("Setup Variables")
 	args.with_defaults(:major => "0")
 	args.with_defaults(:minor => "0")
 	args.with_defaults(:patch => "0000")
+	args.with_defaults(:apikey => "")
+	args.with_defaults(:sourceurl => "")
 	$major_version = "#{args[:major]}"
 	$minor_version = "#{args[:minor]}"
 	$patch_version = "#{args[:patch]}"
+	$nuget_apikey = "#{args[:apikey]}"
+	$nuget_sourceurl = "#{args[:sourceurl]}"
 	$app_version = "#{$major_version}.#{$minor_version}.#{$patch_version}.0"
-	puts cyan("Assembly Version #{$app_version}")	
+	puts cyan("Assembly Version #{$app_version}")
+	puts cyan("Nuget key: #{$nuget_apikey} for: #{$nuget_sourceurl}")
+end
+
+desc "Restore Nuget Packages"
+task :restorepackages do
+	system 'lib\nuget.exe restore #{$solution}'
 end
 
 task :set_assembly_version do
@@ -143,22 +140,31 @@ end
 
 desc "Install nuget packages"
 getnugetpackages :installNugetPackages do |ip|
-    ip.package_names = ["Habanero.Base.#{$nuget_habanero_version}",  
-						"Habanero.BO.#{$nuget_habanero_version}"]
+    ip.package_names = ["Habanero.Base.#{$nuget_publish_version}",  
+						"Habanero.BO.#{$nuget_publish_version}"]
+	ip.SourceUrl = "#{$nuget_sourceurl}"
 end
 
+desc "Pushes Habanero into the given nuget folder"
+task :nugetpush => [:publishSmoothNugetPackage, 
+				:publishNakedNugetPackage]
+
 desc "Publish the Habanero.Smooth nuget package"
-pushnugetpackages :publishSmoothNugetPackage do |package|
+pushnugetpackagesonline :publishSmoothNugetPackage do |package|
   package.InputFileWithPath = "bin/Habanero.Smooth.dll"
   package.Nugetid = "Habanero.Smooth.#{$nuget_publish_version}"
   package.Version = $nuget_publish_version_id
   package.Description = "Smooth.Base"
+  package.ApiKey = "#{$nuget_apikey}"
+  package.SourceUrl = "#{$nuget_sourceurl}"
 end
 
 desc "Publish the Habanero.Naked nuget package"
-pushnugetpackages :publishNakedNugetPackage do |package|
+pushnugetpackagesonline :publishNakedNugetPackage do |package|
   package.InputFileWithPath = "bin/Habanero.Naked.dll"
   package.Nugetid = "Habanero.Naked.#{$nuget_publish_version}"
   package.Version = $nuget_publish_version_id
   package.Description = "Naked"
+  package.ApiKey = "#{$nuget_apikey}"
+  package.SourceUrl = "#{$nuget_sourceurl}"
 end
