@@ -72,7 +72,8 @@ end
 
 desc "Restore Nuget Packages"
 task :restorepackages do
-	system 'lib\nuget.exe restore source\#{$solution}'
+	puts cyan('lib\nuget.exe restore '+"#{$solution}")
+	system 'lib\nuget.exe restore '+"#{$solution}"
 end
 
 task :set_assembly_version do
@@ -142,10 +143,10 @@ desc "Install nuget packages"
 getnugetpackages :installNugetPackages do |ip|
     ip.package_names = ["Habanero.Base.#{$nuget_publish_version}",  
 						"Habanero.BO.#{$nuget_publish_version}"]
-	ip.SourceUrl = "#{$nuget_sourceurl}"
+	ip.SourceUrl = "#{$nuget_sourceurl}/nuget"
 end
 
-desc "Pushes Habanero into the given nuget folder"
+desc "Pushes Habanero Smooth into the given nuget folder"
 task :nugetpush => [:publishSmoothNugetPackage, 
 				:publishNakedNugetPackage]
 
@@ -153,7 +154,7 @@ desc "Publish the Habanero.Smooth nuget package"
 pushnugetpackagesonline :publishSmoothNugetPackage do |package|
   package.InputFileWithPath = "bin/Habanero.Smooth.dll"
   package.Nugetid = "Habanero.Smooth.#{$nuget_publish_version}"
-  package.Version = $nuget_publish_version_id
+  package.Version = $app_version
   package.Description = "Smooth.Base"
   package.ApiKey = "#{$nuget_apikey}"
   package.SourceUrl = "#{$nuget_sourceurl}"
@@ -163,7 +164,7 @@ desc "Publish the Habanero.Naked nuget package"
 pushnugetpackagesonline :publishNakedNugetPackage do |package|
   package.InputFileWithPath = "bin/Habanero.Naked.dll"
   package.Nugetid = "Habanero.Naked.#{$nuget_publish_version}"
-  package.Version = $nuget_publish_version_id
+  package.Version = $app_version
   package.Description = "Naked"
   package.ApiKey = "#{$nuget_apikey}"
   package.SourceUrl = "#{$nuget_sourceurl}"
