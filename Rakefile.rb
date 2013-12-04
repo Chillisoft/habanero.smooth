@@ -151,6 +151,7 @@ getnugetpackages :installNugetPackages do |ip|
     ip.package_names = ["Habanero.Base.#{$nuget_publish_version}",  
 						"Habanero.BO.#{$nuget_publish_version}"]
 	ip.SourceUrl = "#{$nuget_sourceurl}/nuget"
+	ip.Version = $app_version
 end
 
 desc "Pushes Habanero Smooth into the given nuget folder"
