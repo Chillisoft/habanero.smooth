@@ -40,10 +40,10 @@ $nuget_publish_version = 'Trunk'
 #---------------------------------TASKS----------------------------------------
 
 desc "Runs the build all task"
-task :default, [:major, :minor, :patch] => [:setupvars, :build]
+task :default, [:major, :minor, :patch] => [:updatesubmodules,:setupvars, :build]
 
 desc "Pulls habanero from local nuget, builds and tests smooth"
-task :build_test_push_internal, [:major, :minor, :patch, :apikey, :sourceurl] => [:setupvars, :installNugetPackages, :build, :nugetpush]
+task :build_test_push_internal, [:major, :minor, :patch, :apikey, :sourceurl] => [:updatesubmodules,:setupvars, :installNugetPackages, :build, :nugetpush]
 
 desc "Builds Smooth, including tests"
 task :build, [:major, :minor, :patch] => [:clean, :restorepackages, :setupvars, :set_assembly_version, :build_FakeBOs, :msbuild, :copy_to_nuget, :test]
@@ -74,6 +74,13 @@ desc "Restore Nuget Packages"
 task :restorepackages do
 	puts cyan('lib\nuget.exe restore '+"#{$solution}")
 	system 'lib\nuget.exe restore '+"#{$solution}"
+end
+
+desc "Update Submodules"
+task :updatesubmodules do
+	puts cyan("Updating Git Submodules")
+	system 'git submodule foreach git checkout master'
+	system 'git submodule foreach git pull'
 end
 
 task :set_assembly_version do
