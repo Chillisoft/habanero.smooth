@@ -1,0 +1,8 @@
+bin/
+obj/
+/source/packages/
+nunit-result.xml
+/nugetArtifacts/
+lib/
+*.DotSettings.user
+*.suo
