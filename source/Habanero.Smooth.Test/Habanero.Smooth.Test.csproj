@@ -32,10 +32,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="FakeBosInSeperateAssembly">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\FakeBosInSeperateAssembly.dll</HintPath>
-    </Reference>
     <Reference Include="Habanero.Base">
       <HintPath>..\..\lib\Habanero.Base.dll</HintPath>
     </Reference>
@@ -98,6 +94,10 @@
     <Compile Include="TestUniqueConstraintAutoMapper.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\FakeBosInSeperateAssembly\FakeBosInSeperateAssembly.csproj">
+      <Project>{6f817092-27ad-45f0-973b-51200707fc71}</Project>
+      <Name>FakeBosInSeperateAssembly</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Habanero.Smooth\Habanero.Smooth.csproj">
       <Project>{6750B8F7-AA4B-4E74-AF0F-9AF9BE05FEDC}</Project>
       <Name>Habanero.Smooth</Name>

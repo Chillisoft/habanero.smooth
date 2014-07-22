@@ -40,16 +40,16 @@ $nuget_publish_version = 'Trunk'
 #---------------------------------TASKS----------------------------------------
 
 desc "Runs the build all task"
-task :default, [:major, :minor, :patch] => [:updatesubmodules,:setupvars, :build]
+task :default, [:major, :minor, :patch] => [:updatesubmodules, :setupvars, :build]
 
 desc "Pulls habanero from local nuget, builds and tests smooth"
-task :build_test_push_internal, [:major, :minor, :patch, :apikey, :sourceurl] => [:updatesubmodules,:setupvars, :installNugetPackages, :build, :nugetpush]
+task :build_test_push_internal, [:major, :minor, :patch, :apikey, :sourceurl] => [:updatesubmodules, :setupvars, :installNugetPackages, :build, :nugetpush]
 
 desc "Builds Smooth, including tests"
-task :build, [:major, :minor, :patch] => [:clean, :restorepackages, :setupvars, :set_assembly_version, :build_FakeBOs, :msbuild, :copy_to_nuget, :test]
+task :build, [:major, :minor, :patch] => [:clean, :restorepackages, :setupvars, :set_assembly_version, :msbuild, :copy_to_nuget, :test]
 
 desc "builds the FakeBOs dll and copies to the lib folder"
-task :build_FakeBOs => [:msbuild_FakeBOsInSeperateAssembly,:copy_dll_to_smooth_lib] 
+task :build_FakeBOs => [:msbuild_FakeBOsInSeperateAssembly, :copy_dll_to_smooth_lib]
 
 #------------------------Setup Versions---------
 desc "Setup Variables"
@@ -71,16 +71,18 @@ task :setupvars,:major ,:minor,:patch, :apikey, :sourceurl do |t, args|
 end
 
 desc "Restore Nuget Packages"
-task :restorepackages do
-	puts cyan('lib\nuget.exe restore '+"#{$solution}")
-	system 'lib\nuget.exe restore '+"#{$solution}"
+exec :restorepackages do |cmd|
+    puts cyan("Restoring nuget packages")
+    cmd.command = $buildscriptpath + "/NuGet.exe"
+    cmd.parameters = "restore #{$solution}"
 end
 
 desc "Update Submodules"
 task :updatesubmodules do
-	puts cyan("Updating Git Submodules")
-	system 'git submodule foreach git checkout master'
-	system 'git submodule foreach git pull'
+    puts cyan("Updating Git Submodules")
+    system 'git submodule update --init --recursive'
+    system 'git submodule foreach --recursive git fetch'
+    system 'git submodule foreach --recursive git checkout origin'
 end
 
 task :set_assembly_version do
@@ -89,17 +91,17 @@ task :set_assembly_version do
 	outdata = File.open(file_path).read.gsub(/"9.9.9.999"/, "\"#{$app_version}\"")
 	File.open(file_path, 'w') do |out|
 		out << outdata
-	end	
+	end
 end
 #------------------------build FakeBOsInSeperateAssembly---------
 
 $fakeBOsFolder = "source/FakeBOsInSeperateAssembly"
 
-task :clean_FakeBOsInSeperateAssembly do 
+task :clean_FakeBOsInSeperateAssembly do
 	FileUtils.rm_rf "#{$fakeBOsFolder}/bin"
 end
 
-msbuild :msbuild_FakeBOsInSeperateAssembly do |msb| 
+msbuild :msbuild_FakeBOsInSeperateAssembly do |msb|
 	puts cyan("building FakeBOsInSeperateAssembly in #{$fakeBOsFolder}")
 	msb.update_attributes msbuild_settings
     msb.solution = "#{$fakeBOsFolder}/FakeBOsInSeperateAssembly.sln"
@@ -115,12 +117,11 @@ desc "Cleans the bin folder"
 task :clean do
 	puts cyan("Cleaning bin folder")
 	FileUtils.rm_rf 'bin'
-	FileUtils.rm_rf $nuget_baselocation	
-	FileSystem.ensure_dir_exists $nuget_baselocation
+	FileUtils.rm_rf $nuget_baselocation
 end
 
 desc "Builds the solution with msbuild"
-msbuild :msbuild do |msb| 
+msbuild :msbuild do |msb|
 	puts cyan("Building #{$solution} with msbuild")
 	msb.update_attributes msbuild_settings
 	msb.solution = $solution
@@ -130,37 +131,40 @@ desc "Runs the tests"
 nunit :test do |nunit|
 	puts cyan("Running tests")
 	nunit.assemblies 'bin\Habanero.Smooth.Test.dll',
-					 'bin\Habanero.Naked.Tests.dll', 
+					 'bin\Habanero.Naked.Tests.dll',
 					 'bin\Habanero.Fluent.Tests.dll',
 					 'bin\TestProject.Test.BO.dll',
-					 'bin\TestProjectNoDBSpecificProps.Test.BO.dll' 
+					 'bin\TestProjectNoDBSpecificProps.Test.BO.dll'
 end
 
 def copy_nuget_files_to location
-	FileUtils.cp "#{$binaries_baselocation}/Habanero.Smooth.dll", location
-	FileUtils.cp "#{$binaries_baselocation}/Habanero.Naked.dll", location
+    FileSystem.ensure_dir_exists location
+    FileUtils.cp "#{$binaries_baselocation}/Habanero.Smooth.dll", location
+    FileUtils.cp "#{$binaries_baselocation}/Habanero.Smooth.pdb", location
+    FileUtils.cp "#{$binaries_baselocation}/Habanero.Naked.dll", location
+    FileUtils.cp "#{$binaries_baselocation}/Habanero.Naked.pdb", location
 end
 
 task :copy_to_nuget do
-	puts cyan("Copying files to the nuget folder")	
-	copy_nuget_files_to $nuget_baselocation
+	puts cyan("Copying files to the nuget folder")
+	copy_nuget_files_to $nuget_baselocation + "/"
 end
 
 desc "Install nuget packages"
 getnugetpackages :installNugetPackages do |ip|
-    ip.package_names = ["Habanero.Base.#{$nuget_publish_version}",  
+    ip.package_names = ["Habanero.Base.#{$nuget_publish_version}",
 						"Habanero.BO.#{$nuget_publish_version}"]
 	ip.SourceUrl = "#{$nuget_sourceurl}/nuget"
 	ip.Version = $app_version
 end
 
 desc "Pushes Habanero Smooth into the given nuget folder"
-task :nugetpush => [:publishSmoothNugetPackage, 
+task :nugetpush => [:publishSmoothNugetPackage,
 				:publishNakedNugetPackage]
 
 desc "Publish the Habanero.Smooth nuget package"
 pushnugetpackagesonline :publishSmoothNugetPackage do |package|
-  package.InputFileWithPath = "bin/Habanero.Smooth.dll"
+  package.InputFileWithPath = ["bin/Habanero.Smooth.dll", "bin/Habanero.Smooth.pdb"]
   package.Nugetid = "Habanero.Smooth.#{$nuget_publish_version}"
   package.Version = $app_version
   package.Description = "Smooth.Base"
@@ -170,7 +174,7 @@ end
 
 desc "Publish the Habanero.Naked nuget package"
 pushnugetpackagesonline :publishNakedNugetPackage do |package|
-  package.InputFileWithPath = "bin/Habanero.Naked.dll"
+  package.InputFileWithPath = ["bin/Habanero.Naked.dll", "bin/Habanero.Naked.pdb"]
   package.Nugetid = "Habanero.Naked.#{$nuget_publish_version}"
   package.Version = $app_version
   package.Description = "Naked"
