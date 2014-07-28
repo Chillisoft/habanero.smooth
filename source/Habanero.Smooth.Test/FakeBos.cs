@@ -208,6 +208,22 @@ namespace Habanero.Smooth.Test
 		public FakeBONoPK MySingleRElationshipWithIgnore { get; set; }
 	}
 
+	public interface IFakeNoPK
+	{
+		Guid PublicGetGuidProp { get; }
+	}
+
+	public class FakeBOWithInterface : BusinessObject, IFakeNoPK
+	{
+		public Guid PublicGetGuidProp { get; private set; }
+	}
+
+	public class FakeBOWithSingleRelToInterface : BusinessObject
+	{
+		[AutoMapManyToOne(RelatedObjectClassType = typeof(FakeBOWithInterface))]
+		public IFakeNoPK MySingleRelationship { get; set; }
+	}
+
 	public class FakeBOWithSingleRelWithFieldNameOverride : BusinessObject
 	{
 		[AutoMapFieldName("SingleID")]

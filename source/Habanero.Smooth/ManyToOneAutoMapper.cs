@@ -95,18 +95,36 @@ namespace Habanero.Smooth
             if (this.PropertyWrapper.DeclaringType == (Type)null) return null;
             if (!MustBeMapped()) return null;
 
-            var propertyType = this.PropertyWrapper.PropertyType;
+            var relatedObjectType = this.PropertyWrapper.PropertyType;
+            if (this.PropertyWrapper.HasAttribute<AutoMapManyToOneAttribute>())
+            {
+                var manyToOneAttribute = this.PropertyWrapper.GetAttribute<AutoMapManyToOneAttribute>();
+                var specifiedType = manyToOneAttribute.RelatedObjectClassType;
+                if (specifiedType != null) relatedObjectType = specifiedType.ToTypeWrapper();
+            }
+            if (!relatedObjectType.IsBusinessObject)
+            {
+                throw new InvalidDefinitionException(string.Format(
+                    "The specified RelatedObjectClassType '{0}' on '{1}.{2}' must be a Business Object",
+                    relatedObjectType, this.PropertyWrapper.DeclaringClassName, this.PropertyWrapper.Name));
+            }
+            if (!relatedObjectType.IsOfType(this.PropertyWrapper.UndelyingPropertyType))
+            {
+                throw new InvalidDefinitionException(string.Format(
+                    "The specified RelatedObjectClassType '{0}' on '{1}.{2}' must be assignment compatible with the actual property type '{3}'",
+                    relatedObjectType, this.PropertyWrapper.DeclaringClassName,
+                    this.PropertyWrapper.Name, this.PropertyWrapper.UndelyingPropertyType));
+            }
 
-            var relDef
-                        = new SingleRelationshipDef(this.PropertyWrapper.Name, propertyType.UnderlyingType
-                        , new RelKeyDef(), true, DeleteParentAction.DoNothing);
+            var relDef = new SingleRelationshipDef(this.PropertyWrapper.Name, relatedObjectType.UnderlyingType,
+                new RelKeyDef(), true, DeleteParentAction.DoNothing);
 
             SetRelationshipType(relDef);
             if(this.PropertyWrapper.HasCompulsoryAttribute) relDef.SetAsCompulsory();
             relDef.OwningBOHasForeignKey = true;
             SetReverseRelationshipName(relDef);
             var ownerPropName = GetOwningPropName();
-            var relatedPropName = GetRelatedPropName(propertyType);
+            var relatedPropName = GetRelatedPropName(relatedObjectType);
             IRelPropDef relPropDef = new RelPropDef(ownerPropName, relatedPropName);
             relDef.RelKeyDef.Add(relPropDef);
             return relDef;

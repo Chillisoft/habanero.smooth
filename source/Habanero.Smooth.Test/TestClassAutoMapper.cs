@@ -316,6 +316,34 @@ namespace Habanero.Smooth.Test
         }
 
         [Test]
+        public void Test_Map_WithExplicitRelatedObjectClassType_ShouldMapManyToOne()
+        {
+            //---------------Set up test pack-------------------
+            const string propertyName = "MySingleRelationship";
+            const string expectedForeignKeyPropName = propertyName + "ID";
+            var type = typeof (FakeBOWithSingleRelToInterface);
+            var expectedPropType = typeof (FakeBOWithInterface);
+            //---------------Assert Precondition----------------
+            PropertyInfo propertyInfo = type.GetProperty(propertyName);
+            propertyInfo.AssertIsNotOfType<IBusinessObject>();
+            //---------------Execute Test ----------------------
+            var classDef = type.MapClass();
+            //---------------Test Result -----------------------
+            Assert.AreEqual(1, classDef.RelationshipDefCol.Count, "Should have a single relationship");
+            Assert.AreEqual(2, classDef.PropDefcol.Count, "Should have FKProp and IDProp");
+            var relationshipDef = classDef.RelationshipDefCol[propertyName];
+            Assert.AreEqual(propertyName, relationshipDef.RelationshipName);
+            Assert.AreEqual(expectedPropType.ToString(), relationshipDef.RelatedObjectClassName);
+            var relPropDef = relationshipDef.RelKeyDef.FirstOrDefault();
+            Assert.IsNotNull(relPropDef);
+            var foreignKeyPropDef = classDef.GetPropDef(expectedForeignKeyPropName);
+            Assert.IsNotNull(foreignKeyPropDef);
+            Assert.AreSame(typeof(Guid), foreignKeyPropDef.PropertyType);
+            CollectionAssert.Contains(classDef.PropDefcol, foreignKeyPropDef);
+            Assert.AreEqual(expectedForeignKeyPropName, foreignKeyPropDef.PropertyName);
+        }
+
+        [Test]
         public void Test_Map_ShouldMapManyToOneRelationship()
         {
             //---------------Set up test pack-------------------

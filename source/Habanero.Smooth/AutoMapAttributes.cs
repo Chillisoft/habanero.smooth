@@ -105,6 +105,7 @@ namespace Habanero.Smooth
             this.ReverseRelationshipName = reverseRelationshipName;
             this.RelationshipType = Base.RelationshipType.Association;
         }
+
         /// <summary>
         /// 
         /// </summary>
@@ -112,7 +113,7 @@ namespace Habanero.Smooth
         protected AutoMapRelationshipAttribute(RelationshipType relationshipType)
         {
             this.RelationshipType = relationshipType;
-        }        
+        }
 
         /// <summary>
         /// 
@@ -135,6 +136,7 @@ namespace Habanero.Smooth
         /// </summary>
         public RelationshipType RelationshipType { get; set; }
     }
+
     /// <summary>
     /// Automap a relationship between two Business Objects as a One to One.
     /// </summary>
@@ -246,6 +248,12 @@ namespace Habanero.Smooth
         public AutoMapManyToOneAttribute(string reverseRelationshipName, RelationshipType relationshipType) : base(reverseRelationshipName, relationshipType)
         {
         }
+
+        /// <summary>
+        /// The specified RelatedObjectClassType used to override the defined property type.
+        /// RelatedObjectClassType must descend from <see cref="IBusinessObject"/>.
+        /// </summary>
+        public Type RelatedObjectClassType { get; set; }
     }
 
     /// <summary>
