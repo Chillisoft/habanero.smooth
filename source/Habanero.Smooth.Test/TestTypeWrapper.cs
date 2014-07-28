@@ -494,7 +494,7 @@ namespace Habanero.Smooth.Test
         {
             //---------------Set up test pack-------------------
             Type classType = typeof(FakeBoNoProps);
-            AllClassesAutoMapper.PropNamingConvention = new FakeConvetion();
+            AllClassesAutoMapper.PropNamingConvention = new FakeConvention();
             //---------------Assert Precondition----------------
             //---------------Execute Test ----------------------
             var pkPropName = classType.ToTypeWrapper().GetPKPropName();

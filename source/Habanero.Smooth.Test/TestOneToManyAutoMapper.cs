@@ -178,7 +178,7 @@ namespace Habanero.Smooth.Test
 
 		private static INamingConventions SetFakeNameConvention()
 		{
-			INamingConventions nameConvention = new FakeConvetion();
+			INamingConventions nameConvention = new FakeConvention();
 			AllClassesAutoMapper.PropNamingConvention = nameConvention;
 			return nameConvention;
 		}

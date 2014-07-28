@@ -17,6 +17,7 @@
 //      along with the Habanero framework.  If not, see <http://www.gnu.org/licenses/>.
 // ---------------------------------------------------------------------------------
 using System;
+using System.Linq;
 using System.Reflection;
 using Habanero.Smooth.ReflectionWrappers;
 using Habanero.Smooth.Test.ExtensionMethods;
@@ -74,28 +75,31 @@ namespace Habanero.Smooth.Test
             //---------------Test Result -----------------------
             Assert.IsFalse(mustBeMapped);
         }
+
         [Test]
         public void Test_MustBeMapped_WhenIsInterface_ReturnFalse()
         {
             //---------------Set up test pack-------------------
             //---------------Assert Precondition----------------
             //---------------Execute Test ----------------------
-            var type = typeof(IFakeBoInterfaceShouldNotBeLoaded);
+            var type = typeof (IFakeBoInterfaceShouldNotBeLoaded);
             var mustBeMapped = type.MustBeMapped();
             //---------------Test Result -----------------------
             Assert.IsFalse(mustBeMapped);
         }
+
         [Test]
         public void Test_MustBeMapped_WhenIsAbstract_ReturnFalse()
         {
             //---------------Set up test pack-------------------
             //---------------Assert Precondition----------------
             //---------------Execute Test ----------------------
-            var type = typeof(FakeAbstractBoShouldNotBeLoaded);
+            var type = typeof (FakeAbstractBoShouldNotBeLoaded);
             var mustBeMapped = type.MustBeMapped();
             //---------------Test Result -----------------------
             Assert.IsFalse(mustBeMapped);
         }
+
         [Test]
         public void Test_MustBeMapped_WhenNull_ReturnFalse()
         {
@@ -103,6 +107,7 @@ namespace Habanero.Smooth.Test
             //---------------Assert Precondition----------------
             //---------------Execute Test ----------------------
             Type type = null;
+            // ReSharper disable once ExpressionIsAlwaysNull
             var mustBeMapped = type.MustBeMapped();
             //---------------Test Result -----------------------
             Assert.IsFalse(mustBeMapped);
@@ -145,17 +150,19 @@ namespace Habanero.Smooth.Test
             //---------------Test Result -----------------------
             Assert.IsNull(classDef);
         }
+
         [Test]
         public void Test_MapClass_WhenIsInterface_ReturnNullClassDef()
         {
             //---------------Set up test pack-------------------
             //---------------Assert Precondition----------------
             //---------------Execute Test ----------------------
-            var type = typeof(IFakeBoInterfaceShouldNotBeLoaded);
+            var type = typeof (IFakeBoInterfaceShouldNotBeLoaded);
             var classDef = type.MapClass();
             //---------------Test Result -----------------------
             Assert.IsNull(classDef);
-        }  
+        }
+
         [Test]
         public void Test_MapClass_WhenIsAbstract_ReturnNullClassDef()
         {
@@ -233,11 +240,12 @@ namespace Habanero.Smooth.Test
             //---------------Test Result -----------------------
             Assert.IsNotNull(classDef);
         }
+
         [Test]
         public void Test_MapClass_WhenInheritsFromGenericBO_ReturnMapDefaultPrimaryKeyCorrectly()
         {
             //---------------Set up test pack-------------------
-            var type = typeof(FakeBOGeneric);
+            var type = typeof (FakeBOGeneric);
             //---------------Assert Precondition----------------
             //---------------Execute Test ----------------------
             var classDef = type.MapClass();
@@ -270,7 +278,6 @@ namespace Habanero.Smooth.Test
             classDef.PropDefcol.ShouldContain(propDef => propDef.PropertyName == propName);
         }
 
-
         [Test]
         public void Test_MapClass_ShouldAssignPropDefToClassDef()
         {
@@ -289,6 +296,7 @@ namespace Habanero.Smooth.Test
             Assert.IsNotNull(propDef, "Prop Def should not be null");
             Assert.IsNotNull(propDef.ClassDef, "Prop Def should be assigned to ClassDef");
         }
+
         [Test]
         public void Test_Map_ShouldMapPrimaryKey()
         {
@@ -305,13 +313,14 @@ namespace Habanero.Smooth.Test
             Assert.AreEqual(1, classDef.PrimaryKeyDef.Count);
             var propDef = classDef.PrimaryKeyDef[0];
             Assert.AreEqual(primaryKeyPropName, propDef.PropertyName);
-        }  
-   
+        }
+
         [Test]
         public void Test_Map_ShouldMapManyToOneRelationship()
         {
             //---------------Set up test pack-------------------
             const string expectedPropName = "MySingleRelationship";
+            const string expectedOwnerPropName = expectedPropName + "ID";
             var type = typeof(FakeBOWithSingleRel);
             //---------------Assert Precondition----------------
             PropertyInfo propertyInfo = type.GetProperty(expectedPropName);
@@ -319,9 +328,16 @@ namespace Habanero.Smooth.Test
             //---------------Execute Test ----------------------
             var classDef = type.MapClass();
             //---------------Test Result -----------------------
-            Assert.AreEqual(1, classDef.RelationshipDefCol.Count);
+            Assert.AreEqual(1, classDef.RelationshipDefCol.Count, "Should have a single relationship");
+            Assert.AreEqual(2, classDef.PropDefcol.Count, "Should have FKProp and IDProp");
             var relationshipDef = classDef.RelationshipDefCol[expectedPropName];
             Assert.AreEqual(expectedPropName, relationshipDef.RelationshipName);
+            var relPropDef = relationshipDef.RelKeyDef.FirstOrDefault();
+            Assert.IsNotNull(relPropDef);
+            var fkPropDef = classDef.GetPropDef(relPropDef.OwnerPropertyName);
+            Assert.IsNotNull(fkPropDef);
+            Assert.AreEqual(expectedOwnerPropName, fkPropDef.PropertyName);
+            Assert.AreEqual(expectedOwnerPropName, fkPropDef.DatabaseFieldName);
         }
 
         [Test]
@@ -333,6 +349,7 @@ namespace Habanero.Smooth.Test
             //---------------Set up test pack-------------------
             var classType = typeof(FakeBOWithSingleRelAndFKProp);
             const string expectedPropName = "MySingleRelationship";
+            const string expectedOwnerPropName = expectedPropName + "ID";
             PropertyInfo propertyInfo = classType.GetProperty(expectedPropName);
             //---------------Assert Precondition----------------
             propertyInfo.AssertIsOfType<IBusinessObject>();
@@ -342,6 +359,32 @@ namespace Habanero.Smooth.Test
             var classDef = classType.MapClass();
             //---------------Test Result -----------------------
             Assert.AreEqual(2, classDef.PropDefcol.Count, "Should have FKProp and IDProp");
+            var relationshipDef = classDef.RelationshipDefCol[expectedPropName];
+            var relPropDef = relationshipDef.RelKeyDef.FirstOrDefault();
+            Assert.IsNotNull(relPropDef);
+            var fkPropDef = classDef.GetPropDef(relPropDef.OwnerPropertyName);
+            Assert.IsNotNull(fkPropDef);
+            Assert.AreEqual(expectedOwnerPropName, fkPropDef.PropertyName);
+            Assert.AreEqual(expectedOwnerPropName, fkPropDef.DatabaseFieldName);
+        }
+
+        [Test]
+        public void Test_Map_GivenManyToOne_WhenHasAutoMapFieldNameAttribute_ShouldSetDatabaseFieldName()
+        {
+            //---------------Set up test pack-------------------
+            var classType = typeof (FakeBOWithSingleRelWithFieldNameOverride);
+            const string expectedPropName = "MySingleRelationship";
+            const string expectedOwnerPropName = expectedPropName + "ID";
+            const string expectedDatabaseFieldName = "SingleID";
+            var propertyInfo = classType.GetProperty(expectedPropName);
+            //---------------Assert Precondition----------------
+            classType.AssertPropertyExists(expectedPropName);
+            propertyInfo.AssertIsOfType<IBusinessObject>();
+            //---------------Execute Test ----------------------
+            var classDef = classType.MapClass();
+            //---------------Test Result -----------------------
+            var actualPropDef = classDef.GetPropDef(expectedOwnerPropName);
+            Assert.AreEqual(expectedDatabaseFieldName, actualPropDef.DatabaseFieldName);
         }
 
         [TestCase("MyMultRel", 2)]
@@ -378,7 +421,6 @@ namespace Habanero.Smooth.Test
             var relationshipDef = classDef.RelationshipDefCol[expectedPropName];
             Assert.AreEqual(expectedPropName, relationshipDef.RelationshipName);
             Assert.IsInstanceOf(typeof (SingleRelationshipDef), relationshipDef);
-//            Assert.IsNotNull(relationshipDef.OwningClassDef);
         }
 
         [TestCase("MyOneToOne", 2)]
@@ -398,6 +440,7 @@ namespace Habanero.Smooth.Test
             Assert.AreEqual(expectedPropName, relationshipDef.RelationshipName);
             Assert.IsInstanceOf(typeof(SingleRelationshipDef), relationshipDef);
         }
+
         [TestCase("MySingleRel1", 2)]
         [TestCase("MySingleRel2", 2)]
         public void TestAccept_Map_WhenOne1_1AndOneM_1Relationships_ShouldMapBothRelationships(string expectedPropName, int expectedNoRels)
@@ -510,7 +553,7 @@ namespace Habanero.Smooth.Test
             Assert.AreEqual("UC2Prop1", keyDef2[0].PropertyName);
             Assert.AreEqual("UC2Prop2", keyDef2[1].PropertyName);
         }
-        
+
         [Test]
         public void Test_Map_WhenOneUniqueConstraintOnRelationship_ShouldCreateConstraintOnRelationshipProperty()
         {
@@ -526,7 +569,7 @@ namespace Habanero.Smooth.Test
             Assert.AreEqual(1, keyDef1.Count);
             Assert.AreSame(classDef.GetPropDef("RelatedObjectID"), keyDef1[0]);
         }
-        
+
         [Test]
         public void Test_Map_WhenInheritance_ShouldMapInheritenceRelationship()
         {
@@ -544,6 +587,7 @@ namespace Habanero.Smooth.Test
             Assert.AreEqual(ORMapping.SingleTableInheritance, subClassDef.SuperClassDef.ORMapping);
             Assert.AreEqual("FakeBOSuperClassType", subClassDef.SuperClassDef.Discriminator);
         }
+
         [Test]
         public void Test_Map_WhenInheritance_AndBaseClassAlreadyInClassDefCol_ShouldUseExistingClassDef()
         {

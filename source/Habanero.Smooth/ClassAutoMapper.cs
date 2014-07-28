@@ -22,7 +22,6 @@ using System.Linq;
 using Habanero.Base;
 using Habanero.BO.ClassDefinition;
 using Habanero.Smooth.ReflectionWrappers;
-using Habanero.Util;
 
 namespace Habanero.Smooth
 {
@@ -34,7 +33,7 @@ namespace Habanero.Smooth
     {
         /// <summary>
         /// Maps the Class of <paramref name="type"/> to a ClassDef.
-        /// Note_ this willl not create the reverse relationships on 
+        /// Note_ this will not create the reverse relationships on
         /// the Related Class if they are required. If you require reverse relationships to be set up then please
         /// use the <see cref="AllClassesAutoMapper"/>
         /// </summary>
@@ -46,7 +45,7 @@ namespace Habanero.Smooth
         }
         /// <summary>
         /// Maps the Class of <paramref name="typeWrapper"/> to a ClassDef.
-        /// Note_ this willl not create the reverse relationships on 
+        /// Note_ this will not create the reverse relationships on
         /// the Related Class if they are required. If you require reverse relationships to be set up then please
         /// use the <see cref="AllClassesAutoMapper"/>
         /// </summary>
@@ -81,6 +80,7 @@ namespace Habanero.Smooth
             return type != null && type.ToTypeWrapper().MustBeMapped();
         }
     }
+
     /// <summary>
     /// Automatically Maps the Class identified by a <see cref="TypeWrapper"/>
     /// to a ClassDefinition <see cref="IClassDef"/>
@@ -107,7 +107,9 @@ namespace Habanero.Smooth
             if (typeWrapper.IsNull()) throw new ArgumentNullException("typeWrapper");
             this.TypeWrapper = typeWrapper;
         }
+
         private TypeWrapper TypeWrapper { get; set; }
+
         /// <summary>
         /// Maps the type wrapped by the <see cref="ReflectionWrappers.TypeWrapper"/>
         /// to a ClassDef.
@@ -128,7 +130,7 @@ namespace Habanero.Smooth
                 this.ClassDef = CreateClassDef();
                 MapSuperClassHierarchy();
                 MapProperties();
-                
+
                 this.ClassDef.MapIdentity();
 
                 MapManyToOneRelationships();
@@ -146,7 +148,7 @@ namespace Habanero.Smooth
         {
             foreach (var keyDef in ClassDef.MapUniqueConstraints())
             {
-                this.ClassDef.KeysCol.Add(keyDef);    
+                this.ClassDef.KeysCol.Add(keyDef);
             }
         }
 
@@ -158,8 +160,8 @@ namespace Habanero.Smooth
 
         internal bool MustBeMapped()
         {
-            return this.TypeWrapper.IsBusinessObject 
-                    && !this.TypeWrapper.HasIgnoreAttribute 
+            return this.TypeWrapper.IsBusinessObject
+                    && !this.TypeWrapper.HasIgnoreAttribute
                     && this.TypeWrapper.IsRealClass;
         }
 
@@ -185,12 +187,24 @@ namespace Habanero.Smooth
             classDef.AddPropDefs(propDefs);
         }
 
-        private  void CreateFKKeyProp(IRelationshipDef relationshipDef)
+        private void CreateForeignKeyProp(IRelationshipDef relationshipDef)
         {
-            var propertyName = PropNamingConvention.GetSingleRelOwningPropName(relationshipDef.RelationshipName);
-            IPropDef propDef = new PropDef(propertyName, typeof(Guid?), PropReadWriteRule.ReadWrite, null)
-                                   {Compulsory = relationshipDef.IsCompulsory};
+            var relationshipName = relationshipDef.RelationshipName;
+            var propertyName = PropNamingConvention.GetSingleRelOwningPropName(relationshipName);
+            var propDef = new PropDef(propertyName, typeof (Guid?), PropReadWriteRule.ReadWrite, null)
+            {
+                Compulsory = relationshipDef.IsCompulsory
+            };
+            SetDatabaseFieldName(propDef, relationshipName);
             this.ClassDef.PropDefcol.Add(propDef);
+        }
+
+        private void SetDatabaseFieldName(IPropDef propDef, string relationshipName)
+        {
+            var propertyWrapper = this.ClassDef.ClassType.GetProperty(relationshipName).ToPropertyWrapper();
+            if (!propertyWrapper.HasAttribute<AutoMapFieldNameAttribute>()) return;
+            var autoMapFieldNameAttribute = propertyWrapper.GetAttribute<AutoMapFieldNameAttribute>();
+            propDef.DatabaseFieldName = autoMapFieldNameAttribute.FieldName;
         }
 
         private void MapManyToOneRelationships()
@@ -202,6 +216,7 @@ namespace Habanero.Smooth
         {
             MapRelationships(info => info.MapOneToMany());
         }
+
         private void MapOneToOneRelationships()
         {
             MapRelationships(info => info.MapOneToOne());
@@ -232,7 +247,7 @@ namespace Habanero.Smooth
                        select relDef;
             foreach (var relDef in relationshipDefs)
             {
-                CreateFKKeyProp(relDef);
+                CreateForeignKeyProp(relDef);
             }
         }
 
@@ -252,6 +267,7 @@ namespace Habanero.Smooth
         }
 
         private IClassDef ClassDef { get; set; }
+
         /// <summary>
         /// Returns the PropNaming Convention that is being used for this Mapping.
         /// </summary>
@@ -263,6 +279,7 @@ namespace Habanero.Smooth
             }
         }
     }
+
     /// <summary>
     /// A set of extension methods that can be used to make it easier to add and edit A ClassDef.
     /// </summary>

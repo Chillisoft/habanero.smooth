@@ -900,7 +900,7 @@ namespace Habanero.Smooth.Test
 
         private static void SetNonDefaultNamingConvention()
         {
-            var namingConvention = new FakeConvetion();
+            var namingConvention = new FakeConvention();
             AllClassesAutoMapper.PropNamingConvention = namingConvention;
             return;
         }

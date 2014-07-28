@@ -17,10 +17,7 @@
 //      along with the Habanero framework.  If not, see <http://www.gnu.org/licenses/>.
 // ---------------------------------------------------------------------------------
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using Habanero.Smooth.Test.ExtensionMethods;
 using Habanero.Base;
 using Habanero.Base.Exceptions;
 using Habanero.BO.ClassDefinition;
@@ -62,6 +59,7 @@ namespace Habanero.Smooth.Test
                 StringAssert.Contains("propWrapper", ex.ParamName);
             }
         }
+
         [Test]
         public void Test_ConstructShouldRaiseError()
         {
@@ -169,7 +167,7 @@ namespace Habanero.Smooth.Test
         [Test]
         public void Test_Map_WhenOverridenProp_ShouldReturnNull()
         {
-            //When Prop overrides from another class the base 
+            //When Prop overrides from another class the base
             // declaration of the prop will be mapped as part of the base class
             // and should not be mapped as part of this class.
             //---------------Set up test pack-------------------
@@ -245,7 +243,7 @@ namespace Habanero.Smooth.Test
             Assert.IsNotNull(relKeyDef);
             Assert.AreEqual(1, relKeyDef.Count);
             const string expectedOwnerPropName = expectedPropName + "ID";
-            Assert.IsTrue(relKeyDef.Contains(expectedOwnerPropName), 
+            Assert.IsTrue(relKeyDef.Contains(expectedOwnerPropName),
                 "By Convention the RelationshipPropName on the single side of the M-1 Relationship Should be RelationshipName & ID");
             var relPropDef = relKeyDef[expectedOwnerPropName];
             Assert.AreEqual(expectedOwnerPropName, relPropDef.OwnerPropertyName);
@@ -278,18 +276,6 @@ namespace Habanero.Smooth.Test
             Assert.AreEqual(expectedRelatedClassName, relPropDef.RelatedClassPropName);
         }
 
-        /*                    //---------------Set up test pack-------------------
-            var type = typeof(FakeBOGeneric);
-            //---------------Assert Precondition----------------
-            //---------------Execute Test ----------------------
-            var classDef = type.MapClass();
-            //---------------Test Result -----------------------
-            Assert.IsNotNull(classDef.PrimaryKeyDef);
-            Assert.AreEqual(1, classDef.PrimaryKeyDef.Count);
-            var pkProp = classDef.PrimaryKeyDef[0];
-            Assert.AreEqual("FakeBOGeneric" + "ID", pkProp.PropertyName);*/
-
-
         [Test]
         public void Test_Map_When_WhenHasCompulsoryAttribute_ShouldSetIsCompulsoryToTrue()
         {
@@ -307,6 +293,7 @@ namespace Habanero.Smooth.Test
             //---------------Test Result -----------------------
             Assert.IsTrue(relationshipDef.IsCompulsory);
         }
+
         [Test]
         public void Test_Map_When_WhenNotHasCompulsoryAttribute_ShouldSetIsCompulsoryToFalse()
         {
@@ -323,6 +310,7 @@ namespace Habanero.Smooth.Test
             //---------------Test Result -----------------------
             Assert.IsFalse(relationshipDef.IsCompulsory);
         }
+
         [Test]
         public void Test_Map_WhenIsSingleRel_WithCompulsoryAttribute_ShouldCreateRelProp_WithCompulsoryProp()
         {
@@ -344,8 +332,8 @@ namespace Habanero.Smooth.Test
             var ownerPropDef = relationshipDef.OwningClassDef.GetPropDef(expectedOwnerPropName);
             Assert.IsNotNull(ownerPropDef, "Owner Prop Def cannot be null");
             Assert.IsTrue(ownerPropDef.Compulsory, "Owner Prop for a compulsory Relationship should be set to true.");
-
         }
+
         [Test]
         public void Test_DefaultNameConventionIfNoneSet()
         {
@@ -361,7 +349,7 @@ namespace Habanero.Smooth.Test
         public void Test_Map_WhenNonDefaultNameConventionSet_ShouldCreateRelProp()
         {
             //---------------Set up test pack-------------------
-            INamingConventions nameConvention = new FakeConvetion();
+            INamingConventions nameConvention = new FakeConvention();
             AllClassesAutoMapper.PropNamingConvention = nameConvention;
             var classType = typeof(FakeBOWithSingleRel);
             const string expectedPropName = "MySingleRelationship";
@@ -376,7 +364,7 @@ namespace Habanero.Smooth.Test
             Assert.IsNotNull(relKeyDef);
             Assert.AreEqual(1, relKeyDef.Count);
             string expectedOwnerPropName = nameConvention.GetSingleRelOwningPropName(expectedPropName);
-            Assert.IsTrue(relKeyDef.Contains(expectedOwnerPropName), 
+            Assert.IsTrue(relKeyDef.Contains(expectedOwnerPropName),
                 "By Convention the RelationshipPropName on the single side of the M-1 Relationship Should be RelationshipName & ID");
             var relPropDef = relKeyDef[expectedOwnerPropName];
             Assert.AreEqual(expectedOwnerPropName, relPropDef.OwnerPropertyName);
@@ -822,8 +810,6 @@ namespace Habanero.Smooth.Test
             Assert.AreEqual(RelationshipType.Aggregation, relationshipDef.RelationshipType);
         }
 
-       
-
         private static void AssertRelationshipIsForOwnerClass(Type ownerClassType, Type reverseClassType, string reveresRelationshipName)
         {
             var reversePropInfo = reverseClassType.GetPropertyWrapper(reveresRelationshipName);
@@ -832,7 +818,7 @@ namespace Habanero.Smooth.Test
         }
     }
 
-    public class FakeConvetion : INamingConventions
+    public class FakeConvention : INamingConventions
     {
         public string GetIDPropertyName<T>()
         {

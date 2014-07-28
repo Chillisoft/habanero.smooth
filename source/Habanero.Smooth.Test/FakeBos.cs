@@ -28,7 +28,6 @@ using Habanero.BO.Loaders;
 // ReSharper disable UnusedAutoPropertyAccessor.Local
 // ReSharper disable UnusedMember.Local
 // ReSharper disable ClassNeverInstantiated.Global
-
 namespace Habanero.Smooth.Test
 {
 	public enum FakeEnum
@@ -51,7 +50,7 @@ namespace Habanero.Smooth.Test
 	public class SuperClassWithNonStandardID : BusinessObject
 	{
 		/// <summary>
-		/// 
+		///
 		/// </summary>
 		[AutoMapPrimaryKey]
 		public virtual Guid? NonStandardID
@@ -113,6 +112,7 @@ namespace Habanero.Smooth.Test
 		public string Someprop { get; set; }
 		public FakeBOWProps somerela { get; set; }
 	}
+
 	public class FakeBOWProps : BusinessObject
 	{
 		public Guid FakeBOWPropsID { get; set; }
@@ -120,7 +120,7 @@ namespace Habanero.Smooth.Test
 		public Guid? PublicGetNullableGuidProp { get; private set; }
 		public string PublicStringProp { get; private set; }
 		public int PublicIntProp { get; private set; }
-        public short PublicShortProp { get; private set; }
+		public short PublicShortProp { get; private set; }
 		public FakeEnum PublicEnumProp { get; set; }
 		public FakeEnum? PublicNullableEnumProp { get; set; }
 		public System.Drawing.Image PublicImageProp { get; set; }
@@ -132,31 +132,27 @@ namespace Habanero.Smooth.Test
 		[AutoMapIgnore]
 		public Guid PublicWithIgnoreAtt { get; set; }
 
-        [AutoMapKeepValuePrivate]
-        public Guid PublicWithKeepValuePrivateAtt { get; set; }
+		[AutoMapKeepValuePrivate]
+		public Guid PublicWithKeepValuePrivateAtt { get; set; }
 	}
 
 	public class FakeBOGeneric : BusinessObject<FakeBOGeneric>
 	{
-
 	}
+
 	public class FakeBOGenericSubType : FakeBOGeneric
 	{
-
 	}
 
-    public class GenericBOSuperType<T> : BusinessObject<T>
+	public class GenericBOSuperType<T> : BusinessObject<T>
 	{
-
 	}
 
-    public class FakeGenericBOSubType : GenericBOSuperType<FakeGenericBOSubType>
+	public class FakeGenericBOSubType : GenericBOSuperType<FakeGenericBOSubType>
 	{
-
 	}
 
-	public class 
-		FakeBONoPK : BusinessObject
+	public class FakeBONoPK : BusinessObject
 	{
 		public Guid PublicGetGuidProp { get; private set; }
 	}
@@ -165,7 +161,6 @@ namespace Habanero.Smooth.Test
 	{
 		[AutoMapPrimaryKey]
 		public Guid PublicGuidProp { get; private set; }
-
 
 		public Guid AnotherProp { get; private set; }
 	}
@@ -211,6 +206,12 @@ namespace Habanero.Smooth.Test
 
 		[AutoMapIgnore]
 		public FakeBONoPK MySingleRElationshipWithIgnore { get; set; }
+	}
+
+	public class FakeBOWithSingleRelWithFieldNameOverride : BusinessObject
+	{
+		[AutoMapFieldName("SingleID")]
+		public FakeBONoPK MySingleRelationship { get; set; }
 	}
 
 	public class FakeBOWithSingleRelToGenericBO : BusinessObject
@@ -259,7 +260,6 @@ namespace Habanero.Smooth.Test
 		public FakeBONoPK MySecondSingleRelationship { get; set; }
 	}
 
-
 	public class FakeBOWithUndefinableSingleRel : BusinessObject
 	{
 		public FakeBOWithSingleAndMultipleRelToSameType MySingleRelationship { get; set; }
@@ -277,21 +277,25 @@ namespace Habanero.Smooth.Test
 
 		public BusinessObjectCollection<FakeBOWithUndefinableSingleRel> MyMultipleRevRel { get; set; }
 	}
+
 	public class FakeBoWithCompositionMultipleRel : BusinessObject
 	{
 		[AutoMapOneToMany(RelationshipType = RelationshipType.Composition)]
 		public BusinessObjectCollection<FakeBOWithUndefinableSingleRel> MyMultipleRevRel { get; set; }
-	}	
-    public class FakeBoWithDeleteParentActionDeleteRelatedRel : BusinessObject
+	}
+
+	public class FakeBoWithDeleteParentActionDeleteRelatedRel : BusinessObject
 	{
 		[AutoMapOneToMany(DeleteParentAction = DeleteParentAction.DeleteRelated)]
 		public BusinessObjectCollection<FakeBOWithUndefinableSingleRel> MyMultipleRevRel { get; set; }
 	}
-    public class FakeBoWithOneToManyAssociation : BusinessObject
+
+	public class FakeBoWithOneToManyAssociation : BusinessObject
 	{
-        [AutoMapOneToMany(RelationshipType.Association)]
+		[AutoMapOneToMany(RelationshipType.Association)]
 		public BusinessObjectCollection<FakeBOWithUndefinableSingleRel> MultipleRel { get; set; }
 	}
+
 	public class FakeBoWithMultipleRel : BusinessObject
 	{
 		public BusinessObjectCollection<FakeBOWithUndefinableSingleRel> MyMultipleRevRel { get; set; }
@@ -329,9 +333,9 @@ namespace Habanero.Smooth.Test
 		public BusinessObjectCollection<FakeBOWithTwoRelToSameProp> MyMultipleAutoMapWithTwoSingleReverse { get; set; }
 
 		[AutoMapOneToMany("FakeBORel2")]
-		public BusinessObjectCollection<FakeBOWithTwoRelToSameProp> MyMultipleAutoMapWithTwoSingleReverse2 { get; set; }	   
-		
+		public BusinessObjectCollection<FakeBOWithTwoRelToSameProp> MyMultipleAutoMapWithTwoSingleReverse2 { get; set; }
 	}
+
 	public class FakeBOWithTwoSingleRelToSameProp : BusinessObject
 	{
 		[AutoMapManyToOne("FakeBORel1")]
@@ -352,7 +356,6 @@ namespace Habanero.Smooth.Test
 
 	public class FakeBOWithTwoRelToSameProp:BusinessObject
 	{
-		
 	}
 
 	public class FakeBoWithAutoMapOneToOne : BusinessObject
@@ -447,7 +450,6 @@ namespace Habanero.Smooth.Test
 		[AutoMapManyToOne]
 		public FakeBOWithReverseSingle MySingleRelationshipRev { get; set; }
 	}
-
 
 	public class FakeBOWithOneM21_AndOne121 : BusinessObject
 	{
@@ -544,22 +546,21 @@ namespace Habanero.Smooth.Test
 	[AutoMapTableName(TableName = "tbMyFakeBo")]
 	public class FakeBoWithTableName : BusinessObject
 	{
-        [AutoMapFieldName("MyFieldName")]
-	    public virtual string PropWithFieldName
-	    {
-	        get { return ((string) (base.GetPropertyValue("PropWithFieldName"))); }
-	        set { base.SetPropertyValue("PropWithFieldName", value); }
-	    }
-	    public virtual string PropNoFieldName
-	    {
-            get { return ((string)(base.GetPropertyValue("PropNoFieldName"))); }
-            set { base.SetPropertyValue("PropNoFieldName", value); }
-	    }
+		[AutoMapFieldName("MyFieldName")]
+		public virtual string PropWithFieldName
+		{
+			get { return ((string) (base.GetPropertyValue("PropWithFieldName"))); }
+			set { base.SetPropertyValue("PropWithFieldName", value); }
+		}
+		public virtual string PropNoFieldName
+		{
+			get { return ((string)(base.GetPropertyValue("PropNoFieldName"))); }
+			set { base.SetPropertyValue("PropNoFieldName", value); }
+		}
 	}
 
 	public class FakeBoWithoutTableName : BusinessObject
 	{
-
 	}
 
 	public class FakeManyToOneBoRelNoFK : BusinessObject
@@ -600,11 +601,12 @@ namespace Habanero.Smooth.Test
 	{
 		string FakeBOSuperClassWithDescType { get; set; }
 	}
+
 	public class FakeBOSubClass : FakeBOSuperClass
 	{
-	}	
-    
-    public class FakeBOSubClassA : FakeBOSuperClass
+	}
+
+	public class FakeBOSubClassA : FakeBOSuperClass
 	{
 	}
 
@@ -615,8 +617,6 @@ namespace Habanero.Smooth.Test
 	public class FakeBoNoProps : BusinessObject
 	{
 	}
-
-
 
 	public class FakeBOSuperClassWithDesc : BusinessObject, IFakeBO
 	{
@@ -647,7 +647,6 @@ namespace Habanero.Smooth.Test
 
 	public class FakeBOSubClassWithSuperHasUC : FakeBOSuperClassWithUC
 	{
-		
 	}
 
 	public class FakeBOSuperClassWithUC : BusinessObject
@@ -680,6 +679,7 @@ namespace Habanero.Smooth.Test
 		[AutoMapOneToMany]
 		public virtual BusinessObjectCollection<FakeBOWithNoRelationship> OneToManyRelationshipInherited { get; set; }
 	}
+
 	public class FakeBOSubClassWithOverridenProps : FakeBOSuperClassWithVirtualProps
 	{
 		public override string OverriddenProp { get; set; }
@@ -689,8 +689,8 @@ namespace Habanero.Smooth.Test
 		public override FakeBOWithNoRelationship OneToOneRelationshipOverridden { get; set; }
 		[AutoMapOneToMany]
 		public override BusinessObjectCollection<FakeBOWithNoRelationship> OneToManyRelationshipOverridden { get; set; }
-
 	}
+
 	public class FakeBOWithUniqueConstraint_TwoProps : BusinessObject
 	{
 		[AutoMapUniqueConstraint("UC1")]
@@ -818,6 +818,7 @@ namespace Habanero.Smooth.Test.ValidFakeBOs
 		[AutoMapManyToOne(ReverseRelationshipName = "AnyName")]
 		public FakeBOWithMultipleRel NonCompulsorySingleRelationship { get; set; }
 	}
+
 	public class FakeBOWithDefaultProp : BusinessObject
 	{
 		[AutoMapDefault("Today")]
@@ -826,26 +827,27 @@ namespace Habanero.Smooth.Test.ValidFakeBOs
 		public String NonDefaultProp { get; set; }
 	}
 
-    public class FakeBoWithIntPK : BusinessObject
-    {
-        /// <summary>
-        /// 
-        /// </summary>
-        [AutoMapPrimaryKey]
-        public virtual int FakeBoWithIntPKID
-        {
-            get { return ((int) (base.GetPropertyValue("FakeBoWithIntPKID"))); }
-            set { base.SetPropertyValue("FakeBoWithIntPKID", value); }
-        }
-    }
+	public class FakeBoWithIntPK : BusinessObject
+	{
+		/// <summary>
+		///
+		/// </summary>
+		[AutoMapPrimaryKey]
+		public virtual int FakeBoWithIntPKID
+		{
+			get { return ((int) (base.GetPropertyValue("FakeBoWithIntPKID"))); }
+			set { base.SetPropertyValue("FakeBoWithIntPKID", value); }
+		}
+	}
 
 	public class FakeBOWitDisplayNameProp : BusinessObject
 	{
 		[AutoMapDisplayName("MyDisplayName")]
-        public String DisplayNameProp { get; set; }
+		public String DisplayNameProp { get; set; }
 
 		public String NonDisplayNameProp { get; set; }
 	}
+
 	public class FakeBOWithAutoIncrementingProp : BusinessObject
 	{
 		[AutoMapAutoIncrementing]
@@ -853,6 +855,7 @@ namespace Habanero.Smooth.Test.ValidFakeBOs
 
 		public int NonAutoIncrementingProp { get; set; }
 	}
+
 	public class FakeBOWithReadWriteRuleProp : BusinessObject
 	{
 		[AutoMapReadWriteRule(PropReadWriteRule.ReadOnly)]
@@ -887,14 +890,10 @@ namespace Habanero.Smooth.Test.ValidFakeBOs
 		public virtual FakeMergeableParent FakeMergeableParentReverseNoType { get; set; }
 
 		public virtual FakeMergeableParent FakeMergeableParentReverseFKDefined { get; set; }
-		
 	}
 
-
-	
 	public class FakeBOWithWithOneToOneAssociationRel: BusinessObject
 	{
-
 		[AutoMapOneToOneAttribute("FakeMergeableRel", RelationshipType.Association)]
 		public virtual AFakeBO2WithOneToOneAssociationRel FakeParentReverse
 		{
@@ -908,9 +907,9 @@ namespace Habanero.Smooth.Test.ValidFakeBOs
 			}
 		}
 	}
+
 	public class AFakeBO2WithOneToOneAssociationRel : BusinessObject
 	{
-
 		public virtual Guid? FakeMergeableRelID
 		{
 			get
@@ -922,6 +921,7 @@ namespace Habanero.Smooth.Test.ValidFakeBOs
 				base.SetPropertyValue("FakeMergeableRelID", value);
 			}
 		}
+
 		[AutoMapOneToOneAttribute("FakeParentReverse", RelationshipType.Association)]
 		public virtual FakeBOWithWithOneToOneAssociationRel FakeMergeableRel
 		{
@@ -934,12 +934,8 @@ namespace Habanero.Smooth.Test.ValidFakeBOs
 				Relationships.SetRelatedObject("FakeMergeableRel", value);
 			}
 		}
-
 	}
-
-
 }
-
 // ReSharper restore UnusedMember.Global
 // ReSharper restore UnusedAutoPropertyAccessor.Local
 // ReSharper restore UnusedMember.Local

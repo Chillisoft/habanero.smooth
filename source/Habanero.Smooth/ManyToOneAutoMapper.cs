@@ -22,10 +22,10 @@ using System.Linq;
 using System.Reflection;
 using Habanero.Base;
 using Habanero.Base.Exceptions;
-using Habanero.BO;
 using Habanero.BO.ClassDefinition;
 using Habanero.Smooth.ReflectionWrappers;
 using Habanero.Util;
+
 // ReSharper disable ClassWithVirtualMembersNeverInherited.Global
 namespace Habanero.Smooth
 {
@@ -45,7 +45,9 @@ namespace Habanero.Smooth
 
             ManyToOneAutoMapper autoMapper = new ManyToOneAutoMapper(propInfo);
             return autoMapper.MapManyToOne();
-        }        /// <summary>
+        }
+
+        /// <summary>
         /// Automatically map the RelDef for this propWrapper
         /// </summary>
         /// <param name="propWrapper"></param>
@@ -57,22 +59,23 @@ namespace Habanero.Smooth
             ManyToOneAutoMapper autoMapper = new ManyToOneAutoMapper(propWrapper);
             return autoMapper.MapManyToOne();
         }
-
     }
+
     /// <summary>
     /// A Class to Reflectively map a <see cref="PropertyInfo"/> to a ManyToOne Habanero Relationship.
     /// </summary>
     public class ManyToOneAutoMapper
     {
         private PropertyWrapper PropertyWrapper { get; set; }
+
         /// <summary>
         /// Constructs the Reflective Mapper based on a PropertyInfo
         /// </summary>
         /// <param name="propInfo"></param>
         public ManyToOneAutoMapper(PropertyInfo propInfo):this(propInfo.ToPropertyWrapper())
         {
-
         }
+
         /// <summary>
         /// Constructs the Reflective Mapper based on a <see cref="ReflectionWrappers.PropertyWrapper"/>
         /// </summary>
@@ -82,6 +85,7 @@ namespace Habanero.Smooth
             if (propWrapper == null) throw new ArgumentNullException("propWrapper");
             this.PropertyWrapper = propWrapper;
         }
+
         /// <summary>
         /// Maps the <see cref="PropertyInfo"/> to a Many to One relationship
         /// </summary>
@@ -92,6 +96,7 @@ namespace Habanero.Smooth
             if (!MustBeMapped()) return null;
 
             var propertyType = this.PropertyWrapper.PropertyType;
+
             var relDef
                         = new SingleRelationshipDef(this.PropertyWrapper.Name, propertyType.UnderlyingType
                         , new RelKeyDef(), true, DeleteParentAction.DoNothing);
@@ -132,7 +137,7 @@ namespace Habanero.Smooth
         }
 
         /// <summary>
-        /// Returns the Related Property Name based on a Heuristic dependent upon the 
+        /// Returns the Related Property Name based on a Heuristic dependent upon the
         /// Related ClassType i.e. the <paramref name="propertyType"/>.
         /// </summary>
         /// <param name="propertyType"></param>
@@ -146,14 +151,14 @@ namespace Habanero.Smooth
         {
             return PropNamingConvention.GetSingleRelOwningPropName(this.PropertyWrapper.Name);
         }
+
         /// <summary>
-        /// Determines whether this Property Info must be mapped based on 
+        /// Determines whether this Property Info must be mapped based on
         /// Its AutoMapping Attributes.
         /// </summary>
         /// <returns></returns>
         public bool MustBeMapped()
         {
-
             if (this.PropertyWrapper.IsStatic) return false;
             if (!this.PropertyWrapper.IsPublic) return false;
             if (this.PropertyWrapper.IsInherited) return false;
@@ -178,7 +183,6 @@ namespace Habanero.Smooth
             return !this.PropertyWrapper.HasSingleReverseRelationship;
         }
 
-
         /// <summary>
         /// Returns the PropNaming Convention that is being used for this Mapping.
         /// </summary>
@@ -188,7 +192,6 @@ namespace Habanero.Smooth
             {
                 return ClassAutoMapper.PropNamingConvention;
             }
-
         }
     }
 }
