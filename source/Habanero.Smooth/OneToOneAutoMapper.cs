@@ -125,7 +125,7 @@ namespace Habanero.Smooth
             if(this.PropertyWrapper.IsInherited) return false;
             if (this.PropertyWrapper.IsStatic) return false;
             if (!this.PropertyWrapper.IsPublic) return false;
-            if (!PropertyWrapper.IsSingleRelationhip) return false;
+            if (!PropertyWrapper.IsSingleRelationship) return false;
             if (PropertyWrapper.HasIgnoreAttribute) return false;
             if (this.PropertyWrapper.PropertyInfo == null) return false;
             if (this.PropertyWrapper.DeclaringType.IsNull()) return false;
@@ -233,7 +233,7 @@ namespace Habanero.Smooth
             }
         }
         /// <summary>
-        /// If the reverse relationship is defined as Composition or Aggregation via attrubutes then return true.
+        /// If the reverse relationship is defined as Composition or Aggregation via attributes then return true.
         /// </summary>
         private bool ReverseRelationshipIsDefinedAsAggregationOrComposition()
         {
@@ -249,7 +249,7 @@ namespace Habanero.Smooth
             return IsDefinedAsCompositionOrAggregation(this.PropertyWrapper);
         }
         /// <summary>
-        /// If the <paramref name="propertyWrapper"/> is defined as Composition or Aggregation via attrubutes then return true.
+        /// If the <paramref name="propertyWrapper"/> is defined as Composition or Aggregation via attributes then return true.
         /// </summary>
         /// <param name="propertyWrapper"></param>
         /// <returns></returns>

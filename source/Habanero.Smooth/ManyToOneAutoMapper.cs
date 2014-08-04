@@ -108,12 +108,12 @@ namespace Habanero.Smooth
                     "The specified RelatedObjectClassType '{0}' on '{1}.{2}' must be a Business Object",
                     relatedObjectType, this.PropertyWrapper.DeclaringClassName, this.PropertyWrapper.Name));
             }
-            if (!relatedObjectType.IsOfType(this.PropertyWrapper.UndelyingPropertyType))
+            if (!relatedObjectType.IsOfType(this.PropertyWrapper.UnderlyingPropertyType))
             {
                 throw new InvalidDefinitionException(string.Format(
                     "The specified RelatedObjectClassType '{0}' on '{1}.{2}' must be assignment compatible with the actual property type '{3}'",
                     relatedObjectType, this.PropertyWrapper.DeclaringClassName,
-                    this.PropertyWrapper.Name, this.PropertyWrapper.UndelyingPropertyType));
+                    this.PropertyWrapper.Name, this.PropertyWrapper.UnderlyingPropertyType));
             }
 
             var relDef = new SingleRelationshipDef(this.PropertyWrapper.Name, relatedObjectType.UnderlyingType,
@@ -192,7 +192,7 @@ namespace Habanero.Smooth
             }
             if (this.PropertyWrapper.HasManyToOneAttribute) return true;
 
-            if (!this.PropertyWrapper.IsSingleRelationhip
+            if (!this.PropertyWrapper.IsSingleRelationship
                     || this.PropertyWrapper.HasIgnoreAttribute
                     || this.PropertyWrapper.HasOneToOneAttribute)
             {

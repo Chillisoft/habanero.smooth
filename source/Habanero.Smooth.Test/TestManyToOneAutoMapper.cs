@@ -616,7 +616,7 @@ namespace Habanero.Smooth.Test
             PropertyInfo propertyInfo = type.GetProperty(expectedPropName);
             PropertyWrapper propWrapper = propertyInfo.ToPropertyWrapper();
             //---------------Assert Precondition----------------
-            Assert.IsTrue(propWrapper.IsSingleRelationhip);
+            Assert.IsTrue(propWrapper.IsSingleRelationship);
             Assert.IsFalse(propWrapper.HasSingleReverseRelationship);
             Assert.IsFalse(propWrapper.HasMultipleReverseRelationship);
             Assert.IsTrue(propWrapper.HasAttribute<AutoMapManyToOneAttribute>());
@@ -742,7 +742,7 @@ namespace Habanero.Smooth.Test
             PropertyInfo propertyInfo = classType.GetProperty(expectedPropName, BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.GetProperty);
             var propertyWrapper = propertyInfo.ToPropertyWrapper();
             //---------------Assert Precondition----------------
-            Assert.IsTrue(propertyWrapper.IsSingleRelationhip);
+            Assert.IsTrue(propertyWrapper.IsSingleRelationship);
             Assert.IsFalse(propertyWrapper.IsPublic);
             //---------------Execute Test ----------------------
             var relationshipDefCol = propertyWrapper.MapManyToOne();
@@ -759,7 +759,7 @@ namespace Habanero.Smooth.Test
             PropertyInfo propertyInfo = classType.GetProperty(expectedPropName);
             var propertyWrapper = propertyInfo.ToPropertyWrapper();
             //---------------Assert Precondition----------------
-            Assert.IsTrue(propertyWrapper.IsSingleRelationhip);
+            Assert.IsTrue(propertyWrapper.IsSingleRelationship);
             Assert.IsTrue(propertyWrapper.IsStatic);
             //---------------Execute Test ----------------------
             var relationshipDefCol = propertyWrapper.MapManyToOne();
@@ -774,13 +774,13 @@ namespace Habanero.Smooth.Test
             var propertyWrapper = MockRepository.GenerateStub<FakePropertyWrapper>();
             propertyWrapper.Stub(wrapper => wrapper.IsPublic).Return(true);
             propertyWrapper.Stub(wrapper => wrapper.IsInherited).Return(true);
-            propertyWrapper.Stub(wrapper => wrapper.IsSingleRelationhip).Return(true);
+            propertyWrapper.Stub(wrapper => wrapper.IsSingleRelationship).Return(true);
             ManyToOneAutoMapper mapper = new ManyToOneAutoMapper(propertyWrapper);
             //---------------Assert Precondition----------------
             Assert.IsFalse(propertyWrapper.IsStatic);
             Assert.IsTrue(propertyWrapper.IsPublic);
             Assert.IsFalse(propertyWrapper.HasManyToOneAttribute);
-            Assert.IsTrue(propertyWrapper.IsSingleRelationhip);
+            Assert.IsTrue(propertyWrapper.IsSingleRelationship);
             Assert.IsFalse(propertyWrapper.HasIgnoreAttribute);
             Assert.IsFalse(propertyWrapper.HasOneToOneAttribute);
 

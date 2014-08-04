@@ -65,7 +65,7 @@ namespace Habanero.Smooth
         {
             if (MustMapProperty)
             {
-                var propertyType = this.PropertyWrapper.UndelyingPropertyType;
+                var propertyType = this.PropertyWrapper.UnderlyingPropertyType;
 
                 string displayName = "";
                 if (this.PropertyWrapper.HasDisplayNameAttribute)
@@ -208,7 +208,7 @@ namespace Habanero.Smooth
                 if (this.PropertyWrapper.IsStatic) return false;
                 if (!this.PropertyWrapper.IsPublic) return false;
                 if (this.PropertyWrapper.IsInherited) return false;
-                var propertyType = this.PropertyWrapper.UndelyingPropertyType;
+                var propertyType = this.PropertyWrapper.UnderlyingPropertyType;
                 if (IsInheritedFromBO) return false;
 
                 return !this.PropertyWrapper.HasIgnoreAttribute && propertyType.CanMapToProp();

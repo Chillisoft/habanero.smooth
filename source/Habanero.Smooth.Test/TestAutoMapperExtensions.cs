@@ -55,7 +55,7 @@ namespace Habanero.Smooth.Test
             var type = typeof(FakeBOWithSingleAttributeDeclaredRevRel).ToTypeWrapper();
             //---------------Assert Precondition----------------
             PropertyWrapper propertyInfo = type.GetProperty(expectedPropName);
-            Assert.IsTrue(propertyInfo.IsSingleRelationhip);
+            Assert.IsTrue(propertyInfo.IsSingleRelationship);
             //---------------Execute Test ----------------------
             var hasSingleReverseRelationship = propertyInfo.HasSingleReverseRelationship;
             //---------------Test Result -----------------------

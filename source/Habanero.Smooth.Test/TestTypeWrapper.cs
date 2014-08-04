@@ -694,7 +694,7 @@ namespace Habanero.Smooth.Test
             Assert.IsFalse(isNullableType);
         }
         [Test]
-        public void Test_GetNullableUndelyingType_WhenIs_ShouldRetGuid()
+        public void Test_GetNullableUnderlyingType_WhenIs_ShouldRetGuid()
         {
             //---------------Set up test pack-------------------
             Type type = typeof(Guid?);
@@ -703,21 +703,21 @@ namespace Habanero.Smooth.Test
             Assert.IsTrue(type.IsGenericType);
             Assert.IsTrue(type.GetGenericTypeDefinition().Equals(typeof(Nullable<>)));
             //---------------Execute Test ----------------------
-            var undelyingType = typeWrapper.GetNullableUndelyingType();
+            var underlyingType = typeWrapper.GetNullableUnderlyingType();
             //---------------Test Result -----------------------
-            Assert.AreSame(typeof(Guid), undelyingType);
+            Assert.AreSame(typeof(Guid), underlyingType);
         }
         [Test]
-        public void Test_GetNullableUndelyingType_WhenNot_ShouldRetGuid()
+        public void Test_GetNullableUnderlyingType_WhenNot_ShouldRetGuid()
         {
             //---------------Set up test pack-------------------
             Type type = typeof(Guid);
             var typeWrapper = type.ToTypeWrapper();
             //---------------Assert Precondition----------------
             //---------------Execute Test ----------------------
-            var undelyingType = typeWrapper.GetNullableUndelyingType();
+            var underlyingType = typeWrapper.GetNullableUnderlyingType();
             //---------------Test Result -----------------------
-            Assert.AreSame(typeof(Guid), undelyingType);
+            Assert.AreSame(typeof(Guid), underlyingType);
         }
 
         [Test]

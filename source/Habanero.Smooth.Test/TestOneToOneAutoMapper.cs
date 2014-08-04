@@ -962,7 +962,7 @@ namespace Habanero.Smooth.Test
             var propertyWrapper = MockRepository.GenerateStub<FakePropertyWrapper>();
             propertyWrapper.Stub(wrapper => wrapper.IsPublic).Return(true);
             propertyWrapper.Stub(wrapper => wrapper.IsInherited).Return(true);
-            propertyWrapper.Stub(wrapper => wrapper.IsSingleRelationhip).Return(true);
+            propertyWrapper.Stub(wrapper => wrapper.IsSingleRelationship).Return(true);
             propertyWrapper.Stub(wrapper => wrapper.PropertyInfo).Return(GetFakePropertyInfo());
             propertyWrapper.Stub(wrapper => wrapper.HasOneToOneAttribute).Return(true);
             propertyWrapper.Stub(wrapper => wrapper.DeclaringType).Return(GetFakeTypeWrapper());
@@ -972,7 +972,7 @@ namespace Habanero.Smooth.Test
             Assert.IsFalse(propertyWrapper.IsStatic);
             Assert.IsTrue(propertyWrapper.IsPublic);
             Assert.IsFalse(propertyWrapper.HasManyToOneAttribute);
-            Assert.IsTrue(propertyWrapper.IsSingleRelationhip);
+            Assert.IsTrue(propertyWrapper.IsSingleRelationship);
             Assert.IsFalse(propertyWrapper.HasIgnoreAttribute);
             Assert.IsTrue(propertyWrapper.HasOneToOneAttribute);
             Assert.IsNotNull(propertyWrapper.PropertyInfo);
@@ -1005,7 +1005,7 @@ namespace Habanero.Smooth.Test
             propertyWrapper.SetIsSingleRelationship(false);
             propertyWrapper.SetIgnoreAttribute(false);
             //---------------Assert Precondition----------------
-            Assert.IsFalse(propertyWrapper.IsSingleRelationhip);
+            Assert.IsFalse(propertyWrapper.IsSingleRelationship);
             Assert.IsFalse(propertyWrapper.HasIgnoreAttribute);
             //---------------Execute Test ----------------------
             var relationshipDef = propertyWrapper.MapOneToOne();
@@ -1021,7 +1021,7 @@ namespace Habanero.Smooth.Test
             propertyWrapper.SetIsSingleRelationship(false);
             propertyWrapper.SetIgnoreAttribute(true);
             //---------------Assert Precondition----------------
-            Assert.IsFalse(propertyWrapper.IsSingleRelationhip);
+            Assert.IsFalse(propertyWrapper.IsSingleRelationship);
             Assert.IsTrue(propertyWrapper.HasIgnoreAttribute);
             //---------------Execute Test ----------------------
             var relationshipDef = propertyWrapper.MapOneToOne();
@@ -1045,7 +1045,7 @@ namespace Habanero.Smooth.Test
             OneToOneAutoMapper autoMapper = new OneToOneAutoMapper(propertyWrapper);
             //---------------Assert Precondition----------------
             Assert.IsTrue(autoMapper.OwningBoHasForeignKey);
-            Assert.IsTrue(propertyWrapper.IsSingleRelationhip);
+            Assert.IsTrue(propertyWrapper.IsSingleRelationship);
             //---------------Execute Test ----------------------
             var relationshipDef = autoMapper.MapOneToOne();
             //---------------Test Result -----------------------
@@ -1072,7 +1072,7 @@ namespace Habanero.Smooth.Test
             OneToOneAutoMapper autoMapper = new OneToOneAutoMapper(propertyWrapper);
             //---------------Assert Precondition----------------
             Assert.IsFalse(autoMapper.OwningBoHasForeignKey);
-            Assert.IsTrue(propertyWrapper.IsSingleRelationhip);
+            Assert.IsTrue(propertyWrapper.IsSingleRelationship);
             Assert.IsTrue(propertyWrapper.IsPublic);
             Assert.IsFalse(propertyWrapper.IsInherited);
             Assert.IsTrue(autoMapper.MustBeMapped());
@@ -1094,7 +1094,7 @@ namespace Habanero.Smooth.Test
             OneToOneAutoMapper autoMapper = new OneToOneAutoMapper(propertyWrapper);
             var expectedReverseRelName = propertyWrapper.GetSingleReverseRelationshipName<AutoMapOneToOneAttribute>();
             //---------------Assert Precondition----------------
-            Assert.IsTrue(propertyWrapper.IsSingleRelationhip);
+            Assert.IsTrue(propertyWrapper.IsSingleRelationship);
             Assert.AreEqual(expectedReverseRelName, autoMapper.ReverseRelationshipName);
             //---------------Execute Test ----------------------
             var relationshipDef = autoMapper.MapOneToOne();
@@ -1113,7 +1113,7 @@ namespace Habanero.Smooth.Test
 
             OneToOneAutoMapper autoMapper = new OneToOneAutoMapper(propertyWrapper);
             //---------------Assert Precondition----------------
-            Assert.IsTrue(propertyWrapper.IsSingleRelationhip);
+            Assert.IsTrue(propertyWrapper.IsSingleRelationship);
             //---------------Execute Test ----------------------
             var relationshipDef = autoMapper.MapOneToOne();
             //---------------Test Result -----------------------
@@ -1140,7 +1140,7 @@ namespace Habanero.Smooth.Test
             OneToOneAutoMapper autoMapper = new OneToOneAutoMapper(propertyWrapper);
             var expectedReverseRelName = propertyWrapper.GetSingleReverseRelationshipName<AutoMapOneToOneAttribute>();
             //---------------Assert Precondition----------------
-            Assert.IsTrue(propertyWrapper.IsSingleRelationhip);
+            Assert.IsTrue(propertyWrapper.IsSingleRelationship);
             Assert.AreEqual(expectedReverseRelName, autoMapper.ReverseRelationshipName);
             //---------------Execute Test ----------------------
             var relationshipDef = autoMapper.MapOneToOne();
@@ -1331,7 +1331,7 @@ namespace Habanero.Smooth.Test
             //---------------Execute Test ----------------------
             var relationshipDef = propertyInfo.ToPropertyWrapper().MapOneToOne();
             //---------------Test Result -----------------------
-            Assert.IsNull(relationshipDef);   
+            Assert.IsNull(relationshipDef);
         }
         [Test]
         public void TestAccept_Map_WhenHasTwoSingleReverseRel_WithNoAttributes_ShouldRaiseError()
@@ -1356,7 +1356,7 @@ namespace Habanero.Smooth.Test
             Assert.IsNotNull(reversePropInfo);
             reversePropInfo.AssertIsOfType(classType);
 
-            Assert.IsTrue(propertyInfo.ToPropertyWrapper().IsSingleRelationhip);
+            Assert.IsTrue(propertyInfo.ToPropertyWrapper().IsSingleRelationship);
             Assert.IsFalse(propertyInfo.ToPropertyWrapper().HasIgnoreAttribute);
 
             Assert.AreEqual(2, propertyInfo.ToPropertyWrapper().GetSingleReverseRelPropInfos().Count);
@@ -1385,7 +1385,7 @@ namespace Habanero.Smooth.Test
             PropertyInfo propertyInfo = classType.GetProperty(expectedPropName);
             var propertyWrapper = propertyInfo.ToPropertyWrapper();
             //---------------Assert Precondition----------------           
-            Assert.IsTrue(propertyWrapper.IsSingleRelationhip);
+            Assert.IsTrue(propertyWrapper.IsSingleRelationship);
             Assert.IsTrue(propertyWrapper.IsStatic);
             //---------------Execute Test ----------------------
             var relationshipDefCol = propertyWrapper.MapOneToOne();
@@ -1401,7 +1401,7 @@ namespace Habanero.Smooth.Test
             PropertyInfo propertyInfo = classType.GetProperty(expectedPropName, BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.GetProperty);
             var propertyWrapper = propertyInfo.ToPropertyWrapper();
             //---------------Assert Precondition----------------           
-            Assert.IsTrue(propertyWrapper.IsSingleRelationhip);
+            Assert.IsTrue(propertyWrapper.IsSingleRelationship);
             Assert.IsFalse(propertyWrapper.IsPublic);
             //---------------Execute Test ----------------------
             var relationshipDefCol = propertyWrapper.MapOneToOne();

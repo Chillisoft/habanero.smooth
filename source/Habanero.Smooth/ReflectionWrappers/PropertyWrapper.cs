@@ -338,7 +338,7 @@ namespace Habanero.Smooth.ReflectionWrappers
         /// <returns></returns>
         public virtual IList<PropertyWrapper> GetManyToOneReverseRelationshipInfos()
         {
-            if (this.IsSingleRelationhip || this.HasIgnoreAttribute) return new List<PropertyWrapper>();
+            if (this.IsSingleRelationship || this.HasIgnoreAttribute) return new List<PropertyWrapper>();
 
             return this.GetSingleReverseRelPropInfos<AutoMapOneToOneAttribute, AutoMapManyToOneAttribute, AutoMapOneToManyAttribute>();
         }
@@ -423,7 +423,7 @@ namespace Habanero.Smooth.ReflectionWrappers
         {
             if (!this.IsRelationship) return null;
 
-            return this.IsSingleRelationhip
+            return this.IsSingleRelationship
                        ? GetOneToOneReverseRelationshipInfos()
                        : GetManyToOneReverseRelationshipInfos();
         }
@@ -439,7 +439,7 @@ namespace Habanero.Smooth.ReflectionWrappers
         /// Is the wrapped <see cref="PropertyInfo"/> a declaration for a single relationship.
         /// I.e. Returns a BusinessObject
         /// </summary>
-        public virtual bool IsSingleRelationhip
+        public virtual bool IsSingleRelationship
         {
             get { return this.PropertyType.IsOfType<BusinessObject>(); }
         }
@@ -459,7 +459,7 @@ namespace Habanero.Smooth.ReflectionWrappers
         /// </summary>
         public virtual bool IsRelationship
         {
-            get { return this.IsSingleRelationhip || this.IsMultipleRelationship; }
+            get { return this.IsSingleRelationship || this.IsMultipleRelationship; }
         }
 
         /// <summary>
@@ -542,7 +542,7 @@ namespace Habanero.Smooth.ReflectionWrappers
         /// <summary>
         /// Returns teh Underlying PropertyType in cases where this property returns a generic or nullable type.
         /// </summary>
-        public virtual Type UndelyingPropertyType
+        public virtual Type UnderlyingPropertyType
         {
             get { return ReflectionUtilities.GetUndelyingPropertType(this.PropertyInfo); }
         }

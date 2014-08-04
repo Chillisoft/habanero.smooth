@@ -98,7 +98,7 @@ namespace Habanero.Smooth.Test
         }
 
         [Test]
-        public void Test_DeclaringTypeName_ShouldReturnUndelyingTypeName()
+        public void Test_DeclaringTypeName_ShouldReturnUnderlyingTypeName()
         {
             //---------------Set up test pack-------------------
             TypeWrapper declaringType = MockRepository.GenerateMock<FakeTypeWrapper>();
@@ -113,7 +113,7 @@ namespace Habanero.Smooth.Test
             Assert.AreEqual(expectedTypeName, declaringTypeName);
         }
         [Test]
-        public void Test_AssemblyQualifiedName_ShouldReturnUndelyingAssemblyName()
+        public void Test_AssemblyQualifiedName_ShouldReturnUnderlyingAssemblyName()
         {
             //---------------Set up test pack-------------------
             TypeWrapper declaringType = MockRepository.GenerateMock<FakeTypeWrapper>();
@@ -129,7 +129,7 @@ namespace Habanero.Smooth.Test
         }
 
         [Test]
-        public void Test_RelatedClassName_ShouldReturnUndelyingTypeName()
+        public void Test_RelatedClassName_ShouldReturnUnderlyingTypeName()
         {
             //---------------Set up test pack-------------------
             TypeWrapper returnType = MockRepository.GenerateMock<FakeTypeWrapper>();
@@ -187,9 +187,9 @@ namespace Habanero.Smooth.Test
             //---------------Assert Precondition----------------
             Assert.IsTrue(genericReturnType.IsGenericType);
             //---------------Execute Test ----------------------
-            var isSingleRelationhip = propertyWrapper.IsSingleRelationhip;
+            var isSingleRelationship = propertyWrapper.IsSingleRelationship;
             //---------------Test Result -----------------------
-            Assert.IsFalse(isSingleRelationhip);
+            Assert.IsFalse(isSingleRelationship);
         }
 
         [Test]
@@ -201,9 +201,9 @@ namespace Habanero.Smooth.Test
             
             //---------------Assert Precondition----------------
             //---------------Execute Test ----------------------
-            var isSingleRelationhip = propertyWrapper.IsSingleRelationhip;
+            var isSingleRelationship = propertyWrapper.IsSingleRelationship;
             //---------------Test Result -----------------------
-            Assert.IsFalse(isSingleRelationhip);
+            Assert.IsFalse(isSingleRelationship);
         }
         [Test]
         public void Test_IsSingleRel_WhenIsBOShouldReturnTrue()
@@ -214,9 +214,9 @@ namespace Habanero.Smooth.Test
             
             //---------------Assert Precondition----------------
             //---------------Execute Test ----------------------
-            var isSingleRelationhip = propertyWrapper.IsSingleRelationhip;
+            var isSingleRelationship = propertyWrapper.IsSingleRelationship;
             //---------------Test Result -----------------------
-            Assert.IsTrue(isSingleRelationhip);
+            Assert.IsTrue(isSingleRelationship);
         }
 
         [Test]
@@ -722,7 +722,7 @@ namespace Habanero.Smooth.Test
             //---------------Assert Precondition----------------
             var propertyInfo = type.GetProperty(expectedPropName);
             var property = propertyInfo.ToPropertyWrapper();
-            Assert.IsTrue(property.IsSingleRelationhip);
+            Assert.IsTrue(property.IsSingleRelationship);
             //---------------Execute Test ----------------------
             var hasSingleReverseRelationship = property.HasSingleReverseRelationship;
             //---------------Test Result -----------------------
@@ -2133,7 +2133,7 @@ namespace Habanero.Smooth.Test
             //---------------Assert Precondition----------------
             Assert.AreSame(typeof(Guid?), propertyInfo.PropertyType);
             //---------------Execute Test ----------------------
-            var propType = propertyWrapper.UndelyingPropertyType;
+            var propType = propertyWrapper.UnderlyingPropertyType;
             //---------------Test Result -----------------------
             Assert.AreEqual(typeof(Guid), propType);
         }
@@ -2149,7 +2149,7 @@ namespace Habanero.Smooth.Test
             //---------------Assert Precondition----------------
             Assert.AreSame(typeof(Guid), propertyInfo.PropertyType);
             //---------------Execute Test ----------------------
-            var propType = propertyWrapper.UndelyingPropertyType;
+            var propType = propertyWrapper.UnderlyingPropertyType;
             //---------------Test Result -----------------------
             Assert.AreEqual(typeof(Guid), propType);
         }
@@ -2164,7 +2164,7 @@ namespace Habanero.Smooth.Test
             //---------------Assert Precondition----------------
             Assert.AreSame(typeof(int), propertyInfo.PropertyType);
             //---------------Execute Test ----------------------
-            var propType = propertyWrapper.UndelyingPropertyType;
+            var propType = propertyWrapper.UnderlyingPropertyType;
             //---------------Test Result -----------------------
             Assert.AreEqual(typeof(int), propType);
         }
@@ -2395,7 +2395,7 @@ namespace Habanero.Smooth.Test
 
         public static void SetIsSingleRelationship(this PropertyWrapper propertyWrapper, bool isSingle)
         {
-            propertyWrapper.Stub(wrapper => wrapper.IsSingleRelationhip).Return(isSingle);
+            propertyWrapper.Stub(wrapper => wrapper.IsSingleRelationship).Return(isSingle);
         }
 
         public static void SetIgnoreAttribute(this PropertyWrapper propertyInfo, bool mustSetAttribute)

@@ -849,7 +849,7 @@ namespace Habanero.Smooth.Test
         {
             PropertyWrapper wrapper = MockRepository.GenerateMock<FakePropertyWrapper>();
             wrapper.Stub(wrapper1 => wrapper1.IsPublic).Return(true);
-            wrapper.Stub(wrapper1 => wrapper1.UndelyingPropertyType).Return(typeof(bool));
+            wrapper.Stub(wrapper1 => wrapper1.UnderlyingPropertyType).Return(typeof(bool));
             wrapper.Stub(wrapper1 => wrapper1.Name).Return(GetRandomString());
             return wrapper;
         }

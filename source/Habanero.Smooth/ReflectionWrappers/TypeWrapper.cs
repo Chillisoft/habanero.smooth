@@ -374,7 +374,7 @@ namespace Habanero.Smooth.ReflectionWrappers
         /// (i.e bool? will return bool)
         /// </summary>
         /// <returns></returns>
-        public Type GetNullableUndelyingType()
+        public Type GetNullableUnderlyingType()
         {
             return IsNullableType ? Nullable.GetUnderlyingType(_underlyingType) : _underlyingType;
         }
