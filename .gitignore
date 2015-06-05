@@ -1,8 +1,10 @@
-bin/
-obj/
-/source/packages/
-nunit-result.xml
-/nugetArtifacts/
-lib/
+/buildreports/**
+/lib/**
+**/bin/**
+*.FileListAbsolute.txt
+*.cache
+**/obj/**
+/source/packages/**
+/nugetArtifacts/**
 *.DotSettings.user
 *.suo
