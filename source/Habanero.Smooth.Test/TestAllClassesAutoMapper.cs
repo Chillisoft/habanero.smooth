@@ -24,7 +24,6 @@ using FakeBosInSeperateAssembly;
 using Habanero.Base;
 using Habanero.BO.ClassDefinition;
 using Habanero.Smooth.ReflectionWrappers;
-using Habanero.Smooth.Test.ValidFakeBOs;
 using NUnit.Framework;
 using Rhino.Mocks;
 
@@ -88,6 +87,7 @@ namespace Habanero.Smooth.Test
             //---------------Test Result -----------------------
              Assert.AreSame(classDefCol, AllClassesAutoMapper.ClassDefCol);
         }
+
         [Test]
         public void Test_GetClassDefCol_WhenNonSet_ShouldRetEmptyCol()
         {
@@ -226,6 +226,7 @@ namespace Habanero.Smooth.Test
             classDefCol.ShouldContain(def => def.ClassName == "FakeExtBoShouldBeLoaded");
             classDefCol.ShouldContain(def => def.ClassName == "FakeExtBoOnlyImplementingInterfaceShouldBeLoaded");
         }
+
         [Test]
         public void Test_MapClassesForTypeWithWhereClause_ShouldMapAllClassesForTheTypesAssemblyMatchingClause()
         {
@@ -275,7 +276,6 @@ namespace Habanero.Smooth.Test
             Assert.IsFalse(reverseRelDef.OwningBOHasForeignKey);
         }
 
-
         [Test]
         public void Test_Map_WhenNotHasReverseRelDefined_ShouldCreateRelProp()
         {
@@ -309,6 +309,7 @@ namespace Habanero.Smooth.Test
             Assert.AreEqual(relPropDef.OwnerPropertyName, revereRelPropDef.RelatedClassPropName);
             Assert.AreEqual(relPropDef.RelatedClassPropName, revereRelPropDef.OwnerPropertyName);
         }
+
         /// <summary>
         /// When mapping Related Classes and there is no reverse relationship defined
         /// the autoMapper should created the FKProp if Required.
@@ -343,6 +344,7 @@ namespace Habanero.Smooth.Test
             Assert.AreEqual(DeleteParentAction.DoNothing, reverseRelDef.DeleteParentAction);
             Assert.IsTrue(reverseRelDef.OwningBOHasForeignKey);
         }
+
         [Test]
         public void Test_Map_WhenNotHasFKPropDefined_AndIsOneToMany_ShouldFKProp()
         {
@@ -369,6 +371,7 @@ namespace Habanero.Smooth.Test
             IRelPropDef reverseRelPropDef = reverseRelDef.RelKeyDef.First();
             cDefNoDefinedRel.PropDefcol.ShouldContain(propDef => propDef.PropertyName == reverseRelPropDef.OwnerPropertyName);
         }
+
         /// <summary>
         /// When mapping Related Classes and there is no reverse relationship defined
         /// the autoMapper should created the FKProp if Required.
@@ -427,6 +430,7 @@ namespace Habanero.Smooth.Test
             var classDef = classDefCol.First();
             Assert.AreSame(typeSecondTime, classDef.ClassType);
         }
+
         /// <summary>
         /// When mapping Related Classes and there is no reverse relationship defined
         /// the autoMapper should created the FKProp if Required.
@@ -452,6 +456,7 @@ namespace Habanero.Smooth.Test
             Assert.AreEqual(DeleteParentAction.DoNothing, reverseRelDef.DeleteParentAction);
             Assert.IsTrue(reverseRelDef.OwningBOHasForeignKey);
         }
+
         [Test]
         public void Test_Map_WhenRelatedClassNotInClassDefCol_ShouldNotRaiseError()
         {
@@ -468,20 +473,19 @@ namespace Habanero.Smooth.Test
             //---------------Test Result -----------------------
             classDefCol.ShouldHaveCount(1);
         }
+
         [Test]
-        public void Test_Map_WhenInheritance_ShouldMapInheritenceRelationship()
+        public void Test_Map_WhenInheritance_ShouldMapInheritanceRelationship()
         {
             //---------------Set up test pack-------------------
-            Type superClass = typeof(FakeBOSuperClass);
-            Type subClass = typeof(FakeBOSubClass);
-            FakeTypeSource source = new FakeTypeSource(
-                new[] { superClass, subClass});
-
-            AllClassesAutoMapper allClassesAutoMapper = new AllClassesAutoMapper(source);
+            var superClass = typeof(FakeBOSuperClass);
+            var subClass = typeof(FakeBOSubClass);
+            var source = new FakeTypeSource(new[] {superClass, subClass});
+            var allClassesAutoMapper = new AllClassesAutoMapper(source);
             //---------------Assert Precondition----------------
             Assert.AreEqual(2, source.GetTypes().Count());
             //---------------Execute Test ----------------------
-            ClassDefCol classDefCol = allClassesAutoMapper.Map();
+            var classDefCol = allClassesAutoMapper.Map();
             //---------------Test Result -----------------------
             classDefCol.ShouldHaveCount(2);
             var subClassDef = classDefCol.First(def => def.ClassType == subClass);
@@ -491,13 +495,101 @@ namespace Habanero.Smooth.Test
         }
 
         [Test]
+        public void Test_Map_GivenTypeSourceProvidesSubClassBeforeSuperClass_WhenInheritance_ShouldMapInheritanceRelationship()
+        {
+            //---------------Set up test pack-------------------
+            var superClass = typeof(FakeBOSuperClass);
+            var subClass = typeof(FakeBOSubClass);
+            var source = new FakeTypeSource(new[] {subClass, superClass});
+            var allClassesAutoMapper = new AllClassesAutoMapper(source);
+            //---------------Assert Precondition----------------
+            Assert.AreEqual(2, source.GetTypes().Count());
+            //---------------Execute Test ----------------------
+            var classDefCol = allClassesAutoMapper.Map();
+            //---------------Test Result -----------------------
+            classDefCol.ShouldHaveCount(2);
+            var subClassDef = classDefCol.First(def => def.ClassType == subClass);
+            var superClassDef = classDefCol.First(def => def.ClassType == superClass);
+            Assert.AreEqual(superClassDef.ClassType, subClassDef.SuperClassDef.SuperClassClassDef.ClassType);
+            Assert.AreSame(superClassDef, subClassDef.SuperClassDef.SuperClassClassDef);
+        }
+
+        [Test]
+        public void Test_Map_When2LayersOfInheritance_ShouldMapInheritanceRelationships()
+        {
+            //---------------Set up test pack-------------------
+            var superSuperClass = typeof(FakeBOSuperClassWithDesc);
+            var superClass = typeof(FakeBOSubClassSuperHasDesc);
+            var subClass = typeof(FakeBOSubSubClassSuperHasDesc);
+            var source = new FakeTypeSource(new[] {superSuperClass, superClass, subClass});
+            var allClassesAutoMapper = new AllClassesAutoMapper(source);
+            //---------------Assert Precondition----------------
+            Assert.AreEqual(3, source.GetTypes().Count());
+            //---------------Execute Test ----------------------
+            var classDefCol = allClassesAutoMapper.Map();
+            //---------------Test Result -----------------------
+            classDefCol.ShouldHaveCount(3);
+            var subClassDef = classDefCol.First(def => def.ClassType == subClass);
+            var superClassDef = classDefCol.First(def => def.ClassType == superClass);
+            var superSuperClassDef = classDefCol.First(def => def.ClassType == superSuperClass);
+            Assert.AreEqual(superClassDef.ClassType, subClassDef.SuperClassDef.SuperClassClassDef.ClassType);
+            Assert.AreSame(superClassDef, subClassDef.SuperClassDef.SuperClassClassDef);
+            Assert.AreEqual(superSuperClassDef.ClassType, superClassDef.SuperClassDef.SuperClassClassDef.ClassType);
+            Assert.AreSame(superSuperClassDef, superClassDef.SuperClassDef.SuperClassClassDef);
+        }
+
+        [Test]
+        public void Test_Map_GivenTypeSourceProvidesSubClassBeforeSuperClasses_When2LayersOfInheritance_ShouldMapInheritanceRelationships()
+        {
+            //---------------Set up test pack-------------------
+            var superSuperClass = typeof(FakeBOSuperClassWithDesc);
+            var superClass = typeof(FakeBOSubClassSuperHasDesc);
+            var subClass = typeof(FakeBOSubSubClassSuperHasDesc);
+            var source = new FakeTypeSource(new[] {subClass, superSuperClass, superClass});
+            var allClassesAutoMapper = new AllClassesAutoMapper(source);
+            //---------------Assert Precondition----------------
+            Assert.AreEqual(3, source.GetTypes().Count());
+            //---------------Execute Test ----------------------
+            var classDefCol = allClassesAutoMapper.Map();
+            //---------------Test Result -----------------------
+            classDefCol.ShouldHaveCount(3);
+            var subClassDef = classDefCol.First(def => def.ClassType == subClass);
+            var superClassDef = classDefCol.First(def => def.ClassType == superClass);
+            var superSuperClassDef = classDefCol.First(def => def.ClassType == superSuperClass);
+            Assert.AreEqual(superClassDef.ClassType, subClassDef.SuperClassDef.SuperClassClassDef.ClassType);
+            Assert.AreSame(superClassDef, subClassDef.SuperClassDef.SuperClassClassDef);
+            Assert.AreEqual(superSuperClassDef.ClassType, superClassDef.SuperClassDef.SuperClassClassDef.ClassType);
+            Assert.AreSame(superSuperClassDef, superClassDef.SuperClassDef.SuperClassClassDef);
+        }
+
+        [Test]
         public void Test_Map_WhenInheritanceWithMultipleDerivatives_ShouldSameSuperClass()
         {
             //---------------Set up test pack-------------------
             var parentSuperClass = typeof(FakeBOSuperClass);
             var parentSubClassA = typeof(FakeBOSubClass);
             var parentSubClassB = typeof(FakeBOSubClassA);
-            var source = new FakeTypeSource(new[] {  parentSuperClass, parentSubClassA, parentSubClassB });
+            var source = new FakeTypeSource(new[] {parentSuperClass, parentSubClassA, parentSubClassB});
+            var allClassesAutoMapper = new AllClassesAutoMapper(source);
+            //---------------Assert Precondition----------------
+            Assert.AreEqual(3, source.GetTypes().Count());
+            //---------------Execute Test ----------------------
+            var classDefCol = allClassesAutoMapper.Map();
+            //---------------Test Result -----------------------
+            classDefCol.ShouldHaveCount(3);
+            Assert.AreSame(classDefCol[parentSubClassA].SuperClassClassDef, classDefCol[parentSuperClass]);
+            Assert.AreSame(classDefCol[parentSubClassB].SuperClassClassDef, classDefCol[parentSuperClass]);
+            Assert.AreSame(classDefCol[parentSubClassA].SuperClassClassDef, classDefCol[parentSubClassB].SuperClassClassDef);
+        }
+
+        [Test]
+        public void Test_Map_GivenTypeSourceProvidesSubClassesBeforeSuperClass_WhenInheritanceWithMultipleDerivatives_ShouldSameSuperClass()
+        {
+            //---------------Set up test pack-------------------
+            var parentSuperClass = typeof(FakeBOSuperClass);
+            var parentSubClassA = typeof(FakeBOSubClass);
+            var parentSubClassB = typeof(FakeBOSubClassA);
+            var source = new FakeTypeSource(new[] {parentSubClassA, parentSubClassB, parentSuperClass});
             var allClassesAutoMapper = new AllClassesAutoMapper(source);
             //---------------Assert Precondition----------------
             Assert.AreEqual(3, source.GetTypes().Count());
@@ -514,16 +606,14 @@ namespace Habanero.Smooth.Test
         public void Test_Map_WhenInheritance_ShouldNotCreatePKInSubClass()
         {
             //---------------Set up test pack-------------------
-            Type superClass = typeof(FakeBOSuperClass);
-            Type subClass = typeof(FakeBOSubClass);
-            FakeTypeSource source = new FakeTypeSource(
-                new[] { superClass, subClass});
-
-            AllClassesAutoMapper allClassesAutoMapper = new AllClassesAutoMapper(source);
+            var superClass = typeof(FakeBOSuperClass);
+            var subClass = typeof(FakeBOSubClass);
+            var source = new FakeTypeSource(new[] {superClass, subClass});
+            var allClassesAutoMapper = new AllClassesAutoMapper(source);
             //---------------Assert Precondition----------------
             Assert.AreEqual(2, source.GetTypes().Count());
             //---------------Execute Test ----------------------
-            ClassDefCol classDefCol = allClassesAutoMapper.Map();
+            var classDefCol = allClassesAutoMapper.Map();
             //---------------Test Result -----------------------
             classDefCol.ShouldHaveCount(2);
             var subClassDef = classDefCol.First(def => def.ClassType == subClass);
@@ -534,20 +624,19 @@ namespace Habanero.Smooth.Test
             subClassDef.PropDefcol.ShouldBeEmpty();
             superClassDef.PropDefcol.ShouldNotBeEmpty();
         }
+
         [Test]
         public void Test_Map_WhenInheritance_ShouldCreateDiscriminatorPropInSuperClass()
         {
             //---------------Set up test pack-------------------
-            Type superClass = typeof(FakeBOSuperClass);
-            Type subClass = typeof(FakeBOSubClass);
-            FakeTypeSource source = new FakeTypeSource(
-                new[] { superClass, subClass});
-
-            AllClassesAutoMapper allClassesAutoMapper = new AllClassesAutoMapper(source);
+            var superClass = typeof(FakeBOSuperClass);
+            var subClass = typeof(FakeBOSubClass);
+            var source = new FakeTypeSource(new[] {superClass, subClass});
+            var allClassesAutoMapper = new AllClassesAutoMapper(source);
             //---------------Assert Precondition----------------
             Assert.AreEqual(2, source.GetTypes().Count());
             //---------------Execute Test ----------------------
-            ClassDefCol classDefCol = allClassesAutoMapper.Map();
+            var classDefCol = allClassesAutoMapper.Map();
             //---------------Test Result -----------------------
             classDefCol.ShouldHaveCount(2);
             var subClassDef = classDefCol.First(def => def.ClassType == subClass);
@@ -558,27 +647,81 @@ namespace Habanero.Smooth.Test
             var superClassProps = superClassDef.PropDefcol;
             superClassProps.ShouldHaveCount(2);
             superClassProps.ShouldContain(propDef => propDef.PropertyName == discriminatorPropName);
-
         }
+
         [Test]
-        public void Test_Map_WhenInheritanceAndHasRelationship_ShouldCreateCorrectRelPropDefs()
+        public void Test_Map_GivenTypeSourceProvidesSubClassBeforeSuperClass_WhenInheritance_ShouldCreateDiscriminatorPropInSuperClass()
         {
             //---------------Set up test pack-------------------
-            Type superClass = typeof(FakeBOSuperClass);
-            Type subClass = typeof(FakeBOSubClassWithRelationships);
-            FakeTypeSource source = new FakeTypeSource(
-                new[] { superClass, subClass});
-
-            AllClassesAutoMapper allClassesAutoMapper = new AllClassesAutoMapper(source);
+            var superClass = typeof(FakeBOSuperClass);
+            var subClass = typeof(FakeBOSubClass);
+            var source = new FakeTypeSource(new[] {subClass, superClass});
+            var allClassesAutoMapper = new AllClassesAutoMapper(source);
             //---------------Assert Precondition----------------
             Assert.AreEqual(2, source.GetTypes().Count());
             //---------------Execute Test ----------------------
-            ClassDefCol classDefCol = allClassesAutoMapper.Map();
+            var classDefCol = allClassesAutoMapper.Map();
             //---------------Test Result -----------------------
             classDefCol.ShouldHaveCount(2);
             var subClassDef = classDefCol.First(def => def.ClassType == subClass);
             var superClassDef = classDefCol.First(def => def.ClassType == superClass);
-            
+
+            var discriminatorPropName = subClassDef.SuperClassDef.Discriminator;
+
+            var superClassProps = superClassDef.PropDefcol;
+            superClassProps.ShouldHaveCount(2);
+            superClassProps.ShouldContain(propDef => propDef.PropertyName == discriminatorPropName);
+        }
+
+        [Test]
+        public void Test_Map_WhenInheritanceAndHasRelationship_ShouldCreateCorrectRelPropDefs()
+        {
+            //---------------Set up test pack-------------------
+            var superClass = typeof(FakeBOSuperClass);
+            var subClass = typeof(FakeBOSubClassWithRelationships);
+            var source = new FakeTypeSource(new[] {superClass, subClass});
+            var allClassesAutoMapper = new AllClassesAutoMapper(source);
+            //---------------Assert Precondition----------------
+            Assert.AreEqual(2, source.GetTypes().Count());
+            //---------------Execute Test ----------------------
+            var classDefCol = allClassesAutoMapper.Map();
+            //---------------Test Result -----------------------
+            classDefCol.ShouldHaveCount(2);
+            var subClassDef = classDefCol.First(def => def.ClassType == subClass);
+            var superClassDef = classDefCol.First(def => def.ClassType == superClass);
+
+            subClassDef.PropDefcol.ShouldHaveCount(1, "Should have FK for MultipleRel Created");
+            superClassDef.PropDefcol.ShouldHaveCount(2, "Should have PK and Discriminator Created");
+
+            subClassDef.RelationshipDefCol.ShouldHaveCount(2, "Should have Multiple and single Rel");
+            var multipleRelDef = subClassDef.RelationshipDefCol.First(relationshipDef => relationshipDef.IsOneToMany);
+            var multipleRelPropDef = multipleRelDef.RelKeyDef.First();
+            Assert.AreEqual("FakeBOSuperClassID", multipleRelPropDef.OwnerPropertyName);
+            Assert.AreEqual("FakeBOSuperClassID", multipleRelPropDef.RelatedClassPropName);
+
+            var singleRelDef = subClassDef.RelationshipDefCol.First(relationshipDef => relationshipDef.IsManyToOne);
+            var singleRelPropDef = singleRelDef.RelKeyDef.First();
+            Assert.AreEqual("SingleRelID", singleRelPropDef.OwnerPropertyName);
+            Assert.AreEqual("FakeBoNoPropsID", singleRelPropDef.RelatedClassPropName);
+        }
+
+        [Test]
+        public void Test_Map_GivenTypeSourceProvidesSubClassBeforeSuperClass_WhenInheritanceAndHasRelationship_ShouldCreateCorrectRelPropDefs()
+        {
+            //---------------Set up test pack-------------------
+            var superClass = typeof(FakeBOSuperClass);
+            var subClass = typeof(FakeBOSubClassWithRelationships);
+            var source = new FakeTypeSource(new[] {subClass, superClass});
+            var allClassesAutoMapper = new AllClassesAutoMapper(source);
+            //---------------Assert Precondition----------------
+            Assert.AreEqual(2, source.GetTypes().Count());
+            //---------------Execute Test ----------------------
+            var classDefCol = allClassesAutoMapper.Map();
+            //---------------Test Result -----------------------
+            classDefCol.ShouldHaveCount(2);
+            var subClassDef = classDefCol.First(def => def.ClassType == subClass);
+            var superClassDef = classDefCol.First(def => def.ClassType == superClass);
+
             subClassDef.PropDefcol.ShouldHaveCount(1, "Should have FK for MultipleRel Created");
             superClassDef.PropDefcol.ShouldHaveCount(2, "Should have PK and Discriminator Created");
 
@@ -598,25 +741,24 @@ namespace Habanero.Smooth.Test
         public void Test_Map_When2LayersOfInheritance_AndHasDiscriminatorProp_ShouldNotCreateDiscriminator()
         {
             //---------------Set up test pack-------------------
-            Type superSuperClass = typeof(FakeBOSuperClassWithDesc);
-            Type superClass = typeof(FakeBOSubClassSuperHasDesc);
-            Type subClass = typeof(FakeBOSubSubClassSuperHasDesc);
-            FakeTypeSource source = new FakeTypeSource(
-                new[] { superSuperClass, superClass, subClass });
+            var superSuperClass = typeof(FakeBOSuperClassWithDesc);
+            var superClass = typeof(FakeBOSubClassSuperHasDesc);
+            var subClass = typeof(FakeBOSubSubClassSuperHasDesc);
+            var source = new FakeTypeSource(new[] {superSuperClass, superClass, subClass});
             //---------------Assert Precondition----------------
             Assert.AreEqual(3, source.GetTypes().Count());
             //---------------Execute Test ----------------------
-            AllClassesAutoMapper allClassesAutoMapper = new AllClassesAutoMapper(source);
-            ClassDefCol classDefCol = allClassesAutoMapper.Map();
+            var allClassesAutoMapper = new AllClassesAutoMapper(source);
+            var classDefCol = allClassesAutoMapper.Map();
             //---------------Test Result -----------------------
-            IClassDef subClassDef = classDefCol.First(def => def.ClassName == "FakeBOSubSubClassSuperHasDesc");
-            ISuperClassDef inheritanceDef = subClassDef.SuperClassDef;
+            var subClassDef = classDefCol.First(def => def.ClassName == "FakeBOSubSubClassSuperHasDesc");
+            var inheritanceDef = subClassDef.SuperClassDef;
             var superClassClassDef = inheritanceDef.SuperClassClassDef;
             var superSuperClassClassDef = superClassClassDef.SuperClassDef.SuperClassClassDef;
 
             superClassClassDef.PropDefcol.ShouldHaveCount(0,
-                    "No Properties Should be created for SuperClass since ID and Discriminator will be on SuperSuperClass");
-            IPropDefCol superSuperClassProps = superSuperClassClassDef.PropDefcol;
+                "No Properties Should be created for SuperClass since ID and Discriminator will be on SuperSuperClass");
+            var superSuperClassProps = superSuperClassClassDef.PropDefcol;
             superSuperClassProps.ShouldHaveCount(2, "Discriminator and ID Prop should be created");
 
             superSuperClassProps.ShouldContain(def => def.PropertyName == "FakeBOSuperClassWithDescType");
@@ -628,19 +770,16 @@ namespace Habanero.Smooth.Test
             //---------------Set up test pack-------------------
             var superClass = typeof(FakeBOSuperClassWithUC);
             var subClass = typeof(FakeBOSubClassWithSuperHasUC);
-            var source = new FakeTypeSource(
-                new[] { superClass, subClass });
+            var source = new FakeTypeSource(new[] {superClass, subClass});
             //---------------Assert Precondition----------------
             Assert.AreEqual(2, source.GetTypes().Count());
             //---------------Execute Test ----------------------
-            AllClassesAutoMapper allClassesAutoMapper = new AllClassesAutoMapper(source);
-            ClassDefCol classDefCol = allClassesAutoMapper.Map();
-
+            var allClassesAutoMapper = new AllClassesAutoMapper(source);
+            var classDefCol = allClassesAutoMapper.Map();
             //---------------Test Result -----------------------
-            IClassDef subClassDef = classDefCol.First(def => def.ClassName == "FakeBOSubClassWithSuperHasUC");
-            ISuperClassDef inheritanceDef = subClassDef.SuperClassDef;
+            var subClassDef = classDefCol.First(def => def.ClassName == "FakeBOSubClassWithSuperHasUC");
+            var inheritanceDef = subClassDef.SuperClassDef;
             var superClassClassDef = inheritanceDef.SuperClassClassDef;
-
 
             Assert.AreEqual(0, subClassDef.KeysCol.Count);
             Assert.AreEqual(1, superClassClassDef.KeysCol.Count);
@@ -691,6 +830,7 @@ namespace Habanero.Smooth.Test
             //Should Validate without Error if it gets here then it has validated
         }
     }
+
     internal class FakeSingleRelationshipDef : SingleRelationshipDef
     {
         public FakeSingleRelationshipDef()
@@ -700,6 +840,7 @@ namespace Habanero.Smooth.Test
         }
 
     }
+
     internal class FakeTypeSource : CustomTypeSource
     {
         public FakeTypeSource()
@@ -715,6 +856,7 @@ namespace Habanero.Smooth.Test
             Add(type);
         }
     }
+
     internal class DummyTypeSourceWithMockItems : ITypeSource
     {
         private readonly IEnumerable<TypeWrapper> _typeWrappers;

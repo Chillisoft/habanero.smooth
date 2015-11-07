@@ -114,7 +114,7 @@ namespace Habanero.Smooth
             return ClassDefCol;
         }
 
-        private IClassDef MapAndStoreClassDefFor(TypeWrapper type)
+        private static IClassDef MapAndStoreClassDefFor(TypeWrapper type)
         {
             var classDef = type.MapClass();
             MergeClassDefs(classDef);
@@ -128,15 +128,12 @@ namespace Habanero.Smooth
                 //You always want the classDef that has been
                 // Mapped via its subClass
                 var superClassClassDef = classDef.SuperClassDef.SuperClassClassDef;
-                var superClassType = superClassClassDef.ClassType;
-                if (ClassDefCol.Contains(superClassType))
-                {
-                    ClassDefCol.Remove(superClassType);
-                    ClassDefCol.Add(superClassClassDef);
-                }
-
+                MergeClassDefs(superClassClassDef);
             }
-            ClassDefCol.Add(classDef);
+            if (!ClassDefCol.Contains(classDef.ClassType))
+            {
+                ClassDefCol.Add(classDef);
+            }
         }
 
         private static void MapAllReverseRelationships(IEnumerable<IClassDef> classDefsMapped)
